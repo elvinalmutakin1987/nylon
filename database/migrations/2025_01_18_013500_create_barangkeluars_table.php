@@ -21,13 +21,13 @@ return new class extends Migration
             $table->string('gudang')->nullable();
             $table->date('tanggal')->nullable();
             $table->string('status')->nullable();
+            $table->text('catatan')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
             $table->string('approved_by')->nullable();
             $table->string('sent_by')->nullable();
             $table->string('received_by')->nullable();
-            $table->text('catatan')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamp('approved_at')->nullable();

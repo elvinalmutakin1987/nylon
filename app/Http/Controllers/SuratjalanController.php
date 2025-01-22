@@ -31,6 +31,9 @@ class SuratjalanController extends Controller
             if (request()->nama_toko != 'null' && request()->nama_toko != '') {
                 $suratjalan->where('nama_toko', request()->nama_toko);
             }
+            if (request()->status != 'null' && request()->status != '') {
+                $suratjalan->where('status', request()->status);
+            }
             $suratjalan->whereDate('tanggal', '>=', $tanggal_dari);
             $suratjalan->whereDate('tanggal', '<=', $tanggal_sampai);
             $suratjalan->get();
@@ -107,7 +110,7 @@ class SuratjalanController extends Controller
             $suratjalan->nama_toko = $request->nama_toko;
             $suratjalan->nopol = $request->nopol;
             $suratjalan->sopir = $request->sopir;
-            $suratjalan->status = $pengaturan->nilai == 'Ya' ? $request->status : 'Approved';
+            $suratjalan->status = $pengaturan->nilai == 'Tidak' && $request->status == 'Submit' ? 'Approved' : $request->status;
             $suratjalan->catatan = $request->catatan;
             $suratjalan->created_by = Auth::user()->id;
             $suratjalan->save();
@@ -125,7 +128,7 @@ class SuratjalanController extends Controller
             $suratjalan->suratjalandetail()->createMany($detail);
             if ($suratjalan->status == 'Approved') {
                 foreach ($suratjalan->suratjalandetail as $d) {
-                    Controller::update_stok("Keluar", "Gudang Barang Jadi", "Surat Jalan", $suratjalan->id, $d->material_id, $d->jumlah);
+                    Controller::update_stok("Keluar", "Gudang Barang Jadi", "Surat Jalan", $suratjalan->id, $d->material_id, $d->jumlah, $d->satuan);
                 }
             }
             DB::commit();
@@ -175,7 +178,7 @@ class SuratjalanController extends Controller
             $suratjalan->nama_toko = $request->nama_toko;
             $suratjalan->nopol = $request->nopol;
             $suratjalan->sopir = $request->sopir;
-            $suratjalan->status = $pengaturan->nilai == 'Ya' ? $request->status : 'Approved';
+            $suratjalan->status = $pengaturan->nilai == 'Tidak' && $request->status == 'Submit' ? 'Approved' : $request->status;
             $suratjalan->catatan = $request->catatan;
             $suratjalan->created_by = Auth::user()->id;
             $suratjalan->save();
@@ -194,7 +197,7 @@ class SuratjalanController extends Controller
             $suratjalan->suratjalandetail()->createMany($detail);
             if ($suratjalan->status == 'Approved') {
                 foreach ($suratjalan->suratjalandetail as $d) {
-                    Controller::update_stok("Keluar", "Gudang Barang Jadi", "Surat Jalan", $suratjalan->id, $d->material_id, $d->jumlah);
+                    Controller::update_stok("Keluar", "Gudang Barang Jadi", "Surat Jalan", $suratjalan->id, $d->material_id, $d->jumlah, $d->satuan);
                 }
             }
             DB::commit();

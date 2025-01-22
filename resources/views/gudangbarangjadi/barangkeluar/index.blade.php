@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                                 <div class="row mb-4">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <div class="input-group date" id="div_tanggal_dari" data-target-input="nearest">
                                                 <input type="text" class="form-control datetimepicker-input"
@@ -56,7 +56,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <div class="input-group date" id="div_tanggal_sampai"
                                                 data-target-input="nearest">
@@ -71,6 +71,12 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select class="form-control select2 w-100 select-status" id="status"
+                                            name="status">
+                                            <option></option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -117,8 +123,26 @@
     <script type="text/javascript">
         const table1 = $('#table1');
 
+        var data = [{
+                id: 'Draft',
+                text: 'Draft'
+            },
+            {
+                id: 'Submit',
+                text: 'Submit'
+            },
+            {
+                id: 'Approved',
+                text: 'Approved'
+            },
+            {
+                id: 'Reject',
+                text: 'Reject'
+            }
+        ];
+
         var ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
-            '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}';
+            '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&status=' + $("#status").val();
 
         $(document).ready(function() {
             $('#div_tanggal_dari').datetimepicker({
@@ -127,6 +151,14 @@
 
             $('#div_tanggal_sampai').datetimepicker({
                 format: 'YYYY-MM-DD'
+            });
+
+            $(".select-status").select2({
+                placeholder: "-- Pilih Status --",
+                allowClear: true,
+                data: data,
+                minimumResultsForSearch: -1,
+                width: '100%'
             });
 
             get_data();
@@ -253,14 +285,23 @@
 
         $("#tanggal_dari").on('blur', function(e) {
             ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
-                '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}';
+                    '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&status=' + $("#status")
+                .val();
             table1.DataTable().ajax.url(ajax).load();
-        })
+        });
 
         $("#tanggal_sampai").on('blur', function(e) {
             ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
-                '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}';
+                    '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&status=' + $("#status")
+                .val();
             table1.DataTable().ajax.url(ajax).load();
-        })
+        });
+
+        $(".select-status").on('change', function(e) {
+            ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
+                    '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&status=' + $("#status")
+                .val();
+            table1.DataTable().ajax.url(ajax).load();
+        });
     </script>
 @endsection

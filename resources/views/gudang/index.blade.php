@@ -52,13 +52,6 @@
                                             </a>
                                         @endif
 
-                                        @if (auth()->user()->can('gudang.barangjadi.barangmasuk'))
-                                            <a class="btn btn-app"
-                                                href="{{ route('barangkeluar.index', ['gudang' => 'bahan-jadi']) }}">
-                                                <i class="fa fa-download"></i> Barang Masuk
-                                            </a>
-                                        @endif
-
                                         @if (auth()->user()->can('gudang.barangjadi.barangkeluar'))
                                             <a class="btn btn-app"
                                                 href="{{ route('barangkeluar.index', ['gudang' => 'barang-jadi']) }}">
@@ -66,9 +59,16 @@
                                             </a>
                                         @endif
 
+                                        @if (auth()->user()->can('gudang.barangjadi.barangmasuk'))
+                                            <a class="btn btn-app"
+                                                href="{{ route('barangmasuk.index', ['gudang' => 'barang-jadi']) }}">
+                                                <i class="fa fa-download"></i> Barang Masuk
+                                            </a>
+                                        @endif
+
                                         @if (auth()->user()->can('gudang.barangjadi.retur'))
                                             <a class="btn btn-app"
-                                                href="{{ route('barangkeluar.index', ['gudang' => 'bahan-jadi']) }}">
+                                                href="{{ route('barangkeluar.index', ['gudang' => 'barnag-jadi']) }}">
                                                 <i class="fa fa-mail-reply"></i> Retur
                                             </a>
                                         @endif

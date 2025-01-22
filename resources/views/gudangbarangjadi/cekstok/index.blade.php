@@ -44,6 +44,7 @@
                                                 <tr>
                                                     <th></th>
                                                     <th>Nama Material</th>
+                                                    <th>Satuan</th>
                                                     <th>Stok</th>
                                                     <th></th>
                                                 </tr>
@@ -105,6 +106,12 @@
                     {
                         data: 'nama',
                         name: 'nama',
+                        orderable: true,
+                        searchable: true,
+                    },
+                    {
+                        data: 'satuan',
+                        name: 'satuan',
                         orderable: true,
                         searchable: true,
                     },

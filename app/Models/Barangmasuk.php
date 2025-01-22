@@ -22,7 +22,7 @@ class Barangmasuk extends Model
 
     protected $fillable = [
         'slug',
-        'packing_id',
+        'barangmasuk_id',
         'referensi',
         'referensi_id',
         'no_dokumen',
@@ -47,5 +47,15 @@ class Barangmasuk extends Model
     public function barangmasukdetail(): HasMany
     {
         return $this->hasMany(Barangmasukdetail::class);
+    }
+
+    public function packing(): BelongsTo
+    {
+        return $this->belongsTo(Packing::class)->withDefault(['no_dokumen' => null]);
+    }
+
+    public function barangmasuk(): BelongsTo
+    {
+        return $this->belongsTo(Barangmasuk::class)->withDefault(['no_dokumen' => null]);
     }
 }

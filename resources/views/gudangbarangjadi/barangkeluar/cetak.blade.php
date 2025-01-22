@@ -203,8 +203,8 @@
                         <table class="table-detail">
                             <tr class="table-detail">
                                 <td width="30%" class="table-detail text-center">Diterima Oleh</td>
-                                <td width="30%" class="table-detail text-center">Diketahui Oleh</td>
                                 <td width="30%" class="table-detail text-center">Diserahkan Oleh</td>
+                                <td width="30%" class="table-detail text-center">Diketahui Oleh</td>
                             </tr>
                             <tr class="table-detail">
                                 <td class="table-detail tinggi-tr"></td>

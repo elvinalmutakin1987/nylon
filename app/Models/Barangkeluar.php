@@ -49,6 +49,11 @@ class Barangkeluar extends Model
         return $this->hasMany(Barangkeluardetail::class);
     }
 
+    public function barangmasuk(): HasMany
+    {
+        return $this->hasMany(Barangmasuk::class);
+    }
+
     public function permintaanmaterial(): BelongsTo
     {
         return $this->belongsTo(Permintaanmaterial::class)->withDefault(['no_dokumen' => null]);

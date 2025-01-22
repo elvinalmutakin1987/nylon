@@ -84,9 +84,9 @@ class Controller extends BaseController
         $histori->save();
     }
 
-    public static function update_stok(String $jenis, String $gudang, String $dokumen, String $dokumen_id, String $material_id, String $jumlah)
+    public static function update_stok(String $jenis, String $gudang, String $dokumen, String $dokumen_id, String $material_id, String $jumlah, String $satuan)
     {
-        $kartustok_akhir = Kartustok::where('material_id', $material_id)->where('gudang', $gudang)->orderBy('id', 'desc')->first();
+        $kartustok_akhir = Kartustok::where('material_id', $material_id)->where('gudang', $gudang)->where('satuan', $satuan)->orderBy('id', 'desc')->first();
         $stok_akhir = $kartustok_akhir ? $kartustok_akhir->stok_akhir : 0;
         $kartustok = new Kartustok();
         $kartustok->gudang = $gudang;
@@ -105,6 +105,7 @@ class Controller extends BaseController
             $kartustok->keluar = $jumlah;
             $kartustok->stok_akhir = $stok_akhir - $jumlah;
         }
+        $kartustok->satuan = $satuan;
         $kartustok->created_by = Auth::user()->id;
         $kartustok->save();
     }

@@ -25,8 +25,16 @@ class BarangkeluarController extends Controller
     public function index()
     {
         if (request()->ajax()) {
+            $tanggal_dari = request()->tanggal_dari ?? \Carbon\Carbon::now()->startOfMonth()->format('Y-m-d');
+            $tanggal_sampai = request()->tanggal_sampai ?? \Carbon\Carbon::now()->endOfMonth()->format('Y-m-d');
             $barangkeluar = Barangkeluar::query();
-            $barangkeluar->where('gudang', request()->gudang)->get();
+            $barangkeluar->where('gudang', request()->gudang);
+            if (request()->status != 'null' && request()->status != '') {
+                $barangkeluar->where('status', request()->status);
+            }
+            $barangkeluar->whereDate('tanggal', '>=', $tanggal_dari);
+            $barangkeluar->whereDate('tanggal', '<=', $tanggal_sampai);
+            $barangkeluar->get();
             return DataTables::of($barangkeluar)
                 ->addIndexColumn()
                 ->addColumn('dibuat_oleh', function ($item) {
@@ -106,7 +114,7 @@ class BarangkeluarController extends Controller
             $barangkeluar->no_dokumen = $gen_no_dokumen['nomor'];
             $barangkeluar->gudang = $request->gudang;
             $barangkeluar->tanggal = date('Y-m-d');
-            $barangkeluar->status = $pengaturan->nilai == 'Ya' ? $request->status : 'Approved';
+            $barangkeluar->status = $pengaturan->nilai == 'Tidak' && $request->status == 'Submit' ? 'Approved' : $request->status;
             $barangkeluar->catatan = $request->catatan;
             $barangkeluar->created_by = Auth::user()->id;
             $barangkeluar->save();
@@ -124,7 +132,7 @@ class BarangkeluarController extends Controller
             $barangkeluar->barangkeluardetail()->createMany($detail);
             if ($barangkeluar->status == 'Approved') {
                 foreach ($barangkeluar->barangkeluardetail as $d) {
-                    Controller::update_stok("Keluar", "Gudang Barang Jadi", "Barang Keluar", $barangkeluar->id, $d->material_id, $d->jumlah);
+                    Controller::update_stok("Keluar", "Gudang Barang Jadi", "Barang Keluar", $barangkeluar->id, $d->material_id, $d->jumlah, $d->satuan);
                 }
             }
             DB::commit();
@@ -172,7 +180,7 @@ class BarangkeluarController extends Controller
             $pengaturan = Pengaturan::where('keterangan', 'gudang.barang-jadi.barangkeluar.butuh.approval')->first();
             $barangkeluar->permintaanmaterial_id = $request->permintaanmaterial_id;
             $barangkeluar->tanggal = date('Y-m-d');
-            $barangkeluar->status = $pengaturan->nilai == 'Ya' ? $request->status : 'Approved';
+            $barangkeluar->status = $pengaturan->nilai == 'Tidak' && $request->status == 'Submit' ? 'Approved' : $request->status;
             $barangkeluar->catatan = $request->catatan;
             $barangkeluar->created_by = Auth::user()->id;
             $barangkeluar->save();
@@ -191,7 +199,7 @@ class BarangkeluarController extends Controller
             $barangkeluar->barangkeluardetail()->createMany($detail);
             if ($barangkeluar->status == 'Approved') {
                 foreach ($barangkeluar->barangkeluardetail as $d) {
-                    Controller::update_stok("Keluar", "Gudang Barang Jadi", "Barang Keluar", $barangkeluar->id, $d->material_id, $d->jumlah);
+                    Controller::update_stok("Keluar", "Gudang Barang Jadi", "Barang Keluar", $barangkeluar->id, $d->material_id, $d->jumlah, $d->satuan);
                 }
             }
             DB::commit();

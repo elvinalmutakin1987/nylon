@@ -13,7 +13,7 @@
                             <li class="breadcrumb-item"><a href="{{ route('gudang.index') }}" class="text-dark">Gudang</a>
                             </li>
                             <li class="breadcrumb-item">Gudang Barang Jadi</li>
-                            <li class="breadcrumb-item" Active>Surat Jalan</li>
+                            <li class="breadcrumb-item" Active>Barang Masuk</li>
                         </ol>
                     </div>
                 </div>
@@ -28,13 +28,14 @@
                         <!-- Application buttons -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Surat Jalan</h3>
+                                <h3 class="card-title">Barang Masuk</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row mb-4">
                                     <div class="col-md-12">
                                         <a type="button" class="btn btn-success m-1"
-                                            href="{{ route('suratjalan.create') }}"><i class="fa fa-plus"></i> Tambah
+                                            href="{{ route('barangmasuk.create', ['gudang' => 'barang-jadi']) }}"><i
+                                                class="fa fa-plus"></i> Tambah
                                             Data</a>
                                         <a type="button" class="btn btn-secondary m-1"
                                             href="{{ route('gudang.index') }}"><i class="fa fa-reply"></i> Kembali</a>
@@ -72,8 +73,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <select class="form-control select2 w-100 select-nama-toko" id="nama_toko"
-                                            name="nama_toko">
+                                        <select class="form-control select2 w-100 select-asal" id="asal"
+                                            name="asal">
                                             <option></option>
                                         </select>
                                     </div>
@@ -90,11 +91,11 @@
                                             <thead>
                                                 <tr>
                                                     <th></th>
-                                                    <th>No. SJ</th>
-                                                    <th>No. Order</th>
+                                                    <th>No. Dokumen</th>
                                                     <th>Tanggal</th>
-                                                    <th>Nama Toko</th>
-                                                    <th>Kendaraan</th>
+                                                    <th>Asal</th>
+                                                    <th>No. Barang Keluar</th>
+                                                    <th>Catatan</th>
                                                     <th>Status</th>
                                                     <th></th>
                                                 </tr>
@@ -143,13 +144,56 @@
                 text: 'Approved'
             },
             {
-                id: 'Reject',
-                text: 'Reject'
+                id: 'Rejected',
+                text: 'Rejected'
+            }
+        ];
+
+        var data2 = [{
+                id: 'barang-jadi',
+                text: 'Barang Jadi'
+            },
+            {
+                id: 'bahan-baku',
+                text: 'Bahan Baku'
+            },
+            {
+                id: 'benang',
+                text: 'Benang'
+            },
+            {
+                id: 'extruder',
+                text: 'Extruder'
+            },
+            {
+                id: 'wjl',
+                text: 'WJL'
+            },
+            {
+                id: 'sulzer',
+                text: 'Sulzer'
+            },
+            {
+                id: 'rashel',
+                text: 'Rashel'
+            },
+            {
+                id: 'beaming',
+                text: 'Beaming'
+            },
+            {
+                id: 'packing',
+                text: 'Packing'
+            },
+            {
+                id: '-',
+                text: 'Tidak ada info'
             }
         ];
 
         var ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
-            '#tanggal_sampai').val() + '&nama_toko=' + $('#nama_toko').text() + '&status=' + $("#status").val();
+                '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&asal=' + $('#asal').val() +
+            '&status=' + $('#status').val();
 
         $(document).ready(function() {
             $('#div_tanggal_dari').datetimepicker({
@@ -160,24 +204,6 @@
                 format: 'YYYY-MM-DD'
             });
 
-            get_data();
-
-            $('.select-nama-toko').select2({
-                placeholder: "- Pilih Toko -",
-                allowClear: true,
-                ajax: {
-                    url: '{{ route('suratjalan.get_toko') }}',
-                    dataType: 'json',
-                    data: function(params) {
-                        return {
-                            term: params.term || '',
-                            page: params.page || 1,
-                        };
-                    },
-                    cache: true,
-                }
-            });
-
             $(".select-status").select2({
                 placeholder: "-- Pilih Status --",
                 allowClear: true,
@@ -185,6 +211,17 @@
                 minimumResultsForSearch: -1,
                 width: '100%'
             });
+
+            $(".select-asal").select2({
+                placeholder: "-- Pilih Asal --",
+                allowClear: true,
+                data: data2,
+                minimumResultsForSearch: -1,
+                width: '100%'
+            });
+
+
+            get_data();
         });
 
         function get_data() {
@@ -217,26 +254,26 @@
                         searchable: true,
                     },
                     {
-                        data: 'no_order',
-                        name: 'no_order',
-                        orderable: true,
-                        searchable: true,
-                    },
-                    {
                         data: 'tanggal',
                         name: 'tanggal',
                         orderable: true,
                         searchable: true,
                     },
                     {
-                        data: 'nama_toko',
-                        name: 'nama_toko',
+                        data: 'asalnya',
+                        name: 'asalnya',
                         orderable: true,
                         searchable: true,
                     },
                     {
-                        data: 'nopol',
-                        name: 'nopol',
+                        data: 'barangkeluar',
+                        name: 'barangkeluar',
+                        orderable: true,
+                        searchable: true,
+                    },
+                    {
+                        data: 'catatan',
+                        name: 'catatan',
                         orderable: true,
                         searchable: true,
                     },
@@ -285,7 +322,7 @@
                 cancelButtonText: 'Tidak'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let url = `{!! route('suratjalan.destroy', ':_id') !!}`;
+                    let url = `{!! route('barangmasuk.destroy', ':_id') !!}`;
                     url = url.replace(':_id', id);
                     $("#_method").val('DELETE');
                     $('#form-delete').attr('action', url);
@@ -318,35 +355,35 @@
             $("#card-tabs").html('');
         });
 
-        $(".select-nama-toko").on('change', function(e) {
-            ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
-                    '#tanggal_sampai').val() + '&nama_toko=' + $('#nama_toko').text() + '&status=' + $("#status")
-                .val();
-
-            table1.DataTable().ajax.url(ajax).load();
-        });
-
         $("#tanggal_dari").on('blur', function(e) {
             ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
-                    '#tanggal_sampai').val() + '&nama_toko=' + $('#nama_toko').text() + '&status=' + $("#status")
-                .val();
-
+                    '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&asal=' + $('#asal')
+                .val() +
+                '&status=' + $('#status').val();
             table1.DataTable().ajax.url(ajax).load();
         });
 
         $("#tanggal_sampai").on('blur', function(e) {
             ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
-                    '#tanggal_sampai').val() + '&nama_toko=' + $('#nama_toko').text() + '&status=' + $("#status")
-                .val();
-
+                    '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&asal=' + $('#asal')
+                .val() +
+                '&status=' + $('#status').val();
             table1.DataTable().ajax.url(ajax).load();
         });
 
-        $(".select-status").on('change', function(e) {
+        $("#asal").on('change', function(e) {
             ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
-                    '#tanggal_sampai').val() + '&nama_toko=' + $('#nama_toko').text() + '&status=' + $("#status")
-                .val();
+                    '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&asal=' + $('#asal')
+                .val() +
+                '&status=' + $('#status').val();
+            table1.DataTable().ajax.url(ajax).load();
+        });
 
+        $("#status").on('change', function(e) {
+            ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
+                    '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&asal=' + $('#asal')
+                .val() +
+                '&status=' + $('#status').val();
             table1.DataTable().ajax.url(ajax).load();
         });
     </script>

@@ -143,10 +143,8 @@
                                             class="fa fa-save"></i>
                                         Simpan</button>
                                     <div class="dropdown-menu" role="menu">
-                                        @if ($pengaturan->nilai == 'Ya')
-                                            <button type="submit" class="dropdown-item" name="status"
-                                                value="Draft"><i class="fa fa-file"></i> Sebagai Draft</button>
-                                        @endif
+                                        <button type="submit" class="dropdown-item" name="status" value="Draft"><i
+                                                class="fa fa-file"></i> Sebagai Draft</button>
                                         <button type="submit" class="dropdown-item" name="status" value="Submit"><i
                                                 class="fa fa-save"></i> Simpan Barang Keluar</button>
                                     </div>

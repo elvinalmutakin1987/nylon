@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BarangkeluarController;
+use App\Http\Controllers\BarangmasukController;
 use App\Http\Controllers\CekstokController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\DatamasterController;
@@ -136,5 +137,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('suratjalan-get-material', [SuratjalanController::class, 'get_material'])->name('suratjalan.get_material');
         Route::get('suratjalan-get-referensi', [SuratjalanController::class, 'get_referensi'])->name('suratjalan.get_referensi');
         Route::get('suratjalan-get-order-by-id', [SuratjalanController::class, 'get_order_by_id'])->name('suratjalan.get_order_by_id');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superuser|barangmasuk']], function () {
+        Route::resource('barangmasuk', BarangmasukController::class)->names('barangmasuk');
+
+        Route::get('barangmasuk/{barangmasuk}/cetak', [BarangmasukController::class, 'cetak'])->name('barangmasuk.cetak');
+        Route::get('barangmasuk-get-material', [BarangmasukController::class, 'get_material'])->name('barangmasuk.get_material');
+        Route::get('barangmasuk-get-referensi', [BarangmasukController::class, 'get_referensi'])->name('barangmasuk.get_referensi');
+        Route::get('barangmasuk-get-barangkeluar', [BarangmasukController::class, 'get_barangkeluar'])->name('barangmasuk.get_barangkeluar');
+        Route::get('barangmasuk-get-barangkeluar-by-id', [BarangmasukController::class, 'ge_barangkeluar_by_id'])->name('barangmasuk.get_barangkeluar_by_id');
     });
 });
