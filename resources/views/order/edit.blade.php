@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Number;
+@endphp
+
 @extends('partials.main')
 
 @section('content')
@@ -80,7 +84,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    {{-- <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Jenis Barang</label>
@@ -92,7 +96,80 @@
                                                     class="error invalid-feedback">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                    </div> --}}
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive p-0">
+                                                <table id="table1" class="table border table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 40%">Barang</th>
+                                                            <th style="width: 10%">Satuan</th>
+                                                            <th style="width: 15%">Jumlah</th>
+                                                            <th>Keterangan</th>
+                                                            <th style="width: 50px" class="text-center"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($order->orderdetail as $d)
+                                                            <tr>
+                                                                <td>
+                                                                    <select class="form-control select2 w-100 select-barang"
+                                                                        id="material_id{{ $d->id }}"
+                                                                        name="material_id[]">
+                                                                        <option value="{{ $d->material_id }}">
+                                                                            {{ $d->material->nama }}</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select class="form-control select2 w-100 select-satuan"
+                                                                        id="satuan{{ $d->id }}" name="satuan[]">
+                                                                        <option value="ZAK"
+                                                                            {{ $d->satuan == 'ZAK' ? 'selected' : '' }}>ZAK
+                                                                        </option>
+                                                                        <option value="KG"
+                                                                            {{ $d->satuan == 'KG' ? 'selected' : '' }}>KG
+                                                                        </option>
+                                                                        <option value="BOBIN"
+                                                                            {{ $d->satuan == 'BOBIN' ? 'selected' : '' }}>
+                                                                            BOBIN</option>
+                                                                        <option value="PCS"
+                                                                            {{ $d->satuan == 'PCS' ? 'selected' : '' }}>PCS
+                                                                        </option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control"
+                                                                        id="jumlah{{ $d->id }}" name="jumlah[]"
+                                                                        onblur="ubah_format('jumlah{{ $d->id }}', this.value)"
+                                                                        value="{{ Number::format($d->jumlah, precision: 1) }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control"
+                                                                        id="keterangan{{ $d->id }}"
+                                                                        name="keterangan_[]">
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <button type="button" class="btn btn-danger"
+                                                                        id="hapus"><i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        <tr>
+                                                            <td class="text-right text-bold" colspan="4"></td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-primary"
+                                                                    onclick="tambah()"><i class="fa fa-plus"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
+
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -263,6 +340,7 @@
         $("#modal-button-simpan").on('click', function() {
             $.post("{{ route('order.progress', $order->slug) }}", $("#form-import").serialize(), function(data) {
                 if (data.status == 'success') {
+                    $('#modal-import').modal('hide');
                     $("#list-progress").html(`
                         <div class="d-flex justify-content-center m-2">
                            <button class="btn btn-primary" type="button" disabled>
@@ -274,10 +352,59 @@
                     $("#catatan").val('');
                     setTimeout(() => {
                         $("#list-progress").html(data.data);
-                        $('#modal-import').modal('hide');
                     }, 500);
                 }
             });
-        })
+        });
+
+        function ubah_format(field, nilai) {
+            var mynumeral = numeral(nilai).format('0,0');
+            if (field.includes('jumlah')) {
+                mynumeral = numeral(nilai).format('0,0.0');
+            }
+            $("#" + field).val(mynumeral);
+        }
+
+        function tambah() {
+            var tbody_row = $('#table1').find('tr').length;
+            var row_id = Date.now().toString(36) + Math.random().toString(36).substr(2);
+            $("#table1 > tbody > tr:last").before(`
+                <tr>
+                    <td>
+                        <select class="form-control select2 w-100 select-barang"
+                            id="mamterial_id${row_id}" name="material_id[]">
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control select2 w-100 select-satuan"
+                            id="satuan${row_id}" name="satuan[]">
+                            <option value="ZAK">ZAK</option>
+                            <option value="KG">KG</option>
+                            <option value="BOBIN">BOBIN</option>
+                            <option value="PCS">PCS</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="jumlah${row_id}"
+                            name="jumlah[]" onblur="ubah_format('jumlah${row_id}', this.value)">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="keterangan${row_id}"
+                            name="keterangan_[]">
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-danger" id="hapus"><i
+                                class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `);
+
+            format_select2();
+        }
+
+        $("#table1").on("click", "#hapus", function() {
+            $(this).closest("tr").remove();
+        });
     </script>
 @endsection

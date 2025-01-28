@@ -10,11 +10,10 @@
                     <div class="col-sm-12">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-dark">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('datamaster.index') }}"
-                                    class="text-dark">Produksi</a>
+                            <li class="breadcrumb-item"><a href="{{ route('gudang.index') }}" class="text-dark">Gudang</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="{{ route('order.index') }}" class="text-dark">Order</a>
-                            </li>
+                            <li class="breadcrumb-item">Barang Jadi</li>
+                            <li class="breadcrumb-item">Retur</li>
                             <li class="breadcrumb-item" Active>Detail Data</li>
                         </ol>
                     </div>
@@ -29,37 +28,46 @@
                         <!-- Application buttons -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Detail Order</h3>
+                                <h3 class="card-title">Detail Retur</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="no_order">No. Order</label>
-                                            <p>{{ $order->no_order }}</p>
+                                            <label for="no_dokumen">No. Retur</label>
+                                            <p>{{ $retur->no_dokumen }}</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="nama_pemesan">Nama Pemesan</label>
-                                            <p>{{ $order->nama_pemesan ?? '-' }}</p>
+                                            @php
+                                                $dokumen = '';
+                                                $no_dokumen = '';
+                                                if ($retur->referensi == 'suratjalan') {
+                                                    $dokumen = 'Surat Jalan';
+                                                    $no_dokumen = $retur->suratjalan->no_dokumen;
+                                                } elseif ($retur->referensi == 'barangkeluar') {
+                                                    $dokumen = 'Barang Keluar';
+                                                    $no_dokumen = $retur->barangkeluar->no_dokumen;
+                                                }
+                                            @endphp
+                                            <label for="no_permintaan_material">Dokumen</label>
+                                            <p>{{ $dokumen }}</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="tanggal">Tanggal Order</label>
-                                            <p>{{ $order->tanggal ?? '-' }}</p>
+                                            <label for="no_permintaan_material">No. Dokumen</label>
+                                            <p>{{ $no_dokumen }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="tanggal">Tanggal</label>
+                                            <p>{{ $barangkeluar->tanggal ?? '-' }}</p>
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Jenis Barang</label>
-                                            <p>{!! nl2br($order->jenis_barang) !!}</p>
-                                        </div>
-                                    </div>
-                                </div> --}}
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -73,7 +81,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($order->orderdetail as $d)
+                                                    @foreach ($retur->returdetail as $d)
                                                         <tr>
                                                             <td>{{ $d->material->nama }}</td>
                                                             <td>{{ $d->satuan }}</td>
@@ -87,51 +95,18 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="keterangan">Keterangan</label>
-                                            <p>{{ $order->keterangan ?? '-' }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="tanggal_kirim">Tanggal Kirim</label>
-                                            <p>{{ $order->tanggal_kirim ?? '-' }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="kode">Kode</label>
-                                            <p>{{ $order->kode ?? '-' }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-12">
-                                        <label for="">Catatan</label>
-                                        <div id="list-progress">
-                                            @include('order.list-progress', ['order' => $order])
+                                        <div class="form-group">
+                                            <label for="sopir">Catatan</label>
+                                            <p>{{ $retur->catatan }}</p>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="">Histori</label>
-                                        <table class="w-100">
-                                            @foreach ($histori as $d)
-                                                <tr>
-                                                    <td>{{ \Carbon\Carbon::parse($d->created_at)->format('d/M/Y h:i:s') }}
-                                                        - {{ $d->keterangan }}
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </table>
                                     </div>
                                 </div>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <a type="button" class="btn btn-default" href="{{ route('order.index') }}"><i
+                                <a type="button" class="btn btn-default"
+                                    href="{{ route('retur.index', ['gudang' => $retur->gudang]) }}"><i
                                         class="fa fa-reply"></i>
                                     Kembali</a>
                             </div>

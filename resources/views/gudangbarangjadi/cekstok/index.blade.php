@@ -12,7 +12,7 @@
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-dark">Home</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('gudang.index') }}" class="text-dark">Gudang</a>
                             </li>
-                            <li class="breadcrumb-item">Gudang Barang Jadi</li>
+                            <li class="breadcrumb-item">Barang Jadi</li>
                             <li class="breadcrumb-item" Active>Cek Stok</li>
                         </ol>
                     </div>

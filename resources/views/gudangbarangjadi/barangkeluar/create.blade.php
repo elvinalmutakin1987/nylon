@@ -12,7 +12,7 @@
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-dark">Home</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('gudang.index') }}" class="text-dark">Gudang</a>
                             </li>
-                            <li class="breadcrumb-item">Gudang Barang Jadi</li>
+                            <li class="breadcrumb-item">Barang Jadi</li>
                             <li class="breadcrumb-item">Barang Keluar</li>
                             <li class="breadcrumb-item" Active>Tambah Data</li>
                         </ol>
@@ -94,6 +94,8 @@
                                                                     id="satuan1" name="satuan[]">
                                                                     <option value="ZAK">ZAK</option>
                                                                     <option value="KG">KG</option>
+                                                                    <option value="BOBIN">BOBIN</option>
+                                                                    <option value="PCS">PCS</option>
                                                                 </select>
                                                             </td>
                                                             <td>

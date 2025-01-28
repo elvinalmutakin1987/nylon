@@ -45,7 +45,7 @@ class BarangmasukController extends Controller
                     $asal = "";
                     if ($item->asal == 'barang-jadi') {
                         $asal = 'Barang Jadi';
-                    } elseif ($item->asal == 'bahan-baku') {
+                    } elseif ($item->asal == 'bahan-baku' || $item->asal == 'bahan-penolong') {
                         $asal = 'Bahan Baku';
                     } elseif ($item->asal == 'benang') {
                         $asal = 'Benang';
@@ -74,7 +74,7 @@ class BarangmasukController extends Controller
                 })
                 ->addColumn('barangkeluar', function ($item) {
                     $barangkeluar = Barangkeluar::find($item->barangkeluar_id);
-                    return $barangkeluar ? $barangkeluar->name : null;
+                    return $barangkeluar ? $barangkeluar->no_dokumen : null;
                 })
                 ->addColumn('action', function ($item) {
                     if ($item->status == 'Approved') {
@@ -103,12 +103,24 @@ class BarangmasukController extends Controller
                 })
                 ->make();
         }
-        if (request()->gudang == 'bahan-baku') {
+        if (request()->gudang == 'bahan-baku' || request()->gudang == 'bahan-penolong') {
             return view('gudangbahanbaku.barangmasuk.index');
         } elseif (request()->gudang == 'benang') {
             return view('gudangbenang.barangmasuk.index');
         } elseif (request()->gudang == 'barang-jadi') {
             return view('gudangbarangjadi.barangmasuk.index');
+        } elseif (request()->gudang == 'extruder') {
+            return view('gudangextruder.barangmasuk.index');
+        } elseif (request()->gudang == 'wjl') {
+            return view('gudangwjl.barangmasuk.index');
+        } elseif (request()->gudang == 'sulzer') {
+            return view('gudangsulzer.barangmasuk.index');
+        } elseif (request()->gudang == 'rashel') {
+            return view('gudangrashel.barangmasuk.index');
+        } elseif (request()->gudang == 'beaming') {
+            return view('gudangbeaming.barangmasuk.index');
+        } elseif (request()->gudang == 'packing') {
+            return view('gudangpacking.barangmasuk.index');
         }
     }
 
@@ -118,7 +130,7 @@ class BarangmasukController extends Controller
     public function create()
     {
         $gudang = request()->gudang;
-        if ($gudang == 'bahan-baku') {
+        if ($gudang == 'bahan-baku' || $gudang == 'bahan-penolong') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.bahan-baku.barangmasuk.butuh.approval')->first();
             return view('gudangbahanbaku.barangmasuk.create', compact('pengaturan', 'gudang'));
         } elseif ($gudang == 'benang') {
@@ -127,6 +139,24 @@ class BarangmasukController extends Controller
         } elseif ($gudang == 'barang-jadi') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.barang-jadi.barangmasuk.butuh.approval')->first();
             return view('gudangbarangjadi.barangmasuk.create', compact('pengaturan', 'gudang'));
+        } elseif ($gudang == 'extruder') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.extruder.barangmasuk.butuh.approval')->first();
+            return view('gudangextruder.barangmasuk.create', compact('pengaturan', 'gudang'));
+        } elseif ($gudang == 'wjl') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.wjl.barangmasuk.butuh.approval')->first();
+            return view('gudangwjl.barangmasuk.create', compact('pengaturan', 'gudang'));
+        } elseif ($gudang == 'sulzer') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.sulzer.barangmasuk.butuh.approval')->first();
+            return view('gudangsulzer.barangmasuk.create', compact('pengaturan', 'gudang'));
+        } elseif ($gudang == 'rashel') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.rashel.barangmasuk.butuh.approval')->first();
+            return view('gudangrashel.barangmasuk.create', compact('pengaturan', 'gudang'));
+        } elseif ($gudang == 'beaming') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.beaming.barangmasuk.butuh.approval')->first();
+            return view('gudangbeaming.barangmasuk.create', compact('pengaturan', 'gudang'));
+        } elseif ($gudang == 'packing') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.packing.barangmasuk.butuh.approval')->first();
+            return view('gudangpacking.barangmasuk.create', compact('pengaturan', 'gudang'));
         }
     }
 
@@ -183,7 +213,25 @@ class BarangmasukController extends Controller
      */
     public function show(Barangmasuk $barangmasuk)
     {
-        return view('gudangbarangjadi.barangmasuk.show', compact('barangmasuk'));
+        if ($barangmasuk->gudang == 'bahan-baku' || $barangmasuk->gudang == 'bahan-penolong') {
+            return view('gudangbahanbaku.barangmasuk.show', compact('barangmasuk'));
+        } elseif ($barangmasuk->gudang == 'benang') {
+            return view('gudangbenang.barangmasuk.show', compact('barangmasuk'));
+        } elseif ($barangmasuk->gudang == 'barang-jadi') {
+            return view('gudangbarangjadi.barangmasuk.show', compact('barangmasuk'));
+        } elseif ($barangmasuk->gudang == 'extruder') {
+            return view('gudangextruder.barangmasuk.show', compact('barangmasuk'));
+        } elseif ($barangmasuk->gudang == 'wjl') {
+            return view('gudangwjl.barangmasuk.show', compact('barangmasuk'));
+        } elseif ($barangmasuk->gudang == 'sulzer') {
+            return view('gudangsulzer.barangmasuk.show', compact('barangmasuk'));
+        } elseif ($barangmasuk->gudang == 'rashel') {
+            return view('gudangrashel.barangmasuk.show', compact('barangmasuk'));
+        } elseif ($barangmasuk->gudang == 'beaming') {
+            return view('gudangbeaming.barangmasuk.show', compact('barangmasuk'));
+        } elseif ($barangmasuk->gudang == 'packing') {
+            return view('gudangpacking.barangmasuk.show', compact('barangmasuk'));
+        }
     }
 
     /**
@@ -199,7 +247,25 @@ class BarangmasukController extends Controller
             ]);
         }
         $gudang = $barangmasuk->gudang;
-        return view('gudangbarangjadi.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+        if ($gudang == 'bahan-baku' || $gudang == 'bahan-penolong') {
+            return view('gudangbahanbaku.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'benang') {
+            return view('gudangbenang.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'barang-jadi') {
+            return view('gudangbarangjadi.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'extruder') {
+            return view('gudangextruder.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'wjl') {
+            return view('gudangwjl.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'sulzer') {
+            return view('gudangsulzer.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'rashel') {
+            return view('gudangrashel.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'beaming') {
+            return view('gudangbeaming.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'packing') {
+            return view('gudangpacking.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+        }
     }
 
     /**
@@ -324,7 +390,7 @@ class BarangmasukController extends Controller
             $barangkeluar = Barangkeluar::selectRaw("id, no_dokumen as text")
                 ->where('no_dokumen', 'like', '%' . $term . '%');
             $barangkeluar = $barangkeluar->where('gudang', '=', $request->gudang);
-            $barangkeluar = $barangkeluar->where('status', 'Approved');
+            // $barangkeluar = $barangkeluar->where('status', 'Approved');
             $barangkeluar = $barangkeluar->orderBy('no_dokumen')->simplePaginate(10);
             $total_count = count($barangkeluar);
             $morePages = true;

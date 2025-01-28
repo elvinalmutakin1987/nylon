@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Ordercatatan;
 use App\Models\Orderdetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -76,12 +77,12 @@ class GudangbarangjadiorderController extends Controller
     {
         DB::beginTransaction();
         try {
-            $orderdetail = new Orderdetail();
-            $orderdetail->slug = Controller::gen_slug();
-            $orderdetail->order_id = $order->id;
-            $orderdetail->catatan = $request->catatan;
-            $orderdetail->created_by = Auth::user()->id;
-            $orderdetail->save();
+            $ordercatatan = new Ordercatatan();
+            $ordercatatan->slug = Controller::gen_slug();
+            $ordercatatan->order_id = $order->id;
+            $ordercatatan->catatan = $request->catatan;
+            $ordercatatan->created_by = Auth::user()->id;
+            $ordercatatan->save();
             DB::commit();
             $order_id = $order->id;
             $view = view('gudangbarangjadi.order.list-progress', compact('order_id'))->render();

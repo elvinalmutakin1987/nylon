@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Histori;
+use App\Models\Material;
 use App\Models\Order;
+use App\Models\Ordercatatan;
 use App\Models\Orderdetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -78,6 +80,18 @@ class OrderController extends Controller
             $order->status = "Open";
             $order->created_by = Auth::user()->id;
             $order->save();
+            foreach ($request->material_id as $key => $material_id) {
+                $detail[] = [
+                    'slug' => Controller::gen_slug(),
+                    'order_id' => $order->id,
+                    'material_id' => $material_id,
+                    'jumlah' => $request->jumlah[$key] ? Controller::unformat_angka($request->jumlah[$key]) : 0,
+                    'satuan' => $request->satuan[$key],
+                    'keterangan' => $request->keterangan_[$key],
+                    'created_by' => Auth::user()->id
+                ];
+            }
+            $order->orderdetail()->createMany($detail);
             Controller::simpan_histori("Order", $order->id, Auth::user()->name . " menyimpan data order.");
             DB::commit();
             return redirect()->route('order.index')->with([
@@ -164,12 +178,12 @@ class OrderController extends Controller
     {
         DB::beginTransaction();
         try {
-            $orderdetail = new Orderdetail();
-            $orderdetail->slug = Controller::gen_slug();
-            $orderdetail->order_id = $order->id;
-            $orderdetail->catatan = $request->catatan;
-            $orderdetail->created_by = Auth::user()->id;
-            $orderdetail->save();
+            $ordercatatan = new Ordercatatan();
+            $ordercatatan->slug = Controller::gen_slug();
+            $ordercatatan->order_id = $order->id;
+            $ordercatatan->catatan = $request->catatan;
+            $ordercatatan->created_by = Auth::user()->id;
+            $ordercatatan->save();
             DB::commit();
             $view = view('order.list-progress', compact('order'))->render();
             return response()->json([
@@ -187,4 +201,29 @@ class OrderController extends Controller
     }
 
     public function destroy_progress(Request $request, Order $order) {}
+
+    public function get_material(Request $request)
+    {
+        if ($request->ajax()) {
+            $term = trim($request->term);
+            $material = Material::selectRaw("id, nama as text")
+                ->where('nama', 'like', '%' . $term . '%')
+                ->where('jenis', 'Barang Jadi')
+                ->orderBy('nama')->simplePaginate(10);
+            $total_count = count($material);
+            $morePages = true;
+            $pagination_obj = json_encode($material);
+            if (empty($material->nextPageUrl())) {
+                $morePages = false;
+            }
+            $result = [
+                "results" => $material->items(),
+                "pagination" => [
+                    "more" => $morePages
+                ],
+                "total_count" => $total_count
+            ];
+            return response()->json($result);
+        }
+    }
 }

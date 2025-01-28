@@ -44,6 +44,11 @@ class Order extends Model
         return $this->hasMany(Orderdetail::class);
     }
 
+    public function ordercatatan(): HasMany
+    {
+        return $this->hasMany(Ordercatatan::class);
+    }
+
     public function suratjalan(): HasMany
     {
         return $this->hasMany(Suratjalan::class);

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kartustok;
+use App\Models\Lapproduksiwjl;
 use Illuminate\Http\Request;
 
-class KartustokController extends Controller
+class LapproduksiwjlController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,12 +34,15 @@ class KartustokController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Kartustok $kartustok) {}
+    public function show(Lapproduksiwjl $lapproduksiwjl)
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kartustok $kartustok)
+    public function edit(Lapproduksiwjl $lapproduksiwjl)
     {
         //
     }
@@ -47,7 +50,7 @@ class KartustokController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kartustok $kartustok)
+    public function update(Request $request, Lapproduksiwjl $lapproduksiwjl)
     {
         //
     }
@@ -55,7 +58,7 @@ class KartustokController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kartustok $kartustok)
+    public function destroy(Lapproduksiwjl $lapproduksiwjl)
     {
         //
     }

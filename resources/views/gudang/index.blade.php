@@ -68,7 +68,7 @@
 
                                         @if (auth()->user()->can('gudang.barangjadi.retur'))
                                             <a class="btn btn-app"
-                                                href="{{ route('barangkeluar.index', ['gudang' => 'barnag-jadi']) }}">
+                                                href="{{ route('retur.index', ['gudang' => 'barang-jadi']) }}">
                                                 <i class="fa fa-mail-reply"></i> Retur
                                             </a>
                                         @endif
@@ -87,24 +87,31 @@
                             <div class="card-body">
                                 <div class="row text-center">
                                     <div class="col-md-12">
-                                        @if (auth()->user()->can('gudang.bahanbaku.barangmasuk'))
+                                        @if (auth()->user()->can('gudang.barangjadi.cekstok'))
                                             <a class="btn btn-app"
-                                                href="{{ route('barangkeluar.index', ['gudang' => 'bahan-baku']) }}">
+                                                href="{{ route('cekstok.index', ['gudang' => 'barang-jadi']) }}">
                                                 <i class="fa fa-search"></i> Cek Stok
                                             </a>
                                         @endif
 
-                                        @if (auth()->user()->can('gudang.bahanbaku.barangmasuk'))
+                                        @if (auth()->user()->can('gudang.barangjadi.barangkeluar'))
                                             <a class="btn btn-app"
-                                                href="{{ route('barangkeluar.index', ['gudang' => 'bahan-baku']) }}">
+                                                href="{{ route('barangkeluar.index', ['gudang' => 'barang-jadi']) }}">
+                                                <i class="fa fa-upload"></i> Barang Keluar
+                                            </a>
+                                        @endif
+
+                                        @if (auth()->user()->can('gudang.barangjadi.barangmasuk'))
+                                            <a class="btn btn-app"
+                                                href="{{ route('barangmasuk.index', ['gudang' => 'barang-jadi']) }}">
                                                 <i class="fa fa-download"></i> Barang Masuk
                                             </a>
                                         @endif
 
-                                        @if (auth()->user()->can('gudang.bahanbaku.barangkeluar'))
+                                        @if (auth()->user()->can('gudang.barangjadi.retur'))
                                             <a class="btn btn-app"
-                                                href="{{ route('barangkeluar.index', ['gudang' => 'bahan-baku']) }}">
-                                                <i class="fa fa-upload"></i> Barang Keluar
+                                                href="{{ route('retur.index', ['gudang' => 'barang-jadi']) }}">
+                                                <i class="fa fa-mail-reply"></i> Retur
                                             </a>
                                         @endif
                                     </div>
@@ -122,9 +129,31 @@
                             <div class="card-body">
                                 <div class="row text-center">
                                     <div class="col-md-12">
-                                        @if (auth()->user()->can('order'))
-                                            <a class="btn btn-app" href="{{ route('order.index') }}">
-                                                <i class="fa fa-download"></i> Order
+                                        @if (auth()->user()->can('gudang.barangjadi.cekstok'))
+                                            <a class="btn btn-app"
+                                                href="{{ route('cekstok.index', ['gudang' => 'barang-jadi']) }}">
+                                                <i class="fa fa-search"></i> Cek Stok
+                                            </a>
+                                        @endif
+
+                                        @if (auth()->user()->can('gudang.barangjadi.barangkeluar'))
+                                            <a class="btn btn-app"
+                                                href="{{ route('barangkeluar.index', ['gudang' => 'barang-jadi']) }}">
+                                                <i class="fa fa-upload"></i> Barang Keluar
+                                            </a>
+                                        @endif
+
+                                        @if (auth()->user()->can('gudang.barangjadi.barangmasuk'))
+                                            <a class="btn btn-app"
+                                                href="{{ route('barangmasuk.index', ['gudang' => 'barang-jadi']) }}">
+                                                <i class="fa fa-download"></i> Barang Masuk
+                                            </a>
+                                        @endif
+
+                                        @if (auth()->user()->can('gudang.barangjadi.retur'))
+                                            <a class="btn btn-app"
+                                                href="{{ route('retur.index', ['gudang' => 'barang-jadi']) }}">
+                                                <i class="fa fa-mail-reply"></i> Retur
                                             </a>
                                         @endif
                                     </div>
@@ -142,12 +171,6 @@
                             <div class="card-body">
                                 <div class="row text-center">
                                     <div class="col-md-12">
-                                        @if (auth()->user()->can('order'))
-                                            <a class="btn btn-app" href="{{ route('order.index') }}">
-                                                <i class="fa fa-download"></i> Order
-                                            </a>
-                                        @endif
-
                                         @if (auth()->user()->can('gudang.bahanbaku.barangmasuk'))
                                             <a class="btn btn-app"
                                                 href="{{ route('barangkeluar.index', ['gudang' => 'bahan-baku']) }}">
@@ -158,14 +181,7 @@
                                         @if (auth()->user()->can('gudang.bahanbaku.barangmasuk'))
                                             <a class="btn btn-app"
                                                 href="{{ route('barangkeluar.index', ['gudang' => 'bahan-baku']) }}">
-                                                <i class="fa fa-download"></i> Barang Masuk
-                                            </a>
-                                        @endif
-
-                                        @if (auth()->user()->can('gudang.bahanbaku.barangkeluar'))
-                                            <a class="btn btn-app"
-                                                href="{{ route('barangkeluar.index', ['gudang' => 'bahan-baku']) }}">
-                                                <i class="fa fa-upload"></i> Barang Keluar
+                                                <i class="fa fa-check-square"></i> Penyesuaian Stok
                                             </a>
                                         @endif
                                     </div>

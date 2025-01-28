@@ -13,7 +13,30 @@ return new class extends Migration
     {
         Schema::create('returs', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->nullable();
+            $table->integer('suratjalan_id')->nullable();
+            $table->integer('barangkeluar_id')->nullable();
+            $table->string('referensi')->nullable();
+            $table->string('referensi_id')->nullable();
+            $table->string('no_dokumen')->nullable();
+            $table->string('asal')->nullable();
+            $table->string('gudang')->nullable();
+            $table->date('tanggal')->nullable();
+            $table->string('status')->nullable();
+            $table->text('catatan')->nullable();
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
+            $table->string('approved_by')->nullable();
+            $table->string('sent_by')->nullable();
+            $table->string('received_by')->nullable();
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
+            $table->timestamp('approved_at')->nullable();
+            $table->timestamp('sent_at')->nullable();
+            $table->timestamp('received_at')->nullable();
+            $table->index('suratjalan_id');
+            $table->index('barangkeluar_id');
         });
     }
 

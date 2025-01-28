@@ -11,21 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orderdetails', function (Blueprint $table) {
+        Schema::create('ordercatatans', function (Blueprint $table) {
             $table->id();
             $table->integer('order_id')->nullable();
-            $table->integer('material_id')->nullable();
             $table->string('slug')->nullable();
-            $table->decimal('jumlah', 16, 2)->nullable();
-            $table->string('satuan')->nullable();
-            $table->string('keterangan')->nullable();
+            $table->text('catatan')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
             $table->index('order_id');
-            $table->index('material_id');
         });
     }
 
@@ -34,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orderdetails');
+        Schema::dropIfExists('ordercatatans');
     }
 };

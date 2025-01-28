@@ -17,6 +17,7 @@ use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\PermintaanmaterialController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProduksiController;
+use App\Http\Controllers\ReturController;
 use App\Http\Controllers\SuratjalanController;
 use App\Http\Controllers\VarianController;
 use Illuminate\Support\Facades\Route;
@@ -94,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => ['role_or_permission:superuser|order']], function () {
         Route::resource('order', OrderController::class)->names('order');
 
+        Route::get('order-get-material', [OrderController::class, 'get_material'])->name('order.get_material');
         Route::post('order-progress/{order}', [OrderController::class, 'store_progress'])->name('order.progress');
         Route::delete('order-progress/{order}', [OrderController::class, 'destroy_progress'])->name('order.progress.destroy');
     });
@@ -147,5 +149,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('barangmasuk-get-referensi', [BarangmasukController::class, 'get_referensi'])->name('barangmasuk.get_referensi');
         Route::get('barangmasuk-get-barangkeluar', [BarangmasukController::class, 'get_barangkeluar'])->name('barangmasuk.get_barangkeluar');
         Route::get('barangmasuk-get-barangkeluar-by-id', [BarangmasukController::class, 'ge_barangkeluar_by_id'])->name('barangmasuk.get_barangkeluar_by_id');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superuser|retur']], function () {
+        Route::resource('retur', ReturController::class)->names('retur');
+
+        Route::get('retur/{retur}/cetak', [ReturController::class, 'cetak'])->name('retur.cetak');
+        Route::get('retur-get-material', [ReturController::class, 'get_material'])->name('retur.get_material');
+        Route::get('retur-get-referensi', [ReturController::class, 'get_referensi'])->name('retur.get_referensi');
+        Route::get('retur-get-barangkeluar', [ReturController::class, 'get_barangkeluar'])->name('retur.get_barangkeluar');
+        Route::get('retur-get-dokumen', [ReturController::class, 'get_dokumen'])->name('retur.get_dokumen');
+        Route::get('retur-get-barangkeluar-by-id', [ReturController::class, 'ge_barangkeluar_by_id'])->name('retur.get_barangkeluar_by_id');
     });
 });

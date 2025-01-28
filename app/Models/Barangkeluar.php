@@ -58,4 +58,9 @@ class Barangkeluar extends Model
     {
         return $this->belongsTo(Permintaanmaterial::class)->withDefault(['no_dokumen' => null]);
     }
+
+    public function retur(): HasMany
+    {
+        return $this->hasMany(Retur::class);
+    }
 }

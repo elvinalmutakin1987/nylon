@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Orderdetail extends Model
+class Ordercatatan extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -23,11 +23,8 @@ class Orderdetail extends Model
     protected $fillable = [
         'slug',
         'order_id',
-        'material_id',
         'slug',
-        'jumlah',
-        'satuan',
-        'keterangan',
+        'catatan',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -39,10 +36,5 @@ class Orderdetail extends Model
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class)->withDefault(['no_order' => null]);
-    }
-
-    public function material(): BelongsTo
-    {
-        return $this->belongsTo(Material::class)->withDefault(['nama' => null]);
     }
 }

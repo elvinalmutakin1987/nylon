@@ -25,14 +25,20 @@
                         <!-- Application buttons -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Order</h3>
+                                <h3 class="card-title">WJL</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
                                         @if (auth()->user()->can('order'))
                                             <a class="btn btn-app" href="{{ route('order.index') }}">
-                                                <i class="fa fa-download"></i> Order
+                                                <i class="fa fa-user"></i> Operator
+                                            </a>
+                                        @endif
+
+                                        @if (auth()->user()->can('order'))
+                                            <a class="btn btn-app" href="{{ route('order.index') }}">
+                                                <i class="fa fa-user-circle"></i> Kepala Regu
                                             </a>
                                         @endif
                                     </div>

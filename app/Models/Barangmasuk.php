@@ -22,7 +22,7 @@ class Barangmasuk extends Model
 
     protected $fillable = [
         'slug',
-        'barangmasuk_id',
+        'barangkeluar_id',
         'referensi',
         'referensi_id',
         'no_dokumen',
@@ -54,8 +54,8 @@ class Barangmasuk extends Model
         return $this->belongsTo(Packing::class)->withDefault(['no_dokumen' => null]);
     }
 
-    public function barangmasuk(): BelongsTo
+    public function barangkeluar(): BelongsTo
     {
-        return $this->belongsTo(Barangmasuk::class)->withDefault(['no_dokumen' => null]);
+        return $this->belongsTo(Barangkeluar::class)->withDefault(['no_dokumen' => null]);
     }
 }

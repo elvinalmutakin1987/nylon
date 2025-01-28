@@ -1,13 +1,13 @@
 @php
 
-    use App\Models\Orderdetail;
+    use App\Models\Ordercatatan;
     use App\Models\User;
     use Illuminate\Support\Facades\DB;
 
-    $orderdetail = Orderdetail::where('order_id', $order->id)
+    $ordercatatan = Ordercatatan::where('order_id', $order->id)
         ->orderBy('created_at', 'desc')
         ->get();
-    $catatandate = Orderdetail::select(DB::raw('date(created_at) as created_at'))
+    $catatandate = Ordercatatan::select(DB::raw('date(created_at) as created_at'))
         ->where('order_id', $order->id)
         ->groupBy('created_at')
         ->get();
@@ -16,7 +16,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="timeline">
-            @foreach ($orderdetail as $d)
+            @foreach ($ordercatatan as $d)
                 @php
                     $user = User::find($d->created_by);
                 @endphp

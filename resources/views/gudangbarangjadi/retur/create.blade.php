@@ -1,7 +1,3 @@
-@php
-    use Illuminate\Support\Number;
-@endphp
-
 @extends('partials.main')
 
 @section('content')
@@ -17,8 +13,8 @@
                             <li class="breadcrumb-item"><a href="{{ route('gudang.index') }}" class="text-dark">Gudang</a>
                             </li>
                             <li class="breadcrumb-item">Barang Jadi</li>
-                            <li class="breadcrumb-item">Barang Keluar</li>
-                            <li class="breadcrumb-item" Active>Edit Data</li>
+                            <li class="breadcrumb-item">Retur</li>
+                            <li class="breadcrumb-item" Active>Tambah Data</li>
                         </ol>
                     </div>
                 </div>
@@ -30,39 +26,50 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Application buttons -->
-                        <form action="{{ route('barangkeluar.update', $barangkeluar->slug) }}" enctype="multipart/form-data"
-                            method="POST">
+                        <form action="{{ route('retur.store') }}" enctype="multipart/form-data" method="POST">
                             @csrf
-                            @method('put')
+                            @method('post')
                             <input type="hidden" id="gudang" name="gudang" value="{{ $gudang }}">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Edit Barang Keluar</h3>
+                                    <h3 class="card-title">Tambah Retur</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="no_order">No. Permintaan Material</label>
+                                                <label for="dokumen">Dokumen</label>
                                                 <select
-                                                    class="form-control select2 w-100 select-permintaanmaterial @error('permintaanmaterial_id') is-invalid @enderror"
-                                                    id="permintaanmaterial_id" name="permintaanmaterial_id">
-                                                    <option value="{{ $barangkeluar->permintaanmaterial_id }}">
-                                                        {{ $barangkeluar->permintaanmaterial->no_dokumen ?? '' }}</option>
+                                                    class="form-control select2 w-100 select-dokumen @error('dokumen') is-invalid @enderror"
+                                                    id="dokumen" name="dokumen">
+                                                    <option value=""></option>
                                                 </select>
-                                                @error('permintaanmaterial_id')
-                                                    <span id="permintaanmaterial_id-error"
+                                                @error('dokumen')
+                                                    <span id="dokumen-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="dokumen_id">No. Dokumen</label>
+                                                <select
+                                                    class="form-control select2 w-100 select-get-dokumen @error('dokumen_id') is-invalid @enderror"
+                                                    id="dokumen_id" name="dokumen_id">
+                                                </select>
+                                                @error('dokumen_id')
+                                                    <span id="dokumen_id-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="tanggal">Tanggal</label>
                                                 <div class="input-group date" id="div_tanggal" data-target-input="nearest">
                                                     <input type="text" class="form-control datetimepicker-input"
                                                         data-target="#div_tanggal" id="tanggal" name="tanggal"
-                                                        value="{{ old('tanggal') ?? $barangkeluar->tanggal }}" />
+                                                        value="{{ old('tanggal') ?? date('Y-m-d') }}" />
                                                     <div class="input-group-append" data-target="#div_tanggal"
                                                         data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-calendar"></i>
@@ -90,51 +97,36 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($barangkeluar->barangkeluardetail as $d)
-                                                            <tr>
-                                                                <td>
-                                                                    <select class="form-control select2 w-100 select-barang"
-                                                                        id="material_id{{ $d->id }}"
-                                                                        name="material_id[]">
-                                                                        <option value="{{ $d->material_id }}">
-                                                                            {{ $d->material->nama }}</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td>
-                                                                    <select class="form-control select2 w-100 select-satuan"
-                                                                        id="satuan{{ $d->id }}" name="satuan[]">
-                                                                        <option value="ZAK"
-                                                                            {{ $d->satuan == 'ZAK' ? 'selected' : '' }}>
-                                                                            ZAK</option>
-                                                                        <option value="KG"
-                                                                            {{ $d->satuan == 'KG' ? 'selected' : '' }}>
-                                                                            KG</option>
-                                                                        <option value="BOBIN"
-                                                                            {{ $d->satuan == 'BOBIN' ? 'selected' : '' }}>
-                                                                            BOBIN</option>
-                                                                        <option value="PCS"
-                                                                            {{ $d->satuan == 'PCS' ? 'selected' : '' }}>
-                                                                            PCS</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        id="jumlah{{ $d->id }}" name="jumlah[]"
-                                                                        onblur="ubah_format('jumlah{{ $d->id }}', this.value)"
-                                                                        value="{{ Number::format((float) $d->jumlah, precision: 1) }}">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control"
-                                                                        id="keterangan1" name="keterangan[]"
-                                                                        value={{ $d->keterangan }}>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <button type="button" class="btn btn-danger"
-                                                                        id="hapus"><i class="fa fa-trash"></i>
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
+                                                        <tr>
+                                                            <td>
+                                                                <select class="form-control select2 w-100 select-barang"
+                                                                    id="material_id1" name="material_id[]">
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-control select2 w-100 select-satuan"
+                                                                    id="satuan1" name="satuan[]">
+                                                                    <option value="ZAK">ZAK</option>
+                                                                    <option value="KG">KG</option>
+                                                                    <option value="BOBIN">BOBIN</option>
+                                                                    <option value="PCS">PCS</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" id="jumlah1"
+                                                                    name="jumlah[]"
+                                                                    onblur="ubah_format('jumlah1', this.value)">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" id="keterangan1"
+                                                                    name="keterangan[]">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button type="button" class="btn btn-danger"
+                                                                    id="hapus"><i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
                                                         <tr>
                                                             <td class="text-right text-bold" colspan="4"></td>
                                                             <td>
@@ -152,7 +144,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="catatan">Catatan</label>
-                                                <textarea id="catatan" name="catatan" class="form-control @error('catatan') is-invalid @enderror" rows="3">{{ $barangkeluar->catatan }}</textarea>
+                                                <textarea id="catatan" name="catatan" class="form-control @error('catatan') is-invalid @enderror" rows="3"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -160,19 +152,17 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <a type="button" class="btn btn-default"
-                                        href="{{ route('barangkeluar.index', ['gudang' => $gudang]) }}"><i
+                                        href="{{ route('retur.index', ['gudang' => $gudang]) }}"><i
                                             class="fa fa-reply"></i>
                                         Kembali</a>
                                     <button type="button" class="btn btn-success" data-toggle="dropdown"><i
                                             class="fa fa-save"></i>
                                         Simpan</button>
                                     <div class="dropdown-menu" role="menu">
-                                        @if ($pengaturan->nilai == 'Ya')
-                                            <button type="submit" class="dropdown-item" name="status"
-                                                value="Draft"><i class="fa fa-file"></i> Sebagai Draft</button>
-                                        @endif
+                                        <button type="submit" class="dropdown-item" name="status" value="Draft"><i
+                                                class="fa fa-file"></i> Sebagai Draft</button>
                                         <button type="submit" class="dropdown-item" name="status" value="Submit"><i
-                                                class="fa fa-save"></i> Simpan Barang Keluar</button>
+                                                class="fa fa-save"></i> Simpan Retur</button>
                                     </div>
                                 </div>
                             </div>
@@ -192,6 +182,18 @@
 
 @section('script')
     <script type="text/javascript">
+        var dokumen;
+
+        var data2 = [{
+                id: 'barangkeluar',
+                text: 'Barang Keluar'
+            },
+            {
+                id: 'suratjalan',
+                text: 'Surat Jalan'
+            }
+        ];
+
         $(document).ready(function() {
             $('#div_tanggal').datetimepicker({
                 format: 'YYYY-MM-DD'
@@ -201,16 +203,26 @@
         });
 
         function format_select2() {
-            $('.select-permintaanmaterial').select2({
-                placeholder: "- Pilih Permintaan Material -",
+            $(".select-dokumen").select2({
+                placeholder: "-- Pilih Dokumen --",
+                allowClear: true,
+                data: data2,
+                minimumResultsForSearch: -1,
+                width: '100%'
+            });
+
+            $('.select-get-dokumen').select2({
+                placeholder: "- Pilih Barang Keluar -",
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('barangkeluar.get_permintaanmaterial') }}',
+                    url: '{{ route('retur.get_dokumen') }}',
                     dataType: 'json',
                     data: function(params) {
                         return {
                             term: params.term || '',
                             page: params.page || 1,
+                            dokumen: dokumen,
+                            gudang: '{{ $gudang }}'
                         };
                     },
                     cache: true,
@@ -225,7 +237,7 @@
                 placeholder: "- Pilih Barang -",
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('barangkeluar.get_material') }}',
+                    url: '{{ route('retur.get_material') }}',
                     dataType: 'json',
                     data: function(params) {
                         return {
@@ -286,5 +298,27 @@
         $("#table1").on("click", "#hapus", function() {
             $(this).closest("tr").remove();
         });
+
+        $(".select-dokumen").on('change', function(e) {
+            $('.select-get-dokumen').val('').trigger('change');
+            dokumen = $(".select-dokumen").val();
+            $('.select-get-dokumen').select2({
+                placeholder: "- Pilih No. Dokumen -",
+                allowClear: true,
+                ajax: {
+                    url: '{{ route('retur.get_dokumen') }}',
+                    dataType: 'json',
+                    data: function(params) {
+                        return {
+                            term: params.term || '',
+                            page: params.page || 1,
+                            dokumen: dokumen,
+                            gudang: '{{ $gudang }}'
+                        };
+                    },
+                    cache: true,
+                }
+            });
+        })
     </script>
 @endsection

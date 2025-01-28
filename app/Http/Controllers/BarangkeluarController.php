@@ -72,12 +72,24 @@ class BarangkeluarController extends Controller
                 })
                 ->make();
         }
-        if (request()->gudang == 'bahan-baku') {
+        if (request()->gudang == 'bahan-baku' || request()->gudang == 'bahan-penolong') {
             return view('gudangbahanbaku.barangkeluar.index');
         } elseif (request()->gudang == 'benang') {
             return view('gudangbenang.barangkeluar.index');
         } elseif (request()->gudang == 'barang-jadi') {
             return view('gudangbarangjadi.barangkeluar.index');
+        } elseif (request()->gudang == 'extruder') {
+            return view('gudangextruder.barangkeluar.index');
+        } elseif (request()->gudang == 'wjl') {
+            return view('gudangwjl.barangkeluar.index');
+        } elseif (request()->gudang == 'sulzer') {
+            return view('gudangsulzer.barangkeluar.index');
+        } elseif (request()->gudang == 'rashel') {
+            return view('gudangrashel.barangkeluar.index');
+        } elseif (request()->gudang == 'beaming') {
+            return view('gudangbeaming.barangkeluar.index');
+        } elseif (request()->gudang == 'packing') {
+            return view('gudangpacking.barangkeluar.index');
         }
     }
 
@@ -87,7 +99,7 @@ class BarangkeluarController extends Controller
     public function create()
     {
         $gudang = request()->gudang;
-        if ($gudang == 'bahan-baku') {
+        if ($gudang == 'bahan-baku' || $gudang == 'bahan-penolong') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.bahan-baku.barangkeluar.butuh.approval')->first();
             return view('gudangbahanbaku.barangkeluar.create', compact('pengaturan', 'gudang'));
         } elseif ($gudang == 'benang') {
@@ -96,6 +108,24 @@ class BarangkeluarController extends Controller
         } elseif ($gudang == 'barang-jadi') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.barang-jadi.barangkeluar.butuh.approval')->first();
             return view('gudangbarangjadi.barangkeluar.create', compact('pengaturan', 'gudang'));
+        } elseif ($gudang == 'extruder') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.extruder.barangkeluar.butuh.approval')->first();
+            return view('gudangextruder.barangkeluar.create', compact('pengaturan', 'gudang'));
+        } elseif ($gudang == 'wjl') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.wjl.barangkeluar.butuh.approval')->first();
+            return view('gudangwjl.barangkeluar.create', compact('pengaturan', 'gudang'));
+        } elseif ($gudang == 'sulzer') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.sulzer.barangkeluar.butuh.approval')->first();
+            return view('gudangsulzer.barangkeluar.create', compact('pengaturan', 'gudang'));
+        } elseif ($gudang == 'rashel') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.rashel.barangkeluar.butuh.approval')->first();
+            return view('gudangrashel.barangkeluar.create', compact('pengaturan', 'gudang'));
+        } elseif ($gudang == 'beaming') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.beaming.barangkeluar.butuh.approval')->first();
+            return view('gudangbeaming.barangkeluar.create', compact('pengaturan', 'gudang'));
+        } elseif ($gudang == 'packing') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.packing.barangkeluar.butuh.approval')->first();
+            return view('gudangpacking.barangkeluar.create', compact('pengaturan', 'gudang'));
         }
     }
 
@@ -151,7 +181,25 @@ class BarangkeluarController extends Controller
      */
     public function show(Barangkeluar $barangkeluar)
     {
-        return view('gudangbarangjadi.barangkeluar.show', compact('barangkeluar'));
+        if ($barangkeluar->gudang == 'bahan-baku' || $barangkeluar->gudang == 'bahan-penolong') {
+            return view('gudangbahanbaku.barangkeluar.show', compact('barangkeluar'));
+        } elseif ($barangkeluar->gudang == 'benang') {
+            return view('gudangbenang.barangkeluar.show', compact('barangkeluar'));
+        } elseif ($barangkeluar->gudang == 'barang-jadi') {
+            return view('gudangbarangjadi.barangkeluar.show', compact('barangkeluar'));
+        } elseif ($barangkeluar->gudang == 'extruder') {
+            return view('gudangextruder.barangkeluar.show', compact('barangkeluar'));
+        } elseif ($barangkeluar->gudang == 'wjl') {
+            return view('gudangwjl.barangkeluar.show', compact('barangkeluar'));
+        } elseif ($barangkeluar->gudang == 'sulzer') {
+            return view('gudangsulzer.barangkeluar.show', compact('barangkeluar'));
+        } elseif ($barangkeluar->gudang == 'rashel') {
+            return view('gudangrashel.barangkeluar.show', compact('barangkeluar'));
+        } elseif ($barangkeluar->gudang == 'beaming') {
+            return view('gudangbeaming.barangkeluar.show', compact('barangkeluar'));
+        } elseif ($barangkeluar->gudang == 'packing') {
+            return view('gudangpacking.barangkeluar.show', compact('barangkeluar'));
+        }
     }
 
     /**
@@ -167,7 +215,25 @@ class BarangkeluarController extends Controller
             ]);
         }
         $gudang = $barangkeluar->gudang;
-        return view('gudangbarangjadi.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang'));
+        if ($gudang == 'bahan-baku' || $gudang == 'bahan-penolong') {
+            return view('gudangbahanbaku.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'benang') {
+            return view('gudangbenang.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'barang-jadi') {
+            return view('gudangbarangjadi.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'extruder') {
+            return view('gudangextruder.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'wjl') {
+            return view('gudangwjl.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'sulzer') {
+            return view('gudangsulzer.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'rashel') {
+            return view('gudangrashel.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'beaming') {
+            return view('gudangbeaming.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'packing') {
+            return view('gudangpacking.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang'));
+        }
     }
 
     /**

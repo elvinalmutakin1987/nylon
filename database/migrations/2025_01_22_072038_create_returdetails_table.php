@@ -13,7 +13,19 @@ return new class extends Migration
     {
         Schema::create('returdetails', function (Blueprint $table) {
             $table->id();
+            $table->integer('retur_id')->nullable();
+            $table->integer('material_id')->nullable();
+            $table->string('slug')->nullable();
+            $table->decimal('jumlah', 16, 2)->nullable();
+            $table->string('satuan')->nullable();
+            $table->string('keterangan')->nullable();
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
+            $table->index('retur_id');
+            $table->index('material_id');
         });
     }
 

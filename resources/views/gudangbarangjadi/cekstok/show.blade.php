@@ -13,8 +13,8 @@
                             <li class="breadcrumb-item"><a href="{{ route('gudang.index') }}" class="text-dark">Gudang</a>
                             </li>
                             <li class="breadcrumb-item">Barang Jadi</li>
-                            <li class="breadcrumb-item">Barang Masuk</li>
-                            <li class="breadcrumb-item" Active>Detail Data</li>
+                            <li class="breadcrumb-item">Cek Stok</li>
+                            <li class="breadcrumb-item" Active>Kartu Stok</li>
                         </ol>
                     </div>
                 </div>
@@ -28,74 +28,68 @@
                         <!-- Application buttons -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Detail Barang Masuk</h3>
+                                <h3 class="card-title">Kartu Stok</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="no_dokumen">No. Barang Masuk</label>
-                                            <p>{{ $barangmasuk->no_dokumen }}</p>
+                                            <select class="form-control select2 w-100 select-nama-toko" id="nama_toko"
+                                                name="nama_toko">
+                                                <option></option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="no_permintaan_material">Gudang Asal</label>
-                                            <p>{{ $barangmasuk->asal }}</p>
+                                            <select class="form-control select2 w-100 select-status" id="satuan"
+                                                name="satuan">
+                                                <option></option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="no_permintaan_material">No. Barang Keluar</label>
-                                            <p>{{ $barangmasuk->permintaanmaterial->no_dokumen ?? '-' }}</p>
+                                            <div class="input-group date" id="div_tanggal_dari" data-target-input="nearest">
+                                                <input type="text" class="form-control datetimepicker-input"
+                                                    data-target="#div_tanggal_dari" id="tanggal_dari" name="tanggal_dari"
+                                                    value="{{ \Carbon\Carbon::now()->startOfMonth()->toDateString() }}" />
+                                                <div class="input-group-append" data-target="#div_tanggal_dari"
+                                                    data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="tanggal">Tanggal</label>
-                                            <p>{{ $barangmasuk->tanggal ?? '-' }}</p>
+                                            <div class="input-group date" id="div_tanggal_sampai"
+                                                data-target-input="nearest">
+                                                <input type="text" class="form-control datetimepicker-input"
+                                                    data-target="#div_tanggal_sampai" id="tanggal_sampai"
+                                                    name="tanggal_sampai"
+                                                    value="{{ \Carbon\Carbon::now()->endOfMonth()->toDateString() }}" />
+                                                <div class="input-group-append" data-target="#div_tanggal_sampai"
+                                                    data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-group">
-                                            <table id="table1" class="table border table-sm table-striped projects">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 40%">Barang</th>
-                                                        <th style="width: 10%">Satuan</th>
-                                                        <th style="width: 15%">Jumlah</th>
-                                                        <th>Keterangan</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($barangmasuk->barangmasukdetail as $d)
-                                                        <tr>
-                                                            <td>{{ $d->material->nama }}</td>
-                                                            <td>{{ $d->satuan }}</td>
-                                                            <td>{{ Number::format((float) $d->jumlah, precision: 1) }}</td>
-                                                            <td>{{ $d->keterangan }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="sopir">Catatan</label>
-                                            <p>{{ $barangmasuk->catatan }}</p>
+                                        <div class="form-group" id="div-detail">
+                                            @include('gudangbarangjadi.cekstok.detail')
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <a type="button" class="btn btn-default"
-                                    href="{{ route('barangmasuk.index', ['gudang' => $barangmasuk->gudang]) }}"><i
+                                <a type="button" class="btn btn-default" href="{{ route('cekstok.index') }}"><i
                                         class="fa fa-reply"></i>
                                     Kembali</a>
                             </div>
@@ -116,9 +110,14 @@
 @section('script')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#div_tanggal').datetimepicker({
+            $('#div_tanggal_dari').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
+
+            $('#div_tanggal_sampai').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+
         });
     </script>
 @endsection

@@ -73,6 +73,7 @@
                                                 <option value="Bahan Penolong">Bahan Penolong</option>
                                                 <option value="Work In Progress">Work In Progress</option>
                                                 <option value="Barang Jadi">Barang Jadi</option>
+                                                <option value="Avalan">Avalan</option>
                                             </select>
                                             @error('jenis')
                                                 <span id="jenis-error" class="error invalid-feedback">{{ $message }}</span>
