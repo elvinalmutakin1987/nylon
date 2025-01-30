@@ -12,8 +12,8 @@
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-dark">Home</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('gudang.index') }}" class="text-dark">Gudang</a>
                             </li>
+                            <li class="breadcrumb-item">Barang Jadi</li>
                             <li class="breadcrumb-item">Bahan Baku</li>
-                            <li class="breadcrumb-item">Barang Keluar</li>
                             <li class="breadcrumb-item" Active>Tambah Data</li>
                         </ol>
                     </div>
@@ -26,30 +26,44 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Application buttons -->
-                        <form action="{{ route('barangkeluar.store') }}" enctype="multipart/form-data" method="POST">
+                        <form action="{{ route('barangmasuk.store') }}" enctype="multipart/form-data" method="POST">
                             @csrf
                             @method('post')
                             <input type="hidden" id="gudang" name="gudang" value="{{ $gudang }}">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Tambah Barang Keluar</h3>
+                                    <h3 class="card-title">Tambah Barang Masuk</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="no_order">No. Permintaan Material</label>
+                                                <label for="asal">Gudang Asal</label>
                                                 <select
-                                                    class="form-control select2 w-100 select-permintaanmaterial @error('permintaanmaterial_id') is-invalid @enderror"
-                                                    id="permintaanmaterial_id" name="permintaanmaterial_id">
+                                                    class="form-control select2 w-100 select-asal @error('asal') is-invalid @enderror"
+                                                    id="asal" name="asal">
+                                                    <option value=""></option>
                                                 </select>
-                                                @error('permintaanmaterial_id')
-                                                    <span id="permintaanmaterial_id-error"
+                                                @error('asal')
+                                                    <span id="asal-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="barangkeluar_id">No. Barang Keluar</label>
+                                                <select
+                                                    class="form-control select2 w-100 select-barang-keluar @error('barangkeluar_id') is-invalid @enderror"
+                                                    id="barangkeluar_id" name="barangkeluar_id">
+                                                </select>
+                                                @error('barangkeluar_id')
+                                                    <span id="barangkeluar_id-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="tanggal">Tanggal</label>
                                                 <div class="input-group date" id="div_tanggal" data-target-input="nearest">
@@ -94,8 +108,6 @@
                                                                     id="satuan1" name="satuan[]">
                                                                     <option value="ZAK">ZAK</option>
                                                                     <option value="KG">KG</option>
-                                                                    <option value="BOBIN">BOBIN</option>
-                                                                    <option value="PCS">PCS</option>
                                                                 </select>
                                                             </td>
                                                             <td>
@@ -138,7 +150,7 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <a type="button" class="btn btn-default"
-                                        href="{{ route('barangkeluar.index', ['gudang' => $gudang]) }}"><i
+                                        href="{{ route('barangmasuk.index', ['gudang' => $gudang]) }}"><i
                                             class="fa fa-reply"></i>
                                         Kembali</a>
                                     <button type="button" class="btn btn-success" data-toggle="dropdown"><i
@@ -148,7 +160,7 @@
                                         <button type="submit" class="dropdown-item" name="status" value="Draft"><i
                                                 class="fa fa-file"></i> Sebagai Draft</button>
                                         <button type="submit" class="dropdown-item" name="status" value="Submit"><i
-                                                class="fa fa-save"></i> Simpan Barang Keluar</button>
+                                                class="fa fa-save"></i> Simpan Barang Masuk</button>
                                     </div>
                                 </div>
                             </div>
@@ -168,6 +180,45 @@
 
 @section('script')
     <script type="text/javascript">
+        var gudang;
+
+        var data2 = [{
+                id: 'barang-jadi',
+                text: 'Barang Jadi'
+            },
+            {
+                id: 'bahan-baku',
+                text: 'Bahan Baku'
+            },
+            {
+                id: 'benang',
+                text: 'Benang'
+            },
+            {
+                id: 'extruder',
+                text: 'Extruder'
+            },
+            {
+                id: 'wjl',
+                text: 'WJL'
+            },
+            {
+                id: 'sulzer',
+                text: 'Sulzer'
+            },
+            {
+                id: 'rashel',
+                text: 'Rashel'
+            },
+            {
+                id: 'beaming',
+                text: 'Beaming'
+            }, {
+                id: 'packing',
+                text: 'Packing'
+            }
+        ];
+
         $(document).ready(function() {
             $('#div_tanggal').datetimepicker({
                 format: 'YYYY-MM-DD'
@@ -177,16 +228,25 @@
         });
 
         function format_select2() {
-            $('.select-permintaanmaterial').select2({
-                placeholder: "- Pilih Permintaan Material -",
+            $(".select-asal").select2({
+                placeholder: "-- Pilih Asal --",
+                allowClear: true,
+                data: data2,
+                minimumResultsForSearch: -1,
+                width: '100%'
+            });
+
+            $('.select-barang-keluar').select2({
+                placeholder: "- Pilih Barang Keluar -",
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('barangkeluar.get_permintaanmaterial') }}',
+                    url: '{{ route('barangmasuk.get_barangkeluar') }}',
                     dataType: 'json',
                     data: function(params) {
                         return {
                             term: params.term || '',
                             page: params.page || 1,
+                            gudang: gudang
                         };
                     },
                     cache: true,
@@ -201,7 +261,7 @@
                 placeholder: "- Pilih Barang -",
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('barangkeluar.get_material') }}',
+                    url: '{{ route('barangmasuk.get_material') }}',
                     dataType: 'json',
                     data: function(params) {
                         return {
@@ -263,5 +323,26 @@
         $("#table1").on("click", "#hapus", function() {
             $(this).closest("tr").remove();
         });
+
+        $(".select-asal").on('change', function(e) {
+            $('.select-barang-keluar').val('').trigger('change');
+            gudang = $(".select-asal").val();
+            $('.select-barang-keluar').select2({
+                placeholder: "- Pilih Barang Keluar -",
+                allowClear: true,
+                ajax: {
+                    url: '{{ route('barangmasuk.get_barangkeluar') }}',
+                    dataType: 'json',
+                    data: function(params) {
+                        return {
+                            term: params.term || '',
+                            page: params.page || 1,
+                            gudang: gudang
+                        };
+                    },
+                    cache: true,
+                }
+            });
+        })
     </script>
 @endsection

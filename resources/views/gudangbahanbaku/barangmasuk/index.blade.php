@@ -13,7 +13,7 @@
                             <li class="breadcrumb-item"><a href="{{ route('gudang.index') }}" class="text-dark">Gudang</a>
                             </li>
                             <li class="breadcrumb-item">Bahan Baku</li>
-                            <li class="breadcrumb-item" Active>Barang Keluar</li>
+                            <li class="breadcrumb-item" Active>Barang Masuk</li>
                         </ol>
                     </div>
                 </div>
@@ -28,13 +28,13 @@
                         <!-- Application buttons -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Barang Keluar</h3>
+                                <h3 class="card-title">Barang Masuk</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row mb-4">
                                     <div class="col-md-12">
                                         <a type="button" class="btn btn-success m-1"
-                                            href="{{ route('barangkeluar.create', ['gudang' => 'bahan-baku']) }}"><i
+                                            href="{{ route('barangmasuk.create', ['gudang' => 'bahan-baku']) }}"><i
                                                 class="fa fa-plus"></i> Tambah
                                             Data</a>
                                         <a type="button" class="btn btn-secondary m-1"
@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                                 <div class="row mb-4">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <div class="input-group date" id="div_tanggal_dari" data-target-input="nearest">
                                                 <input type="text" class="form-control datetimepicker-input"
@@ -56,7 +56,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <div class="input-group date" id="div_tanggal_sampai"
                                                 data-target-input="nearest">
@@ -72,7 +72,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
+                                        <select class="form-control select2 w-100 select-asal" id="asal"
+                                            name="asal">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
                                         <select class="form-control select2 w-100 select-status" id="status"
                                             name="status">
                                             <option></option>
@@ -87,6 +93,8 @@
                                                     <th></th>
                                                     <th>No. Dokumen</th>
                                                     <th>Tanggal</th>
+                                                    <th>Asal</th>
+                                                    <th>No. Barang Keluar</th>
                                                     <th>Catatan</th>
                                                     <th>Status</th>
                                                     <th></th>
@@ -136,13 +144,56 @@
                 text: 'Approved'
             },
             {
-                id: 'Reject',
-                text: 'Reject'
+                id: 'Rejected',
+                text: 'Rejected'
+            }
+        ];
+
+        var data2 = [{
+                id: 'barang-jadi',
+                text: 'Barang Jadi'
+            },
+            {
+                id: 'bahan-baku',
+                text: 'Bahan Baku'
+            },
+            {
+                id: 'benang',
+                text: 'Benang'
+            },
+            {
+                id: 'extruder',
+                text: 'Extruder'
+            },
+            {
+                id: 'wjl',
+                text: 'WJL'
+            },
+            {
+                id: 'sulzer',
+                text: 'Sulzer'
+            },
+            {
+                id: 'rashel',
+                text: 'Rashel'
+            },
+            {
+                id: 'beaming',
+                text: 'Beaming'
+            },
+            {
+                id: 'packing',
+                text: 'Packing'
+            },
+            {
+                id: '-',
+                text: 'Tidak ada info'
             }
         ];
 
         var ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
-            '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&status=' + $("#status").val();
+                '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&asal=' + $('#asal').val() +
+            '&status=' + $('#status').val();
 
         $(document).ready(function() {
             $('#div_tanggal_dari').datetimepicker({
@@ -160,6 +211,15 @@
                 minimumResultsForSearch: -1,
                 width: '100%'
             });
+
+            $(".select-asal").select2({
+                placeholder: "-- Pilih Asal --",
+                allowClear: true,
+                data: data2,
+                minimumResultsForSearch: -1,
+                width: '100%'
+            });
+
 
             get_data();
         });
@@ -196,6 +256,18 @@
                     {
                         data: 'tanggal',
                         name: 'tanggal',
+                        orderable: true,
+                        searchable: true,
+                    },
+                    {
+                        data: 'asalnya',
+                        name: 'asalnya',
+                        orderable: true,
+                        searchable: true,
+                    },
+                    {
+                        data: 'barangkeluar',
+                        name: 'barangkeluar',
                         orderable: true,
                         searchable: true,
                     },
@@ -250,7 +322,7 @@
                 cancelButtonText: 'Tidak'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let url = `{!! route('barangkeluar.destroy', ':_id') !!}`;
+                    let url = `{!! route('barangmasuk.destroy', ':_id') !!}`;
                     url = url.replace(':_id', id);
                     $("#_method").val('DELETE');
                     $('#form-delete').attr('action', url);
@@ -285,22 +357,33 @@
 
         $("#tanggal_dari").on('blur', function(e) {
             ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
-                    '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&status=' + $("#status")
-                .val();
+                    '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&asal=' + $('#asal')
+                .val() +
+                '&status=' + $('#status').val();
             table1.DataTable().ajax.url(ajax).load();
         });
 
         $("#tanggal_sampai").on('blur', function(e) {
             ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
-                    '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&status=' + $("#status")
-                .val();
+                    '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&asal=' + $('#asal')
+                .val() +
+                '&status=' + $('#status').val();
             table1.DataTable().ajax.url(ajax).load();
         });
 
-        $(".select-status").on('change', function(e) {
+        $("#asal").on('change', function(e) {
             ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
-                    '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&status=' + $("#status")
-                .val();
+                    '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&asal=' + $('#asal')
+                .val() +
+                '&status=' + $('#status').val();
+            table1.DataTable().ajax.url(ajax).load();
+        });
+
+        $("#status").on('change', function(e) {
+            ajax = '{{ url()->current() }}?tanggal_dari=' + $("#tanggal_dari").val() + '&tanggal_sampai=' + $(
+                    '#tanggal_sampai').val() + '&gudang={{ request()->get('gudang') }}' + '&asal=' + $('#asal')
+                .val() +
+                '&status=' + $('#status').val();
             table1.DataTable().ajax.url(ajax).load();
         });
     </script>

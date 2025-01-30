@@ -72,7 +72,9 @@ class BarangkeluarController extends Controller
                 })
                 ->make();
         }
-        if (request()->gudang == 'bahan-baku' || request()->gudang == 'bahan-penolong') {
+        if (request()->gudang == 'bahan-baku') {
+            return view('gudangbahanbaku.barangkeluar.index');
+        } elseif (request()->gudang == 'bahan-penolong') {
             return view('gudangbahanbaku.barangkeluar.index');
         } elseif (request()->gudang == 'benang') {
             return view('gudangbenang.barangkeluar.index');
@@ -136,8 +138,36 @@ class BarangkeluarController extends Controller
     {
         DB::beginTransaction();
         try {
-            $pengaturan = Pengaturan::where('keterangan', 'gudang.barang-jadi.barangkeluar.butuh.approval')->first();
-            $gen_no_dokumen = Controller::gen_no_dokumen('barangjadi.barangkeluar');
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.' . $request->gudang . '.barangkeluar.butuh.approval')->first();
+            if ($request->gudang == 'barang-jadi') {
+                $jenis_gudang = 'barangjadi';
+                $kartustok_gudang = 'Gudang Barang Jadi';
+            } elseif ($request->gudang == 'bahan-baku') {
+                $jenis_gudang = 'bahanbaku';
+                $kartustok_gudang = 'Gudang Bahan Baku';
+            } elseif ($request->gudang == 'bahan-penolong') {
+                $jenis_gudang = 'bahanbaku';
+                $kartustok_gudang = 'Gudang Bahan Baku';
+            } elseif ($request->gudang == 'extruder') {
+                $jenis_gudang = 'extruder';
+                $kartustok_gudang = 'Gudang Extruder';
+            } elseif ($request->gudang == 'wjl') {
+                $jenis_gudang = 'wjl';
+                $kartustok_gudang = 'Gudang WJL';
+            } elseif ($request->gudang == 'sulzer') {
+                $jenis_gudang = 'sulzer';
+                $kartustok_gudang = 'Gudang Sulzer';
+            } elseif ($request->gudang == 'rashel') {
+                $jenis_gudang = 'rashel';
+                $kartustok_gudang = 'Gudang Rashel';
+            } elseif ($request->gudang == 'beaming') {
+                $jenis_gudang = 'beaming';
+                $kartustok_gudang = 'Gudang Beaming';
+            } elseif ($request->gudang == 'packing') {
+                $jenis_gudang = 'packing';
+                $kartustok_gudang = 'Gudang Packing';
+            }
+            $gen_no_dokumen = Controller::gen_no_dokumen($jenis_gudang . '.barangkeluar');
             $barangkeluar = new Barangkeluar();
             $barangkeluar->slug = Controller::gen_slug();
             $barangkeluar->permintaanmaterial_id = $request->permintaanmaterial_id;
@@ -162,7 +192,7 @@ class BarangkeluarController extends Controller
             $barangkeluar->barangkeluardetail()->createMany($detail);
             if ($barangkeluar->status == 'Approved') {
                 foreach ($barangkeluar->barangkeluardetail as $d) {
-                    Controller::update_stok("Keluar", "Gudang Barang Jadi", "Barang Keluar", $barangkeluar->id, $d->material_id, $d->jumlah, $d->satuan);
+                    Controller::update_stok("Keluar", $kartustok_gudang, "Barang Keluar", $barangkeluar->id, $d->material_id, $d->jumlah, $d->satuan);
                 }
             }
             DB::commit();
@@ -181,7 +211,9 @@ class BarangkeluarController extends Controller
      */
     public function show(Barangkeluar $barangkeluar)
     {
-        if ($barangkeluar->gudang == 'bahan-baku' || $barangkeluar->gudang == 'bahan-penolong') {
+        if ($barangkeluar->gudang == 'bahan-baku') {
+            return view('gudangbahanbaku.barangkeluar.show', compact('barangkeluar'));
+        } elseif ($barangkeluar->gudang == 'bahan-penolong') {
             return view('gudangbahanbaku.barangkeluar.show', compact('barangkeluar'));
         } elseif ($barangkeluar->gudang == 'benang') {
             return view('gudangbenang.barangkeluar.show', compact('barangkeluar'));
@@ -215,7 +247,9 @@ class BarangkeluarController extends Controller
             ]);
         }
         $gudang = $barangkeluar->gudang;
-        if ($gudang == 'bahan-baku' || $gudang == 'bahan-penolong') {
+        if ($gudang == 'bahan-baku') {
+            return view('gudangbahanbaku.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'bahan-penolong') {
             return view('gudangbahanbaku.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang'));
         } elseif ($gudang == 'benang') {
             return view('gudangbenang.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang'));
@@ -243,7 +277,35 @@ class BarangkeluarController extends Controller
     {
         DB::beginTransaction();
         try {
-            $pengaturan = Pengaturan::where('keterangan', 'gudang.barang-jadi.barangkeluar.butuh.approval')->first();
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.' . $request->gudang . '.barangkeluar.butuh.approval')->first();
+            if ($request->gudang == 'barang-jadi') {
+                $jenis_gudang = 'barangjadi';
+                $kartustok_gudang = 'Gudang Barang Jadi';
+            } elseif ($request->gudang == 'bahan-baku') {
+                $jenis_gudang = 'bahanbaku';
+                $kartustok_gudang = 'Gudang Bahan Baku';
+            } elseif ($request->gudang == 'bahan-penolong') {
+                $jenis_gudang = 'bahanbaku';
+                $kartustok_gudang = 'Gudang Bahan Baku';
+            } elseif ($request->gudang == 'extruder') {
+                $jenis_gudang = 'extruder';
+                $kartustok_gudang = 'Gudang Extruder';
+            } elseif ($request->gudang == 'wjl') {
+                $jenis_gudang = 'wjl';
+                $kartustok_gudang = 'Gudang WJL';
+            } elseif ($request->gudang == 'sulzer') {
+                $jenis_gudang = 'sulzer';
+                $kartustok_gudang = 'Gudang Sulzer';
+            } elseif ($request->gudang == 'rashel') {
+                $jenis_gudang = 'rashel';
+                $kartustok_gudang = 'Gudang Rashel';
+            } elseif ($request->gudang == 'beaming') {
+                $jenis_gudang = 'beaming';
+                $kartustok_gudang = 'Gudang Beaming';
+            } elseif ($request->gudang == 'packing') {
+                $jenis_gudang = 'packing';
+                $kartustok_gudang = 'Gudang Packing';
+            }
             $barangkeluar->permintaanmaterial_id = $request->permintaanmaterial_id;
             $barangkeluar->tanggal = date('Y-m-d');
             $barangkeluar->status = $pengaturan->nilai == 'Tidak' && $request->status == 'Submit' ? 'Approved' : $request->status;
@@ -265,7 +327,7 @@ class BarangkeluarController extends Controller
             $barangkeluar->barangkeluardetail()->createMany($detail);
             if ($barangkeluar->status == 'Approved') {
                 foreach ($barangkeluar->barangkeluardetail as $d) {
-                    Controller::update_stok("Keluar", "Gudang Barang Jadi", "Barang Keluar", $barangkeluar->id, $d->material_id, $d->jumlah, $d->satuan);
+                    Controller::update_stok("Keluar", $kartustok_gudang, "Barang Keluar", $barangkeluar->id, $d->material_id, $d->jumlah, $d->satuan);
                 }
             }
             DB::commit();
@@ -304,9 +366,31 @@ class BarangkeluarController extends Controller
     {
         if ($request->ajax()) {
             $term = trim($request->term);
+            $jenis = "";
+            if ($request->gudang == 'bahan-baku') {
+                $jenis = 'Bahan Baku';
+            } elseif ($request->gudang == 'bahan-penolong') {
+                $jenis = 'Bahan Penolong';
+            } elseif ($request->gudang == 'benang') {
+                $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'barang-jadi') {
+                $jenis = 'Barang Jadi';
+            } elseif ($request->gudang == 'extruder') {
+                $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'wjl') {
+                $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'sulzer') {
+                $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'rashel') {
+                $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'beaming') {
+                $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'packing') {
+                $jenis = 'Work In Progress';
+            }
             $material = Material::selectRaw("id, nama as text")
                 ->where('nama', 'like', '%' . $term . '%')
-                ->where('jenis', '=', 'Barang Jadi')
+                ->where('jenis', '=', $jenis)
                 ->orderBy('nama')->simplePaginate(10);
             $total_count = count($material);
             $morePages = true;
@@ -387,9 +471,30 @@ class BarangkeluarController extends Controller
 
     public function cetak(Barangkeluar $barangkeluar)
     {
-        $pdf = PDF::loadview('gudangbarangjadi.barangkeluar.cetak', compact(
+        if ($barangkeluar->gudang == 'bahan-baku') {
+            $gudang = 'gudangbahanbaku';
+        } elseif ($barangkeluar->gudang == 'bahan-penolong') {
+            $gudang = 'gudangbahanbaku';
+        } elseif ($barangkeluar->gudang == 'benang') {
+            $gudang = 'gudangbenang';
+        } elseif ($barangkeluar->gudang == 'barang-jadi') {
+            $gudang = 'gudangbarangjadi';
+        } elseif ($barangkeluar->gudang == 'extruder') {
+            $gudang = 'gudangextruder';
+        } elseif ($barangkeluar->gudang == 'wjl') {
+            $gudang = 'gudangwjl';
+        } elseif ($barangkeluar->gudang == 'sulzer') {
+            $gudang = 'gudangsulzer';
+        } elseif ($barangkeluar->gudang == 'rashel') {
+            $gudang = 'gudangrashel';
+        } elseif ($barangkeluar->gudang == 'beaming') {
+            $gudang = 'gudangbeaming';
+        } elseif ($barangkeluar->gudang == 'packing') {
+            $gudang = 'gudangpacking';
+        }
+        $pdf = PDF::loadview($gudang . '.barangkeluar.cetak', compact(
             'barangkeluar'
         ));
-        return $pdf->download('barangkeluar-' .  $barangkeluar->no_dokumen . '.pdf');
+        return $pdf->download('barangkeluar-' . $gudang . '-' . $barangkeluar->no_dokumen . '.pdf');
     }
 }

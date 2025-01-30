@@ -12,8 +12,8 @@
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-dark">Home</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('gudang.index') }}" class="text-dark">Gudang</a>
                             </li>
-                            <li class="breadcrumb-item">Bahan Baku</li>
-                            <li class="breadcrumb-item">Barang Keluar</li>
+                            <li class="breadcrumb-item">Barang Jadi</li>
+                            <li class="breadcrumb-item">Retur</li>
                             <li class="breadcrumb-item" Active>Detail Data</li>
                         </ol>
                     </div>
@@ -28,23 +28,40 @@
                         <!-- Application buttons -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Detail Barang Keluar</h3>
+                                <h3 class="card-title">Detail Retur</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="no_dokumen">No. Barang Keluar</label>
-                                            <p>{{ $barangkeluar->no_dokumen }}</p>
+                                            <label for="no_dokumen">No. Retur</label>
+                                            <p>{{ $retur->no_dokumen }}</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="no_permintaan_material">No. Permintaan Material</label>
-                                            <p>{{ $barangkeluar->permintaanmaterial->no_dokumen ?? '-' }}</p>
+                                            @php
+                                                $dokumen = '';
+                                                $no_dokumen = '';
+                                                if ($retur->referensi == 'suratjalan') {
+                                                    $dokumen = 'Surat Jalan';
+                                                    $no_dokumen = $retur->suratjalan->no_dokumen;
+                                                } elseif ($retur->referensi == 'barangkeluar') {
+                                                    $dokumen = 'Barang Keluar';
+                                                    $no_dokumen = $retur->barangkeluar->no_dokumen;
+                                                }
+                                            @endphp
+                                            <label for="no_permintaan_material">Dokumen</label>
+                                            <p>{{ $dokumen }}</p>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="no_permintaan_material">No. Dokumen</label>
+                                            <p>{{ $no_dokumen }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="tanggal">Tanggal</label>
                                             <p>{{ $barangkeluar->tanggal ?? '-' }}</p>
@@ -64,7 +81,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($barangkeluar->barangkeluardetail as $d)
+                                                    @foreach ($retur->returdetail as $d)
                                                         <tr>
                                                             <td>{{ $d->material->nama }}</td>
                                                             <td>{{ $d->satuan }}</td>
@@ -81,7 +98,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="sopir">Catatan</label>
-                                            <p>{{ $barangkeluar->catatan }}</p>
+                                            <p>{{ $retur->catatan }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -89,7 +106,7 @@
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <a type="button" class="btn btn-default"
-                                    href="{{ route('barangkeluar.index', ['gudang' => $barangkeluar->gudang]) }}"><i
+                                    href="{{ route('retur.index', ['gudang' => $retur->gudang]) }}"><i
                                         class="fa fa-reply"></i>
                                     Kembali</a>
                             </div>

@@ -12,6 +12,8 @@
         "barryvdh/laravel-dompdf": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
         "hnhdigital-os/laravel-number-converter": "^1.6",
+        "intervention/image": "^3.11",
+        "intervention/image-laravel": "^1.4",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",

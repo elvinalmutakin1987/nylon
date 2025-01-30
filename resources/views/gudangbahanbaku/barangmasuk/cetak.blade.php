@@ -136,8 +136,8 @@
                         Jl. Sukodono, Gedangan, Sidoarjo, Jawa Timur
                     </td>
                     <td class="w-30 float-right">
-                        <b class="underline">Barang Keluar </b><br>
-                        No: {{ $barangkeluar->no_dokumen }}
+                        <b class="underline">Barang Masuk </b><br>
+                        No: {{ $barangmasuk->no_dokumen }}
                     </td>
                 </tr>
                 <tr>
@@ -149,17 +149,45 @@
                             <tr>
                                 <td width="150">Tanggal</td>
                                 <td width="10">:</td>
-                                <td>{{ \Carbon\Carbon::parse($barangkeluar->tanggal)->format('d/m/Y') }}</td>
-                            </tr>
-                            <tr>
-                                <td width="150">No. Permintaan Material</td>
-                                <td width="10">:</td>
-                                <td>{{ $barangkeluar->permintaanmaterial->no_dokumen ?? '' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($barangmasuk->tanggal)->format('d/m/Y') }}</td>
                             </tr>
                             <tr>
                                 <td width="150">Gudang</td>
                                 <td width="10">:</td>
                                 <td>Bahan Baku</td>
+                            </tr>
+                            <tr>
+                                <td width="150">Gudang Asal</td>
+                                <td width="10">:</td>
+
+                                @php
+                                    $asal = '';
+                                    if ($barangmasuk->asal == 'barang-jadi') {
+                                        $asal = 'Barang Jadi';
+                                    } elseif ($barangmasuk->asal == 'bahan-baku') {
+                                        $asal = 'Bahan Baku';
+                                    } elseif ($barangmasuk->asal == 'benang') {
+                                        $asal = 'Benang';
+                                    } elseif ($barangmasuk->asal == 'wjl') {
+                                        $asal = 'WJL';
+                                    } elseif ($barangmasuk->asal == 'sulzer') {
+                                        $asal = 'Sulzer';
+                                    } elseif ($barangmasuk->asal == 'rashel') {
+                                        $asal = 'Rashel';
+                                    } elseif ($barangmasuk->asal == 'extruder') {
+                                        $asal = 'Extruder';
+                                    } elseif ($barangmasuk->asal == 'beaming') {
+                                        $asal = 'Beaming';
+                                    } elseif ($barangmasuk->asal == 'packing') {
+                                        $asal = 'Packing';
+                                    }
+                                @endphp
+                                <td>{{ $asal }}</td>
+                            </tr>
+                            <tr>
+                                <td width="150">No. Barang Masuk</td>
+                                <td width="10">:</td>
+                                <td>{{ $barangmasuk->barangkeluar->no_dokumen ?? '' }}</td>
                             </tr>
                         </table>
                     </td>
@@ -179,7 +207,7 @@
                     <td style="width: 15%">Jumlah</td>
                     <td>Keterangan</td>
                 </tr>
-                @foreach ($barangkeluar->barangkeluardetail as $d)
+                @foreach ($barangmasuk->barangmasukdetail as $d)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $d->material->nama }}</td>
@@ -197,7 +225,7 @@
                 <tr>
                     <td class="w-50 font-10">
                         Catatan : <br>
-                        {{ $barangkeluar->catatan }}
+                        {{ $barangmasuk->catatan }}
                     </td>
                     <td class="w-50 font-10">
                         <table class="table-detail">

@@ -41,6 +41,7 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'gudang.bahanbaku.barangkeluar']);
         Permission::create(['name' => 'gudang.bahanbaku.barangmasuk']);
         Permission::create(['name' => 'gudang.bahanbaku.retur']);
+        Permission::create(['name' => 'gudang.bahanbaku.cekstok']);
         Permission::create(['name' => 'gudang.benang.barangkeluar']);
         Permission::create(['name' => 'gudang.benang.barangmasuk']);
         Permission::create(['name' => 'gudang.benang.retur']);
@@ -57,6 +58,8 @@ class UserSeeder extends Seeder
          * Produksi
          */
         Permission::create(['name' => 'produksi']);
+        Permission::create(['name' => 'produksiwjl.operator']);
+        Permission::create(['name' => 'produksiwjl.kepalaregu']);
         Permission::create(['name' => 'permintaanmaterial']);
         Permission::create(['name' => 'pengaturan']);
         Permission::create(['name' => 'approval']);

@@ -25,9 +25,12 @@ class CekstokController extends Controller
         if (request()->ajax()) {
             $jenis = '';
             $gudang = '';
-            if (request()->gudang == 'bahan-baku' || request()->gudang == 'bahan-penolong') {
+            if (request()->gudang == 'bahan-baku') {
                 $jenis = "Bahan Baku";
                 $gudang = "Gudang Bahan Baku";
+            } elseif (request()->gudang == 'bahan-penolong') {
+                $jenis = "Benang";
+                $gudang = "Gudang Benang";
             } elseif (request()->gudang == 'benang') {
                 $jenis = "Benang";
                 $gudang = "Gudang Benang";
@@ -53,9 +56,9 @@ class CekstokController extends Controller
                 $jenis = "Packing";
                 $gudang = "Gudang Packing";
             }
-
             $kartustok = Kartustok::query();
             $kartustok = $kartustok->select('material_id', 'satuan');
+            $kartustok = $kartustok->where('gudang', '=', $gudang);
             $kartustok = $kartustok->groupBy('material_id', 'satuan');
             $kartustok = $kartustok->get();
             return DataTables::of($kartustok)
@@ -74,31 +77,34 @@ class CekstokController extends Controller
                 ->addColumn('action', function ($item) {
                     $material = Material::find($item->material_id);
                     $button = '
-                        <a type="button" class="btn btn-info" href="' . route('cekstok.show', $material->slug) . '?gudang=' . request()->gudang . '&satuan=' . $item->satuan . '")"><i
+                        <a type="button" class="btn btn-info" href="' . route('cekstok.show', $material->slug) . '?gudang=' . request()->gudang . '&satuan=' . $item->satuan . '")" target="_blank"><i
                                 class="fa fa-exchange"></i> Kartu Stok</a>
                         ';
                     return $button;
                 })
                 ->make();
         }
-        if (request()->gudang == 'bahan-baku' || request()->gudang == 'bahan-penolong') {
-            return view('gudangbahanbaku.cekstok.index');
+        $gudang = request()->gudang;
+        if (request()->gudang == 'bahan-baku') {
+            return view('gudangbahanbaku.cekstok.index', compact('gudang'));
+        } elseif (request()->gudang == 'bahan-penolong') {
+            return view('gudangbahanbaku.cekstok.index', compact('gudang'));
         } elseif (request()->gudang == 'benang') {
-            return view('gudangbenang.cekstok.index');
+            return view('gudangbenang.cekstok.index', compact('gudang'));
         } elseif (request()->gudang == 'barang-jadi') {
-            return view('gudangbarangjadi.cekstok.index');
+            return view('gudangbarangjadi.cekstok.index', compact('gudang'));
         } elseif (request()->gudang == 'wjl') {
-            return view('gudangwjl.cekstok.index');
+            return view('gudangwjl.cekstok.index', compact('gudang'));
         } elseif (request()->gudang == 'sulzer') {
-            return view('gudangsulzer.cekstok.index');
+            return view('gudangsulzer.cekstok.index', compact('gudang'));
         } elseif (request()->gudang == 'rashel') {
-            return view('gudangrashel.cekstok.index');
+            return view('gudangrashel.cekstok.index', compact('gudang'));
         } elseif (request()->gudang == 'extruder') {
-            return view('gudangextruder.cekstok.index');
+            return view('gudangextruder.cekstok.index', compact('gudang'));
         } elseif (request()->gudang == 'beaming') {
-            return view('gudangbeaming.cekstok.index');
+            return view('gudangbeaming.cekstok.index', compact('gudang'));
         } elseif (request()->gudang == 'packing') {
-            return view('gudangpacking.cekstok.index');
+            return view('gudangpacking.cekstok.index', compact('gudang'));
         }
     }
 
@@ -125,7 +131,10 @@ class CekstokController extends Controller
     {
         $tanggal_dari = request()->tanggal_dari ?? \Carbon\Carbon::now()->startOfMonth()->format('Y-m-d');
         $tanggal_sampai = request()->tanggal_sampai ?? \Carbon\Carbon::now()->endOfMonth()->format('Y-m-d');
-        if (request()->gudang == 'bahan-baku' || request()->gudang == 'bahan-penolong') {
+        if (request()->gudang == 'bahan-baku') {
+            $jenis = "Bahan Baku";
+            $gudang = "Gudang Bahan Baku";
+        } elseif (request()->gudang == 'bahan-penolong') {
             $jenis = "Bahan Baku";
             $gudang = "Gudang Bahan Baku";
         } elseif (request()->gudang == 'benang') {
@@ -161,24 +170,25 @@ class CekstokController extends Controller
             ->whereDate('created_at', '>=', $tanggal_dari)
             ->whereDate('created_at', '<=', $tanggal_sampai)
             ->get();
+        $gudang = request()->gudang;
         if (request()->gudang == 'bahan-baku' || request()->gudang == 'bahan-penolong') {
-            return view('gudangbahanbaku.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai'));
+            return view('gudangbahanbaku.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'));
         } elseif (request()->gudang == 'benang') {
-            return view('gudangbenang.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai'));
+            return view('gudangbenang.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'));
         } elseif (request()->gudang == 'barang-jadi') {
-            return view('gudangbarangjadi.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai'));
+            return view('gudangbarangjadi.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'));
         } elseif (request()->gudang == 'extruder') {
-            return view('gudangextruder.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai'));
+            return view('gudangextruder.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'));
         } elseif (request()->gudang == 'wjl') {
-            return view('gudangwjl.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai'));
+            return view('gudangwjl.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'));
         } elseif (request()->gudang == 'sulzer') {
-            return view('gudangsulzer.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai'));
+            return view('gudangsulzer.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'));
         } elseif (request()->gudang == 'rashel') {
-            return view('gudangrashel.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai'));
+            return view('gudangrashel.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'));
         } elseif (request()->gudang == 'beaming') {
-            return view('gudangbeaming.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai'));
+            return view('gudangbeaming.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'));
         } elseif (request()->gudang == 'packing') {
-            return view('gudangpacking.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai'));
+            return view('gudangpacking.cekstok.show', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'));
         }
     }
 
@@ -204,5 +214,75 @@ class CekstokController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function detail(Request $request, Material $material)
+    {
+        $view = '';
+        $gudang = $request->gudang;
+        $id = $material->id;
+        $tanggal_dari = $request->tanggal_dari ?? \Carbon\Carbon::now()->startOfMonth()->format('Y-m-d');
+        $tanggal_sampai = $request->tanggal_sampai ?? \Carbon\Carbon::now()->endOfMonth()->format('Y-m-d');
+        if ($request->gudang == 'bahan-baku' || $request->gudang == 'bahan-penolong') {
+            $jenis = "Bahan Baku";
+            $gudang = "Gudang Bahan Baku";
+        } elseif ($request->gudang == 'benang') {
+            $jenis = "Benang";
+            $gudang = "Gudang Benang";
+        } elseif ($request->gudang == 'barang-jadi') {
+            $jenis = "Barang Jadi";
+            $gudang = "Gudang Barang Jadi";
+        } elseif ($request->gudang == 'wjl') {
+            $jenis = "WJL";
+            $gudang = "Gudang WJL";
+        } elseif ($request->gudang == 'sulzer') {
+            $jenis = "Sulzer";
+            $gudang = "Gudang Sulzer";
+        } elseif ($request->gudang == 'rashel') {
+            $jenis = "Rashel";
+            $gudang = "Gudang Rashel";
+        } elseif ($request->gudang == 'extruder') {
+            $jenis = "Extruder";
+            $gudang = "Gudang Extruder";
+        } elseif ($request->gudang == 'beaming') {
+            $jenis = "Beaming";
+            $gudang = "Gudang Beaming";
+        } elseif ($request->gudang == 'packing') {
+            $jenis = "Packing";
+            $gudang = "Gudang Packing";
+        }
+        $satuan = $request->satuan;
+        // $material = Material::where('slug', $material->id)->first();
+        $kartustok = Kartustok::where('material_id', $material->id)
+            ->where('satuan', $satuan)
+            ->where('gudang', $gudang)
+            ->whereDate('created_at', '>=', $tanggal_dari)
+            ->whereDate('created_at', '<=', $tanggal_sampai)
+            ->get();
+        $gudang = $request->gudang;
+        if ($request->gudang == 'bahan-baku' || $request->gudang == 'bahan-penolong') {
+            $view = view('gudangbahanbaku.cekstok.detail', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'))->render();
+        } elseif ($request->gudang == 'benang') {
+            $view = view('gudangbenang.cekstok.detail', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'))->render();
+        } elseif ($request->gudang == 'barang-jadi') {
+            $view = view('gudangbarangjadi.cekstok.detail', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'))->render();
+        } elseif ($request->gudang == 'extruder') {
+            $view = view('gudangextruder.cekstok.detail', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'))->render();
+        } elseif ($request->gudang == 'wjl') {
+            $view = view('gudangwjl.cekstok.detail', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'))->render();
+        } elseif ($request->gudang == 'sulzer') {
+            $view = view('gudangsulzer.cekstok.detail', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'))->render();
+        } elseif ($request->gudang == 'rashel') {
+            $view = view('gudangrashel.cekstok.detail', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'))->render();
+        } elseif ($request->gudang == 'beaming') {
+            $view = view('gudangbeaming.cekstok.detail', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'))->render();
+        } elseif ($request->gudang == 'packing') {
+            $view = view('gudangpacking.cekstok.detail', compact('kartustok', 'material', 'gudang', 'tanggal_dari', 'tanggal_sampai', 'satuan'))->render();
+        }
+        return response()->json([
+            'status' => 'success',
+            'data' => $view,
+            'message' => 'success'
+        ]);
     }
 }

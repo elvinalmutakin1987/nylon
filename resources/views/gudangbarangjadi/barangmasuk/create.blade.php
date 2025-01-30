@@ -12,7 +12,7 @@
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-dark">Home</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('gudang.index') }}" class="text-dark">Gudang</a>
                             </li>
-                            <li class="breadcrumb-item">Barang Jadi</li>
+                            <li class="breadcrumb-item">Bahan Baku</li>
                             <li class="breadcrumb-item">Barang Masuk</li>
                             <li class="breadcrumb-item" Active>Tambah Data</li>
                         </ol>
@@ -266,7 +266,8 @@
                     data: function(params) {
                         return {
                             term: params.term || '',
-                            page: params.page || 1
+                            page: params.page || 1,
+                            gudang: '{{ $gudang }}'
                         };
                     },
                     cache: true,

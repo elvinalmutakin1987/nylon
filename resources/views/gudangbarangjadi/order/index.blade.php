@@ -177,7 +177,7 @@
                                                                     <button type="button" class="btn btn-primary m-1"
                                                                         data-toggle="modal" data-target="#modal-import"
                                                                         onclick="pilih('{{ $d->slug }}', '{{ $d->id }}')"><i
-                                                                            class="fa fa-plus"></i>
+                                                                            class="fa fa-pencil"></i>
                                                                         Catatan</button>
                                                                 </div>
                                                             </div>

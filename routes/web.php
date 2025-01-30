@@ -8,6 +8,7 @@ use App\Http\Controllers\DatamasterController;
 use App\Http\Controllers\GudangbarangjadicekstokController;
 use App\Http\Controllers\GudangbarangjadiorderController;
 use App\Http\Controllers\GudangController;
+use App\Http\Controllers\LapproduksiwjlController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\MaterialController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\PermintaanmaterialController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProduksiController;
+use App\Http\Controllers\ProduksiwjloperatorController;
 use App\Http\Controllers\ReturController;
 use App\Http\Controllers\SuratjalanController;
 use App\Http\Controllers\VarianController;
@@ -128,6 +130,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => ['role_or_permission:superuser|gudangbarangjadi.cekstok']], function () {
         Route::resource('cekstok', CekstokController::class)->names('cekstok');
+        Route::get('cekstok/{material}/detail', [CekstokController::class, 'detail'])->name('cekstok.detail');
     });
 
     Route::group(['middleware' => ['role_or_permission:superuser|suratjalan']], function () {
@@ -160,5 +163,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('retur-get-barangkeluar', [ReturController::class, 'get_barangkeluar'])->name('retur.get_barangkeluar');
         Route::get('retur-get-dokumen', [ReturController::class, 'get_dokumen'])->name('retur.get_dokumen');
         Route::get('retur-get-barangkeluar-by-id', [ReturController::class, 'ge_barangkeluar_by_id'])->name('retur.get_barangkeluar_by_id');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superuser|produksiwjl.operator']], function () {
+        Route::resource('produksiwjl-operator', ProduksiwjloperatorController::class)->names('produksiwjl.operator');
+
+        Route::get('produksi-wjl-get-mesin', [ProduksiwjloperatorController::class, 'get_mesin'])->name('produksiwjl.get_mesin');
     });
 });

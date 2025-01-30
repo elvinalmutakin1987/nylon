@@ -30,8 +30,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        @if (auth()->user()->can('order'))
-                                            <a class="btn btn-app" href="{{ route('order.index') }}">
+                                        @if (auth()->user()->can('produksiwjl.operator'))
+                                            <a class="btn btn-app" href="{{ route('produksiwjl.operator.index') }}">
                                                 <i class="fa fa-user"></i> Operator
                                             </a>
                                         @endif
