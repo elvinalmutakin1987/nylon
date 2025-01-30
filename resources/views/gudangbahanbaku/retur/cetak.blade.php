@@ -151,6 +151,11 @@
                                 <td width="10">:</td>
                                 <td>{{ \Carbon\Carbon::parse($retur->tanggal)->format('d/m/Y') }}</td>
                             </tr>
+                            <tr>
+                                <td width="150">Gudang</td>
+                                <td width="10">:</td>
+                                <td>Bahan Baku</td>
+                            </tr>
                             @php
                                 $dokumen_id = '';
                                 $dokumen = '';

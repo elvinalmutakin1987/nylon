@@ -82,7 +82,9 @@ class ReturController extends Controller
                 })
                 ->make();
         }
-        if (request()->gudang == 'bahan-baku' || request()->gudang == 'bahan-penolong') {
+        if (request()->gudang == 'bahan-baku') {
+            return view('gudangbahanbaku.retur.index');
+        } elseif (request()->gudang == 'bahan-penolong') {
             return view('gudangbahanbaku.retur.index');
         } elseif (request()->gudang == 'benang') {
             return view('gudangbenang.retur.index');
@@ -109,7 +111,10 @@ class ReturController extends Controller
     public function create()
     {
         $gudang = request()->gudang;
-        if ($gudang == 'bahan-baku' || $gudang == 'bahan-penolong') {
+        if ($gudang == 'bahan-baku') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.bahan-baku.retur.butuh.approval')->first();
+            return view('gudangbahanbaku.retur.create', compact('pengaturan', 'gudang'));
+        } elseif ($gudang == 'bahan-penolong') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.bahan-baku.retur.butuh.approval')->first();
             return view('gudangbahanbaku.retur.create', compact('pengaturan', 'gudang'));
         } elseif ($gudang == 'benang') {
@@ -152,8 +157,38 @@ class ReturController extends Controller
         }
         DB::beginTransaction();
         try {
-            $pengaturan = Pengaturan::where('keterangan', 'gudang.barang-jadi.retur.butuh.approval')->first();
-            $gen_no_dokumen = Controller::gen_no_dokumen('barangjadi.retur');
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.' . $request->gudang . '.retur.butuh.approval')->first();
+            $jenis_gudang = '';
+            $kartustok_gudang = '';
+            if ($request->gudang == 'barang-jadi') {
+                $jenis_gudang = 'barangjadi.retur';
+                $kartustok_gudang = 'Gudang Barang Jadi';
+            } elseif ($request->gudang == 'bahan-baku') {
+                $jenis_gudang = 'bahanbaku.retur';
+                $kartustok_gudang = 'Gudang Bahan Baku';
+            } elseif ($request->gudang == 'bahan-penolong') {
+                $jenis_gudang = 'bahanbaku.retur';
+                $kartustok_gudang = 'Gudang Bahan Baku';
+            } elseif ($request->gudang == 'extruder') {
+                $jenis_gudang = 'extruder.retur';
+                $kartustok_gudang = 'Gudang Extruder';
+            } elseif ($request->gudang == 'wjl') {
+                $jenis_gudang = 'wjl.retur';
+                $kartustok_gudang = 'Gudang WJL';
+            } elseif ($request->gudang == 'sulzer') {
+                $jenis_gudang = 'sulzer.retur';
+                $kartustok_gudang = 'Gudang Sulzer';
+            } elseif ($request->gudang == 'rashel') {
+                $jenis_gudang = 'rashel.retur';
+                $kartustok_gudang = 'Gudang Rashel';
+            } elseif ($request->gudang == 'beaming') {
+                $jenis_gudang = 'beaming.retur';
+                $kartustok_gudang = 'Gudang Beaming';
+            } elseif ($request->gudang == 'packing') {
+                $jenis_gudang = 'packing.retur';
+                $kartustok_gudang = 'Gudang Packing';
+            }
+            $gen_no_dokumen = Controller::gen_no_dokumen($jenis_gudang);
             $retur = new Retur();
             $retur->slug = Controller::gen_slug();
             $retur->no_dokumen = $gen_no_dokumen['nomor'];
@@ -183,7 +218,7 @@ class ReturController extends Controller
             $retur->returdetail()->createMany($detail);
             if ($retur->status == 'Approved') {
                 foreach ($retur->returdetail as $d) {
-                    Controller::update_stok("Masuk", "Gudang Barang Jadi", "Retur", $retur->id, $d->material_id, $d->jumlah, $d->satuan);
+                    Controller::update_stok("Masuk", $kartustok_gudang, "Retur", $retur->id, $d->material_id, $d->jumlah, $d->satuan);
                 }
             }
             DB::commit();
@@ -202,7 +237,9 @@ class ReturController extends Controller
      */
     public function show(Retur $retur)
     {
-        if ($retur->gudang == 'bahan-baku' || $retur->gudang == 'bahan-penolong') {
+        if ($retur->gudang == 'bahan-baku') {
+            return view('gudangbahanbaku.retur.show', compact('retur'));
+        } elseif ($retur->gudang == 'bahan-penolong') {
             return view('gudangbahanbaku.retur.show', compact('retur'));
         } elseif ($retur->gudang == 'benang') {
             return view('gudangbenang.retur.show', compact('retur'));
@@ -236,7 +273,9 @@ class ReturController extends Controller
             ]);
         }
         $gudang = $retur->gudang;
-        if ($gudang == 'bahan-baku' || $gudang == 'bahan-penolong') {
+        if ($gudang == 'bahan-baku') {
+            return view('gudangbahanbaku.retur.edit', compact('retur', 'pengaturan', 'gudang'));
+        } elseif ($gudang == 'bahan-penolong') {
             return view('gudangbahanbaku.retur.edit', compact('retur', 'pengaturan', 'gudang'));
         } elseif ($gudang == 'benang') {
             return view('gudangbenang.retur.edit', compact('retur', 'pengaturan', 'gudang'));
@@ -262,7 +301,84 @@ class ReturController extends Controller
      */
     public function update(Request $request, Retur $retur)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'dokumen_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
+        }
+        DB::beginTransaction();
+        try {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.' . $request->gudang . '.retur.butuh.approval')->first();
+            $jenis_gudang = '';
+            $kartustok_gudang = '';
+            if ($request->gudang == 'barang-jadi') {
+                $jenis_gudang = 'barangjadi.retur';
+                $kartustok_gudang = 'Gudang Barang Jadi';
+            } elseif ($request->gudang == 'bahan-baku') {
+                $jenis_gudang = 'bahanbaku.retur';
+                $kartustok_gudang = 'Gudang Bahan Baku';
+            } elseif ($request->gudang == 'bahan-penolong') {
+                $jenis_gudang = 'bahanbaku.retur';
+                $kartustok_gudang = 'Gudang Bahan Baku';
+            } elseif ($request->gudang == 'extruder') {
+                $jenis_gudang = 'extruder.retur';
+                $kartustok_gudang = 'Gudang Extruder';
+            } elseif ($request->gudang == 'wjl') {
+                $jenis_gudang = 'wjl.retur';
+                $kartustok_gudang = 'Gudang WJL';
+            } elseif ($request->gudang == 'sulzer') {
+                $jenis_gudang = 'sulzer.retur';
+                $kartustok_gudang = 'Gudang Sulzer';
+            } elseif ($request->gudang == 'rashel') {
+                $jenis_gudang = 'rashel.retur';
+                $kartustok_gudang = 'Gudang Rashel';
+            } elseif ($request->gudang == 'beaming') {
+                $jenis_gudang = 'beaming.retur';
+                $kartustok_gudang = 'Gudang Beaming';
+            } elseif ($request->gudang == 'packing') {
+                $jenis_gudang = 'packing.retur';
+                $kartustok_gudang = 'Gudang Packing';
+            }
+            $retur->referensi = $request->dokumen;
+            if ($request->dokumen == 'suratjalan') {
+                $retur->suratjalan_id  = $request->dokumen_id;
+            } elseif ($request->dokumen == 'barangkeluar') {
+                $retur->barangkeluar_id = $request->dokumen_id;
+            }
+            $retur->gudang = $request->gudang;
+            $retur->tanggal = date('Y-m-d');
+            $retur->status = $pengaturan->nilai == 'Tidak' && $request->status == 'Submit' ? 'Approved' : $request->status;
+            $retur->catatan = $request->catatan;
+            $retur->created_by = Auth::user()->id;
+            $retur->save();
+            foreach ($request->material_id as $key => $material_id) {
+                $detail[] = [
+                    'slug' => Controller::gen_slug(),
+                    'retur_id' => $retur->id,
+                    'material_id' => $material_id,
+                    'jumlah' => $request->jumlah[$key] ? Controller::unformat_angka($request->jumlah[$key]) : 0,
+                    'satuan' => $request->satuan[$key],
+                    'keterangan' => $request->keterangan[$key],
+                    'created_by' => Auth::user()->id
+                ];
+            }
+            $retur->returdetail()->delete();
+            $retur->returdetail()->createMany($detail);
+            if ($retur->status == 'Approved') {
+                foreach ($retur->returdetail as $d) {
+                    Controller::update_stok("Masuk", $kartustok_gudang, "Retur", $retur->id, $d->material_id, $d->jumlah, $d->satuan);
+                }
+            }
+            DB::commit();
+            return redirect()->route('retur.index', ['gudang' => $retur->gudang])->with([
+                'status' => 'success',
+                'message' => 'Data telah disimpan!'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return view('error', compact('th'));
+        }
     }
 
     /**
@@ -290,9 +406,31 @@ class ReturController extends Controller
     {
         if ($request->ajax()) {
             $term = trim($request->term);
+            $jenis = "";
+            if ($request->gudang == 'bahan-baku') {
+                $jenis = 'Bahan Baku';
+            } elseif ($request->gudang == 'bahan-penolong') {
+                $jenis = 'Bahan Penolong';
+            } elseif ($request->gudang == 'benang') {
+                $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'barang-jadi') {
+                $jenis = 'Barang Jadi';
+            } elseif ($request->gudang == 'extruder') {
+                $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'wjl') {
+                $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'sulzer') {
+                $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'rashel') {
+                $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'beaming') {
+                $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'packing') {
+                $jenis = 'Work In Progress';
+            }
             $material = Material::selectRaw("id, nama as text")
                 ->where('nama', 'like', '%' . $term . '%')
-                ->where('jenis', '=', 'Barang Jadi')
+                ->where('jenis', '=', $jenis)
                 ->orderBy('nama')->simplePaginate(10);
             $total_count = count($material);
             $morePages = true;
@@ -410,7 +548,28 @@ class ReturController extends Controller
 
     public function cetak(Retur $retur)
     {
-        $pdf = PDF::loadview('gudangbarangjadi.retur.cetak', compact(
+        if ($retur->gudang == 'bahan-baku') {
+            $gudang = 'gudangbahanbaku';
+        } elseif ($retur->gudang == 'bahan-penolong') {
+            $gudang = 'gudangbahanbaku';
+        } elseif ($retur->gudang == 'benang') {
+            $gudang = 'gudangbenang';
+        } elseif ($retur->gudang == 'barang-jadi') {
+            $gudang = 'gudangbarangjadi';
+        } elseif ($retur->gudang == 'extruder') {
+            $gudang = 'gudangextruder';
+        } elseif ($retur->gudang == 'wjl') {
+            $gudang = 'gudangwjl';
+        } elseif ($retur->gudang == 'sulzer') {
+            $gudang = 'gudangsulzer';
+        } elseif ($retur->gudang == 'rashel') {
+            $gudang = 'gudangrashel';
+        } elseif ($retur->gudang == 'beaming') {
+            $gudang = 'gudangbeaming';
+        } elseif ($retur->gudang == 'packing') {
+            $gudang = 'gudangpacking';
+        }
+        $pdf = PDF::loadview($gudang . '.retur.cetak', compact(
             'retur'
         ));
         return $pdf->download('retur-' .  $retur->no_dokumen . '.pdf');
