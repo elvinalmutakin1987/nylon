@@ -69,6 +69,8 @@ class MaterialController extends Controller
             $material->nama = $request->nama;
             $material->jenis = $request->jenis;
             $material->group = $request->group;
+            $material->ukuran = $request->ukuran;
+            $material->keterangan = $request->keterangan;
             $material->created_by = Auth::user()->id;
             $material->save();
             DB::commit();
@@ -116,6 +118,8 @@ class MaterialController extends Controller
             $material->nama = $request->nama;
             $material->jenis = $request->jenis;
             $material->group = $request->group;
+            $material->ukuran = $request->ukuran;
+            $material->keterangan = $request->keterangan;
             $material->created_by = Auth::user()->id;
             $material->save();
             DB::commit();

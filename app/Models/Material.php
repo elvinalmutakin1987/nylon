@@ -25,6 +25,8 @@ class Material extends Model
         'nama',
         'jenis',
         'group',
+        'ukuran',
+        'keterangan',
         'created_by',
         'updated_by',
         'deleted_by',

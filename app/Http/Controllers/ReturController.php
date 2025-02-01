@@ -7,6 +7,7 @@ use App\Models\Barangmasuk;
 use App\Models\Material;
 use App\Models\Pengaturan;
 use App\Models\Retur;
+use App\Models\Satuan;
 use App\Models\Suratjalan;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -110,37 +111,38 @@ class ReturController extends Controller
      */
     public function create()
     {
+        $satuan = Satuan::all();
         $gudang = request()->gudang;
         if ($gudang == 'bahan-baku') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.bahan-baku.retur.butuh.approval')->first();
-            return view('gudangbahanbaku.retur.create', compact('pengaturan', 'gudang'));
+            return view('gudangbahanbaku.retur.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'bahan-penolong') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.bahan-baku.retur.butuh.approval')->first();
-            return view('gudangbahanbaku.retur.create', compact('pengaturan', 'gudang'));
+            return view('gudangbahanbaku.retur.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'benang') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.benang.retur.butuh.approval')->first();
-            return view('gudangbenang.retur.create', compact('pengaturan', 'gudang'));
+            return view('gudangbenang.retur.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'barang-jadi') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.barang-jadi.retur.butuh.approval')->first();
-            return view('gudangbarangjadi.retur.create', compact('pengaturan', 'gudang'));
+            return view('gudangbarangjadi.retur.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'extruder') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.extruder.retur.butuh.approval')->first();
-            return view('gudangextruder.retur.create', compact('pengaturan', 'gudang'));
+            return view('gudangextruder.retur.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'wjl') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.wjl.retur.butuh.approval')->first();
-            return view('gudangwjl.retur.create', compact('pengaturan', 'gudang'));
+            return view('gudangwjl.retur.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'sulzer') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.sulzer.retur.butuh.approval')->first();
-            return view('gudangsulzer.retur.create', compact('pengaturan', 'gudang'));
+            return view('gudangsulzer.retur.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'rashel') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.rashel.retur.butuh.approval')->first();
-            return view('gudangrashel.retur.create', compact('pengaturan', 'gudang'));
+            return view('gudangrashel.retur.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'beaming') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.beaming.retur.butuh.approval')->first();
-            return view('gudangbeaming.retur.create', compact('pengaturan', 'gudang'));
+            return view('gudangbeaming.retur.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'packing') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.packing.retur.butuh.approval')->first();
-            return view('gudangpacking.retur.create', compact('pengaturan', 'gudang'));
+            return view('gudangpacking.retur.create', compact('pengaturan', 'gudang', 'satuan'));
         }
     }
 
@@ -265,6 +267,7 @@ class ReturController extends Controller
      */
     public function edit(Retur $retur)
     {
+        $satuan = Satuan::all();
         $pengaturan = Pengaturan::where('keterangan', 'gudang.barang-jadi.retur.butuh.approval')->first();
         if ($retur->status == 'Approved') {
             return redirect()->route('retur.index')->with([
@@ -274,25 +277,25 @@ class ReturController extends Controller
         }
         $gudang = $retur->gudang;
         if ($gudang == 'bahan-baku') {
-            return view('gudangbahanbaku.retur.edit', compact('retur', 'pengaturan', 'gudang'));
+            return view('gudangbahanbaku.retur.edit', compact('retur', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'bahan-penolong') {
-            return view('gudangbahanbaku.retur.edit', compact('retur', 'pengaturan', 'gudang'));
+            return view('gudangbahanbaku.retur.edit', compact('retur', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'benang') {
-            return view('gudangbenang.retur.edit', compact('retur', 'pengaturan', 'gudang'));
+            return view('gudangbenang.retur.edit', compact('retur', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'barang-jadi') {
-            return view('gudangbarangjadi.retur.edit', compact('retur', 'pengaturan', 'gudang'));
+            return view('gudangbarangjadi.retur.edit', compact('retur', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'extruder') {
-            return view('gudangextruder.retur.edit', compact('retur', 'pengaturan', 'gudang'));
+            return view('gudangextruder.retur.edit', compact('retur', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'wjl') {
-            return view('gudangwjl.retur.edit', compact('retur', 'pengaturan', 'gudang'));
+            return view('gudangwjl.retur.edit', compact('retur', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'sulzer') {
-            return view('gudangsulzer.retur.edit', compact('retur', 'pengaturan', 'gudang'));
+            return view('gudangsulzer.retur.edit', compact('retur', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'rashel') {
-            return view('gudangrashel.retur.edit', compact('retur', 'pengaturan', 'gudang'));
+            return view('gudangrashel.retur.edit', compact('retur', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'beaming') {
-            return view('gudangbeaming.retur.edit', compact('retur', 'pengaturan', 'gudang'));
+            return view('gudangbeaming.retur.edit', compact('retur', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'packing') {
-            return view('gudangpacking.retur.edit', compact('retur', 'pengaturan', 'gudang'));
+            return view('gudangpacking.retur.edit', compact('retur', 'pengaturan', 'gudang', 'satuan'));
         }
     }
 

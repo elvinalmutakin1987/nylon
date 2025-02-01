@@ -185,7 +185,7 @@
 
                         @if (auth()->user()->can('pengaturan'))
                             <li class="nav-item">
-                                <a href="{{ route('datamaster.index') }}"
+                                <a href="{{ route('pengaturan.index') }}"
                                     class="nav-link {{ \Request::segment(1) == 'pengaturan' ? 'active' : '' }}">
                                     <i class="nav-icon fa fa-cogs"></i>
                                     <p>

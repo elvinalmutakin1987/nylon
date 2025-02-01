@@ -95,6 +95,27 @@
                                                     class="error invalid-feedback">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        <div class="form-group">
+                                            <label for="ukuran">Ukuran</label>
+                                            <input type="text" class="form-control @error('ukuran') is-invalid @enderror"
+                                                id="ukuran" name="ukuran"
+                                                value="{{ old('ukuran') ?? $material->ukuran }}">
+                                            @error('ukuran')
+                                                <span id="ukuran-error"
+                                                    class="error invalid-feedback">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="keterangan">Keterangan</label>
+                                            <input type="text"
+                                                class="form-control @error('keterangan') is-invalid @enderror"
+                                                id="keterangan" name="keterangan"
+                                                value="{{ old('keterangan') ?? $material->keterangan }}">
+                                            @error('keterangan')
+                                                <span id="keterangan-error"
+                                                    class="error invalid-feedback">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                     <!-- /.card-body -->
                                 </div>

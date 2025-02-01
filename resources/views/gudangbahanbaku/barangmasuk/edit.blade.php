@@ -152,12 +152,11 @@
                                                                 <td>
                                                                     <select class="form-control select2 w-100 select-satuan"
                                                                         id="satuan{{ $d->id }}" name="satuan[]">
-                                                                        <option value="ZAK"
-                                                                            {{ $d->satuan == 'ZAK' ? 'selected' : '' }}>ZAK
-                                                                        </option>
-                                                                        <option value="KG"
-                                                                            {{ $d->satuan == 'KG' ? 'selected' : '' }}>KG
-                                                                        </option>
+                                                                        @foreach ($satuan as $s)
+                                                                            <option value="{{ $s->nama }}"
+                                                                                {{ $d->satuan == $s->nama ? 'selected' : '' }}>
+                                                                                {{ $s->nama }}</option>
+                                                                        @endforeach
                                                                     </select>
                                                                 </td>
                                                                 <td>
@@ -350,8 +349,9 @@
                     <td>
                         <select class="form-control select2 w-100 select-satuan"
                             id="satuan${row_id}" name="satuan[]">
-                            <option value="ZAK">ZAK</option>
-                            <option value="KG">KG</option>
+                            @foreach ($satuan as $d)
+                                <option value="{{ $d->nama }}">{{ $d->nama }}</option>
+                            @endforeach
                         </select>
                     </td>
                     <td>

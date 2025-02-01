@@ -10,10 +10,10 @@
                     <div class="col-sm-12">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-dark">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('datamaster.index') }}" class="text-dark">Data
-                                    Master</a>
+                            <li class="breadcrumb-item"><a href="{{ route('pengaturan.index') }}"
+                                    class="text-dark">Pengaturan</a>
                             </li>
-                            <li class="breadcrumb-item" Active>Material</li>
+                            <li class="breadcrumb-item" Active>Peran Pengguna</li>
                         </ol>
                     </div>
                 </div>
@@ -28,36 +28,26 @@
                         <!-- Application buttons -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Material</h3>
+                                <h3 class="card-title">Peran Pengguna</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row mb-4">
                                     <div class="col-md-12">
                                         <a type="button" class="btn btn-success m-1"
-                                            href="{{ route('material.create') }}"><i class="fa fa-plus"></i> Tambah
+                                            href="{{ route('peranpengguna.create') }}"><i class="fa fa-plus"></i> Tambah
                                             Data</a>
-                                        <a type="button" class="btn btn-default m-1" id="button-export"
-                                            href="{{ route('material.export') }}"><i class="fa fa-upload"></i> Export</a>
-                                        <button type="button" class="btn btn-default m-1" id="button-import"
-                                            data-toggle="modal" data-target="#modal-import" onClick="_import()"><i
-                                                class="fa fa-download"></i>
-                                            Import</button>
                                         <a type="button" class="btn btn-secondary m-1"
-                                            href="{{ route('datamaster.index') }}"><i class="fa fa-reply"></i> Kembali</a>
+                                            href="{{ route('pengaturan.index') }}"><i class="fa fa-reply"></i> Kembali</a>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
+
+                                <div class="card ">
+                                    <div class="card-body">
                                         <table id="table1" class="table projects">
                                             <thead>
                                                 <tr>
                                                     <th></th>
-                                                    <th>Kode</th>
                                                     <th>Nama</th>
-                                                    <th>Group</th>
-                                                    <th>Jenis</th>
-                                                    <th>Ukuran</th>
-                                                    <th>Keterangan</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -66,7 +56,9 @@
                                             </tbody>
                                         </table>
                                     </div>
+
                                 </div>
+
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -81,43 +73,6 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <form enctype="multipart/form-data" id="form-import" method="POST" action="{{ route('material.import') }}">
-        <div class="modal fade" id="modal-import">
-            <div class="modal-dialog">
-                @csrf
-                @method('POST')
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Import File</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="file_import" name="file_import"
-                                        required>
-                                    <label class="custom-file-label" for="file_import">Pilih file</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-reply"></i>
-                            Kembali</button>
-                        <button type="submit" class="btn btn-success" id="button-simpan"><i class="fa fa-save"></i>
-                            Simpan</button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-    </form>
-    <!-- /.modal -->
-
     <form enctype="multipart/form-data" id="form-delete" method="POST">
         @csrf
         @method('DELETE')
@@ -128,8 +83,6 @@
 @section('script')
     <script type="text/javascript">
         const table1 = $('#table1');
-
-        var ajax = '{{ url()->current() }}';
 
         $(document).ready(function() {
             get_data();
@@ -147,7 +100,7 @@
                 "responsive": true,
                 "processing": true,
                 "serverSide": true,
-                "ajax": ajax,
+                "ajax": '{{ url()->current() }}',
                 "columns": [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -158,38 +111,8 @@
                         targets: '_all'
                     },
                     {
-                        data: 'kode',
-                        name: 'kode',
-                        orderable: true,
-                        searchable: true,
-                    },
-                    {
                         data: 'nama',
                         name: 'nama',
-                        orderable: true,
-                        searchable: true,
-                    },
-                    {
-                        data: 'group',
-                        name: 'group',
-                        orderable: true,
-                        searchable: true,
-                    },
-                    {
-                        data: 'jenis',
-                        name: 'jenis',
-                        orderable: true,
-                        searchable: true,
-                    },
-                    {
-                        data: 'ukuran',
-                        name: 'ukuran',
-                        orderable: true,
-                        searchable: true,
-                    },
-                    {
-                        data: 'keterangan',
-                        name: 'keterangan',
                         orderable: true,
                         searchable: true,
                     },
@@ -217,7 +140,7 @@
                 cancelButtonText: 'Tidak'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let url = `{!! route('material.destroy', ':_id') !!}`;
+                    let url = `{!! route('peranpengguna.destroy', ':_id') !!}`;
                     url = url.replace(':_id', id);
                     $("#_method").val('DELETE');
                     $('#form-delete').attr('action', url);

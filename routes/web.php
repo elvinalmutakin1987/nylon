@@ -15,6 +15,7 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MesinController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PengaturanController;
+use App\Http\Controllers\PeranpenggunaController;
 use App\Http\Controllers\PermintaanmaterialController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProduksiController;
@@ -130,6 +131,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => ['role_or_permission:superuser|gudangbarangjadi.cekstok']], function () {
         Route::resource('cekstok', CekstokController::class)->names('cekstok');
+
+        Route::get('cekstok-export', [CekstokController::class, 'export'])->name('cekstok.export');
+        Route::get('cekstok-cetak', [CekstokController::class, 'cetak'])->name('cekstok.cetak');
         Route::get('cekstok/{material}/detail', [CekstokController::class, 'detail'])->name('cekstok.detail');
     });
 
@@ -169,5 +173,13 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('produksiwjl-operator', ProduksiwjloperatorController::class)->names('produksiwjl.operator');
 
         Route::get('produksi-wjl-get-mesin', [ProduksiwjloperatorController::class, 'get_mesin'])->name('produksiwjl.get_mesin');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superuser|pengaturan']], function () {
+        Route::resource('pengaturan', PengaturanController::class)->names('pengaturan');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superuser|peranpengguna']], function () {
+        Route::resource('peranpengguna', PeranpenggunaController::class)->names('peranpengguna');
     });
 });

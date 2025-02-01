@@ -7,6 +7,7 @@ use App\Models\Barangmasuk;
 use App\Models\Material;
 use App\Models\Pengaturan;
 use App\Models\Permintaanmaterial;
+use App\Models\Satuan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -129,34 +130,35 @@ class BarangmasukController extends Controller
      */
     public function create()
     {
+        $satuan = Satuan::all();
         $gudang = request()->gudang;
         if ($gudang == 'bahan-baku' || $gudang == 'bahan-penolong') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.bahan-baku.barangmasuk.butuh.approval')->first();
-            return view('gudangbahanbaku.barangmasuk.create', compact('pengaturan', 'gudang'));
+            return view('gudangbahanbaku.barangmasuk.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'benang') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.benang.barangmasuk.butuh.approval')->first();
-            return view('gudangbenang.barangmasuk.create', compact('pengaturan', 'gudang'));
+            return view('gudangbenang.barangmasuk.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'barang-jadi') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.barang-jadi.barangmasuk.butuh.approval')->first();
-            return view('gudangbarangjadi.barangmasuk.create', compact('pengaturan', 'gudang'));
+            return view('gudangbarangjadi.barangmasuk.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'extruder') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.extruder.barangmasuk.butuh.approval')->first();
-            return view('gudangextruder.barangmasuk.create', compact('pengaturan', 'gudang'));
+            return view('gudangextruder.barangmasuk.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'wjl') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.wjl.barangmasuk.butuh.approval')->first();
-            return view('gudangwjl.barangmasuk.create', compact('pengaturan', 'gudang'));
+            return view('gudangwjl.barangmasuk.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'sulzer') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.sulzer.barangmasuk.butuh.approval')->first();
-            return view('gudangsulzer.barangmasuk.create', compact('pengaturan', 'gudang'));
+            return view('gudangsulzer.barangmasuk.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'rashel') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.rashel.barangmasuk.butuh.approval')->first();
-            return view('gudangrashel.barangmasuk.create', compact('pengaturan', 'gudang'));
+            return view('gudangrashel.barangmasuk.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'beaming') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.beaming.barangmasuk.butuh.approval')->first();
-            return view('gudangbeaming.barangmasuk.create', compact('pengaturan', 'gudang'));
+            return view('gudangbeaming.barangmasuk.create', compact('pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'packing') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.packing.barangmasuk.butuh.approval')->first();
-            return view('gudangpacking.barangmasuk.create', compact('pengaturan', 'gudang'));
+            return view('gudangpacking.barangmasuk.create', compact('pengaturan', 'gudang', 'satuan'));
         }
     }
 
@@ -269,6 +271,7 @@ class BarangmasukController extends Controller
      */
     public function edit(Barangmasuk $barangmasuk)
     {
+        $satuan = Satuan::all();
         $pengaturan = Pengaturan::where('keterangan', 'gudang.barang-jadi.barangmasuk.butuh.approval')->first();
         if ($barangmasuk->status == 'Approved') {
             return redirect()->route('barangmasuk.index')->with([
@@ -278,23 +281,23 @@ class BarangmasukController extends Controller
         }
         $gudang = $barangmasuk->gudang;
         if ($gudang == 'bahan-baku' || $gudang == 'bahan-penolong') {
-            return view('gudangbahanbaku.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+            return view('gudangbahanbaku.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'benang') {
-            return view('gudangbenang.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+            return view('gudangbenang.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'barang-jadi') {
-            return view('gudangbarangjadi.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+            return view('gudangbarangjadi.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'extruder') {
-            return view('gudangextruder.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+            return view('gudangextruder.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'wjl') {
-            return view('gudangwjl.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+            return view('gudangwjl.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'sulzer') {
-            return view('gudangsulzer.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+            return view('gudangsulzer.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'rashel') {
-            return view('gudangrashel.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+            return view('gudangrashel.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'beaming') {
-            return view('gudangbeaming.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+            return view('gudangbeaming.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'packing') {
-            return view('gudangpacking.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang'));
+            return view('gudangpacking.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
         }
     }
 

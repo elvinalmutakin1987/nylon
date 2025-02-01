@@ -33,6 +33,12 @@
                             <div class="card-body">
                                 <div class="row mb-4">
                                     <div class="col-md-12 ">
+                                        <a type="button" class="btn btn-success m-1"
+                                            href="{{ route('cekstok.cetak', ['gudang' => 'bahan-baku']) }}"><i
+                                                class="fa fa-print"></i> Cetak</a>
+                                        <a type="button" class="btn btn-primary m-1" id="button-export"
+                                            href="{{ route('cekstok.export', ['gudang' => 'bahan-baku']) }}"><i
+                                                class="fa fa-upload"></i> Export</a>
                                         <a type="button" class="btn btn-secondary m-1"
                                             href="{{ route('gudang.index') }}"><i class="fa fa-reply"></i> Kembali</a>
                                     </div>

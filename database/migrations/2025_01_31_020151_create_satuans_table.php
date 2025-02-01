@@ -11,27 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('materials', function (Blueprint $table) {
+        Schema::create('satuans', function (Blueprint $table) {
             $table->id();
-            $table->integer('produk_id')->nullable();
-            $table->integer('varian_id')->nullable();
             $table->string('slug')->nullable();
-            $table->string('sku')->nullable();
-            $table->string('kode')->nullable();
             $table->string('nama')->nullable();
-            $table->string('jenis')->nullable();
-            $table->string('group')->nullable();
-            $table->string('ukuran')->nullable();
-            $table->string('keterangan')->nullable();
-            $table->decimal('max_stok', 16, 2)->nullable();
-            $table->decimal('min_stok', 16, 2)->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->index('produk_id');
-            $table->index('varian_id');
         });
     }
 
@@ -40,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('materials');
+        Schema::dropIfExists('satuans');
     }
 };

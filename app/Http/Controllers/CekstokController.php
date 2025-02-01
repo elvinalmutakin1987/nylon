@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\KartustokExport;
 use App\Models\Kartustok;
 use App\Models\Material;
 use Faker\Core\Number;
@@ -14,6 +15,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Number as SupportNumber;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class CekstokController extends Controller
 {
@@ -284,5 +286,61 @@ class CekstokController extends Controller
             'data' => $view,
             'message' => 'success'
         ]);
+    }
+
+    public function cetak(Request $request)
+    {
+        $gudang = $request->gudang;
+        $jenis = '';
+        $gudang_ = '';
+        if ($gudang == 'bahan-baku') {
+            $jenis = "gudangbahanbaku";
+            $gudang_ = "Gudang Bahan Baku";
+        } elseif ($gudang == 'bahan-penolong') {
+            $jenis = "gudanbahanbaku";
+            $gudang_ = "Gudang Bahan Baku";
+        } elseif ($gudang == 'benang') {
+            $jenis = "gudangbenang";
+            $gudang_ = "Gudang Benang";
+        } elseif ($gudang == 'barang-jadi') {
+            $jenis = "gudangbarangjadi";
+            $gudang_ = "Gudang Barang Jadi";
+        } elseif ($gudang == 'wjl') {
+            $jenis = "gudangwjl";
+            $gudang_ = "Gudang WJL";
+        } elseif ($gudang == 'sulzer') {
+            $jenis = "gudangsulzer";
+            $gudang_ = "Gudang Sulzer";
+        } elseif ($gudang == 'rashel') {
+            $jenis = "gudangrashel";
+            $gudang_ = "Gudang Rashel";
+        } elseif ($gudang == 'extruder') {
+            $jenis = "gudangextruder";
+            $gudang_ = "Gudang Extruder";
+        } elseif ($gudang == 'beaming') {
+            $jenis = "gudangbeaming";
+            $gudang_ = "Gudang Beaming";
+        } elseif ($gudang == 'packing') {
+            $jenis = "gudangpacking";
+            $gudang_ = "Gudang Packing";
+        }
+        $kartustok = Kartustok::select(
+            DB::raw('(select nama from materials where id=kartustoks.material_id) as material'),
+            'satuan',
+            DB::raw('(select k2.stok_akhir from kartustoks k2 where k2.gudang=kartustoks.gudang and k2.material_id=kartustoks.material_id and k2.satuan=kartustoks.satuan order by k2.id desc limit 1) as stok')
+        )
+            ->where('gudang', '=', $gudang_)
+            ->groupBy('satuan', 'material', 'stok')
+            ->get();
+        $pdf = PDF::loadview($jenis . '.cekstok.cetak', compact(
+            'kartustok'
+        ));
+        return $pdf->download('laporan-stok-' . $gudang . '-' . date('Ymd') . '.pdf');
+    }
+
+    public function export(Request $request)
+    {
+        $gudang = $request->gudang;
+        return Excel::download(new KartustokExport($gudang), 'laporan_stok_gudang_' . $gudang . '_' . date('Ymd') . '.xlsx');
     }
 }

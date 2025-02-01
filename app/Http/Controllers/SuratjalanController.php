@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Material;
 use App\Models\Order;
 use App\Models\Pengaturan;
+use App\Models\Satuan;
 use App\Models\Suratjalan;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -85,12 +86,13 @@ class SuratjalanController extends Controller
      */
     public function create()
     {
+        $satuan = Satuan::all();
         $pengaturan = Pengaturan::where('keterangan', 'gudang.barang-jadi.suratjalan.butuh.approval')->first();
         if (request()->order) {
             $order = Order::where('slug', request()->order)->first();
-            return view('gudangbarangjadi.suratjalan.create', compact('order', 'pengaturan'));
+            return view('gudangbarangjadi.suratjalan.create', compact('order', 'pengaturan', 'satuan'));
         }
-        return view('gudangbarangjadi.suratjalan.create', compact('pengaturan'));
+        return view('gudangbarangjadi.suratjalan.create', compact('pengaturan', 'satuan'));
     }
 
     /**
@@ -155,6 +157,7 @@ class SuratjalanController extends Controller
      */
     public function edit(Suratjalan $suratjalan)
     {
+        $satuan = Satuan::all();
         $pengaturan = Pengaturan::where('keterangan', 'gudang.barang-jadi.suratjalan.butuh.approval')->first();
         if ($suratjalan->status == 'Approved') {
             return redirect()->route('suratjalan.index')->with([
@@ -162,7 +165,7 @@ class SuratjalanController extends Controller
                 'message' => 'Status dokumen sudah approved!'
             ]);
         }
-        return view('gudangbarangjadi.suratjalan.edit', compact('suratjalan', 'pengaturan'));
+        return view('gudangbarangjadi.suratjalan.edit', compact('suratjalan', 'pengaturan', 'satuan'));
     }
 
     /**

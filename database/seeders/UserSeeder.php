@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::create(['name' => 'superuser']);
+        Role::create(['name' => 'superadmin']);
 
         /**
          * Data master
@@ -45,6 +45,7 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'gudang.benang.barangkeluar']);
         Permission::create(['name' => 'gudang.benang.barangmasuk']);
         Permission::create(['name' => 'gudang.benang.retur']);
+        Permission::create(['name' => 'gudang.benang.cekstok']);
         Permission::create(['name' => 'gudang.barangjadi.order']);
         Permission::create(['name' => 'gudang.barangjadi.cekstok']);
         Permission::create(['name' => 'gudang.barangjadi.suratjalan']);
@@ -61,8 +62,16 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'produksiwjl.operator']);
         Permission::create(['name' => 'produksiwjl.kepalaregu']);
         Permission::create(['name' => 'permintaanmaterial']);
-        Permission::create(['name' => 'pengaturan']);
         Permission::create(['name' => 'approval']);
+        //===========================================
+
+        /**
+         * Pengaturan
+         */
+        Permission::create(['name' => 'pengaturan']);
+        Permission::create(['name' => 'peranpengguna']);
+        Permission::create(['name' => 'pengguna']);
+        Permission::create(['name' => 'approvallaporan']);
         //===========================================
 
         $data = [

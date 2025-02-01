@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Number;
+@endphp
+
 @extends('partials.main')
 
 @section('content')
@@ -128,36 +132,78 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <select class="form-control select2 w-100 select-barang"
-                                                                    id="material_id1" name="material_id[]">
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control select2 w-100 select-satuan"
-                                                                    id="satuan1" name="satuan[]">
-                                                                    <option value="ZAK">ZAK</option>
-                                                                    <option value="KG">KG</option>
-                                                                    <option value="BOBIN">BOBIN</option>
-                                                                    <option value="PCS">PCS</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="form-control" id="jumlah1"
-                                                                    name="jumlah[]"
-                                                                    onblur="ubah_format('jumlah1', this.value)">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="form-control"
-                                                                    id="keterangan1" name="keterangan[]">
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <button type="button" class="btn btn-danger"
-                                                                    id="hapus"><i class="fa fa-trash"></i>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
+                                                        @isset($order)
+                                                            @foreach ($order->orderdetail as $d)
+                                                                <tr>
+                                                                    <td>
+                                                                        <select class="form-control select2 w-100 select-barang"
+                                                                            id="material_id{{ $d->id }}"
+                                                                            name="material_id[]">
+                                                                            <option value="{{ $d->material_id }}">
+                                                                                {{ $d->material->nama }}</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select
+                                                                            class="form-control select2 w-100 select-satuan"
+                                                                            id="satuan{{ $d->id }}" name="satuan[]">
+                                                                            @foreach ($satuan as $s)
+                                                                                <option value="{{ $s->nama }}"
+                                                                                    {{ $d->satuan == $s->nama ? 'selected' : '' }}>
+                                                                                    {{ $s->nama }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            id="jumlah{{ $d->id }}" name="jumlah[]"
+                                                                            onblur="ubah_format('jumlah{{ $d->id }}', this.value)"
+                                                                            value="{{ Number::format((float) $d->jumlah, precision: 1) }}">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            id="keterangan{{ $d->id }}"
+                                                                            name="keterangan[]" value="{{ $d->keterangan }}">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <button type="button" class="btn btn-danger"
+                                                                            id="hapus"><i class="fa fa-trash"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @else
+                                                            <tr>
+                                                                <td>
+                                                                    <select class="form-control select2 w-100 select-barang"
+                                                                        id="material_id1" name="material_id[]">
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select class="form-control select2 w-100 select-satuan"
+                                                                        id="satuan1" name="satuan[]">
+                                                                        @foreach ($satuan as $d)
+                                                                            <option value="{{ $d->nama }}">
+                                                                                {{ $d->nama }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control" id="jumlah1"
+                                                                        name="jumlah[]"
+                                                                        onblur="ubah_format('jumlah1', this.value)">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control"
+                                                                        id="keterangan1" name="keterangan[]">
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <button type="button" class="btn btn-danger"
+                                                                        id="hapus"><i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        @endisset
                                                         <tr>
                                                             <td class="text-right text-bold" colspan="4"></td>
                                                             <td>
@@ -292,8 +338,9 @@
                     <td>
                         <select class="form-control select2 w-100 select-satuan"
                             id="satuan${row_id}" name="satuan[]">
-                            <option value="ZAK">ZAK</option>
-                            <option value="KG">KG</option>
+                            @foreach ($satuan as $d)
+                                <option value="{{ $d->nama }}">{{ $d->nama }}</option>
+                            @endforeach
                         </select>
                     </td>
                     <td>

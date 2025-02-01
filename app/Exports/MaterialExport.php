@@ -17,12 +17,16 @@ class MaterialExport implements FromCollection, WithHeadings
             'kode',
             'nama',
             'group',
-            'jenis'
+            'jenis',
+            'ukuran',
+            'keterangan'
         )->get(
             'kode',
             'nama',
             'group',
-            'jenis'
+            'jenis',
+            'ukuran',
+            'keterangan'
         );
     }
 
@@ -32,7 +36,9 @@ class MaterialExport implements FromCollection, WithHeadings
             'kode',
             'nama',
             'group',
-            'jenis'
+            'jenis',
+            'ukuran',
+            'keterangan'
         ];
     }
 }

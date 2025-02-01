@@ -27,6 +27,8 @@ class MaterialImport implements ToModel, WithHeadingRow
                 'nama' => $row['nama'],
                 'group' => $row['group'],
                 'jenis' => $row['jenis'],
+                'ukuran' => $row['ukuran'],
+                'keterangan' => $row['keterangan'],
                 'created_by' => Auth::user()->id
             ]);
         }

@@ -114,10 +114,10 @@
                                                             <td>
                                                                 <select class="form-control select2 w-100 select-satuan"
                                                                     id="satuan1" name="satuan[]">
-                                                                    <option value="ZAK">ZAK</option>
-                                                                    <option value="KG">KG</option>
-                                                                    <option value="BOBIN">BOBIN</option>
-                                                                    <option value="PCS">PCS</option>
+                                                                    @foreach ($satuan as $d)
+                                                                        <option value="{{ $d->nama }}">
+                                                                            {{ $d->nama }}</option>
+                                                                    @endforeach
                                                                 </select>
                                                             </td>
                                                             <td>
@@ -279,10 +279,9 @@
                     <td>
                         <select class="form-control select2 w-100 select-satuan"
                             id="satuan${row_id}" name="satuan[]">
-                            <option value="ZAK">ZAK</option>
-                            <option value="KG">KG</option>
-                            <option value="BOBIN">BOBIN</option>
-                            <option value="PCS">PCS</option>
+                            @foreach ($satuan as $d)
+                                <option value="{{ $d->nama }}">{{ $d->nama }}</option>
+                            @endforeach
                         </select>
                     </td>
                     <td>

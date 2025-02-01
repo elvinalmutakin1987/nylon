@@ -108,9 +108,14 @@
                                                                                         'suratjalandetails.material_id',
                                                                                         $d2->material_id,
                                                                                     )
+                                                                                    ->where(
+                                                                                        'suratjalandetails.satuan',
+                                                                                        $d2->satuan,
+                                                                                    )
                                                                                     ->sum('suratjalandetails.jumlah');
                                                                             @endphp
                                                                             {{ Number::format((float) $terkirim, precision: 1) }}
+                                                                            {!! $d2->jumlah == $terkirim ? '<small class="badge badge-success"><i class="fa fa-check"></i></small>' : '' !!}
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach

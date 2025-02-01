@@ -7,6 +7,7 @@ use App\Models\Material;
 use App\Models\Order;
 use App\Models\Ordercatatan;
 use App\Models\Orderdetail;
+use App\Models\Satuan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -52,7 +53,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('order.create');
+        $satuan = Satuan::all();
+        return view('order.create', compact('satuan'));
     }
 
     /**
@@ -118,8 +120,9 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        $satuan = Satuan::all();
         $histori = Histori::where('dokumen', 'Order')->where('dokumen_id', $order->id)->get();
-        return view('order.edit', compact('order', 'histori'));
+        return view('order.edit', compact('order', 'histori', 'satuan'));
     }
 
     /**
@@ -143,6 +146,19 @@ class OrderController extends Controller
             $order->status = $request->status;
             $order->created_by = Auth::user()->id;
             $order->save();
+            foreach ($request->material_id as $key => $material_id) {
+                $detail[] = [
+                    'slug' => Controller::gen_slug(),
+                    'order_id' => $order->id,
+                    'material_id' => $material_id,
+                    'jumlah' => $request->jumlah[$key] ? Controller::unformat_angka($request->jumlah[$key]) : 0,
+                    'satuan' => $request->satuan[$key],
+                    'keterangan' => $request->keterangan_[$key],
+                    'created_by' => Auth::user()->id
+                ];
+            }
+            $order->orderdetail()->delete();
+            $order->orderdetail()->createMany($detail);
             Controller::simpan_histori("Order", $order->id, Auth::user()->name . " mengubah data order.");
             DB::commit();
             return redirect()->route('order.index')->with([
@@ -206,6 +222,7 @@ class OrderController extends Controller
     {
         if ($request->ajax()) {
             $term = trim($request->term);
+
             $material = Material::selectRaw("id, nama as text")
                 ->where('nama', 'like', '%' . $term . '%')
                 ->where('jenis', 'Barang Jadi')
