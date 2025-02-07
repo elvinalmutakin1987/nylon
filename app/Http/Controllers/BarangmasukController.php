@@ -423,7 +423,7 @@ class BarangmasukController extends Controller
             }
             $material = Material::selectRaw("id, nama as text")
                 ->where('nama', 'like', '%' . $term . '%')
-                ->where('jenis', '=', $jenis)
+                // ->where('jenis', '=', $jenis)
                 ->orderBy('nama')->simplePaginate(10);
             $total_count = count($material);
             $morePages = true;

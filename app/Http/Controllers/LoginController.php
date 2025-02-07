@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use IvanoMatteo\LaravelDeviceTracking\Facades\DeviceTracker;
+use IvanoMatteo\LaravelDeviceTracking\Traits\UseDevices;
+
 
 class LoginController extends Controller
 {
@@ -35,6 +38,10 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            $device = DeviceTracker::detectFindAndUpdate();
+            $device_uuid = $device->device_uuid;
+            $user_id = Auth::user()->id;
+            DeviceTracker::flagAsVerifiedByUuid($device_uuid, $user_id);
             return redirect()->intended()->with([
                 'status' => 'success',
                 'message' => 'Selamat datang di HR - Etam!'

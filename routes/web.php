@@ -15,11 +15,14 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MesinController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PengaturanController;
+use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PeranpenggunaController;
 use App\Http\Controllers\PermintaanmaterialController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProduksiController;
+use App\Http\Controllers\ProduksiwjlkepalareguController;
 use App\Http\Controllers\ProduksiwjloperatorController;
+use App\Http\Controllers\RekapproduksiwjlController;
 use App\Http\Controllers\ReturController;
 use App\Http\Controllers\SuratjalanController;
 use App\Http\Controllers\VarianController;
@@ -50,26 +53,26 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-    Route::group(['middleware' => ['role_or_permission:superuser|produksi']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi']], function () {
         Route::resource('produksi', ProduksiController::class)->names('produksi');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|datamaster']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|datamaster']], function () {
         Route::resource('datamaster', DatamasterController::class)->names('datamaster');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|pengaturan']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|pengaturan']], function () {
         Route::resource('pengaturan', PengaturanController::class)->names('pengaturan');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|lokasi']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|lokasi']], function () {
         Route::resource('lokasi', LokasiController::class)->names('lokasi');
 
         Route::get('lokasi-export', [LokasiController::class, 'export'])->name('lokasi.export');
         Route::post('lokasi-import', [LokasiController::class, 'import'])->name('lokasi.import');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|mesin']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|mesin']], function () {
         Route::resource('mesin', MesinController::class)->names('mesin');
 
         Route::get('mesin-get-lokasi', [MesinController::class, 'get_lokasi'])->name('mesin.get_lokasi');
@@ -77,25 +80,25 @@ Route::middleware(['auth'])->group(function () {
         Route::post('mesin-import', [MesinController::class, 'import'])->name('mesin.import');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|varian']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|varian']], function () {
         Route::resource('varian', VarianController::class)->names('varian');
 
         Route::get('varian-export', [VarianController::class, 'export'])->name('varian.export');
         Route::post('varian-import', [VarianController::class, 'import'])->name('varian.import');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|material']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|material']], function () {
         Route::resource('material', MaterialController::class)->names('material');
 
         Route::get('material-export', [MaterialController::class, 'export'])->name('material.export');
         Route::post('material-import', [MaterialController::class, 'import'])->name('material.import');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|produksi']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi']], function () {
         Route::resource('produksi', ProduksiController::class)->names('produksi');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|order']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|order']], function () {
         Route::resource('order', OrderController::class)->names('order');
 
         Route::get('order-get-material', [OrderController::class, 'get_material'])->name('order.get_material');
@@ -103,18 +106,18 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('order-progress/{order}', [OrderController::class, 'destroy_progress'])->name('order.progress.destroy');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|permintaanmaterial']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|permintaanmaterial']], function () {
         Route::resource('permintaanmaterial', PermintaanmaterialController::class)->names('permintaanmaterial');
 
         Route::get('permintaanmaterial/{permintaanmaterial}/cetak', [PermintaanmaterialController::class, 'cetak'])->name('permintaanmaterial.cetak');
         Route::get('permintaanmaterial-get-material', [PermintaanmaterialController::class, 'get_material'])->name('permintaanmaterial.get_material');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|gudang']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|gudang']], function () {
         Route::resource('gudang', GudangController::class)->names('gudang');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|barangkeluar']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.barangjadi.barangkeluar|gudang.bahanbaku.barangkeluar|gudang.benang.barangkeluar']], function () {
         Route::resource('barangkeluar', BarangkeluarController::class)->names('barangkeluar');
 
         Route::get('barangkeluar/{barangkeluar}/cetak', [BarangkeluarController::class, 'cetak'])->name('barangkeluar.cetak');
@@ -124,12 +127,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('barangkeluar-get-permintaanmaterial-by-id', [BarangkeluarController::class, 'get_permintaanmaterial_by_id'])->name('barangkeluar.get_permintaanmaterial_by_id');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|gudangbarangjadi.order']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.barangjadi.order']], function () {
         Route::resource('gudangbarangjadi-order', GudangbarangjadiorderController::class)->names('gudangbarangjadiorder');
         Route::post('gudangbarangjadi-order-progress/{order}', [GudangbarangjadiorderController::class, 'store_progress'])->name('gudangbarangjadiorder.progress');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|gudangbarangjadi.cekstok']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.barangjadi.cekstok|gudang.bahanbaku.cekstok|gudang.benang.cekstok']], function () {
         Route::resource('cekstok', CekstokController::class)->names('cekstok');
 
         Route::get('cekstok-export', [CekstokController::class, 'export'])->name('cekstok.export');
@@ -137,7 +140,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('cekstok/{material}/detail', [CekstokController::class, 'detail'])->name('cekstok.detail');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|suratjalan']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.barangjadi.suratjalan']], function () {
         Route::resource('suratjalan', SuratjalanController::class)->names('suratjalan');
 
         Route::get('suratjalan/{suratjalan}/cetak', [SuratjalanController::class, 'cetak'])->name('suratjalan.cetak');
@@ -148,7 +151,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('suratjalan-get-order-by-id', [SuratjalanController::class, 'get_order_by_id'])->name('suratjalan.get_order_by_id');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|barangmasuk']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.barangjadi.barangmasuk|gudang.bahanbaku.barangmasuk|gudang.benang.barangmasuk']], function () {
         Route::resource('barangmasuk', BarangmasukController::class)->names('barangmasuk');
 
         Route::get('barangmasuk/{barangmasuk}/cetak', [BarangmasukController::class, 'cetak'])->name('barangmasuk.cetak');
@@ -158,7 +161,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('barangmasuk-get-barangkeluar-by-id', [BarangmasukController::class, 'ge_barangkeluar_by_id'])->name('barangmasuk.get_barangkeluar_by_id');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|retur']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.barangjadi.retur|gudang.bahanbaku.retur|gudang.benang.retur']], function () {
         Route::resource('retur', ReturController::class)->names('retur');
 
         Route::get('retur/{retur}/cetak', [ReturController::class, 'cetak'])->name('retur.cetak');
@@ -169,17 +172,67 @@ Route::middleware(['auth'])->group(function () {
         Route::get('retur-get-barangkeluar-by-id', [ReturController::class, 'ge_barangkeluar_by_id'])->name('retur.get_barangkeluar_by_id');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|produksiwjl.operator']], function () {
-        Route::resource('produksiwjl-operator', ProduksiwjloperatorController::class)->names('produksiwjl.operator');
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.wjl.operator']], function () {
+        Route::get('produksiwjl-operator', [ProduksiwjloperatorController::class, 'index'])->name('produksiwjl.operator.index');
+        Route::post('produksiwjl-operator', [ProduksiwjloperatorController::class, 'store'])->name('produksiwjl.operator.store');
+        Route::get('produksiwjl-operator/create', [ProduksiwjloperatorController::class, 'create'])->name('produksiwjl.operator.create');
+        Route::get('produksiwjl-operator/create-laporan', [ProduksiwjloperatorController::class, 'create_laporan'])->name('produksiwjl.operator.create_laporan');
+        Route::get('produksiwjl-operator/{produksiwjl}', [ProduksiwjloperatorController::class, 'show'])->name('produksiwjl.operator.show');
+        Route::put('produksiwjl-operator/{produksiwjl}', [ProduksiwjloperatorController::class, 'update'])->name('produksiwjl.operator.update');
+        Route::delete('produksiwjl-operator/{produksiwjl}', [ProduksiwjloperatorController::class, 'destroy'])->name('produksiwjl.operator.destroy');
+        Route::get('produksiwjl-operator/{produksiwjl}/edit', [ProduksiwjloperatorController::class, 'edit'])->name('produksiwjl.operator.edit');
 
-        Route::get('produksi-wjl-get-mesin', [ProduksiwjloperatorController::class, 'get_mesin'])->name('produksiwjl.get_mesin');
+        Route::get('produksiwjl-operator-get-mesin', [ProduksiwjloperatorController::class, 'get_mesin'])->name('produksiwjl.operator.get_mesin');
+        Route::get('produksiwjl-operator-get-detail', [ProduksiwjloperatorController::class, 'get_detail'])->name('produksiwjl.operator.get_detail');
+        Route::get('produksiwjl-operator-cek-sebelumnya', [ProduksiwjloperatorController::class, 'cek_sebelumnya'])->name('produksiwjl.operator.cek_sebelumnya');
+        Route::get('produksiwjl-operator-confirm/{produksiwjl}', [ProduksiwjloperatorController::class, 'confirm'])->name('produksiwjl.operator.confirm');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|pengaturan']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|pengaturan']], function () {
         Route::resource('pengaturan', PengaturanController::class)->names('pengaturan');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superuser|peranpengguna']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|peranpengguna']], function () {
         Route::resource('peranpengguna', PeranpenggunaController::class)->names('peranpengguna');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|pengguna']], function () {
+        // Route::resource('pengguna', PenggunaController::class)->names('pengguna');
+        Route::get('pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
+        Route::post('pengguna', [PenggunaController::class, 'store'])->name('pengguna.store');
+        Route::get('pengguna/create', [PenggunaController::class, 'create'])->name('pengguna.create');
+        Route::get('pengguna/{user}', [PenggunaController::class, 'show'])->name('pengguna.show');
+        Route::put('pengguna/{user}', [PenggunaController::class, 'update'])->name('pengguna.update');
+        Route::delete('pengguna/{user}', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
+        Route::get('pengguna/{user}/edit', [PenggunaController::class, 'edit'])->name('pengguna.edit');
+
+        Route::get('pengguna-get-peranpengguna', [PenggunaController::class, 'get_peranpengguna'])->name('pengguna.get_peranpengguna');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksiwjl.kepalaregu']], function () {
+        Route::resource('produksiwjl-kepalaregu', ProduksiwjlkepalareguController::class)->names('produksiwjl.kepalaregu');
+
+        Route::get('produksiwjl-kepalaregu-get-mesin', [ProduksiwjlkepalareguController::class, 'get_mesin'])->name('produksiwjl.kepalaregu.get_mesin');
+        Route::get('produksiwjl-kepalaregu-get-detail', [ProduksiwjlkepalareguController::class, 'get_detail'])->name('produksiwjl.kepalaregu.get_detail');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.wjl.rekap']], function () {
+        Route::get('produksiwjl-rekap', [RekapproduksiwjlController::class, 'index'])->name('produksiwjl.rekap.index');
+        Route::get('produksiwjl-get-rekap', [RekapproduksiwjlController::class, 'get_rekap'])->name('produksiwjl.rekap.get_rekap');
+        Route::post('produksiwjl-rekap', [RekapproduksiwjlController::class, 'store'])->name('produksiwjl.rekap.store');
+        Route::get('produksiwjl-rekap/create', [RekapproduksiwjlController::class, 'create'])->name('produksiwjl.rekap.create');
+        Route::get('produksiwjl-rekap/create-laporan', [RekapproduksiwjlController::class, 'create_laporan'])->name('produksiwjl.rekap.create_laporan');
+        Route::get('produksiwjl-rekap/{produksiwjl}', [RekapproduksiwjlController::class, 'show'])->name('produksiwjl.rekap.show');
+        Route::put('produksiwjl-rekap/{produksiwjl}', [RekapproduksiwjlController::class, 'update'])->name('produksiwjl.rekap.update');
+        Route::delete('produksiwjl-rekap/{produksiwjl}', [RekapproduksiwjlController::class, 'destroy'])->name('produksiwjl.rekap.destroy');
+        Route::get('produksiwjl-rekap/{produksiwjl}/edit', [RekapproduksiwjlController::class, 'edit'])->name('produksiwjl.rekap.edit');
+
+        Route::get('produksiwjl-rekap-cetak', [RekapproduksiwjlController::class, 'cetak'])->name('produksiwjl.rekap.cetak');
+        Route::get('produksiwjl-rekap-get-mesin', [RekapproduksiwjlController::class, 'get_mesin'])->name('produksiwjl.rekap.get_mesin');
+        Route::get('produksiwjl-rekap-get-detail', [RekapproduksiwjlController::class, 'get_detail'])->name('produksiwjl.rekap.get_detail');
+        Route::get('produksiwjl-rekap-cek-sebelumnya', [RekapproduksiwjlController::class, 'cek_sebelumnya'])->name('produksiwjl.rekap.cek_sebelumnya');
+        Route::get('produksiwjl-rekap-confirm/{produksiwjl}', [RekapproduksiwjlController::class, 'confirm'])->name('produksiwjl.rekap.confirm');
+
+        Route::get('produksiwjl-rekap-export', [RekapproduksiwjlController::class, 'export'])->name('produksiwjl.rekap.export');
     });
 });

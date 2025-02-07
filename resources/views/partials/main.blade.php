@@ -160,7 +160,7 @@
                         @endif
 
                         @if (auth()->user()->can('produksi'))
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('produksi.index') }}"
                                     class="nav-link {{ \Request::segment(1) == 'laporan' ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-file-alt"></i>
@@ -168,7 +168,7 @@
                                         Laporan
                                     </p>
                                 </a>
-                            </li>
+                            </li> --}}
                         @endif
 
                         @if (auth()->user()->can('datamaster'))

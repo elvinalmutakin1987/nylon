@@ -45,4 +45,9 @@ class Produksiwjl extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public function mesin(): BelongsTo
+    {
+        return $this->belongsTo(Mesin::class)->withDefault(['nama' => null]);
+    }
 }

@@ -6,6 +6,7 @@ use App\Models\Foto;
 use App\Models\Mesin;
 use App\Models\Pengaturan;
 use App\Models\Produksiwjl;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -33,9 +34,79 @@ class ProduksiwjloperatorController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $mesin_id = $request->mesin_id;
+        $mesin = Mesin::find($mesin_id);
+        $shift = $request->shift;
+        $tanggal = Carbon::parse($request->tanggal)->format('Y-m-d') ?? date('Y-m-d');
+        $shift_sebelumnya = '';
+
+        if ($shift == 'Pagi') {
+            $shift_sebelumnya = 'Malam';
+            $tanggal_sebelumnya = Carbon::parse($tanggal)->subDays(1)->format('Y-m-d');
+        } elseif ($shift == 'Sore') {
+            $shift_sebelumnya = 'Pagi';
+            $tanggal_sebelumnya = $tanggal;
+        } elseif ($shift == 'Malam') {
+            $shift_sebelumnya = 'Sore';
+            $tanggal_sebelumnya = $tanggal;
+        }
+
+        if ($mesin_id == 'null' || $mesin_id == '') {
+            return redirect()->back()->with([
+                'status' => 'error',
+                'message' => 'Pilih mesin!'
+            ]);
+        }
+
+        if ($tanggal == 'null' || $tanggal == '') {
+            return redirect()->back()->with([
+                'status' => 'error',
+                'message' => 'Pilih tanggal!'
+            ]);
+        }
+        if ($shift == 'null' || $shift == '') {
+            return redirect()->back()->with([
+                'status' => 'error',
+                'message' => 'Pilih shift!'
+            ]);
+        }
+
+        $produksiwjl = Produksiwjl::where('mesin_id', $mesin_id)
+            ->where('tanggal', $tanggal)
+            ->where('shift', $shift)
+            ->first();
+
+        $produksiwjl_sebelumnya = Produksiwjl::where('mesin_id', $mesin_id)
+            ->where('tanggal', $tanggal_sebelumnya)
+            ->where('shift', $shift_sebelumnya)
+            ->first();
+
+        $action = 'create';
+        if (!$produksiwjl) {
+            $action = 'create';
+            return view('produksiwjl.operator.show', compact('shift', 'tanggal', 'mesin_id', 'mesin', 'action', 'produksiwjl_sebelumnya'));
+        }
+
+        if ($produksiwjl->status == 'Submit') {
+            $action = 'edit';
+            return view('produksiwjl.operator.show', compact('shift', 'tanggal', 'mesin_id', 'mesin', 'action', 'produksiwjl', 'produksiwjl_sebelumnya'));
+        }
+
+        return redirect()->back()->with([
+            'status' => 'error',
+            'message' => 'Laporan sudah di konfirmasi kepala regu / pengawas!'
+        ]);
+    }
+
+    public function create_laporan(Request $request)
+    {
+        $shift = $request->shift;
+        $tanggal = $request->tanggal;
+        $mesin_id = $request->mesin_id;
+        $mesin = Mesin::find($mesin_id);
+        return view('produksiwjl.operator.create', compact('shift', 'tanggal', 'mesin_id', 'mesin'));
     }
 
     /**
@@ -54,63 +125,43 @@ class ProduksiwjloperatorController extends Controller
             'keterangan' => 'required',
         ]);
         if ($validator->fails()) {
-            return redirect()->back()->withErrors([
-                'status' => 'error',
-                'message' => $validator->getMessageBag()
-            ])->withInput();
+            return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
         }
         DB::beginTransaction();
         try {
-            $pengaturan = Pengaturan::where('keterangan', 'produksiwjl.operator.butuh.approval')->first();
+            $order_shift = '';
+            if ($request->shift == 'Pagi') {
+                $order_shift = '1';
+            } elseif ($request->shift == 'Sore') {
+                $order_shift = '2';
+            } elseif ($request->shift == 'Malam') {
+                $order_shift = '3';
+            }
+            //$pengaturan = Pengaturan::where('keterangan', 'produksiwjl.operator.butuh.approval')->first();
             $gen_no_dokumen = Controller::gen_no_dokumen('produksiwjl');
-            $produksiwjl = Produksiwjl::where('tanggal', $request->tanggal)->where('shift', $request->shift)->first();
-            $cek = 0;
-            if ($produksiwjl) {
-                $cek = 1;
-                if ($produksiwjl->status == 'Approved') {
-                    return redirect()->route('produksiwjl.operator.index')->with([
-                        'status' => 'error',
-                        'message' => 'Data sudah masuk laporan. Tidak bisa diubah!'
-                    ]);
-                }
-            }
-            if ($cek == 0) {
-                $produksiwjl = new Produksiwjl();
-                $produksiwjl->slug = Controller::gen_slug();
-            }
+            $produksiwjl = new Produksiwjl();
+            $produksiwjl->slug = Controller::gen_slug();
             $produksiwjl->tanggal = $request->tanggal;
             $produksiwjl->operator = $request->operator;
             $produksiwjl->shift = $request->shift;
             $produksiwjl->mesin_id = $request->mesin_id;
             $produksiwjl->jenis_kain = $request->jenis_kain;
-            $produksiwjl->meter_awal = Controller::unformat_angka($request->meter_awal);
-            $produksiwjl->meter_akhir = Controller::unformat_angka($request->meter_akhir);
-            $produksiwjl->hasil = Controller::unformat_angka($request->hasil);
+            $produksiwjl->meter_awal = Controller::unformat_angka($request->meter_awal ?? '0');
+            $produksiwjl->meter_akhir = Controller::unformat_angka($request->meter_akhir ?? '0');
+            $produksiwjl->hasil = Controller::unformat_angka($request->hasil ?? '0');
             $produksiwjl->keterangan = $request->keterangan;
-            $produksiwjl->lungsi = Controller::unformat_angka($request->lungsi);
-            $produksiwjl->pakan = Controller::unformat_angka($request->pakan);
+            $produksiwjl->lungsi = Controller::unformat_angka($request->lungsi ?? '0');
+            $produksiwjl->pakan = Controller::unformat_angka($request->pakan ?? '0');
             $produksiwjl->lubang = $request->lubang;
             $produksiwjl->pgr = $request->pgr;
-            $produksiwjl->lebar = Controller::unformat_angka($request->lebar);
+            $produksiwjl->lebar = Controller::unformat_angka($request->lebar ?? '0');
             $produksiwjl->mesin = $request->mesin;
             $produksiwjl->teknisi = $request->teknisi;
-            if ($cek == 0) {
-                $produksiwjl->created_by = Auth::user()->id;
-            } else {
-                $produksiwjl->updated_by = Auth::user()->id;
-            }
-            $produksiwjl->status = $pengaturan->nilai == 'Ya' ? 'Submit' : 'Approved';
+            $produksiwjl->created_by = Auth::user()->id;
+            $produksiwjl->status = 'Submit'; //$pengaturan->nilai == 'Ya' ? 'Submit' : 'Confirmed';
+            $produksiwjl->order_shift = $order_shift;
             $produksiwjl->save();
             if ($request->hasFile('foto')) {
-                if ($cek == 1) {
-                    $fotonya = Foto::where('dokumen', 'produksiwjl')->where('dokumen_id', $produksiwjl->id)->get();
-                    foreach ($fotonya as $f) {
-                        if (Storage::exists($f->fulltext)) {
-                            Storage::delete($f->fulltext);
-                        }
-                    }
-                    Foto::where('dokumen', 'produksiwjl')->where('dokumen_id', $produksiwjl->id)->delete();
-                }
                 $files = $request->file('foto');
                 foreach ($files as $file) {
                     $realname = $file->getClientOriginalName();
@@ -151,17 +202,14 @@ class ProduksiwjloperatorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Produksiwjl $produksiwjl)
-    {
-        //
-    }
+    public function show(Request $request, Produksiwjl $produksiwjl) {}
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Produksiwjl $produksiwjl)
     {
-        //
+        return view('produksiwjl.operator.edit', compact('produksiwjl'));
     }
 
     /**
@@ -169,7 +217,78 @@ class ProduksiwjloperatorController extends Controller
      */
     public function update(Request $request, Produksiwjl $produksiwjl)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'operator' => 'required',
+            'mesin_id' => 'required',
+            'jenis_kain' => 'required',
+            'shift' => 'required',
+            'meter_awal' => 'required',
+            'meter_akhir' => 'required',
+            'hasil' => 'required',
+            'keterangan' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
+        }
+        DB::beginTransaction();
+        try {
+            //$pengaturan = Pengaturan::where('keterangan', 'produksiwjl.operator.butuh.approval')->first();
+            $produksiwjl->tanggal = $request->tanggal;
+            $produksiwjl->operator = $request->operator;
+            $produksiwjl->shift = $request->shift;
+            $produksiwjl->mesin_id = $request->mesin_id;
+            $produksiwjl->jenis_kain = $request->jenis_kain;
+            $produksiwjl->meter_awal = Controller::unformat_angka($request->meter_awal ?? '0');
+            $produksiwjl->meter_akhir = Controller::unformat_angka($request->meter_akhir ?? '0');
+            $produksiwjl->hasil = Controller::unformat_angka($request->hasil ?? '0');
+            $produksiwjl->keterangan = $request->keterangan;
+            $produksiwjl->lungsi = Controller::unformat_angka($request->lungsi ?? '0');
+            $produksiwjl->pakan = Controller::unformat_angka($request->pakan ?? '0');
+            $produksiwjl->lubang = $request->lubang;
+            $produksiwjl->pgr = $request->pgr;
+            $produksiwjl->lebar = Controller::unformat_angka($request->lebar ?? '0');
+            $produksiwjl->mesin = $request->mesin;
+            $produksiwjl->teknisi = $request->teknisi;
+            $produksiwjl->updated_by = Auth::user()->id;
+            $produksiwjl->status = 'Submit'; //$pengaturan->nilai == 'Ya' ? 'Submit' : 'Confirmed';
+            $produksiwjl->order_shift = $order_shift;
+            $produksiwjl->save();
+            if ($request->hasFile('foto')) {
+                $files = $request->file('foto');
+                foreach ($files as $file) {
+                    $realname = $file->getClientOriginalName();
+                    $extension = $file->getClientOriginalExtension();
+                    $directory = "produksiwjl";
+                    $filename = Str::random(24) . "." . $extension;
+                    $file->storeAs($directory, $filename);
+
+                    // $manager = new ImageManager(new Driver());
+                    // $image = ImageManager::imagick()->read('storage/' . $directory . '/' . $filename);
+                    // $image->resizeDown(height: 100);
+                    // $image->scaleDown(height: 100);
+
+                    $foto_db = new Foto();
+                    $foto_db->slug = Controller::gen_slug();
+                    $foto_db->dokumen = 'produksiwjl';
+                    $foto_db->dokumen_id = $produksiwjl->id;
+                    $foto_db->fulltext = 'storage/' . $directory . '/' . $filename;
+                    $foto_db->directory = $directory;
+                    $foto_db->filename = $filename;
+                    $foto_db->realname = $realname;
+                    $foto_db->extension = $extension;
+                    $foto_db->created_by = Auth::user()->id;
+                    $foto_db->save();
+                }
+            }
+            DB::commit();
+            return redirect()->route('produksiwjl.operator.index')->with([
+                'status' => 'success',
+                'message' => 'Data telah disimpan!'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return view('error', compact('th'));
+        }
     }
 
     /**
@@ -202,5 +321,53 @@ class ProduksiwjloperatorController extends Controller
             ];
             return response()->json($result);
         }
+    }
+
+    public function get_detail(Request $request)
+    {
+        $mesin_id = $request->mesin_id;
+        $tanggal = Carbon::parse($request->tanggal)->format('Y-m-d') ?? date('Y-m-d');
+        $shift = $request->shift;
+        if ($shift == 'Pagi') {
+            $shift = "Malam";
+            $tanggal = Carbon::parse($tanggal)->subDays(1)->format('Y-m-d');
+        } elseif ($shift == 'Sore') {
+            $shift = "Pagi";
+        } elseif ($shitf == 'Malam') {
+            $shift = "Sore";
+        }
+        $produksiwjl = Produksiwjl::where('tanggal', $tanggal)->where('shift', $shift)->where('mesin_id', $mesin_id)->first();
+        $view =  view('produksiwjl.operator.show', compact('produksiwjl'))->render();
+        return response()->json([
+            'status' => 'success',
+            'data' => $view,
+            'message' => 'success'
+        ]);
+    }
+
+    public function cek_sebelumnya(Request $request)
+    {
+        $mesin_id = $request->mesin_id;
+        $tanggal = Carbon::parse($request->tanggal)->format('Y-m-d') ?? date('Y-m-d');
+        $shift = $request->shift;
+        if ($shift == 'Pagi') {
+            $shift = "Malam";
+            $tanggal = Carbon::parse($tanggal)->subDays(1)->format('Y-m-d');
+        } elseif ($shift == 'Sore') {
+            $shift = "Pagi";
+        } elseif ($shitf == 'Malam') {
+            $shift = "Sore";
+        }
+        $produksiwjl = Produksiwjl::where('tanggal', $tanggal)->where('shift', $shift)->where('mesin_id', $mesin_id)->first();
+        return response()->json([
+            'status' => 'success',
+            'data' => $produksiwjl,
+            'message' => 'success'
+        ]);
+    }
+
+    public function confirm(Request $request, Produksiwjl $produksiwjl)
+    {
+        return view('produksiwjl.operator.confirm');
     }
 }

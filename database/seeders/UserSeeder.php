@@ -35,6 +35,12 @@ class UserSeeder extends Seeder
         //===========================================
 
         /**
+         * Order
+         */
+        Permission::create(['name' => 'order']);
+        //===========================================
+
+        /**
          * Gudang
          */
         Permission::create(['name' => 'gudang']);
@@ -42,26 +48,26 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'gudang.bahanbaku.barangmasuk']);
         Permission::create(['name' => 'gudang.bahanbaku.retur']);
         Permission::create(['name' => 'gudang.bahanbaku.cekstok']);
-        Permission::create(['name' => 'gudang.benang.barangkeluar']);
-        Permission::create(['name' => 'gudang.benang.barangmasuk']);
-        Permission::create(['name' => 'gudang.benang.retur']);
-        Permission::create(['name' => 'gudang.benang.cekstok']);
         Permission::create(['name' => 'gudang.barangjadi.order']);
         Permission::create(['name' => 'gudang.barangjadi.cekstok']);
         Permission::create(['name' => 'gudang.barangjadi.suratjalan']);
         Permission::create(['name' => 'gudang.barangjadi.barangkeluar']);
         Permission::create(['name' => 'gudang.barangjadi.barangmasuk']);
         Permission::create(['name' => 'gudang.barangjadi.retur']);
-        Permission::create(['name' => 'order']);
         //===========================================
 
         /**
          * Produksi
          */
         Permission::create(['name' => 'produksi']);
-        Permission::create(['name' => 'produksiwjl.operator']);
-        Permission::create(['name' => 'produksiwjl.kepalaregu']);
-        Permission::create(['name' => 'permintaanmaterial']);
+        Permission::create(['name' => 'gudang.benang.barangkeluar']);
+        Permission::create(['name' => 'gudang.benang.barangmasuk']);
+        Permission::create(['name' => 'gudang.benang.retur']);
+        Permission::create(['name' => 'gudang.benang.cekstok']);
+        Permission::create(['name' => 'produksi.wjl.operator']);
+        Permission::create(['name' => 'produksi.wjl.kepalaregu']);
+        Permission::create(['name' => 'produksi.wjl.rekap']);
+        Permission::create(['name' => 'produksi.wjl.permintaanmaterial']);
         Permission::create(['name' => 'approval']);
         //===========================================
 

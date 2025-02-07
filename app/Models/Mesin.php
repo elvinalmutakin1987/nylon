@@ -35,4 +35,9 @@ class Mesin extends Model
     {
         return $this->belongsTo(Lokasi::class)->withDefault(['nama' => null]);
     }
+
+    public function produksiwjl(): HasMany
+    {
+        return $this->hasMany(Produksiwjl::class);
+    }
 }

@@ -111,8 +111,8 @@
                         targets: '_all'
                     },
                     {
-                        data: 'nama',
-                        name: 'nama',
+                        data: 'name',
+                        name: 'name',
                         orderable: true,
                         searchable: true,
                     },

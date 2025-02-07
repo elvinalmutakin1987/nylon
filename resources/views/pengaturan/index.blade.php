@@ -36,7 +36,7 @@
                                             </a>
                                         @endif
                                         @if (auth()->user()->can('pengguna'))
-                                            <a class="btn btn-app" href="{{ route('mesin.index') }}">
+                                            <a class="btn btn-app" href="{{ route('pengguna.index') }}">
                                                 <i class="fa fa-user"></i> Pengguna
                                             </a>
                                         @endif

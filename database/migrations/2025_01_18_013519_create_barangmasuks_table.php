@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('approved_by')->nullable();
             $table->string('sent_by')->nullable();
             $table->string('received_by')->nullable();
+            $table->text('foto')->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamp('approved_at')->nullable();
