@@ -383,8 +383,8 @@
         @endif
 
         function hitung_hasil() {
-            var meter_awal = numeral($("#meter_awal").val()).format('0,0.0');
-            var meter_akhir = numeral($("#meter_akhir").val()).format('0,0.0');
+            var meter_awal = numeral($("#meter_awal").val()).format('0.0');
+            var meter_akhir = numeral($("#meter_akhir").val()).format('0.0');
             var hasil = parseFloat(meter_akhir) - parseFloat(meter_awal);
             $("#hasil").val(numeral(hasil).format('0,0.0'));
         }

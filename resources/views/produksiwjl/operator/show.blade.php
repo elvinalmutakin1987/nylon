@@ -148,7 +148,7 @@
                                                 <input type="text"
                                                     class="form-control @error('hasil') is-invalid @enderror"
                                                     id="hasil" name="hasil"
-                                                    value="{{ old('hasil') ?? Number::format($produksiwjl_sebelumnya->hasil, precision: 1) }}"
+                                                    value="{{ old('hasil') ?? Number::format($produksiwjl_sebelumnya->meter_akhir - $produksiwjl_sebelumnya->meter_awal, precision: 1) }}"
                                                     readonly>
                                                 @error('hasil')
                                                     <span id="hasil-error"

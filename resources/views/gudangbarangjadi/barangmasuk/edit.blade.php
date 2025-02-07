@@ -268,6 +268,9 @@
             }, {
                 id: 'packing',
                 text: 'Packing'
+            }, {
+                id: 'welding',
+                text: 'Welding'
             }
         ];
 

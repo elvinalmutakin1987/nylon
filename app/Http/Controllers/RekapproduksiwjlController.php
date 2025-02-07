@@ -84,7 +84,7 @@ class RekapproduksiwjlController extends Controller
             $term = trim($request->term);
             $mesin = Mesin::selectRaw("id, nama as text")
                 ->where('nama', 'like', '%' . $term . '%')
-                ->orderBy('nama')->simplePaginate(10);
+                ->orderByRaw('CONVERT(nama, SIGNED) asc')->simplePaginate(10);
             $total_count = count($mesin);
             $morePages = true;
             $pagination_obj = json_encode($mesin);

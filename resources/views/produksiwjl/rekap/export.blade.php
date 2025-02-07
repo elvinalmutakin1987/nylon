@@ -72,7 +72,7 @@
                         </td>
                         <td>{{ Number::format((float) $d->meter_akhir, precision: 1) }}
                         </td>
-                        <td>{{ Number::format((float) $d->hasil, precision: 1) }}</td>
+                        <td>{{ Number::format((float) $d->meter_akhir - (float) $d->meter_awal, precision: 1) }}</td>
                         <td>{!! nl2br($d->keterangan) !!}</td>
                         <td>{{ Number::format((float) $d->lungsi, precision: 1) }}</td>
                         <td>{{ Number::format((float) $d->pakan, precision: 1) }}</td>
