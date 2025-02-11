@@ -1,7 +1,3 @@
-@php
-    use Illuminate\Support\Number;
-@endphp
-
 @extends('partials.main')
 
 @section('content')
@@ -17,7 +13,7 @@
                             <li class="breadcrumb-item"><a href="{{ route('gudang.index') }}" class="text-dark">Gudang</a>
                             </li>
                             <li class="breadcrumb-item">Bahan Baku</li>
-                            <li class="breadcrumb-item">Barang Masuk</li>
+                            <li class="breadcrumb-item">Penerimaan Barang</li>
                             <li class="breadcrumb-item" Active>Edit Data</li>
                         </ol>
                     </div>
@@ -30,88 +26,45 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Application buttons -->
-                        <form action="{{ route('barangmasuk.update', $barangmasuk->slug) }}" enctype="multipart/form-data"
-                            method="POST">
+                        <form action="{{ route('penerimaanbarang.update', $penerimaanbarang->slug) }}"
+                            enctype="multipart/form-data" method="POST">
                             @csrf
                             @method('put')
-                            <input type="hidden" id="gudang" name="gudang" value="{{ $barangmasuk->gudang }}">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Edit Barang Masuk</h3>
+                                    <h3 class="card-title">Edit Penerimaan Barang</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="nama_toko">No. Barang Masuk</label>
-                                                <input type="text"
-                                                    class="form-control @error('no_dokumen') is-invalid @enderror"
-                                                    id="no_dokumen" name="no_dokumen" value="{{ $barangmasuk->no_dokumen }}"
-                                                    readonly>
-                                                @error('no_dokumen')
-                                                    <span id="no_dokumen-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="asal">Gudang Asal</label>
-                                                <select
-                                                    class="form-control select2 w-100 select-asal @error('asal') is-invalid @enderror"
-                                                    id="asal" name="asal">
-                                                    @php
-                                                        $asal = '';
-                                                        if ($barangmasuk->asal == 'barang-jadi') {
-                                                            $asal = 'Barang Jadi';
-                                                        } elseif ($barangmasuk->asal == 'bahan-baku') {
-                                                            $asal = 'Bahan Baku';
-                                                        } elseif ($barangmasuk->asal == 'benang') {
-                                                            $asal = 'Benang';
-                                                        } elseif ($barangmasuk->asal == 'wjl') {
-                                                            $asal = 'WJL';
-                                                        } elseif ($barangmasuk->asal == 'sulzer') {
-                                                            $asal = 'Sulzer';
-                                                        } elseif ($barangmasuk->asal == 'rashel') {
-                                                            $asal = 'Rashel';
-                                                        } elseif ($barangmasuk->asal == 'extruder') {
-                                                            $asal = 'Extruder';
-                                                        } elseif ($barangmasuk->asal == 'beaming') {
-                                                            $asal = 'Beaming';
-                                                        } elseif ($barangmasuk->asal == 'packing') {
-                                                            $asal = 'Packing';
-                                                        }
-                                                    @endphp
-                                                    <option value="{{ $barangmasuk->asal }}">{{ $asal }}</option>
-                                                </select>
-                                                @error('asal')
+                                                <label for="asal">Supplier</label>
+                                                <input type="text" class="form-control" id="supplier" name="supplier"
+                                                    value="{{ $penerimaanbarang->supplier }}">
+                                                @error('supplier')
                                                     <span id="asal-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="barangkeluar_id">No. Barang Keluar</label>
-                                                <select
-                                                    class="form-control select2 w-100 select-barang-keluar @error('barangkeluar_id') is-invalid @enderror"
-                                                    id="barangkeluar_id" name="barangkeluar_id">
-                                                    <option value="{{ $barangmasuk->barangkeluar_id }}">
-                                                        {{ $barangmasuk->barangkeluar->no_dokumen ?? '' }}</option>
-                                                </select>
-                                                @error('barangkeluar_id')
-                                                    <span id="barangkeluar_id-error"
+                                                <label for="sj_supplier">No. SJ Supplier</label>
+                                                <input type="text" class="form-control" id="sj_supplier"
+                                                    name="sj_supplier" value="{{ $penerimaanbarang->sj_supplier }}">
+                                                @error('sj_supplier')
+                                                    <span id="sj_supplier-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="tanggal">Tanggal</label>
                                                 <div class="input-group date" id="div_tanggal" data-target-input="nearest">
                                                     <input type="text" class="form-control datetimepicker-input"
                                                         data-target="#div_tanggal" id="tanggal" name="tanggal"
-                                                        value="{{ old('tanggal') ?? date('Y-m-d') }}" />
+                                                        value="{{ old('tanggal') ?? $penerimaanbarang->tanggal }}" />
                                                     <div class="input-group-append" data-target="#div_tanggal"
                                                         data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-calendar"></i>
@@ -139,7 +92,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($barangmasuk->barangmasukdetail as $d)
+                                                        @foreach ($penerimaanbarang->penerimaanbarangdetail as $d)
                                                             <tr>
                                                                 <td>
                                                                     <select class="form-control select2 w-100 select-barang"
@@ -194,7 +147,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="catatan">Catatan</label>
-                                                <textarea id="catatan" name="catatan" class="form-control @error('catatan') is-invalid @enderror" rows="3"></textarea>
+                                                <textarea id="catatan" name="catatan" class="form-control @error('catatan') is-invalid @enderror" rows="3">{!! $penerimaanbarang->catatan !!}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -202,8 +155,7 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <a type="button" class="btn btn-default"
-                                        href="{{ route('barangmasuk.index', ['gudang' => $gudang]) }}"><i
-                                            class="fa fa-reply"></i>
+                                        href="{{ route('penerimaanbarang.index') }}"><i class="fa fa-reply"></i>
                                         Kembali</a>
                                     <button type="button" class="btn btn-success" data-toggle="dropdown"><i
                                             class="fa fa-save"></i>
@@ -212,7 +164,7 @@
                                         <button type="submit" class="dropdown-item" name="status" value="Draft"><i
                                                 class="fa fa-file"></i> Sebagai Draft</button>
                                         <button type="submit" class="dropdown-item" name="status" value="Submit"><i
-                                                class="fa fa-save"></i> Simpan Barang Masuk</button>
+                                                class="fa fa-save"></i> Simpan Penerimaan Barang</button>
                                     </div>
                                 </div>
                             </div>
@@ -283,31 +235,6 @@
         });
 
         function format_select2() {
-            $(".select-asal").select2({
-                placeholder: "-- Pilih Asal --",
-                allowClear: true,
-                data: data2,
-                minimumResultsForSearch: -1,
-                width: '100%'
-            });
-
-            $('.select-barang-keluar').select2({
-                placeholder: "- Pilih Barang Keluar -",
-                allowClear: true,
-                ajax: {
-                    url: '{{ route('barangmasuk.get_barangkeluar') }}',
-                    dataType: 'json',
-                    data: function(params) {
-                        return {
-                            term: params.term || '',
-                            page: params.page || 1,
-                            gudang: gudang
-                        };
-                    },
-                    cache: true,
-                }
-            });
-
             $('.select-satuan').select2({
                 width: '100%'
             });
@@ -316,13 +243,12 @@
                 placeholder: "- Pilih Barang -",
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('barangmasuk.get_material') }}',
+                    url: '{{ route('penerimaanbarang.get_material') }}',
                     dataType: 'json',
                     data: function(params) {
                         return {
                             term: params.term || '',
                             page: params.page || 1,
-                            gudang: '{{ $barangmasuk->gudang }}'
                         };
                     },
                     cache: true,
@@ -379,26 +305,5 @@
         $("#table1").on("click", "#hapus", function() {
             $(this).closest("tr").remove();
         });
-
-        $(".select-asal").on('change', function(e) {
-            $('.select-barang-keluar').val('').trigger('change');
-            gudang = $(".select-asal").val();
-            $('.select-barang-keluar').select2({
-                placeholder: "- Pilih Barang Keluar -",
-                allowClear: true,
-                ajax: {
-                    url: '{{ route('barangmasuk.get_barangkeluar') }}',
-                    dataType: 'json',
-                    data: function(params) {
-                        return {
-                            term: params.term || '',
-                            page: params.page || 1,
-                            gudang: gudang
-                        };
-                    },
-                    cache: true,
-                }
-            });
-        })
     </script>
 @endsection

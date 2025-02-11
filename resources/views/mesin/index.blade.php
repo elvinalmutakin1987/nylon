@@ -53,7 +53,7 @@
                                                 <tr>
                                                     <th></th>
                                                     <th>Nama</th>
-                                                    <th>Lokasi</th>
+                                                    <th>Target Produksi</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -160,10 +160,13 @@
                         searchable: true,
                     },
                     {
-                        data: 'lokasi',
-                        name: 'lokasi',
+                        data: 'target_produksi',
+                        name: 'target_produksi',
                         orderable: true,
                         searchable: true,
+                        render: function(data, type, row) {
+                            return numeral(data).format('0,0');
+                        }
                     },
                     {
                         data: 'action',
@@ -221,5 +224,13 @@
         $('#modal-default').on('hidden.bs.modal', function() {
             $("#card-tabs").html('');
         });
+
+        function ubah_format(field, nilai) {
+            var mynumeral = numeral(nilai).format('0,0');
+            if (field.includes('jumlah')) {
+                mynumeral = numeral(nilai).format('0,0.0');
+            }
+            $("#" + field).val(mynumeral);
+        }
     </script>
 @endsection

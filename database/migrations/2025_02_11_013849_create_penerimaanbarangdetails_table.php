@@ -11,19 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mesins', function (Blueprint $table) {
+        Schema::create('penerimaanbarangdetails', function (Blueprint $table) {
             $table->id();
-            $table->integer('lokasi_id')->nullable();
+            $table->integer('penerimaanbarang_id')->nullable();
+            $table->integer('material_id')->nullable();
             $table->string('slug')->nullable();
-            $table->string('nama')->nullable();
-            $table->string('target_produksi')->nullable();
-            $table->text('keterangan')->nullable();
+            $table->decimal('jumlah', 16, 2)->nullable();
+            $table->string('satuan')->nullable();
+            $table->string('keterangan')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
             $table->timestamps();
-            $table->index('lokasi_id');
             $table->timestamp('deleted_at')->nullable();
+            $table->index('penerimaanbarang_id');
+            $table->index('material_id');
         });
     }
 
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mesins');
+        Schema::dropIfExists('penerimaanbarangdetails');
     }
 };

@@ -73,6 +73,11 @@ class PengaturanSeeder extends Seeder
                 "keterangan" => "gudang.bahan-baku.retur.butuh.approval",
                 "nilai" => "Tidak"
             ],
+            [
+                "slug" => Str::random(32),
+                "keterangan" => "gudang.bahan-baku.penerimaanbarang.butuh.approval",
+                "nilai" => "Tidak"
+            ],
         ];
 
         DB::table('pengaturans')->insert($data);

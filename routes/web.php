@@ -14,6 +14,7 @@ use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MesinController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PenerimaanbarangController;
 use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PeranpenggunaController;
@@ -225,7 +226,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('produksiwjl-rekap/{produksiwjl}', [RekapproduksiwjlController::class, 'show'])->name('produksiwjl.rekap.show');
         Route::put('produksiwjl-rekap/{produksiwjl}', [RekapproduksiwjlController::class, 'update'])->name('produksiwjl.rekap.update');
         Route::delete('produksiwjl-rekap/{produksiwjl}', [RekapproduksiwjlController::class, 'destroy'])->name('produksiwjl.rekap.destroy');
-        Route::get('produksiwjl-rekap/{produksiwjl}/edit', [RekapproduksiwjlController::class, 'edit'])->name('produksiwjl.rekap.edit');
+
+        Route::group(['middleware' => ['role_or_permission:superadmin|produksi.wjl.edit']], function () {
+            Route::get('produksiwjl-rekap/{produksiwjl}/edit', [RekapproduksiwjlController::class, 'edit'])->name('produksiwjl.rekap.edit');
+        });
+
+        Route::group(['middleware' => ['role_or_permission:superadmin|produksi.wjl.konfirmasi']], function () {
+            Route::get('produksiwjl-rekap-konfirmasi', [RekapproduksiwjlController::class, 'konfirmasi'])->name('produksiwjl.rekap.konfirmasi');
+        });
 
         Route::get('produksiwjl-rekap-cetak', [RekapproduksiwjlController::class, 'cetak'])->name('produksiwjl.rekap.cetak');
         Route::get('produksiwjl-rekap-get-mesin', [RekapproduksiwjlController::class, 'get_mesin'])->name('produksiwjl.rekap.get_mesin');
@@ -234,5 +242,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('produksiwjl-rekap-confirm/{produksiwjl}', [RekapproduksiwjlController::class, 'confirm'])->name('produksiwjl.rekap.confirm');
 
         Route::get('produksiwjl-rekap-export', [RekapproduksiwjlController::class, 'export'])->name('produksiwjl.rekap.export');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.bahanbaku.penerimaanbarang']], function () {
+        Route::resource('penerimaanbarang', PenerimaanbarangController::class)->names('penerimaanbarang');
+
+        Route::get('penerimaanbarang/{penerimaanbarang}/cetak', [PenerimaanbarangController::class, 'cetak'])->name('penerimaanbarang.cetak');
+        Route::get('penerimaanbarang-get-supplier', [PenerimaanbarangController::class, 'get_supplier'])->name('penerimaanbarang.get_supplier');
+        Route::get('penerimaanbarang-get-material', [PenerimaanbarangController::class, 'get_material'])->name('penerimaanbarang.get_material');
+        Route::get('penerimaanbarang-get-referensi', [PenerimaanbarangController::class, 'get_referensi'])->name('penerimaanbarang.get_referensi');
+        Route::get('penerimaanbarang-get-barangkeluar', [PenerimaanbarangController::class, 'get_barangkeluar'])->name('penerimaanbarang.get_barangkeluar');
+        Route::get('penerimaanbarang-get-barangkeluar-by-id', [PenerimaanbarangController::class, 'ge_barangkeluar_by_id'])->name('penerimaanbarang.get_barangkeluar_by_id');
     });
 });

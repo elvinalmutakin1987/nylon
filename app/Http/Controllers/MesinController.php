@@ -61,7 +61,7 @@ class MesinController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required|unique:mesins,nama,NULL,id,deleted_at,NULL',
-            'lokasi_id' => 'required'
+            // 'lokasi_id' => 'required'
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
@@ -72,6 +72,7 @@ class MesinController extends Controller
             $mesin->slug = Controller::gen_slug();
             $mesin->nama = $request->nama;
             $mesin->lokasi_id = $request->lokasi_id;
+            $mesin->target_produksi = Controller::unformat_angka($request->target_produksi);
             $mesin->keterangan = $request->keterangan;
             $mesin->created_by = Auth::user()->id;
             $mesin->save();
@@ -109,7 +110,7 @@ class MesinController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required|unique:mesins,nama,' . $mesin->id . ',id,deleted_at,NULL',
-            'lokasi_id' => 'required'
+            // 'lokasi_id' => 'required'
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
@@ -118,6 +119,7 @@ class MesinController extends Controller
         try {
             $mesin->nama = $request->nama;
             $mesin->lokasi_id = $request->lokasi_id;
+            $mesin->target_produksi = Controller::unformat_angka($request->target_produksi);
             $mesin->keterangan = $request->keterangan;
             $mesin->created_by = Auth::user()->id;
             $mesin->save();

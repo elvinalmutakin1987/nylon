@@ -222,7 +222,6 @@ class OrderController extends Controller
     {
         if ($request->ajax()) {
             $term = trim($request->term);
-
             $material = Material::selectRaw("id, nama as text")
                 ->where('nama', 'like', '%' . $term . '%')
                 ->where('jenis', 'Barang Jadi')

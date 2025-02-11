@@ -1,7 +1,7 @@
 @php
     use Illuminate\Support\Number;
+    use App\Models\Mesin;
 @endphp
-
 <style>
     .table-main {
         font-family: Arial, Helvetica, sans-serif;
@@ -167,7 +167,7 @@
                             <tr>
                                 <td width="150">Mesin</td>
                                 <td width="10">:</td>
-                                <td>{{ $mesin->nama }}</td>
+                                <td>{{ $mesin_id != '' && $mesin_id != null ? $mesin->nama : 'Semua' }}</td>
                             </tr>
                         </table>
                     </td>
@@ -183,6 +183,7 @@
                 <tr class="header-table">
                     <td width="20px" class="garis">No.</td>
                     <td class="garis">Tanggal</td>
+                    <td class="garis">Mesin</td>
                     <td class="garis">Shift</td>
                     <td class="garis">Jenis Kain</td>
                     <td class="garis">Operator</td>
@@ -199,9 +200,15 @@
                     <td class="garis">Teknisi</td>
                 </tr>
                 @foreach ($produksiwjl as $d)
+                    @php
+                        $mesin_ = Mesin::find($d->mesin_id);
+                        $hasil = $d->meter_akhir - $d->meter_awal;
+                        $persen = ($hasil / $mesin_->target_produksi) * 100;
+                    @endphp
                     <tr>
                         <td class="v-align-top garis m-1">{{ $loop->iteration }}</td>
                         <td class="v-align-top garis m-1">{{ \Carbon\Carbon::parse($d->tanggal)->format('d/m/Y') }}</td>
+                        <td class="v-align-top garis m-1">{{ $mesin_->nama }}</td>
                         <td class="v-align-top garis m-1">{{ $d->shift }}</td>
                         <td class="v-align-top garis m-1">{{ $d->jenis_kain }}</td>
                         <td class="v-align-top garis m-1">{{ $d->operator }}</td>
@@ -210,7 +217,11 @@
                         <td class="v-align-top garis m-1">{{ Number::format((float) $d->meter_akhir, precision: 1) }}
                         </td>
                         <td class="v-align-top garis m-1">
-                            {{ Number::format((float) $d->meter_akhir - (float) $d->meter_awal, precision: 1) }}</td>
+                            {{ Number::format((float) $hasil) }}
+                            <br>
+                            <br>
+                            {{ Number::format((float) $persen, precision: 1) }}%
+                        </td>
                         <td class="v-align-top garis m-1">{!! nl2br($d->keterangan) !!}</td>
                         <td class="v-align-top garis m-1">{{ Number::format((float) $d->lungsi, precision: 1) }}</td>
                         <td class="v-align-top garis m-1">{{ Number::format((float) $d->pakan, precision: 1) }}</td>

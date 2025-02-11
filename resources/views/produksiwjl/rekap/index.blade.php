@@ -136,6 +136,30 @@
                 }
             });
 
+            var url =
+                '{!! route('produksiwjl.rekap.get_rekap', [
+                    'tanggal_dari' => '_tanggal_dari',
+                    'tanggal_sampai' => '_tanggal_sampai',
+                    'mesin_id' => '_mesin_id',
+                ]) !!}';
+            url = url.replace('_tanggal_dari', $("#tanggal_dari").val());
+            url = url.replace('_tanggal_sampai', $("#tanggal_sampai").val());
+            url = url.replace('_mesin_id', $("#mesin_id").val());
+            $.get(url, function(data) {
+                if (data.status == 'success') {
+                    $('#div_detail').html(`
+                        <div class="d-flex justify-content-center m-2">
+                        <button class="btn btn-primary" type="button" disabled>
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                            </button>
+                        </div>
+                    `);
+                    setTimeout(() => {
+                        $('#div_detail').html(data.data);
+                    }, 500);
+                }
+            });
         });
 
         @if (Session::has('message'))

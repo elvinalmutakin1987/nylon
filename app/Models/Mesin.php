@@ -23,6 +23,7 @@ class Mesin extends Model
     protected $fillable = [
         'slug',
         'nama',
+        'target_produksi',
         'lokasi_id',
         'keterangan',
         'created_by',

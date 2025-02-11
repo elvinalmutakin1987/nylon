@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Http\Controllers\Controller;
 use App\Models\Lokasi;
 use App\Models\Mesin;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,7 @@ class MesinImport implements ToModel, WithHeadingRow
             'slug' => Str::random(32),
             'nama' => $row['nama'],
             'lokasi_id' => $lokasi->id,
+            'target_produksi' => Controller::unformat_angka($row['target_produksi']),
             'keterangan' => $row['keterangan'],
             'created_by' => Auth::user()->id
         ]);

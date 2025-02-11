@@ -57,6 +57,18 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
+                                            <label for="target_produksi">Target Produksi</label>
+                                            <input type="text"
+                                                class="form-control @error('target_produksi') is-invalid @enderror"
+                                                id="target_produksi" name="target_produksi"
+                                                value="{{ old('target_produksi') }}"
+                                                onblur="ubah_format('target_produksi', this.value)">
+                                            @error('target_produksi')
+                                                <span id="target_produksi-error"
+                                                    class="error invalid-feedback">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
                                             <label for="keterangan">Keterangan</label>
                                             <input type="text"
                                                 class="form-control @error('keterangan') is-invalid @enderror"
@@ -115,6 +127,14 @@
                     cache: true,
                 }
             });
+        }
+
+        function ubah_format(field, nilai) {
+            var mynumeral = numeral(nilai).format('0,0');
+            if (field.includes('jumlah')) {
+                mynumeral = numeral(nilai).format('0,0.0');
+            }
+            $("#" + field).val(mynumeral);
         }
     </script>
 @endsection

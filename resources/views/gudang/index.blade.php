@@ -89,7 +89,8 @@
                         @if (auth()->user()->can('gudang.bahanbaku.cekstok') ||
                                 auth()->user()->can('gudang.bahanbaku.barangkeluar') ||
                                 auth()->user()->can('gudang.bahanbaku.barangmasuk') ||
-                                auth()->user()->can('gudang.bahanbaku.retur'))
+                                auth()->user()->can('gudang.bahanbaku.retur') ||
+                                auth()->user()->can('gudang.bahanbaku.penerimaanbarang'))
                             <!-- Application buttons -->
                             <div class="card">
                                 <div class="card-header">
@@ -109,6 +110,12 @@
                                                 <a class="btn btn-app"
                                                     href="{{ route('barangkeluar.index', ['gudang' => 'bahan-baku']) }}">
                                                     <i class="fa fa-upload"></i> Barang Keluar
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('gudang.bahanbaku.penerimaanbarang'))
+                                                <a class="btn btn-app" href="{{ route('penerimaanbarang.index') }}">
+                                                    <i class="fas fa-shipping-fast"></i> Penerimaan Barang
                                                 </a>
                                             @endif
 

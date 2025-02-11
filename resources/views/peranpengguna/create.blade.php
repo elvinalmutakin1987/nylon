@@ -207,6 +207,13 @@
                                                                     for="produksi.wjl.rekap">Rekap Produksi
                                                                     WJL</label>
                                                             </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.wjl.edit" name="produksi.wjl.edit">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.wjl.edit">Edit Produksi
+                                                                    WJL</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
