@@ -44,4 +44,9 @@ class Material extends Model
     {
         return $this->hasMany(Penerimaanbarangdetail::class);
     }
+
+    public function kontroldenier(): HasMany
+    {
+        return $this->hasMany(Kontroldenier::class);
+    }
 }

@@ -78,6 +78,87 @@
                                                     class="error invalid-feedback">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        <div class="form-group">
+                                            <label for="keterangan">D +</label>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <input type="text"
+                                                        class="form-control @error('keterangan') is-invalid @enderror"
+                                                        id="keterangan" name="keterangan" value="{{ old('keterangan') }}">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input type="text"
+                                                        class="form-control @error('keterangan') is-invalid @enderror"
+                                                        id="keterangan" name="keterangan" value="{{ old('keterangan') }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="keterangan">D</label>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <input type="text"
+                                                        class="form-control @error('keterangan') is-invalid @enderror"
+                                                        id="keterangan" name="keterangan" value="{{ old('keterangan') }}">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input type="text"
+                                                        class="form-control @error('keterangan') is-invalid @enderror"
+                                                        id="keterangan" name="keterangan" value="{{ old('keterangan') }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="keterangan">N</label>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <input type="text"
+                                                        class="form-control @error('keterangan') is-invalid @enderror"
+                                                        id="keterangan" name="keterangan"
+                                                        value="{{ old('keterangan') }}">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input type="text"
+                                                        class="form-control @error('keterangan') is-invalid @enderror"
+                                                        id="keterangan" name="keterangan"
+                                                        value="{{ old('keterangan') }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="keterangan">K</label>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <input type="text"
+                                                        class="form-control @error('keterangan') is-invalid @enderror"
+                                                        id="keterangan" name="keterangan"
+                                                        value="{{ old('keterangan') }}">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input type="text"
+                                                        class="form-control @error('keterangan') is-invalid @enderror"
+                                                        id="keterangan" name="keterangan"
+                                                        value="{{ old('keterangan') }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="keterangan">K -</label>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <input type="text"
+                                                        class="form-control @error('keterangan') is-invalid @enderror"
+                                                        id="keterangan" name="keterangan"
+                                                        value="{{ old('keterangan') }}">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input type="text"
+                                                        class="form-control @error('keterangan') is-invalid @enderror"
+                                                        id="keterangan" name="keterangan"
+                                                        value="{{ old('keterangan') }}">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!-- /.card-body -->
 

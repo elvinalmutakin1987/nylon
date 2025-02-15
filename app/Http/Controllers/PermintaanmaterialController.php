@@ -185,8 +185,6 @@ class PermintaanmaterialController extends Controller
             $term = trim($request->term);
             $material = Material::selectRaw("id, nama as text")
                 ->where('nama', 'like', '%' . $term . '%')
-                ->orWhere('jenis', '=', 'Raw Material')
-                ->orWhere('jenis', '=', 'Semi Finished')
                 ->orderBy('nama')->simplePaginate(10);
             $total_count = count($material);
             $morePages = true;

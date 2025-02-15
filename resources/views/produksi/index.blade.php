@@ -22,6 +22,28 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
+                        @if (auth()->user()->can('produksi.extruder.kontrol-denier'))
+                            <!-- Application buttons -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Extruder</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <div class="col-md-12">
+                                            @if (auth()->user()->can('produksi.extruder.kontrol-denier'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('produksiextruder-kontrol-denier.index') }}">
+                                                    <i class="fa fa-pencil"></i> Laporan Kontrol Denier
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        @endif
                         @if (auth()->user()->can('produksi.wjl.operator') || auth()->user()->can('produksi.wjl.rekap'))
                             <!-- Application buttons -->
                             <div class="card">

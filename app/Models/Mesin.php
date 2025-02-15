@@ -41,4 +41,10 @@ class Mesin extends Model
     {
         return $this->hasMany(Produksiwjl::class);
     }
+
+
+    public function kontroldenier(): BelongsTo
+    {
+        return $this->belongsTo(Kontroldenier::class)->withDefault(['nama' => null]);
+    }
 }

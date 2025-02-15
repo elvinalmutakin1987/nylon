@@ -8,6 +8,7 @@ use App\Http\Controllers\DatamasterController;
 use App\Http\Controllers\GudangbarangjadicekstokController;
 use App\Http\Controllers\GudangbarangjadiorderController;
 use App\Http\Controllers\GudangController;
+use App\Http\Controllers\KontroldenierController;
 use App\Http\Controllers\LapproduksiwjlController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LokasiController;
@@ -253,5 +254,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('penerimaanbarang-get-referensi', [PenerimaanbarangController::class, 'get_referensi'])->name('penerimaanbarang.get_referensi');
         Route::get('penerimaanbarang-get-barangkeluar', [PenerimaanbarangController::class, 'get_barangkeluar'])->name('penerimaanbarang.get_barangkeluar');
         Route::get('penerimaanbarang-get-barangkeluar-by-id', [PenerimaanbarangController::class, 'ge_barangkeluar_by_id'])->name('penerimaanbarang.get_barangkeluar_by_id');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.kontrol-denier']], function () {
+        Route::resource('produksiextruder-kontrol-denier', KontroldenierController::class)->names('produksiextruder-kontrol-denier');
+
+        Route::get('produksiextruder-kontrol-denier-create-laporan', [KontroldenierController::class, 'create_laporan'])->name('produksiextruder-kontrol-denier.create_laporan');
+        Route::get('produksiextruder-kontrol-denier-get-material', [KontroldenierController::class, 'get_material'])->name('produksiextruder-kontrol-denier.get_material');
+        Route::get('produksiextruder-kontrol-denier-get-detail', [KontroldenierController::class, 'get_detail'])->name('produksiextruder-kontrol-denier.get_detail');
+        Route::get('produksiextruder-kontrol-denier-cek-sebelumnya', [KontroldenierController::class, 'cek_sebelumnya'])->name('produksiextruder-kontrol-denier.cek_sebelumnya');
+        Route::get('produksiextruder-kontrol-denier-confirm/{produksiwjl}', [KontroldenierController::class, 'confirm'])->name('produksiextruder-kontrol-denier.confirm');
     });
 });

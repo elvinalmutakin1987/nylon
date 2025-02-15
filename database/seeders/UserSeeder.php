@@ -71,6 +71,13 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'produksi.wjl.rekap']);
         Permission::create(['name' => 'produksi.wjl.konfirmasi']);
         Permission::create(['name' => 'produksi.wjl.permintaanmaterial']);
+        Permission::create(['name' => 'produksi.extruder.kontrol-denier']);
+        Permission::create(['name' => 'produksi.extruder.rekap-denier']);
+        Permission::create(['name' => 'produksi.extruder.kontrol-barmag']);
+        Permission::create(['name' => 'produksi.extruder.rekap-barmag']);
+        Permission::create(['name' => 'produksi.extruder.cek-wender']);
+        Permission::create(['name' => 'produksi.extruder.kontrol-reifenhouzer']);
+        Permission::create(['name' => 'produksi.extruder.rekap-reifenhouzer']);
         Permission::create(['name' => 'approval']);
         //===========================================
 

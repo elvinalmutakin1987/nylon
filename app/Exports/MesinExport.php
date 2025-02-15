@@ -16,13 +16,36 @@ class MesinExport implements FromCollection, WithHeadings
     {
         return Mesin::select(
             'nama',
+            'bagian',
             DB::raw('(select nama from lokasis where id=mesins.lokasi_id) as lokasi'),
             'target_produksi',
-            'keterangan'
+            'keterangan',
+            'b_plus_top',
+            'b_plus_bottom',
+            'b_top',
+            'b_bottom',
+            'n_top',
+            'n_bottom',
+            'k_top',
+            'k_bottom',
+            'k_min_top',
+            'k_min_bottom',
         )->get(
             'nama',
+            'bagian',
             'lokasi',
-            'keterangan'
+            'target_produksi',
+            'keterangan',
+            'b_plus_top',
+            'b_plus_bottom',
+            'b_top',
+            'b_bottom',
+            'n_top',
+            'n_bottom',
+            'k_top',
+            'k_bottom',
+            'k_min_top',
+            'k_min_bottom',
         );
     }
 
@@ -30,9 +53,20 @@ class MesinExport implements FromCollection, WithHeadings
     {
         return [
             'nama',
+            'bagian',
             'lokasi',
             'target_produksi',
             'keterangan',
+            'b_plus_top',
+            'b_plus_bottom',
+            'b_top',
+            'b_bottom',
+            'n_top',
+            'n_bottom',
+            'k_top',
+            'k_bottom',
+            'k_min_top',
+            'k_min_bottom',
         ];
     }
 }
