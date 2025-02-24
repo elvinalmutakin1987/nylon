@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('mesin_id')->nullable();
             $table->integer('material_id')->nullable();
             $table->string('slug')->nullable();
-            $table->string('tanggal')->nullable();
+            $table->date('tanggal')->nullable();
             $table->string('panen_ke')->nullable();
             $table->time('jam')->nullable();
             $table->string('jenis_benang')->nullable();
@@ -29,6 +29,16 @@ return new class extends Migration
             $table->text('keterangan')->nullable();
             $table->string('status')->nullable();
             $table->string('order_shift')->nullable();
+            $table->string('d_plus_top')->nullable();
+            $table->string('d_plus_bottom')->nullable();
+            $table->string('d_top')->nullable();
+            $table->string('d_bottom')->nullable();
+            $table->string('n_top')->nullable();
+            $table->string('n_bottom')->nullable();
+            $table->string('k_top')->nullable();
+            $table->string('k_bottom')->nullable();
+            $table->string('k_min_top')->nullable();
+            $table->string('k_min_bottom')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();

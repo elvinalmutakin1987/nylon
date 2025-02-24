@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('bagian')->nullable();
             $table->string('target_produksi')->nullable();
             $table->text('keterangan')->nullable();
-            $table->string('b_plus_top')->nullable();
-            $table->string('b_plus_bottom')->nullable();
-            $table->string('b_top')->nullable();
-            $table->string('b_bottom')->nullable();
+            $table->string('d_plus_top')->nullable();
+            $table->string('d_plus_bottom')->nullable();
+            $table->string('d_top')->nullable();
+            $table->string('d_bottom')->nullable();
             $table->string('n_top')->nullable();
             $table->string('n_bottom')->nullable();
             $table->string('k_top')->nullable();

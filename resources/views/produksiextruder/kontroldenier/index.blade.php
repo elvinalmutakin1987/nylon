@@ -78,6 +78,96 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="d_bottom">Denier</label>
+                                    <input type="text" class="form-control @error('jenis_benang') is-invalid @enderror"
+                                        id="jenis_benang" name="jenis_benang" value="{{ old('jenis_benang') }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="k_min_bottom">K -</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text"
+                                                class="form-control @error('k_min_bottom') is-invalid @enderror"
+                                                id="k_min_bottom" name="k_min_bottom" value="{{ old('k_min_bottom') }}"
+                                                onblur="ubah_format('k_min_bottom', this.value);">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text"
+                                                class="form-control @error('k_min_top') is-invalid @enderror" id="k_min_top"
+                                                name="k_min_top" value="{{ old('k_min_top') }}"
+                                                onblur="ubah_format('k_min_top', this.value);">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="k_bottom">K</label>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <input type="text"
+                                                class="form-control @error('k_bottom') is-invalid @enderror" id="k_bottom"
+                                                name="k_bottom" value="{{ old('k_bottom') }}"
+                                                onblur="ubah_format('k_bottom', this.value);">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control @error('k_top') is-invalid @enderror"
+                                                id="k_top" name="k_top" value="{{ old('k_top') }}"
+                                                onblur="ubah_format('k_top', this.value);">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="n_bottom">N</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text"
+                                                class="form-control @error('n_bottom') is-invalid @enderror"
+                                                id="n_bottom" name="n_bottom" value="{{ old('n_bottom') }}"
+                                                onblur="ubah_format('n_bottom', this.value);">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text"
+                                                class="form-control @error('n_top') is-invalid @enderror" id="n_top"
+                                                name="n_top" value="{{ old('n_top') }}"
+                                                onblur="ubah_format('n_top', this.value);">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="d_bottom">D</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text"
+                                                class="form-control @error('d_bottom') is-invalid @enderror"
+                                                id="d_bottom" name="d_bottom" value="{{ old('d_bottom') }}"
+                                                onblur="ubah_format('d_bottom', this.value);">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text"
+                                                class="form-control @error('d_top') is-invalid @enderror" id="d_top"
+                                                name="d_top" value="{{ old('d_top') }}"
+                                                onblur="ubah_format('d_top', this.value);">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="d_plus_bottom">D +</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text"
+                                                class="form-control @error('d_plus_bottom') is-invalid @enderror"
+                                                id="d_plus_bottom" name="d_plus_bottom"
+                                                value="{{ old('d_plus_bottom') }}"
+                                                onblur="ubah_format('d_plus_bottom', this.value);">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text"
+                                                class="form-control @error('d_plus_top') is-invalid @enderror"
+                                                id="d_plus_top" name="d_plus_top" value="{{ old('d_plus_top') }}"
+                                                onblur="ubah_format('d_plus_top', this.value);">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <button type="button" class="btn btn-success" data-toggle="modal"
@@ -142,7 +232,7 @@
         }
 
         function ubah_format(field, nilai) {
-            var mynumeral = numeral(nilai).format('0,0.0');
+            var mynumeral = numeral(nilai).format('0');
             $("#" + field).val(mynumeral);
         }
 
@@ -172,10 +262,32 @@
                     'material_id' => '_material',
                     'tanggal' => '_tanggal',
                     'shift' => '_shift',
+                    'jenis_benang' => '_jenis_benang',
+                    'd_plus_bottom' => '_d_plus_bottom',
+                    'd_plus_top' => '_d_plus_top',
+                    'd_bottom' => '_d_bottom',
+                    'd_top' => '_d_top',
+                    'n_bottom' => '_n_bottom',
+                    'n_top' => '_n_top',
+                    'k_bottom' => '_k_bottom',
+                    'k_top' => '_k_top',
+                    'k_min_bottom' => '_k_min_bottom',
+                    'k_min_top' => '_k_min_top',
                 ]) !!}';
             url = url.replace('_material', $("#material_id").val());
             url = url.replace('_tanggal', $("#tanggal").val());
             url = url.replace('_shift', $("#shift").val());
+            url = url.replace('_jenis_benang', $("#jenis_benang").val());
+            url = url.replace('_d_plus_bottom', $("#d_plus_bottom").val());
+            url = url.replace('_d_plus_top', $("#d_plus_top").val());
+            url = url.replace('_d_bottom', $("#d_bottom").val());
+            url = url.replace('_d_top', $("#d_top").val());
+            url = url.replace('_n_bottom', $("#n_bottom").val());
+            url = url.replace('_n_top', $("#n_top").val());
+            url = url.replace('_k_bottom', $("#k_bottom").val());
+            url = url.replace('_k_top', $("#k_top").val());
+            url = url.replace('_k_min_bottom', $("#k_min_bottom").val());
+            url = url.replace('_k_min_top', $("#k_min_top").val());
             window.open(url, "_self");
         }
     </script>

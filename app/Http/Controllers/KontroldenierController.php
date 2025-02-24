@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kontroldenier;
+use App\Models\Kontroldenierdetail;
 use App\Models\Material;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -38,6 +39,17 @@ class KontroldenierController extends Controller
         $material = Material::find($material_id);
         $shift = $request->shift;
         $tanggal = Carbon::parse($request->tanggal)->format('Y-m-d') ?? date('Y-m-d');
+        $jenis_benang = $request->jenis_benang;
+        $d_plus_bottom = $request->d_plus_bottom;
+        $d_plus_top = $request->d_plus_top;
+        $d_bottom = $request->d_bottom;
+        $d_top = $request->d_top;
+        $n_bottom = $request->n_bottom;
+        $n_top = $request->n_top;
+        $k_bottom = $request->k_bottom;
+        $k_top = $request->k_top;
+        $k_min_bottom = $request->k_min_bottom;
+        $k_min_top = $request->k_min_top;
         $shift_sebelumnya = '';
 
         if ($shift == 'Pagi') {
@@ -83,11 +95,47 @@ class KontroldenierController extends Controller
 
         $action = 'create';
         if (!$kontroldenier) {
+            $shift = $request->shift;
+            $tanggal = $request->tanggal;
+            $material_id = $request->material_id;
+            $material = Material::find($material_id);
+            $kontroldenier = Kontroldenier::where('material_id', $material_id)->where('shift', $shift)->where('tanggal', $tanggal)->where('status', 'Draft')->first();
+            if (!$kontroldenier) {
+                $kontroldenier = new Kontroldenier();
+                $kontroldenier->slug = Controller::gen_slug();
+                $kontroldenier->shift = $shift;
+                $kontroldenier->material_id = $material_id;
+                $kontroldenier->tanggal = $tanggal;
+                $kontroldenier->status = 'Draft';
+                $kontroldenier->jenis_benang = $jenis_benang;
+                $kontroldenier->d_plus_bottom = $d_plus_bottom;
+                $kontroldenier->d_plus_top = $d_plus_top;
+                $kontroldenier->d_bottom = $d_bottom;
+                $kontroldenier->d_top = $d_top;
+                $kontroldenier->n_bottom = $n_bottom;
+                $kontroldenier->n_top = $n_top;
+                $kontroldenier->k_bottom = $k_bottom;
+                $kontroldenier->k_top = $k_top;
+                $kontroldenier->k_min_bottom = $k_min_bottom;
+                $kontroldenier->k_min_top = $k_min_top;
+                $kontroldenier->save();
+            }
             $action = 'create';
-            return view('produksiextruder.kontroldenier.show', compact('shift', 'tanggal', 'material_id', 'material', 'action', 'kontroldenier_sebelumnya'));
+            return view('produksiextruder.kontroldenier.show', compact('shift', 'tanggal', 'material_id', 'material', 'action', 'kontroldenier', 'kontroldenier_sebelumnya'));
         }
-
-        if ($kontroldenier->status == 'Submit') {
+        $kontroldenier->jenis_benang = $jenis_benang;
+        $kontroldenier->d_plus_bottom = $d_plus_bottom;
+        $kontroldenier->d_plus_top = $d_plus_top;
+        $kontroldenier->d_bottom = $d_bottom;
+        $kontroldenier->d_top = $d_top;
+        $kontroldenier->n_bottom = $n_bottom;
+        $kontroldenier->n_top = $n_top;
+        $kontroldenier->k_bottom = $k_bottom;
+        $kontroldenier->k_top = $k_top;
+        $kontroldenier->k_min_bottom = $k_min_bottom;
+        $kontroldenier->k_min_top = $k_min_top;
+        $kontroldenier->save();
+        if ($kontroldenier->status == 'Draft') {
             $action = 'edit';
             return view('produksiextruder.kontroldenier.show', compact('shift', 'tanggal', 'material_id', 'material', 'action', 'kontroldenier', 'kontroldenier_sebelumnya'));
         }
@@ -104,7 +152,39 @@ class KontroldenierController extends Controller
         $tanggal = $request->tanggal;
         $material_id = $request->material_id;
         $material = Material::find($material_id);
-        return view('produksiextruder.kontroldenier.create', compact('shift', 'tanggal', 'material_id', 'material'));
+        $jenis_benang = $request->jenis_benang;
+        $d_plus_bottom = $request->d_plus_bottom;
+        $d_plus_top = $request->d_plus_top;
+        $d_bottom = $request->d_bottom;
+        $d_top = $request->d_top;
+        $n_bottom = $request->n_bottom;
+        $n_top = $request->n_top;
+        $k_bottom = $request->k_bottom;
+        $k_top = $request->k_top;
+        $k_min_bottom = $request->k_min_bottom;
+        $k_min_top = $request->k_min_top;
+        $kontroldenier = Kontroldenier::where('material_id', $material_id)->where('shift', $shift)->where('tanggal', $tanggal)->where('status', 'Draft')->first();
+        if (!$kontroldenier) {
+            $kontroldenier = new Kontroldenier();
+            $kontroldenier->slug = Controller::gen_slug();
+            $kontroldenier->shift = $shift;
+            $kontroldenier->material_id = $material_id;
+            $kontroldenier->tanggal = $tanggal;
+            $kontroldenier->jenis_benang = $jenis_benang;
+            $kontroldenier->d_plus_bottom = $d_plus_bottom;
+            $kontroldenier->d_plus_top = $d_plus_top;
+            $kontroldenier->d_bottom = $d_bottom;
+            $kontroldenier->d_top = $d_top;
+            $kontroldenier->n_bottom = $n_bottom;
+            $kontroldenier->n_top = $n_top;
+            $kontroldenier->k_bottom = $k_bottom;
+            $kontroldenier->k_top = $k_top;
+            $kontroldenier->k_min_bottom = $k_min_bottom;
+            $kontroldenier->k_min_top = $k_min_top;
+            $kontroldenier->status = 'Draft';
+            $kontroldenier->save();
+        }
+        return view('produksiextruder.kontroldenier.create', compact('shift', 'tanggal', 'material_id', 'material', 'kontroldenier'));
     }
 
     /**
@@ -174,7 +254,6 @@ class KontroldenierController extends Controller
                 }
             }
 
-
             DB::commit();
             return redirect()->route('produksiwjl.operator.index')->with([
                 'status' => 'success',
@@ -186,20 +265,37 @@ class KontroldenierController extends Controller
         }
     }
 
+    public function store_laporan(Request $request)
+    {
+        $shift = $request->shift;
+        $tanggal = $request->tanggal;
+        $material_id = $request->material_id;
+        $material = Material::find($material_id);
+        $kontroldenier = Kontroldenier::find($requet->kontroldenier_id);
+    }
+
     /**
      * Display the specified resource.
      */
     public function show(Kontroldenier $kontroldenier)
     {
-        //
+        $shift = $kontroldenier->shift;
+        $tanggal = $kontroldenier->tanggal;
+        $material_id = $kontroldenier->material_id;
+        $material = Material::find($material_id);
+        return view('produksiextruder.kontroldenier.edit', compact('shift', 'tanggal', 'material_id', 'material', 'kontroldenier'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kontroldenier $kontroldenier)
+    public function edit(Request $request, Kontroldenier $kontroldenier)
     {
-        dd("OK");
+        $shift = $kontroldenier->shift;
+        $tanggal = $kontroldenier->tanggal;
+        $material_id = $kontroldenier->material_id;
+        $material = Material::find($material_id);
+        return view('produksiextruder.kontroldenier.edit', compact('shift', 'tanggal', 'material_id', 'material', 'kontroldenier'));
     }
 
     /**
@@ -207,7 +303,31 @@ class KontroldenierController extends Controller
      */
     public function update(Request $request, Kontroldenier $kontroldenier)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $lokasi = $request->lokasi;
+            foreach ($request->no_lokasi as $key => $no_lokasi) {
+                $detail[] = [
+                    'kontroldenier_id' => $kontroldenier->id,
+                    'slug' => Controller::gen_slug(),
+                    'lokasi' => $lokasi,
+                    'no_lokasi' => $no_lokasi,
+                    'nilai' => $request->nilai[$key] ?? null,
+                    'rank' => $request->rank[$key] ?? null,
+                    'created_by' => Auth::user()->id
+                ];
+            }
+            $kontroldenier->kontroldenierdetail()->delete();
+            $kontroldenier->kontroldenierdetail()->createMany($detail);
+            DB::commit();
+            return redirect()->route('produksiextruder-kontrol-denier.index')->with([
+                'status' => 'success',
+                'message' => 'Data telah disimpan!'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return view('error', compact('th'));
+        }
     }
 
     /**

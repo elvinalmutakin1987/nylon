@@ -54,22 +54,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @php
-                                            $material = Material::find($kontroldenier_sebelumnya->mesin_id);
-                                        @endphp
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="material_id">Mesin</label>
-                                                <input type="text"
-                                                    class="form-control @error('material_id') is-invalid @enderror"
-                                                    id="material_id" name="material_id"
-                                                    value="{{ old('material_id') ?? $material->nama }}" readonly>
-                                                @error('material_id')
-                                                    <span id="material_id-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="shift">Shift</label>
@@ -83,12 +67,160 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        @php
+                                            $material = Material::find($kontroldenier_sebelumnya->mesin_id);
+                                        @endphp
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="material_id">Jenis Benang</label>
+                                                <input type="text"
+                                                    class="form-control @error('material_id') is-invalid @enderror"
+                                                    id="material_id" name="material_id"
+                                                    value="{{ old('material_id') ?? $material->nama }}" readonly>
+                                                @error('material_id')
+                                                    <span id="material_id-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-
+                                            <div class="form-group">
+                                                <label for="d_bottom">Denier</label>
+                                                <input type="text"
+                                                    class="form-control @error('jenis_benang') is-invalid @enderror"
+                                                    id="jenis_benang" name="jenis_benang"
+                                                    value="{{ $kontroldenier->jenis_benang }}" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="k_min_bottom">K -</label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('k_min_bottom') is-invalid @enderror"
+                                                            id="k_min_bottom" name="k_min_bottom"
+                                                            value="{{ $kontroldenier->k_min_bottom }}" readonly>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('k_min_top') is-invalid @enderror"
+                                                            id="k_min_top" name="k_min_top"
+                                                            value="{{ $kontroldenier->k_min_top }}" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="k_bottom">K</label>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <input type="text"
+                                                            class="form-control @error('k_bottom') is-invalid @enderror"
+                                                            id="k_bottom" name="k_bottom"
+                                                            value="{{ $kontroldenier->k_bottom }}" readonly>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input type="text"
+                                                            class="form-control @error('k_top') is-invalid @enderror"
+                                                            id="k_top" name="k_top"
+                                                            value="{{ $kontroldenier->k_top }}" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="n_bottom">N</label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('n_bottom') is-invalid @enderror"
+                                                            id="n_bottom" name="n_bottom"
+                                                            value="{{ $kontroldenier->n_bottom }}" readonly>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('n_top') is-invalid @enderror"
+                                                            id="n_top" name="n_top"
+                                                            value="{{ $kontroldenier->n_top }}" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="d_bottom">D</label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('d_bottom') is-invalid @enderror"
+                                                            id="d_bottom" name="d_bottom"
+                                                            value="{{ $kontroldenier->d_bottom }}" readonly>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('d_top') is-invalid @enderror"
+                                                            id="d_top" name="d_top"
+                                                            value="{{ $kontroldenier->d_top }}" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="d_plus_bottom">D +</label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('d_plus_bottom') is-invalid @enderror"
+                                                            id="d_plus_bottom" name="d_plus_bottom"
+                                                            value="{{ $kontroldenier->d_plus_bottom }}" readonly>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('d_plus_top') is-invalid @enderror"
+                                                            id="d_plus_top" name="d_plus_top"
+                                                            value="{{ $kontroldenier->d_plus_top }}" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    @if ($action == 'create')
+                                                        <a type="button" class="btn btn-success"
+                                                            href="{{ route('produksiextruder-kontrol-denier.create_laporan', ['material_id' => $material_id, 'tanggal' => $tanggal, 'shift' => $shift]) }}"><i
+                                                                class="fa fa-forward"></i>
+                                                            Lanjutkan Buat Laporan</a>
+                                                    @else
+                                                        <a type="button" class="btn btn-success"
+                                                            href="{{ route('produksiextruder-kontrol-denier.edit', $kontroldenier->slug) }}"><i
+                                                                class="fa fa-forward"></i>
+                                                            Lanjutkan Buat Laporan</a>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6"></div>
+                                        <div class="col-md-6">
+                                            <table id="table1" class="table projects">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="30">No.</th>
+                                                        <th>Nilai</th>
+                                                        <th>Rank</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for ($i = 1; $i <= 64; $i++)
+                                                        <tr>
+                                                            <td>{{ $i }}</td>
+                                                            <td>
+                                                                <input type="text" class="form-control"
+                                                                    id="nilai{{ $i }}" name="nilai[]"
+                                                                    onblur="ubah_format('nilai{{ $i }}', this.value);">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control"
+                                                                    id="rank{{ $i }}" name="rank[]" readonly>
+                                                            </td>
+                                                        </tr>
+                                                    @endfor
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -112,19 +244,117 @@
                                     </div>
                                 @else
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="d_bottom">Denier</label>
+                                                <input type="text"
+                                                    class="form-control @error('jenis_benang') is-invalid @enderror"
+                                                    id="jenis_benang" name="jenis_benang"
+                                                    value="{{ $kontroldenier->jenis_benang }}" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="k_min_bottom">K -</label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('k_min_bottom') is-invalid @enderror"
+                                                            id="k_min_bottom" name="k_min_bottom"
+                                                            value="{{ $kontroldenier->k_min_bottom }}" readonly>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('k_min_top') is-invalid @enderror"
+                                                            id="k_min_top" name="k_min_top"
+                                                            value="{{ $kontroldenier->k_min_top }}" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="k_bottom">K</label>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <input type="text"
+                                                            class="form-control @error('k_bottom') is-invalid @enderror"
+                                                            id="k_bottom" name="k_bottom"
+                                                            value="{{ $kontroldenier->k_bottom }}" readonly>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <input type="text"
+                                                            class="form-control @error('k_top') is-invalid @enderror"
+                                                            id="k_top" name="k_top"
+                                                            value="{{ $kontroldenier->k_top }}" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="n_bottom">N</label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('n_bottom') is-invalid @enderror"
+                                                            id="n_bottom" name="n_bottom"
+                                                            value="{{ $kontroldenier->n_bottom }}" readonly>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('n_top') is-invalid @enderror"
+                                                            id="n_top" name="n_top"
+                                                            value="{{ $kontroldenier->n_top }}" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="d_bottom">D</label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('d_bottom') is-invalid @enderror"
+                                                            id="d_bottom" name="d_bottom"
+                                                            value="{{ $kontroldenier->d_bottom }}" readonly>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('d_top') is-invalid @enderror"
+                                                            id="d_top" name="d_top"
+                                                            value="{{ $kontroldenier->d_top }}" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="d_plus_bottom">D +</label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('d_plus_bottom') is-invalid @enderror"
+                                                            id="d_plus_bottom" name="d_plus_bottom"
+                                                            value="{{ $kontroldenier->d_plus_bottom }}" readonly>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text"
+                                                            class="form-control @error('d_plus_top') is-invalid @enderror"
+                                                            id="d_plus_top" name="d_plus_top"
+                                                            value="{{ $kontroldenier->d_plus_top }}" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    @if ($action == 'create')
+                                                        <a type="button" class="btn btn-success"
+                                                            href="{{ route('produksiextruder-kontrol-denier.create_laporan', ['material_id' => $material_id, 'tanggal' => $tanggal, 'shift' => $shift]) }}"><i
+                                                                class="fa fa-forward"></i>
+                                                            Lanjutkan Buat Laporan</a>
+                                                    @else
+                                                        <a type="button" class="btn btn-success"
+                                                            href="{{ route('produksiextruder-kontrol-denier.edit', $kontroldenier->slug) }}"><i
+                                                                class="fa fa-forward"></i>
+                                                            Lanjutkan Buat Laporan</a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
                                             <p>Tidak ada data untuk di serah terima.</p>
-                                            @if ($action == 'create')
-                                                <a type="button" class="btn btn-success"
-                                                    href="{{ route('produksiextruder-kontrol-denier.create_laporan', ['material_id' => $material_id, 'tanggal' => $tanggal, 'shift' => $shift]) }}"><i
-                                                        class="fa fa-forward"></i>
-                                                    Lanjutkan Buat Laporan</a>
-                                            @else
-                                                <a type="button" class="btn btn-success"
-                                                    href="{{ route('produksiextruder-kontrol-denier.edit', $kontroldenier->slug) }}"><i
-                                                        class="fa fa-forward"></i>
-                                                    Lanjutkan Buat Laporan</a>
-                                            @endif
                                         </div>
                                     </div>
                                 @endif
@@ -132,7 +362,8 @@
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <a type="button" class="btn btn-default"
-                                    href="{{ route('produksiextruder-kontrol-denier.index') }}"><i class="fa fa-reply"></i>
+                                    href="{{ route('produksiextruder-kontrol-denier.index') }}"><i
+                                        class="fa fa-reply"></i>
                                     Kembali</a>
                             </div>
                         </div>
@@ -182,11 +413,6 @@
             });
         }
 
-        function ubah_format(field, nilai) {
-            var mynumeral = numeral(nilai).format('0,0.0');
-            $("#" + field).val(mynumeral);
-        }
-
         @if (Session::has('message'))
             let timerInterval;
             Swal.fire({
@@ -207,11 +433,11 @@
             });
         @endif
 
-        function hitung_hasil() {
-            var meter_awal = numeral($("#meter_awal").val()).format('0,0.0');
-            var meter_akhir = numeral($("#meter_akhir").val()).format('0,0.0');
-            var hasil = parseFloat(meter_akhir) - parseFloat(meter_awal);
-            $("#hasil").val(numeral(hasil).format('0,0.0'));
+        function ubah_format(field, nilai) {
+            var mynumeral = numeral(nilai).format('0');
+            // mynumeral = parseFloat(mynumeral) / 1000
+            // mynumeral = numeral(mynumeral).format('0.000')
+            $("#" + field).val(mynumeral);
         }
     </script>
 @endsection

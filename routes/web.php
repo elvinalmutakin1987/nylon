@@ -257,7 +257,15 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.kontrol-denier']], function () {
-        Route::resource('produksiextruder-kontrol-denier', KontroldenierController::class)->names('produksiextruder-kontrol-denier');
+        Route::get('produksiextruder-kontrol-denier', [KontroldenierController::class, 'index'])->name('produksiextruder-kontrol-denier.index');
+        Route::post('produksiextruder-kontrol-denier', [KontroldenierController::class, 'store'])->name('produksiextruder-kontrol-denier.store');
+        Route::post('produksiextruder-kontrol-denier/store-laporan', [KontroldenierController::class, 'store_laporan'])->name('produksiextruder-kontrol-denier.store_laporan');
+        Route::get('produksiextruder-kontrol-denier/create', [KontroldenierController::class, 'create'])->name('produksiextruder-kontrol-denier.create');
+        Route::get('produksiextruder-kontrol-denier/create-laporan', [KontroldenierController::class, 'create_laporan'])->name('produksiextruder-kontrol-denier.create_laporan');
+        Route::get('produksiextruder-kontrol-denier/{kontroldenier}', [KontroldenierController::class, 'show'])->name('produksiextruder-kontrol-denier.show');
+        Route::put('produksiextruder-kontrol-denier/{kontroldenier}', [KontroldenierController::class, 'update'])->name('produksiextruder-kontrol-denier.update');
+        Route::delete('produksiextruder-kontrol-denier/{kontroldenier}', [KontroldenierController::class, 'destroy'])->name('produksiextruder-kontrol-denier.destroy');
+        Route::get('produksiextruder-kontrol-denier/{kontroldenier}/edit', [KontroldenierController::class, 'edit'])->name('produksiextruder-kontrol-denier.edit');
 
         Route::get('produksiextruder-kontrol-denier-create-laporan', [KontroldenierController::class, 'create_laporan'])->name('produksiextruder-kontrol-denier.create_laporan');
         Route::get('produksiextruder-kontrol-denier-get-material', [KontroldenierController::class, 'get_material'])->name('produksiextruder-kontrol-denier.get_material');

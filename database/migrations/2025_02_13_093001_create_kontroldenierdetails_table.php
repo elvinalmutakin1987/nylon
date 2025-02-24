@@ -17,11 +17,13 @@ return new class extends Migration
             $table->string('slug')->nullable();
             $table->string('lokasi')->nullable();
             $table->string('no_lokasi')->nullable();
-            $table->string('berat')->nullable();
+            $table->string('nilai')->nullable();
+            $table->string('rank')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 
