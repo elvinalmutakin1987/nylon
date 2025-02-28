@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Kontroldenierdetail extends Model
 {
     use HasFactory;
-    // use SoftDeletes;
+    use SoftDeletes;
 
-    // protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at'];
 
     public function getRouteKeyName()
     {

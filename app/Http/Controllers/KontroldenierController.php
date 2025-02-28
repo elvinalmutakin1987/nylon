@@ -142,7 +142,7 @@ class KontroldenierController extends Controller
 
         return redirect()->back()->with([
             'status' => 'error',
-            'message' => 'Laporan sudah di konfirmasi kepala regu / pengawas!'
+            'message' => 'Laporan sudah di konfirmasi!'
         ]);
     }
 
@@ -404,8 +404,8 @@ class KontroldenierController extends Controller
         ]);
     }
 
-    public function confirm(Request $request, Produksiwjl $produksiwjl)
+    public function confirm(Request $request, Kontroldenier $kontroldenier)
     {
-        return view('produksiwjl.operator.confirm');
+        return view('produksiextruder.kontroldenier.confirm');
     }
 }

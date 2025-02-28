@@ -37,17 +37,15 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <div class="form-group">
-                                                    <label for="tanggal">Tanggal</label>
-                                                    <input type="text"
-                                                        class="form-control @error('tanggal') is-invalid @enderror"
-                                                        id="tanggal" name="tanggal"
-                                                        value="{{ old('tanggal') ?? $tanggal }}" readonly>
-                                                    @error('tanggal')
-                                                        <span id="tanggal-error"
-                                                            class="error invalid-feedback">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
+                                                <label for="tanggal">Tanggal</label>
+                                                <input type="text"
+                                                    class="form-control @error('tanggal') is-invalid @enderror"
+                                                    id="tanggal" name="tanggal" value="{{ old('tanggal') ?? $tanggal }}"
+                                                    readonly>
+                                                @error('tanggal')
+                                                    <span id="tanggal-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -212,7 +210,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @for ($i = 1; $i <= 64; $i++)
+                                                    @for ($i = 1; $i <= 200; $i++)
                                                         <tr>
                                                             <td>{{ $i }}
                                                                 <input type="hidden" id="no_lokasi{{ $i }}"

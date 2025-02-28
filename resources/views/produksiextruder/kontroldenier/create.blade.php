@@ -212,7 +212,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @for ($i = 1; $i <= 64; $i++)
+                                                    @for ($i = 1; $i <= 200; $i++)
                                                         <tr>
                                                             <td>{{ $i }}
                                                                 <input type="hidden" id="no_lokasi{{ $i }}"

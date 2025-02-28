@@ -2,6 +2,7 @@
     use Illuminate\Support\Number;
     use App\Models\Mesin;
     use App\Models\Material;
+    use App\Models\Kontroldenierdetail;
 @endphp
 
 @extends('partials.main')
@@ -68,7 +69,7 @@
                                             </div>
                                         </div>
                                         @php
-                                            $material = Material::find($kontroldenier_sebelumnya->mesin_id);
+                                            $material = Material::find($kontroldenier_sebelumnya->material_id);
                                         @endphp
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -91,7 +92,7 @@
                                                 <input type="text"
                                                     class="form-control @error('jenis_benang') is-invalid @enderror"
                                                     id="jenis_benang" name="jenis_benang"
-                                                    value="{{ $kontroldenier->jenis_benang }}" readonly>
+                                                    value="{{ $kontroldenier_sebelumnya->jenis_benang }}" readonly>
                                             </div>
                                             <div class="form-group">
                                                 <label for="k_min_bottom">K -</label>
@@ -100,13 +101,13 @@
                                                         <input type="text"
                                                             class="form-control @error('k_min_bottom') is-invalid @enderror"
                                                             id="k_min_bottom" name="k_min_bottom"
-                                                            value="{{ $kontroldenier->k_min_bottom }}" readonly>
+                                                            value="{{ $kontroldenier_sebelumnya->k_min_bottom }}" readonly>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <input type="text"
                                                             class="form-control @error('k_min_top') is-invalid @enderror"
                                                             id="k_min_top" name="k_min_top"
-                                                            value="{{ $kontroldenier->k_min_top }}" readonly>
+                                                            value="{{ $kontroldenier_sebelumnya->k_min_top }}" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -117,13 +118,13 @@
                                                         <input type="text"
                                                             class="form-control @error('k_bottom') is-invalid @enderror"
                                                             id="k_bottom" name="k_bottom"
-                                                            value="{{ $kontroldenier->k_bottom }}" readonly>
+                                                            value="{{ $kontroldenier_sebelumnya->k_bottom }}" readonly>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <input type="text"
                                                             class="form-control @error('k_top') is-invalid @enderror"
                                                             id="k_top" name="k_top"
-                                                            value="{{ $kontroldenier->k_top }}" readonly>
+                                                            value="{{ $kontroldenier_sebelumnya->k_top }}" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -134,13 +135,13 @@
                                                         <input type="text"
                                                             class="form-control @error('n_bottom') is-invalid @enderror"
                                                             id="n_bottom" name="n_bottom"
-                                                            value="{{ $kontroldenier->n_bottom }}" readonly>
+                                                            value="{{ $kontroldenier_sebelumnya->n_bottom }}" readonly>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <input type="text"
                                                             class="form-control @error('n_top') is-invalid @enderror"
                                                             id="n_top" name="n_top"
-                                                            value="{{ $kontroldenier->n_top }}" readonly>
+                                                            value="{{ $kontroldenier_sebelumnya->n_top }}" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -151,13 +152,13 @@
                                                         <input type="text"
                                                             class="form-control @error('d_bottom') is-invalid @enderror"
                                                             id="d_bottom" name="d_bottom"
-                                                            value="{{ $kontroldenier->d_bottom }}" readonly>
+                                                            value="{{ $kontroldenier_sebelumnya->d_bottom }}" readonly>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <input type="text"
                                                             class="form-control @error('d_top') is-invalid @enderror"
                                                             id="d_top" name="d_top"
-                                                            value="{{ $kontroldenier->d_top }}" readonly>
+                                                            value="{{ $kontroldenier_sebelumnya->d_top }}" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -168,13 +169,14 @@
                                                         <input type="text"
                                                             class="form-control @error('d_plus_bottom') is-invalid @enderror"
                                                             id="d_plus_bottom" name="d_plus_bottom"
-                                                            value="{{ $kontroldenier->d_plus_bottom }}" readonly>
+                                                            value="{{ $kontroldenier_sebelumnya->d_plus_bottom }}"
+                                                            readonly>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <input type="text"
                                                             class="form-control @error('d_plus_top') is-invalid @enderror"
                                                             id="d_plus_top" name="d_plus_top"
-                                                            value="{{ $kontroldenier->d_plus_top }}" readonly>
+                                                            value="{{ $kontroldenier_sebelumnya->d_plus_top }}" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -186,6 +188,13 @@
                                                                 class="fa fa-forward"></i>
                                                             Lanjutkan Buat Laporan</a>
                                                     @else
+                                                        <p> <span class="badge badge-success"><i
+                                                                    class="fa fa-check"></i></span> Saya
+                                                            telah
+                                                            membaca, mengerti dan menyetujui serah terima laporan produksi
+                                                            ini.
+                                                        </p>
+
                                                         <a type="button" class="btn btn-success"
                                                             href="{{ route('produksiextruder-kontrol-denier.edit', $kontroldenier->slug) }}"><i
                                                                 class="fa fa-forward"></i>
@@ -204,42 +213,26 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @for ($i = 1; $i <= 64; $i++)
+                                                    @foreach ($kontroldenier_sebelumnya->kontroldenierdetail as $d)
                                                         <tr>
-                                                            <td>{{ $i }}</td>
+                                                            <td>{{ $d->no_lokasi }}</td>
                                                             <td>
                                                                 <input type="text" class="form-control"
-                                                                    id="nilai{{ $i }}" name="nilai[]"
-                                                                    onblur="ubah_format('nilai{{ $i }}', this.value);">
+                                                                    id="nilai{{ $d->id }}" name="nilai[]"
+                                                                    value="{{ $d->nilai == '0' ? '' : $d->nilai }}"
+                                                                    readonly>
                                                             </td>
                                                             <td>
                                                                 <input type="text" class="form-control"
-                                                                    id="rank{{ $i }}" name="rank[]" readonly>
+                                                                    id="rank{{ $d->id }}" name="rank[]"
+                                                                    value="{{ $d->nilai == '0' ? '' : $d->rank }}"
+                                                                    readonly>
                                                             </td>
                                                         </tr>
-                                                    @endfor
+                                                    @endforeach
+
                                                 </tbody>
                                             </table>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <p> <span class="badge badge-success"><i class="fa fa-check"></i></span> Saya
-                                                telah
-                                                membaca, mengerti dan menyetujui serah terima laporan produksi
-                                                ini.
-                                            </p>
-                                            @if ($action == 'create')
-                                                <a type="button" class="btn btn-success"
-                                                    href="{{ route('produksiextruder-kontrol-denier.create_laporan', ['material_id' => $material_id, 'tanggal' => $tanggal, 'shift' => $shift]) }}"><i
-                                                        class="fa fa-forward"></i>
-                                                    Lanjutkan Buat Laporan</a>
-                                            @else
-                                                <a type="button" class="btn btn-success"
-                                                    href="{{ route('produksiextruder-kontrol-denier.edit', $kontroldenier->slug) }}"><i
-                                                        class="fa fa-forward"></i>
-                                                    Lanjutkan Buat Laporan</a>
-                                            @endif
                                         </div>
                                     </div>
                                 @else
@@ -339,6 +332,12 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
+                                                    <p> <span class="badge badge-success"><i
+                                                                class="fa fa-check"></i></span> Saya
+                                                        telah
+                                                        membaca, mengerti dan menyetujui serah terima laporan produksi
+                                                        ini.
+                                                    </p>
                                                     @if ($action == 'create')
                                                         <a type="button" class="btn btn-success"
                                                             href="{{ route('produksiextruder-kontrol-denier.create_laporan', ['material_id' => $material_id, 'tanggal' => $tanggal, 'shift' => $shift]) }}"><i

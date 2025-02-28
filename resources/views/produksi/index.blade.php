@@ -37,6 +37,13 @@
                                                     <i class="fa fa-pencil"></i> Laporan Kontrol Denier
                                                 </a>
                                             @endif
+
+                                            @if (auth()->user()->can('produksi.extruder.kontrol-barmag'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('produksiextruder-kontrol-barmag.index') }}">
+                                                    <i class="far fa-compass"></i> Laporan Kontrol Barmag
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

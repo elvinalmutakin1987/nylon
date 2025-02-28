@@ -8,6 +8,7 @@ use App\Http\Controllers\DatamasterController;
 use App\Http\Controllers\GudangbarangjadicekstokController;
 use App\Http\Controllers\GudangbarangjadiorderController;
 use App\Http\Controllers\GudangController;
+use App\Http\Controllers\KontrolbarmagController;
 use App\Http\Controllers\KontroldenierController;
 use App\Http\Controllers\LapproduksiwjlController;
 use App\Http\Controllers\LoginController;
@@ -28,6 +29,7 @@ use App\Http\Controllers\RekapproduksiwjlController;
 use App\Http\Controllers\ReturController;
 use App\Http\Controllers\SuratjalanController;
 use App\Http\Controllers\VarianController;
+use App\Models\Kontrolbarmag;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -272,5 +274,23 @@ Route::middleware(['auth'])->group(function () {
         Route::get('produksiextruder-kontrol-denier-get-detail', [KontroldenierController::class, 'get_detail'])->name('produksiextruder-kontrol-denier.get_detail');
         Route::get('produksiextruder-kontrol-denier-cek-sebelumnya', [KontroldenierController::class, 'cek_sebelumnya'])->name('produksiextruder-kontrol-denier.cek_sebelumnya');
         Route::get('produksiextruder-kontrol-denier-confirm/{produksiwjl}', [KontroldenierController::class, 'confirm'])->name('produksiextruder-kontrol-denier.confirm');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.kontrol-barmag']], function () {
+        Route::get('produksiextruder-kontrol-barmag', [KontrolbarmagController::class, 'index'])->name('produksiextruder-kontrol-barmag.index');
+        Route::post('produksiextruder-kontrol-barmag', [KontrolbarmagController::class, 'store'])->name('produksiextruder-kontrol-barmag.store');
+        Route::post('produksiextruder-kontrol-barmag/store-laporan', [KontrolbarmagController::class, 'store_laporan'])->name('produksiextruder-kontrol-barmag.store_laporan');
+        Route::get('produksiextruder-kontrol-barmag/create', [KontrolbarmagController::class, 'create'])->name('produksiextruder-kontrol-barmag.create');
+        Route::get('produksiextruder-kontrol-barmag/create-laporan', [KontrolbarmagController::class, 'create_laporan'])->name('produksiextruder-kontrol-barmag.create_laporan');
+        Route::get('produksiextruder-kontrol-barmag/{kontrolbarmag}', [KontrolbarmagController::class, 'show'])->name('produksiextruder-kontrol-barmag.show');
+        Route::put('produksiextruder-kontrol-barmag/{kontrolbarmag}', [KontrolbarmagController::class, 'update'])->name('produksiextruder-kontrol-barmag.update');
+        Route::delete('produksiextruder-kontrol-barmag/{kontrolbarmag}', [KontrolbarmagController::class, 'destroy'])->name('produksiextruder-kontrol-barmag.destroy');
+        Route::get('produksiextruder-kontrol-barmag/{kontrolbarmag}/edit', [KontrolbarmagController::class, 'edit'])->name('produksiextruder-kontrol-barmag.edit');
+
+        Route::get('produksiextruder-kontrol-barmag-create-laporan', [KontrolbarmagController::class, 'create_laporan'])->name('produksiextruder-kontrol-barmag.create_laporan');
+        Route::get('produksiextruder-kontrol-barmag-get-material', [KontrolbarmagController::class, 'get_material'])->name('produksiextruder-kontrol-barmag.get_material');
+        Route::get('produksiextruder-kontrol-barmag-get-detail', [KontrolbarmagController::class, 'get_detail'])->name('produksiextruder-kontrol-barmag.get_detail');
+        Route::get('produksiextruder-kontrol-barmag-cek-sebelumnya', [KontrolbarmagController::class, 'cek_sebelumnya'])->name('produksiextruder-kontrol-barmag.cek_sebelumnya');
+        Route::get('produksiextruder-kontrol-barmag-confirm/{produksiwjl}', [KontrolbarmagController::class, 'confirm'])->name('produksiextruder-kontrol-barmag.confirm');
     });
 });
