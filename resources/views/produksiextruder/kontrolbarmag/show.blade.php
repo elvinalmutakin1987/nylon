@@ -220,7 +220,8 @@
                                                 <label for="srt">S.R.T</label>
                                                 <input type="text"
                                                     class="form-control @error('srt') is-invalid @enderror"
-                                                    id="srt" name="srt" value="{{ old('srt') }}">
+                                                    id="srt" name="srt"
+                                                    value="{{ old('srt') ?? $kontrolbarmag_sebelumnya->srt }}" readonly>
                                                 @error('srt')
                                                     <span id="srt-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -279,7 +280,8 @@
                                                 <input type="text"
                                                     class="form-control @error('godet_1_rpm') is-invalid @enderror"
                                                     id="godet_1_rpm" name="godet_1_rpm"
-                                                    value="{{ old('godet_1_rpm') }}">
+                                                    value="{{ old('godet_1_rpm') ?? $kontrolbarmag_sebelumnya->godet_1_rpm }}"
+                                                    readonly>
                                                 @error('godet_1_rpm')
                                                     <span id="godet_1_rpm-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -292,7 +294,8 @@
                                                 <input type="text"
                                                     class="form-control @error('godet_2_rpm') is-invalid @enderror"
                                                     id="godet_2_rpm" name="godet_2_rpm"
-                                                    value="{{ old('godet_2_rpm') }}">
+                                                    value="{{ old('godet_2_rpm') ?? $kontrolbarmag_sebelumnya->godet_2_rpm }}"
+                                                    readonly>
                                                 @error('godet_2_rpm')
                                                     <span id="godet_2_rpm-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -305,7 +308,8 @@
                                                 <input type="text"
                                                     class="form-control @error('godet_3_rpm') is-invalid @enderror"
                                                     id="godet_3_rpm" name="godet_3_rpm"
-                                                    value="{{ old('godet_3_rpm') }}">
+                                                    value="{{ old('godet_3_rpm') ?? $kontrolbarmag_sebelumnya->godet_3_rpm }}"
+                                                    readonly>
                                                 @error('godet_3_rpm')
                                                     <span id="godet_3_rpm-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -319,7 +323,9 @@
                                                 <label for="cylinder_1">Cylinder 1</label>
                                                 <input type="text"
                                                     class="form-control @error('cylinder_1') is-invalid @enderror"
-                                                    id="cylinder_1" name="cylinder_1" value="{{ old('cylinder_1') }}">
+                                                    id="cylinder_1" name="cylinder_1"
+                                                    value="{{ old('cylinder_1') ?? $kontrolbarmag_sebelumnya->cylinder_1 }}"
+                                                    readonly>
                                                 @error('cylinder_1')
                                                     <span id="cylinder_1-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -331,7 +337,9 @@
                                                 <label for="cylinder_2">Cylinder 2</label>
                                                 <input type="text"
                                                     class="form-control @error('cylinder_2') is-invalid @enderror"
-                                                    id="cylinder_2" name="cylinder_2" value="{{ old('cylinder_2') }}">
+                                                    id="cylinder_2" name="cylinder_2"
+                                                    value="{{ old('cylinder_2') ?? $kontrolbarmag_sebelumnya->cylinder_2 }}"
+                                                    readonly>
                                                 @error('cylinder_2')
                                                     <span id="cylinder_2-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -343,7 +351,9 @@
                                                 <label for="cylinder_3">Cylinder 3</label>
                                                 <input type="text"
                                                     class="form-control @error('cylinder_3') is-invalid @enderror"
-                                                    id="cylinder_3" name="cylinder_3" value="{{ old('cylinder_3') }}">
+                                                    id="cylinder_3" name="cylinder_3"
+                                                    value="{{ old('cylinder_3') ?? $kontrolbarmag_sebelumnya->cylinder_3 }}"
+                                                    readonly>
                                                 @error('cylinder_3')
                                                     <span id="cylinder_3-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -357,7 +367,9 @@
                                                 <label for="adaptor_1">Adaptor 1</label>
                                                 <input type="text"
                                                     class="form-control @error('adaptor_1') is-invalid @enderror"
-                                                    id="adaptor_1" name="adaptor_1" value="{{ old('adaptor_1') }}">
+                                                    id="adaptor_1" name="adaptor_1"
+                                                    value="{{ old('adaptor_1') ?? $kontrolbarmag_sebelumnya->adaptor_1 }}"
+                                                    readonly>
                                                 @error('adaptor_1')
                                                     <span id="adaptor_1-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -370,7 +382,8 @@
                                                 <input type="text"
                                                     class="form-control @error('long_life_filter') is-invalid @enderror"
                                                     id="long_life_filter" name="long_life_filter"
-                                                    value="{{ old('long_life_filter') }}">
+                                                    value="{{ old('long_life_filter') ?? $kontrolbarmag_sebelumnya->long_life_filter }}"
+                                                    readonly>
                                                 @error('long_life_filter')
                                                     <span id="long_life_filter-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -384,7 +397,9 @@
                                                 <label for="dies_1">Dies 1</label>
                                                 <input type="text"
                                                     class="form-control @error('dies_1') is-invalid @enderror"
-                                                    id="dies_1" name="dies_1" value="{{ old('dies_1') }}">
+                                                    id="dies_1" name="dies_1"
+                                                    value="{{ old('dies_1') ?? $kontrolbarmag_sebelumnya->dies_1 }}"
+                                                    readonly>
                                                 @error('dies_1')
                                                     <span id="dies_1-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -396,7 +411,9 @@
                                                 <label for="dies_2">Dies 2</label>
                                                 <input type="text"
                                                     class="form-control @error('dies_2') is-invalid @enderror"
-                                                    id="dies_2" name="dies_2" value="{{ old('dies_2') }}">
+                                                    id="dies_2" name="dies_2"
+                                                    value="{{ old('dies_2') ?? $kontrolbarmag_sebelumnya->dies_2 }}"
+                                                    readonly>
                                                 @error('dies_2')
                                                     <span id="dies_2-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -408,7 +425,9 @@
                                                 <label for="dies_3">Dies 3</label>
                                                 <input type="text"
                                                     class="form-control @error('dies_3') is-invalid @enderror"
-                                                    id="dies_3" name="dies_3" value="{{ old('dies_3') }}">
+                                                    id="dies_3" name="dies_3"
+                                                    value="{{ old('dies_3') ?? $kontrolbarmag_sebelumnya->dies_3 }}"
+                                                    readonly>
                                                 @error('dies_3')
                                                     <span id="dies_3-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -423,7 +442,8 @@
                                                 <input type="text"
                                                     class="form-control @error('olie_g2roll_45') is-invalid @enderror"
                                                     id="olie_g2roll_45" name="olie_g2roll_45"
-                                                    value="{{ old('olie_g2roll_45') }}">
+                                                    value="{{ old('olie_g2roll_45') ?? $kontrolbarmag_sebelumnya->olie_g2roll_45 }}"
+                                                    readonly>
                                                 @error('olie_g2roll_45')
                                                     <span id="olie_g2roll_45-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -436,7 +456,8 @@
                                                 <input type="text"
                                                     class="form-control @error('olie_g2roll_67') is-invalid @enderror"
                                                     id="olie_g2roll_67" name="olie_g2roll_67"
-                                                    value="{{ old('olie_g2roll_67') }}">
+                                                    value="{{ old('olie_g2roll_67') ?? $kontrolbarmag_sebelumnya->olie_g2roll_67 }}"
+                                                    readonly>
                                                 @error('olie_g2roll_67')
                                                     <span id="olie_g2roll_67-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -451,7 +472,8 @@
                                                 <input type="text"
                                                     class="form-control @error('temp_oven_1') is-invalid @enderror"
                                                     id="temp_oven_1" name="temp_oven_1"
-                                                    value="{{ old('temp_oven_1') }}">
+                                                    value="{{ old('temp_oven_1') ?? $kontrolbarmag_sebelumnya->temp_oven_1 }}"
+                                                    readonly>
                                                 @error('temp_oven_1')
                                                     <span id="temp_oven_1-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -464,7 +486,8 @@
                                                 <input type="text"
                                                     class="form-control @error('temp_oven_2') is-invalid @enderror"
                                                     id="temp_oven_2" name="temp_oven_2"
-                                                    value="{{ old('temp_oven_2') }}">
+                                                    value="{{ old('temp_oven_2') ?? $kontrolbarmag_sebelumnya->temp_oven_2 }} "
+                                                    readonly>
                                                 @error('temp_oven_2')
                                                     <span id="temp_oven_2-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -479,7 +502,8 @@
                                                 <input type="text"
                                                     class="form-control @error('temp_pendingin_film') is-invalid @enderror"
                                                     id="temp_pendingin_film" name="temp_pendingin_film"
-                                                    value="{{ old('temp_pendingin_film') }}">
+                                                    value="{{ old('temp_pendingin_film') ?? $kontrolbarmag_sebelumnya->temp_pendingin_film }}"
+                                                    readonly>
                                                 @error('temp_pendingin_film')
                                                     <span id="temp_pendingin_film-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -491,7 +515,9 @@
                                                 <label for="bak_air">Bak Air</label>
                                                 <input type="text"
                                                     class="form-control @error('bak_air') is-invalid @enderror"
-                                                    id="bak_air" name="bak_air" value="{{ old('bak_air') }}">
+                                                    id="bak_air" name="bak_air"
+                                                    value="{{ old('bak_air') ?? $kontrolbarmag_sebelumnya->bak_air }}"
+                                                    readonly>
                                                 @error('bak_air')
                                                     <span id="bak_air-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -503,7 +529,9 @@
                                                 <label for="cyller">Cyller</label>
                                                 <input type="text"
                                                     class="form-control @error('cyller') is-invalid @enderror"
-                                                    id="cyller" name="cyller" value="{{ old('cyller') }}">
+                                                    id="cyller" name="cyller"
+                                                    value="{{ old('cyller') ?? $kontrolbarmag_sebelumnya->cyller }} "
+                                                    readonly>
                                                 @error('cyller')
                                                     <span id="cyller-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -516,7 +544,7 @@
                                             <div class="form-group">
                                                 <label for="keterangan">Keterangan</label>
                                                 <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="10" id="keterangan"
-                                                    name="keterangan"></textarea>
+                                                    name="keterangan" readonly>{!! old('keterangan') ?? $kontrolbarmag_sebelumnya->keterangan !!}</textarea>
                                                 @error('keterangan')
                                                     <span id="keterangan-error"
                                                         class="error invalid-feedback">{{ $message }}</span>

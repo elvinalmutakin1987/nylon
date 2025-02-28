@@ -49,13 +49,27 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                $tanggal_old = '';
+                $tanggal_new = '';
+                $style = '';
+            @endphp
             @foreach ($produksiwjl as $d)
                 @php
                     $mesin_ = Mesin::find($d->mesin_id);
                     $hasil = $d->meter_akhir - $d->meter_awal;
                     $persen = ($hasil / $mesin_->target_produksi) * 100;
+                    $tanggal_new = $d->tanggal;
+
+                    if ($tanggal_new != $tanggal_old) {
+                        if ($style == '') {
+                            $style = "style=\"background-color: rgba(0,0,0,0.05)\"";
+                        } else {
+                            $style = '';
+                        }
+                    }
                 @endphp
-                <tr>
+                <tr {!! $style !!}>
                     <td class="align-top">
                         @if ($d->status == 'Confirmed')
                             <small class="badge badge-success"><i class="fa fa-check"></i></small>
@@ -109,6 +123,9 @@
                         </td>
                     @endif
                 </tr>
+                @php
+                    $tanggal_old = $tanggal_new;
+                @endphp
             @endforeach
         </tbody>
     </table>

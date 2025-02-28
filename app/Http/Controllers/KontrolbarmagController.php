@@ -237,9 +237,9 @@ class KontrolbarmagController extends Controller
             $kontrolbarmag->tebal_film = $request->tebal_film;
             $kontrolbarmag->screw_rpm = $request->screw_rpm;
             $kontrolbarmag->take_of_speed = $request->take_of_speed;
-            $kontrolbarmag->gode_1_rpm = $request->godet_1_rpm;
-            $kontrolbarmag->gode_2_rpm = $request->godet_2_rpm;
-            $kontrolbarmag->gode_3_rpm = $request->godet_3_rpm;
+            $kontrolbarmag->godet_1_rpm = $request->godet_1_rpm;
+            $kontrolbarmag->godet_2_rpm = $request->godet_2_rpm;
+            $kontrolbarmag->godet_3_rpm = $request->godet_3_rpm;
             $kontrolbarmag->cylinder_1 = $request->cylinder_1;
             $kontrolbarmag->cylinder_2 = $request->cylinder_2;
             $kontrolbarmag->cylinder_3 = $request->cylinder_3;
@@ -256,7 +256,7 @@ class KontrolbarmagController extends Controller
             $kontrolbarmag->bak_air = $request->bak_air;
             $kontrolbarmag->cyller = $request->cyller;
             $kontrolbarmag->keterangan = $request->keterangan;
-            $kontrolbarmag->edited_by = Auth::user()->id;
+            $kontrolbarmag->updated_by = Auth::user()->id;
             $kontrolbarmag->save();
             DB::commit();
             return redirect()->route('produksiextruder-kontrol-barmag.index')->with([

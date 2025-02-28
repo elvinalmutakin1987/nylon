@@ -212,6 +212,7 @@ class RekapproduksiwjlController extends Controller
         $produksiwjl = Produksiwjl::whereDate('tanggal', '>=', $tanggal_dari)
             ->whereDate('tanggal', '<=', $tanggal_sampai)
             ->orderBy('tanggal', 'asc')
+            ->orderBy('mesin_id', 'asc')
             ->orderBy('order_shift', 'asc');
         if ($mesin_id != '' && $mesin_id != 'null') {
             $produksiwjl->where('mesin_id', $mesin_id);
@@ -235,6 +236,7 @@ class RekapproduksiwjlController extends Controller
         $produksiwjl = Produksiwjl::whereDate('tanggal', '>=', $tanggal_dari)
             ->whereDate('tanggal', '<=', $tanggal_sampai)
             ->orderBy('tanggal', 'asc')
+            ->orderBy('mesin_id', 'asc')
             ->orderBy('order_shift', 'asc');
         if ($mesin_id != '' && $mesin_id != 'null') {
             $produksiwjl->where('mesin_id', $mesin_id);
