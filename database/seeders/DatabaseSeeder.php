@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PengaturanSeeder::class,
             SatuanSeeder::class,
+            AppuserSeeder::class
         ]);
     }
 }

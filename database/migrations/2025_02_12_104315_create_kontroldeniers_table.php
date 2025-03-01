@@ -44,6 +44,7 @@ return new class extends Migration
             $table->string('deleted_by')->nullable();
             $table->string('approved_by')->nullable();
             $table->string('confirmed_by')->nullable();
+            $table->string('upload')->nullable();
             $table->timestamps();
             $table->index('material_id');
             $table->index('mesin_id');

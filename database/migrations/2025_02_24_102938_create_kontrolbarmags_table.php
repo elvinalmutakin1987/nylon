@@ -51,6 +51,7 @@ return new class extends Migration
             $table->string('cyller')->nullable();
             $table->text('keterangan')->nullable();
             $table->string('status')->nullable();
+            $table->string('upload')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
