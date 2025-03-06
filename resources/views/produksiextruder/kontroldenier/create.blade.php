@@ -97,13 +97,13 @@
                                                 <div class="custom-control custom-radio">
                                                     <input
                                                         class="custom-control-input custom-control-input-danger custom-control-input-outline"
-                                                        type="radio" id="lokasi_kr" name="lokasi">
+                                                        type="radio" id="lokasi_kr" name="lokasi" value="KR">
                                                     <label for="lokasi_kr" class="custom-control-label">KR</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
                                                     <input
                                                         class="custom-control-input custom-control-input-danger custom-control-input-outline"
-                                                        type="radio" id="lokasi_kn" name="lokasi">
+                                                        type="radio" id="lokasi_kn" name="lokasi" value="KN">
                                                     <label for="lokasi_kn" class="custom-control-label">KN</label>
                                                 </div>
                                             </div>
@@ -164,7 +164,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="d_bottom">D</label>
+                                            <label for="d_bottom">B</label>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <input type="text"
@@ -182,7 +182,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="d_plus_bottom">D +</label>
+                                            <label for="d_plus_bottom">B +</label>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <input type="text"
@@ -343,9 +343,9 @@
             } else if (nilai >= parseInt(n_bottom) && nilai <= parseInt(n_top)) {
                 hasil = "N";
             } else if (nilai >= parseInt(d_bottom) && nilai <= parseInt(d_top)) {
-                hasil = "D";
+                hasil = "B";
             } else if (nilai >= parseInt(d_plus_bottom)) {
-                hasil = "D +";
+                hasil = "B +";
             }
             $("#rank" + field).val(hasil);
         }

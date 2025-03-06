@@ -127,16 +127,35 @@
 @section('script')
     <script type="text/javascript">
         var data = [{
+                id: 'EXTRUDER',
+                text: 'EXTRUDERS'
+            }, {
                 id: 'RASHEL',
                 text: 'RASHEL'
             },
             {
-                id: 'SULZER - BEAMING',
-                text: 'SULZER - BEAMING'
+                id: 'SULZER',
+                text: 'SULZER'
+            },
+            {
+                id: 'BEAMING',
+                text: 'BEAMING'
             },
             {
                 id: 'WJL',
                 text: 'WJL'
+            },
+            {
+                id: 'WELDING',
+                text: 'WELDING'
+            },
+            {
+                id: 'PACKING',
+                text: 'PACKING'
+            },
+            {
+                id: 'GUDANG BELAKANG',
+                text: 'GUDANG BELAKANG'
             },
         ];
 

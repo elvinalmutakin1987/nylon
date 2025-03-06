@@ -130,6 +130,9 @@ class BarangkeluarController extends Controller
         } elseif ($gudang == 'packing') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.packing.barangkeluar.butuh.approval')->first();
             return view('gudangpacking.barangkeluar.create', compact('pengaturan', 'gudang', 'satuan'));
+        } elseif ($gudang == 'packing') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.benang.barangkeluar.butuh.approval')->first();
+            return view('gudangbenang.barangkeluar.create', compact('pengaturan', 'gudang', 'satuan'));
         }
     }
 
@@ -168,6 +171,9 @@ class BarangkeluarController extends Controller
             } elseif ($request->gudang == 'packing') {
                 $jenis_gudang = 'packing';
                 $kartustok_gudang = 'Gudang Packing';
+            } elseif ($request->gudang == 'benang') {
+                $jenis_gudang = 'benang';
+                $kartustok_gudang = 'Gudang Benang';
             }
             $gen_no_dokumen = Controller::gen_no_dokumen($jenis_gudang . '.barangkeluar');
             $barangkeluar = new Barangkeluar();
@@ -233,6 +239,8 @@ class BarangkeluarController extends Controller
             return view('gudangbeaming.barangkeluar.show', compact('barangkeluar'));
         } elseif ($barangkeluar->gudang == 'packing') {
             return view('gudangpacking.barangkeluar.show', compact('barangkeluar'));
+        } elseif ($barangkeluar->gudang == 'benang') {
+            return view('gudangbenang.barangkeluar.show', compact('barangkeluar'));
         }
     }
 
@@ -242,7 +250,7 @@ class BarangkeluarController extends Controller
     public function edit(Barangkeluar $barangkeluar)
     {
         $satuan = Satuan::all();
-        $pengaturan = Pengaturan::where('keterangan', 'gudang.barang-jadi.barangkeluar.butuh.approval')->first();
+        $pengaturan = Pengaturan::where('keterangan', 'gudang.' . $barangkeluar->gudang . '.barangkeluar.butuh.approval')->first();
         if ($barangkeluar->status == 'Approved') {
             return redirect()->route('barangkeluar.index')->with([
                 'status' => 'error',
@@ -270,6 +278,8 @@ class BarangkeluarController extends Controller
             return view('gudangbeaming.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'packing') {
             return view('gudangpacking.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang', 'satuan'));
+        } elseif ($gudang == 'benang') {
+            return view('gudangbenang.barangkeluar.edit', compact('barangkeluar', 'pengaturan', 'gudang', 'satuan'));
         }
     }
 
@@ -308,6 +318,9 @@ class BarangkeluarController extends Controller
             } elseif ($request->gudang == 'packing') {
                 $jenis_gudang = 'packing';
                 $kartustok_gudang = 'Gudang Packing';
+            } elseif ($request->gudang == 'benang') {
+                $jenis_gudang = 'benang';
+                $kartustok_gudang = 'Gudang Benang';
             }
             $barangkeluar->permintaanmaterial_id = $request->permintaanmaterial_id;
             $barangkeluar->tanggal = date('Y-m-d');
@@ -389,6 +402,8 @@ class BarangkeluarController extends Controller
             } elseif ($request->gudang == 'beaming') {
                 $jenis = 'Work In Progress';
             } elseif ($request->gudang == 'packing') {
+                $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'benang') {
                 $jenis = 'Work In Progress';
             }
             $material = Material::selectRaw("id, nama as text")

@@ -199,6 +199,9 @@ class BarangmasukController extends Controller
             } elseif ($request->gudang == 'packing') {
                 $jenis_gudang = 'packing';
                 $kartustok_gudang = 'Gudang Packing';
+            } elseif ($request->gudang == 'benang') {
+                $jenis_gudang = 'benang';
+                $kartustok_gudang = 'Gudang Benang';
             }
             $gen_no_dokumen = Controller::gen_no_dokumen($jenis_gudang . '.barangmasuk');
             $barangmasuk = new Barangmasuk();
@@ -263,6 +266,8 @@ class BarangmasukController extends Controller
             return view('gudangbeaming.barangmasuk.show', compact('barangmasuk'));
         } elseif ($barangmasuk->gudang == 'packing') {
             return view('gudangpacking.barangmasuk.show', compact('barangmasuk'));
+        } elseif ($barangmasuk->gudang == 'benang') {
+            return view('gudangbenang.barangmasuk.show', compact('barangmasuk'));
         }
     }
 
@@ -272,7 +277,7 @@ class BarangmasukController extends Controller
     public function edit(Barangmasuk $barangmasuk)
     {
         $satuan = Satuan::all();
-        $pengaturan = Pengaturan::where('keterangan', 'gudang.barang-jadi.barangmasuk.butuh.approval')->first();
+        $pengaturan = Pengaturan::where('keterangan', 'gudang.' . $barangmasuk->gudang . '.barangmasuk.butuh.approval')->first();
         if ($barangmasuk->status == 'Approved') {
             return redirect()->route('barangmasuk.index')->with([
                 'status' => 'error',
@@ -298,6 +303,8 @@ class BarangmasukController extends Controller
             return view('gudangbeaming.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'packing') {
             return view('gudangpacking.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
+        } elseif ($gudang == 'packing') {
+            return view('gudangbenang.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
         }
     }
 
@@ -336,6 +343,9 @@ class BarangmasukController extends Controller
             } elseif ($request->gudang == 'packing') {
                 $jenis_gudang = 'packing';
                 $kartustok_gudang = 'Gudang Packing';
+            } elseif ($request->gudang == 'benang') {
+                $jenis_gudang = 'benang';
+                $kartustok_gudang = 'Gudang Benang';
             }
             $barangmasuk->asal = $request->asal;
             $barangmasuk->barangkeluar_id = $request->barangkeluar_id;
@@ -419,6 +429,8 @@ class BarangmasukController extends Controller
             } elseif ($request->gudang == 'beaming') {
                 $jenis = 'Work In Progress';
             } elseif ($request->gudang == 'packing') {
+                $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'benang') {
                 $jenis = 'Work In Progress';
             }
             $material = Material::selectRaw("id, nama as text")

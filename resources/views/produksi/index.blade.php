@@ -60,13 +60,22 @@
                                 <div class="card-body">
                                     <div class="row text-center">
                                         <div class="col-md-12">
-
                                             @if (auth()->user()->can('produksi.wjl.operator'))
                                                 <a class="btn btn-app" href="{{ route('produksiwjl.operator.index') }}">
                                                     <i class="fa fa-pencil"></i> Laporan Produksi WJL
                                                 </a>
                                             @endif
 
+                                            @if (auth()->user()->can('produksi.wjl.pengeringankain'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('produksiwjl.pengeringankain.index') }}">
+                                                    <i class="fa fa-pencil"></i> Laporan Pengeringan Kain
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="row text-center">
+                                        <div class="col-md-12">
                                             @if (auth()->user()->can('produksi.wjl.rekap'))
                                                 <a class="btn btn-app" href="{{ route('produksiwjl.rekap.index') }}">
                                                     <i class="fa fa-file"></i> Rekap Produksi WJL
@@ -92,30 +101,30 @@
                                 <div class="card-body">
                                     <div class="row text-center">
                                         <div class="col-md-12">
-                                            @if (auth()->user()->can('gudang.bahanbaku.cekstok'))
+                                            @if (auth()->user()->can('gudang.benang.cekstok'))
                                                 <a class="btn btn-app"
-                                                    href="{{ route('cekstok.index', ['gudang' => 'bahan-baku']) }}">
+                                                    href="{{ route('cekstok.index', ['gudang' => 'benang']) }}">
                                                     <i class="fa fa-search"></i> Cek Stok
                                                 </a>
                                             @endif
 
-                                            @if (auth()->user()->can('gudang.bahanbaku.barangkeluar'))
+                                            @if (auth()->user()->can('gudang.benang.barangkeluar'))
                                                 <a class="btn btn-app"
-                                                    href="{{ route('barangkeluar.index', ['gudang' => 'bahan-baku']) }}">
+                                                    href="{{ route('barangkeluar.index', ['gudang' => 'benang']) }}">
                                                     <i class="fa fa-upload"></i> Barang Keluar
                                                 </a>
                                             @endif
 
-                                            @if (auth()->user()->can('gudang.bahanbaku.barangmasuk'))
+                                            @if (auth()->user()->can('gudang.benang.barangmasuk'))
                                                 <a class="btn btn-app"
-                                                    href="{{ route('barangmasuk.index', ['gudang' => 'bahan-baku']) }}">
+                                                    href="{{ route('barangmasuk.index', ['gudang' => 'benang']) }}">
                                                     <i class="fa fa-download"></i> Barang Masuk
                                                 </a>
                                             @endif
 
-                                            @if (auth()->user()->can('gudang.bahanbaku.retur'))
+                                            @if (auth()->user()->can('gudang.benang.retur'))
                                                 <a class="btn btn-app"
-                                                    href="{{ route('retur.index', ['gudang' => 'bahan-baku']) }}">
+                                                    href="{{ route('retur.index', ['gudang' => 'benang']) }}">
                                                     <i class="fa fa-mail-reply"></i> Retur
                                                 </a>
                                             @endif

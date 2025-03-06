@@ -10,9 +10,10 @@
                     <div class="col-sm-12">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-dark">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('gudang.index') }}" class="text-dark">Gudang</a>
+                            <li class="breadcrumb-item"><a href="{{ route('produksi.index') }}"
+                                    class="text-dark">Produksi</a>
                             </li>
-                            <li class="breadcrumb-item">Bahan Baku</li>
+                            <li class="breadcrumb-item">Gudang Benang</li>
                             <li class="breadcrumb-item" Active>Retur</li>
                         </ol>
                     </div>
@@ -34,11 +35,11 @@
                                 <div class="row mb-4">
                                     <div class="col-md-12">
                                         <a type="button" class="btn btn-success m-1"
-                                            href="{{ route('retur.create', ['gudang' => 'barang-jadi']) }}"><i
+                                            href="{{ route('retur.create', ['gudang' => 'benang']) }}"><i
                                                 class="fa fa-plus"></i> Tambah
                                             Data</a>
                                         <a type="button" class="btn btn-secondary m-1"
-                                            href="{{ route('gudang.index') }}"><i class="fa fa-reply"></i> Kembali</a>
+                                            href="{{ route('produksi.index') }}"><i class="fa fa-reply"></i> Kembali</a>
                                     </div>
                                 </div>
                                 <div class="row mb-4">

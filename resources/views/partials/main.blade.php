@@ -129,14 +129,14 @@
                         @if (auth()->user()->can('gudang'))
                             <li class="nav-item">
                                 <a href="{{ route('gudang.index') }}"
-                                    class="nav-link {{ \Request::segment(1) == 'gudang' ||
-                                    \Request::segment(1) == 'barangkeluar' ||
-                                    \Request::segment(1) == 'barangmasuk' ||
-                                    \Request::segment(1) == 'retur' ||
-                                    \Request::segment(1) == 'stockopname' ||
-                                    \Request::segment(1) == 'gudangbarangjadi-order' ||
-                                    \Request::segment(1) == 'cekstok' ||
-                                    \Request::segment(1) == 'suratjalan'
+                                    class="nav-link {{ (\Request::segment(1) == 'gudang' && \Request::get('gudang') != 'benang') ||
+                                    (\Request::segment(1) == 'barangkeluar' && \Request::get('gudang') != 'benang') ||
+                                    (\Request::segment(1) == 'barangmasuk' && \Request::get('gudang') != 'benang') ||
+                                    (\Request::segment(1) == 'retur' && \Request::get('gudang') != 'benang') ||
+                                    (\Request::segment(1) == 'stockopname' && \Request::get('gudang') != 'benang') ||
+                                    (\Request::segment(1) == 'gudangbarangjadi-order' && \Request::get('gudang') != 'benang') ||
+                                    (\Request::segment(1) == 'cekstok' && \Request::get('gudang') != 'benang') ||
+                                    (\Request::segment(1) == 'suratjalan' && \Request::get('gudang') != 'benang')
                                         ? 'active'
                                         : '' }}">
                                     <i class="nav-icon fa fa-cubes"></i>
@@ -150,7 +150,7 @@
                         @if (auth()->user()->can('produksi'))
                             <li class="nav-item">
                                 <a href="{{ route('produksi.index') }}"
-                                    class="nav-link {{ \Request::segment(1) == 'produksi' ? 'active' : '' }}">
+                                    class="nav-link {{ \Request::segment(1) == 'produksi' || \Request::get('gudang') == 'benang' ? 'active' : '' }}">
                                     <i class="nav-icon fa fa-industry"></i>
                                     <p>
                                         Produksi
@@ -159,16 +159,16 @@
                             </li>
                         @endif
 
-                        @if (auth()->user()->can('produksi'))
-                            {{-- <li class="nav-item">
-                                <a href="{{ route('produksi.index') }}"
+                        @if (auth()->user()->can('laporan'))
+                            <li class="nav-item">
+                                <a href="{{ route('laporan.index') }}"
                                     class="nav-link {{ \Request::segment(1) == 'laporan' ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-file-alt"></i>
                                     <p>
                                         Laporan
                                     </p>
                                 </a>
-                            </li> --}}
+                            </li>
                         @endif
 
                         @if (auth()->user()->can('datamaster'))

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Produksiwjl extends Model
+class Pengeringankaindetail extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -21,23 +21,9 @@ class Produksiwjl extends Model
     }
 
     protected $fillable = [
-        'slug',
-        'mesin_id',
-        'tanggal',
-        'jenis_kain',
-        'operator',
-        'shift',
-        'meter_awal',
-        'meter_akhir',
-        'hasil',
-        'keterangan',
-        'lungsi',
-        'pakan',
-        'lubang',
-        'pgr',
-        'lebar',
-        'mesin',
-        'teknisi',
+        'pengeringankain_id',
+        'meter',
+        'kerusakan',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -46,13 +32,8 @@ class Produksiwjl extends Model
         'deleted_at'
     ];
 
-    public function mesin(): BelongsTo
+    public function pengeringankain(): BelongsTo
     {
-        return $this->belongsTo(Mesin::class)->withDefault(['nama' => null]);
-    }
-
-    public function pengeringankain(): HasMany
-    {
-        return $this->hasMany(Pengeringankain::class);
+        return $this->belongsTo(Pengeringankain::class)->withDefault(['slug' => null]);
     }
 }

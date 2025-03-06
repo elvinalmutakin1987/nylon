@@ -10,6 +10,7 @@ use App\Http\Controllers\GudangbarangjadiorderController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\KontrolbarmagController;
 use App\Http\Controllers\KontroldenierController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LapproduksiwjlController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LokasiController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\MesinController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PenerimaanbarangController;
 use App\Http\Controllers\PengaturanController;
+use App\Http\Controllers\PengeringankainController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PeranpenggunaController;
 use App\Http\Controllers\PermintaanmaterialController;
@@ -292,5 +294,36 @@ Route::middleware(['auth'])->group(function () {
         Route::get('produksiextruder-kontrol-barmag-get-detail', [KontrolbarmagController::class, 'get_detail'])->name('produksiextruder-kontrol-barmag.get_detail');
         Route::get('produksiextruder-kontrol-barmag-cek-sebelumnya', [KontrolbarmagController::class, 'cek_sebelumnya'])->name('produksiextruder-kontrol-barmag.cek_sebelumnya');
         Route::get('produksiextruder-kontrol-barmag-confirm/{produksiwjl}', [KontrolbarmagController::class, 'confirm'])->name('produksiextruder-kontrol-barmag.confirm');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.pengeringankain']], function () {
+        Route::get('produksiwjl-pengeringankain', [PengeringankainController::class, 'index'])->name('produksiwjl.pengeringankain.index');
+        Route::get('produksiwjl-get-pengeringankain', [PengeringankainController::class, 'get_pengeringankain'])->name('produksiwjl.pengeringankain.get_pengeringankain');
+        Route::post('produksiwjl-pengeringankain', [PengeringankainController::class, 'store'])->name('produksiwjl.pengeringankain.store');
+        Route::get('produksiwjl-pengeringankain/create', [PengeringankainController::class, 'create'])->name('produksiwjl.pengeringankain.create');
+        Route::get('produksiwjl-pengeringankain/create-laporan', [PengeringankainController::class, 'create_laporan'])->name('produksiwjl.pengeringankain.create_laporan');
+        Route::get('produksiwjl-pengeringankain/{produksiwjl}', [PengeringankainController::class, 'show'])->name('produksiwjl.pengeringankain.show');
+        Route::put('produksiwjl-pengeringankain/{produksiwjl}', [PengeringankainController::class, 'update'])->name('produksiwjl.pengeringankain.update');
+        Route::delete('produksiwjl-pengeringankain/{produksiwjl}', [PengeringankainController::class, 'destroy'])->name('produksiwjl.pengeringankain.destroy');
+
+        Route::group(['middleware' => ['role_or_permission:superadmin|produksi.pengeringakain.edit']], function () {
+            Route::get('produksiwjl-pengeringankain/{pengeringankain}/edit', [PengeringankainController::class, 'edit'])->name('produksiwjl.pengeringankain.edit');
+        });
+
+        Route::group(['middleware' => ['role_or_permission:superadmin|produksi.wjl.konfirmasi']], function () {
+            Route::get('produksiwjl-rekap-konfirmasi', [RekapproduksiwjlController::class, 'konfirmasi'])->name('produksiwjl.rekap.konfirmasi');
+        });
+
+        Route::get('produksiwjl-pengeringankain-cetak', [PengeringankainController::class, 'cetak'])->name('produksiwjl.pengeringankain.cetak');
+        Route::get('produksiwjl-pengeringankain-get-mesin', [PengeringankainController::class, 'get_mesin'])->name('produksiwjl.pengeringankain.get_mesin');
+        Route::get('produksiwjl-pengeringankain-get-detail', [PengeringankainController::class, 'get_detail'])->name('produksiwjl.pengeringankain.get_detail');
+        Route::get('produksiwjl-pengeringankain-cek-sebelumnya', [PengeringankainController::class, 'cek_sebelumnya'])->name('produksiwjl.pengeringankain.cek_sebelumnya');
+        Route::get('produksiwjl-pengeringankain-confirm/{produksiwjl}', [PengeringankainController::class, 'confirm'])->name('produksiwjl.pengeringankain.confirm');
+
+        Route::get('produksiwjl-pengeringankain-export', [PengeringankainController::class, 'export'])->name('produksiwjl.pengeringankain.export');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|laporan']], function () {
+        Route::resource('laporan', LaporanController::class)->names('laporan');
     });
 });

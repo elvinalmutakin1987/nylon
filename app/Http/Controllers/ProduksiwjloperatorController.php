@@ -59,7 +59,6 @@ class ProduksiwjloperatorController extends Controller
                 'message' => 'Pilih mesin!'
             ]);
         }
-
         if ($tanggal == 'null' || $tanggal == '') {
             return redirect()->back()->with([
                 'status' => 'error',

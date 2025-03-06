@@ -134,7 +134,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="d_bottom">D</label>
+                                    <label for="d_bottom">B</label>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <input type="text"
@@ -151,7 +151,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="d_plus_bottom">D +</label>
+                                    <label for="d_plus_bottom">B +</label>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <input type="text"

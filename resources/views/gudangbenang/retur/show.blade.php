@@ -10,9 +10,10 @@
                     <div class="col-sm-12">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-dark">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('gudang.index') }}" class="text-dark">Gudang</a>
+                            <li class="breadcrumb-item"><a href="{{ route('produksi.index') }}"
+                                    class="text-dark">Produksi</a>
                             </li>
-                            <li class="breadcrumb-item">Bahan Baku</li>
+                            <li class="breadcrumb-item">Gudang Benang</li>
                             <li class="breadcrumb-item">Retur</li>
                             <li class="breadcrumb-item" Active>Detail Data</li>
                         </ol>

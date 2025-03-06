@@ -169,6 +169,55 @@
                                                     <label class="form-check-label text-bold">Produksi</label>
                                                     <div class="row">
                                                         <div class="col-md-3">
+                                                            <label class="form-check-label">Extruder</label>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.kontroldenier"
+                                                                    name="produksi.extruder.kontroldenier"
+                                                                    {{ $role->hasPermissionTo('produksi.extruder.kontrol-denier') ? 'checked' : '' }}>
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.kontroldenier">Laporan Kontrol
+                                                                    Denier</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.kontrolbarmag"
+                                                                    name="produksi.extruder.kontrolbarmag"
+                                                                    {{ $role->hasPermissionTo('produksi.extruder.kontrol-barmag') ? 'checked' : '' }}>
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.kontrolbarmag">Laporan Kontrol
+                                                                    Barmag</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label class="form-check-label">WJL</label>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.wjl.operator"
+                                                                    name="produksi.wjl.operator"
+                                                                    {{ $role->hasPermissionTo('produksi.wjl.operator') ? 'checked' : '' }}>
+                                                                <label class="form-check-label"
+                                                                    for="produksi.wjl.operator">Laporan Produksi
+                                                                    WJL</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.wjl.rekap" name="produksi.wjl.rekap"
+                                                                    {{ $role->hasPermissionTo('produksi.wjl.rekap') ? 'checked' : '' }}>
+                                                                <label class="form-check-label"
+                                                                    for="produksi.wjl.rekap">Rekap Produksi
+                                                                    WJL</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.wjl.edit" name="produksi.wjl.edit"
+                                                                    {{ $role->hasPermissionTo('produksi.wjl.edit') ? 'checked' : '' }}>
+                                                                <label class="form-check-label"
+                                                                    for="produksi.wjl.edit">Edit Produksi
+                                                                    WJL</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
                                                             <label class="form-check-label">Gudang Benang</label>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
@@ -206,34 +255,7 @@
                                                                     for="gudang.benang.retur">Retur</label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3">
-                                                            <label class="form-check-label">WJL</label>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    id="produksi.wjl.operator"
-                                                                    name="produksi.wjl.operator"
-                                                                    {{ $role->hasPermissionTo('produksi.wjl.operator') ? 'checked' : '' }}>
-                                                                <label class="form-check-label"
-                                                                    for="produksi.wjl.operator">Laporan Produksi
-                                                                    WJL</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    id="produksi.wjl.rekap" name="produksi.wjl.rekap"
-                                                                    {{ $role->hasPermissionTo('produksi.wjl.rekap') ? 'checked' : '' }}>
-                                                                <label class="form-check-label"
-                                                                    for="produksi.wjl.rekap">Rekap Produksi
-                                                                    WJL</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    id="produksi.wjl.edit" name="produksi.wjl.edit"
-                                                                    {{ $role->hasPermissionTo('produksi.wjl.edit') ? 'checked' : '' }}>
-                                                                <label class="form-check-label"
-                                                                    for="produksi.wjl.edit">Edit Produksi
-                                                                    WJL</label>
-                                                            </div>
-                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>

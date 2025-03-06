@@ -59,13 +59,28 @@
                                             <select
                                                 class="form-control select2 w-100 select-group @error('group') is-invalid @enderror"
                                                 id="group" name="group">
+                                                <option value="EXTRUDER"
+                                                    {{ $material->group == 'EXTRUDER' ? 'selected' : '' }}>
+                                                    EXTRUDER</option>
                                                 <option value="RASHEL" {{ $material->group == 'RASHEL' ? 'selected' : '' }}>
                                                     RASHEL</option>
                                                 <option value="SULZER"
-                                                    {{ $material->group == 'SULZER - BEAMING' ? 'selected' : '' }}>
-                                                    SULZER - BEAMING</option>
+                                                    {{ $material->group == 'SULZER' ? 'selected' : '' }}>
+                                                    SULZER</option>
+                                                <option value="BEAMING"
+                                                    {{ $material->group == 'BEAMING' ? 'selected' : '' }}>
+                                                    BEAMING</option>
                                                 <option value="WJL" {{ $material->group == 'WJL' ? 'selected' : '' }}>
                                                     WJL</option>
+                                                <option value="WELDING"
+                                                    {{ $material->group == 'WELDING' ? 'selected' : '' }}>
+                                                    WELDING</option>
+                                                <option value="PACKING"
+                                                    {{ $material->group == 'PACKING' ? 'selected' : '' }}>
+                                                    PACKING</option>
+                                                <option value="GUDANG BELAKANG"
+                                                    {{ $material->group == 'GUDANG BELAKANG' ? 'selected' : '' }}>
+                                                    GUDANG BELAKANG</option>
                                             </select>
                                             @error('group')
                                                 <span id="group-error"
@@ -148,5 +163,34 @@
             $(".select-jenis").select2();
             $(".select-group").select2();
         });
+
+        var data = [{
+                id: 'EXTRUDER',
+                text: 'EXTRUDERS'
+            }, {
+                id: 'RASHEL',
+                text: 'RASHEL'
+            },
+            {
+                id: 'SULZER',
+                text: 'SULZER'
+            },
+            {
+                id: 'BEAMING',
+                text: 'BEAMING'
+            },
+            {
+                id: 'WJL',
+                text: 'WJL'
+            },
+            {
+                id: 'WELDING',
+                text: 'WELDING'
+            },
+            {
+                id: 'PACKING',
+                text: 'PACKING'
+            },
+        ];
     </script>
 @endsection

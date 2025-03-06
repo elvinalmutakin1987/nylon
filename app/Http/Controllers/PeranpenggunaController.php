@@ -104,6 +104,8 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_wjl_kepalaregu) array_push($access, 'produksi.wjl.kepalaregu');
             if ($request->produksi_wjl_rekap) array_push($access, 'produksi.wjl.rekap');
             if ($request->produksi_wjl_edit) array_push($access, 'produksi.wjl.edit');
+            if ($request->produksi_extruder_kontroldenier) array_push($access, 'produksi.extruder.kontrol-denier');
+            if ($request->produksi_extruder_kontrolbarmag) array_push($access, 'produksi.extruder.kontrol-barmag');
             if (
                 $request->gudang_benang_cekstok ||
                 $request->gudang_benang_barangkeluar ||
@@ -112,7 +114,9 @@ class PeranpenggunaController extends Controller
                 $request->produksi_wjl_operator ||
                 $request->produksi_wjl_kepalaregu ||
                 $request->produksi_wjl_rekap ||
-                $request->produksi_wjl_edit
+                $request->produksi_wjl_edit ||
+                $request->produksi_extruder_kontroldenier ||
+                $request->produksi_extruder_kontrolbarmag
             ) {
                 array_push($access, 'produksi');
             }
@@ -201,6 +205,8 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_wjl_kepalaregu) array_push($access, 'produksi.wjl.kepalaregu');
             if ($request->produksi_wjl_rekap) array_push($access, 'produksi.wjl.rekap');
             if ($request->produksi_wjl_edit) array_push($access, 'produksi.wjl.edit');
+            if ($request->produksi_extruder_kontroldenier) array_push($access, 'produksi.extruder.kontrol-denier');
+            if ($request->produksi_extruder_kontrolbarmag) array_push($access, 'produksi.extruder.kontrol-barmag');
             if (
                 $request->gudang_benang_cekstok ||
                 $request->gudang_benang_barangkeluar ||
@@ -209,7 +215,9 @@ class PeranpenggunaController extends Controller
                 $request->produksi_wjl_operator ||
                 $request->produksi_wjl_kepalaregu ||
                 $request->produksi_wjl_rekap ||
-                $request->produksi_wjl_edit
+                $request->produksi_wjl_edit ||
+                $request->produksi_extruder_kontroldenier ||
+                $request->produksi_extruder_kontrolbarmag
             ) {
                 array_push($access, 'produksi');
             }
