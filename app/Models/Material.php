@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Material extends Model
@@ -26,6 +27,7 @@ class Material extends Model
         'jenis',
         'group',
         'ukuran',
+        'bentuk',
         'keterangan',
         'created_by',
         'updated_by',
@@ -48,5 +50,10 @@ class Material extends Model
     public function kontroldenier(): HasMany
     {
         return $this->hasMany(Kontroldenier::class);
+    }
+
+    public function materialstok(): HasOne
+    {
+        return $this->hasMany(Materialstok::class);
     }
 }

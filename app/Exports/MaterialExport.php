@@ -19,6 +19,7 @@ class MaterialExport implements FromCollection, WithHeadings
             'group',
             'jenis',
             'ukuran',
+            'bentuk',
             'keterangan'
         )->get(
             'kode',
@@ -38,6 +39,7 @@ class MaterialExport implements FromCollection, WithHeadings
             'group',
             'jenis',
             'ukuran',
+            'bentuk',
             'keterangan'
         ];
     }

@@ -57,6 +57,7 @@
                                                     <th>Group</th>
                                                     <th>Jenis</th>
                                                     <th>Ukuran</th>
+                                                    <th>Bentuk</th>
                                                     <th>Keterangan</th>
                                                     <th></th>
                                                 </tr>
@@ -184,6 +185,12 @@
                     {
                         data: 'ukuran',
                         name: 'ukuran',
+                        orderable: true,
+                        searchable: true,
+                    },
+                    {
+                        data: 'bentuk',
+                        name: 'bentuk',
                         orderable: true,
                         searchable: true,
                     },

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('group')->nullable();
             $table->string('ukuran')->nullable();
             $table->string('keterangan')->nullable();
+            $table->string('bentuk')->nullable();
             $table->decimal('max_stok', 16, 2)->nullable();
             $table->decimal('min_stok', 16, 2)->nullable();
             $table->string('created_by')->nullable();

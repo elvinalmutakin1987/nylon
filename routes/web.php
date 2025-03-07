@@ -11,6 +11,7 @@ use App\Http\Controllers\GudangController;
 use App\Http\Controllers\KontrolbarmagController;
 use App\Http\Controllers\KontroldenierController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\LaporangudangController;
 use App\Http\Controllers\LapproduksiwjlController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LokasiController;
@@ -325,5 +326,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['middleware' => ['role_or_permission:superadmin|laporan']], function () {
         Route::resource('laporan', LaporanController::class)->names('laporan');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|laporangudang']], function () {
+        Route::resource('laporangudang', LaporangudangController::class)->names('laporangudang');
+
+        Route::get('laporangudang-detail', [LaporangudangController::class, 'detail'])->name('laporangudang.detail');
+        Route::get('laporangudang-cetak', [LaporangudangController::class, 'cetak'])->name('laporangudang.cetak');
+        Route::get('laporangudang-export', [LaporangudangController::class, 'export'])->name('laporangudang.export');
+        Route::post('laporangudang-store-keterangan', [LaporangudangController::class, 'store_keterangan'])->name('laporangudang.store_keterangan');
     });
 });

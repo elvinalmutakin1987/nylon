@@ -89,6 +89,19 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
+                                            <label for="bentuk">Bentuk</label>
+                                            <select
+                                                class="form-control select2 w-100 select-bentuk @error('bentuk') is-invalid @enderror"
+                                                id="bentuk" name="bentuk">
+                                                <option value="Roll">Roll</option>
+                                                <option value="Terpal">Terpal</option>
+                                            </select>
+                                            @error('jenis')
+                                                <span id="jenis-error"
+                                                    class="error invalid-feedback">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
                                             <label for="keterangan">Keterangan</label>
                                             <input type="text"
                                                 class="form-control @error('keterangan') is-invalid @enderror"
@@ -161,7 +174,7 @@
 
         $(document).ready(function() {
             $(".select-jenis").select2();
-            // $(".select-group").select2();
+            $(".select-bentuk").select2();
 
             $(".select-group").select2({
                 placeholder: "-- Pilih Group --",

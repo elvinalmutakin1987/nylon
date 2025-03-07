@@ -267,7 +267,7 @@
                 placeholder: "- Pilih Barang -",
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('penerimaanbarang.get_material') }}',
+                    url: '{{ route('barangmasuk.get_material') }}',
                     dataType: 'json',
                     data: function(params) {
                         return {
