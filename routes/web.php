@@ -298,30 +298,30 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['middleware' => ['role_or_permission:superadmin|produksi.pengeringankain']], function () {
-        Route::get('produksiwjl-pengeringankain', [PengeringankainController::class, 'index'])->name('produksiwjl.pengeringankain.index');
-        Route::get('produksiwjl-get-pengeringankain', [PengeringankainController::class, 'get_pengeringankain'])->name('produksiwjl.pengeringankain.get_pengeringankain');
-        Route::post('produksiwjl-pengeringankain', [PengeringankainController::class, 'store'])->name('produksiwjl.pengeringankain.store');
-        Route::get('produksiwjl-pengeringankain/create', [PengeringankainController::class, 'create'])->name('produksiwjl.pengeringankain.create');
-        Route::get('produksiwjl-pengeringankain/create-laporan', [PengeringankainController::class, 'create_laporan'])->name('produksiwjl.pengeringankain.create_laporan');
-        Route::get('produksiwjl-pengeringankain/{produksiwjl}', [PengeringankainController::class, 'show'])->name('produksiwjl.pengeringankain.show');
-        Route::put('produksiwjl-pengeringankain/{produksiwjl}', [PengeringankainController::class, 'update'])->name('produksiwjl.pengeringankain.update');
-        Route::delete('produksiwjl-pengeringankain/{produksiwjl}', [PengeringankainController::class, 'destroy'])->name('produksiwjl.pengeringankain.destroy');
+        Route::get('laminanting-pengeringankain', [PengeringankainController::class, 'index'])->name('produksilaminating.pengeringankain.index');
+        Route::get('laminanting-get-pengeringankain', [PengeringankainController::class, 'get_pengeringankain'])->name('produksilaminating.pengeringankain.get_pengeringankain');
+        Route::post('laminanting-pengeringankain', [PengeringankainController::class, 'store'])->name('produksilaminating.pengeringankain.store');
+        Route::get('laminanting-pengeringankain/create', [PengeringankainController::class, 'create'])->name('produksilaminating.pengeringankain.create');
+        Route::get('laminanting-pengeringankain/create-laporan', [PengeringankainController::class, 'create_laporan'])->name('produksilaminating.pengeringankain.create_laporan');
+        Route::get('laminanting-pengeringankain/{pengeringankain}', [PengeringankainController::class, 'show'])->name('produksilaminating.pengeringankain.show');
+        Route::put('laminanting-pengeringankain/{pengeringankain}', [PengeringankainController::class, 'update'])->name('produksilaminating.pengeringankain.update');
+        Route::delete('laminanting-pengeringankain/{pengeringankain}', [PengeringankainController::class, 'destroy'])->name('produksilaminating.pengeringankain.destroy');
 
         Route::group(['middleware' => ['role_or_permission:superadmin|produksi.pengeringakain.edit']], function () {
-            Route::get('produksiwjl-pengeringankain/{pengeringankain}/edit', [PengeringankainController::class, 'edit'])->name('produksiwjl.pengeringankain.edit');
+            Route::get('laminanting-pengeringankain/{pengeringankain}/edit', [PengeringankainController::class, 'edit'])->name('produksilaminating.pengeringankain.edit');
         });
 
         Route::group(['middleware' => ['role_or_permission:superadmin|produksi.wjl.konfirmasi']], function () {
-            Route::get('produksiwjl-rekap-konfirmasi', [RekapproduksiwjlController::class, 'konfirmasi'])->name('produksiwjl.rekap.konfirmasi');
+            Route::get('laminanting-rekap-konfirmasi', [RekapproduksiwjlController::class, 'konfirmasi'])->name('produksilaminating.rekap.konfirmasi');
         });
 
-        Route::get('produksiwjl-pengeringankain-cetak', [PengeringankainController::class, 'cetak'])->name('produksiwjl.pengeringankain.cetak');
-        Route::get('produksiwjl-pengeringankain-get-mesin', [PengeringankainController::class, 'get_mesin'])->name('produksiwjl.pengeringankain.get_mesin');
-        Route::get('produksiwjl-pengeringankain-get-detail', [PengeringankainController::class, 'get_detail'])->name('produksiwjl.pengeringankain.get_detail');
-        Route::get('produksiwjl-pengeringankain-cek-sebelumnya', [PengeringankainController::class, 'cek_sebelumnya'])->name('produksiwjl.pengeringankain.cek_sebelumnya');
-        Route::get('produksiwjl-pengeringankain-confirm/{produksiwjl}', [PengeringankainController::class, 'confirm'])->name('produksiwjl.pengeringankain.confirm');
+        Route::get('laminanting-pengeringankain-cetak', [PengeringankainController::class, 'cetak'])->name('produksilaminating.pengeringankain.cetak');
+        Route::get('laminanting-pengeringankain-get-mesin', [PengeringankainController::class, 'get_mesin'])->name('produksilaminating.pengeringankain.get_mesin');
+        Route::get('laminanting-pengeringankain-get-detail', [PengeringankainController::class, 'get_detail'])->name('produksilaminating.pengeringankain.get_detail');
+        Route::get('laminanting-pengeringankain-cek-laporan-wjl', [PengeringankainController::class, 'cek_laporan_wjl'])->name('produksilaminating.pengeringankain.cek_laporan_wjl');
+        Route::get('laminanting-pengeringankain-confirm/{pengeringankain}', [PengeringankainController::class, 'confirm'])->name('produksilaminating.pengeringankain.confirm');
 
-        Route::get('produksiwjl-pengeringankain-export', [PengeringankainController::class, 'export'])->name('produksiwjl.pengeringankain.export');
+        Route::get('laminanting-pengeringankain-export', [PengeringankainController::class, 'export'])->name('produksilaminating.pengeringankain.export');
     });
 
     Route::group(['middleware' => ['role_or_permission:superadmin|laporan']], function () {

@@ -66,19 +66,39 @@
                                                 </a>
                                             @endif
 
-                                            @if (auth()->user()->can('produksi.wjl.pengeringankain'))
-                                                <a class="btn btn-app"
-                                                    href="{{ route('produksiwjl.pengeringankain.index') }}">
-                                                    <i class="fa fa-pencil"></i> Laporan Pengeringan Kain
+                                            @if (auth()->user()->can('produksi.wjl.rekap'))
+                                                <a class="btn btn-app" href="{{ route('produksiwjl.rekap.index') }}">
+                                                    <i class="fa fa-file"></i> Rekap Produksi WJL
                                                 </a>
                                             @endif
                                         </div>
                                     </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        @endif
+
+                        @if (auth()->user()->can('produksi.laminating.pengeringankain') || auth()->user()->can('produksi.laminanting.rekap'))
+                            <!-- Application buttons -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Laminanting</h3>
+                                </div>
+                                <div class="card-body">
                                     <div class="row text-center">
                                         <div class="col-md-12">
-                                            @if (auth()->user()->can('produksi.wjl.rekap'))
-                                                <a class="btn btn-app" href="{{ route('produksiwjl.rekap.index') }}">
-                                                    <i class="fa fa-file"></i> Rekap Produksi WJL
+                                            @if (auth()->user()->can('produksi.laminanting.pengeringankain'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('produksilaminating.pengeringankain.index') }}">
+                                                    <i class="fa fa-pencil"></i> Laporan Pengeringan Kain
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('produksi.laminanting.rekap'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('produksilaminating.pengeringankain.index') }}">
+                                                    <i class="fa fa-file"></i> Rekap Pengeringan Kain
                                                 </a>
                                             @endif
                                         </div>

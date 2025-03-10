@@ -79,6 +79,8 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'produksi.extruder.cek-wender']);
         Permission::create(['name' => 'produksi.extruder.kontrol-reifenhouzer']);
         Permission::create(['name' => 'produksi.extruder.rekap-reifenhouzer']);
+        Permission::create(['name' => 'produksi.laminanting.pengeringankain']);
+        Permission::create(['name' => 'produksi.laminanting.rekap']);
         Permission::create(['name' => 'approval']);
         //===========================================
 

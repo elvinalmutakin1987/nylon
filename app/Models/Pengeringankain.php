@@ -21,6 +21,7 @@ class Pengeringankain extends Model
     }
 
     protected $fillable = [
+        'slug',
         'produksiwjl_id',
         'mesin_id',
         'wjl_tanggal',

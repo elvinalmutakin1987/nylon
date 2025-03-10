@@ -81,7 +81,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <button type="button" class="btn btn-success" data-toggle="modal"
-                                            data-target="#modal-import" onclick="lihat_laporan_sebelumnya()"><i
+                                            data-target="#modal-import" onclick="cek_laporan_wjl()"><i
                                                 class="fa fa-plus"></i>
                                             Cek Laporan Produksi WJL</button>
                                     </div>
@@ -128,7 +128,7 @@
                 placeholder: "- Pilih Mesin -",
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('produksiwjl.operator.get_mesin') }}',
+                    url: '{{ route('produksilaminating.pengeringankain.get_mesin') }}',
                     dataType: 'json',
                     data: function(params) {
                         return {
@@ -166,9 +166,9 @@
             });
         @endif
 
-        function lihat_laporan_sebelumnya() {
+        function cek_laporan_wjl() {
             var url =
-                '{!! route('produksiwjl.operator.create', [
+                '{!! route('produksilaminating.pengeringankain.create', [
                     'mesin_id' => '_mesin',
                     'tanggal' => '_tanggal',
                     'shift' => '_shift',

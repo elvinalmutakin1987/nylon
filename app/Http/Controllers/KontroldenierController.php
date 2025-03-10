@@ -118,6 +118,7 @@ class KontroldenierController extends Controller
                 $kontroldenier->k_top = $k_top;
                 $kontroldenier->k_min_bottom = $k_min_bottom;
                 $kontroldenier->k_min_top = $k_min_top;
+                $kontroldenier->created_by = Auth::user()->id;
                 $kontroldenier->save();
             }
             $action = 'create';
@@ -134,6 +135,7 @@ class KontroldenierController extends Controller
         $kontroldenier->k_top = $k_top;
         $kontroldenier->k_min_bottom = $k_min_bottom;
         $kontroldenier->k_min_top = $k_min_top;
+        $kontroldenier->updated_by = Auth::user()->id;
         $kontroldenier->save();
         if ($kontroldenier->status == 'Draft') {
             $action = 'edit';
@@ -182,6 +184,7 @@ class KontroldenierController extends Controller
             $kontroldenier->k_min_bottom = $k_min_bottom;
             $kontroldenier->k_min_top = $k_min_top;
             $kontroldenier->status = 'Draft';
+            $kontroldenier->created_by = Auth::user()->id;
             $kontroldenier->save();
         }
         return view('produksiextruder.kontroldenier.create', compact('shift', 'tanggal', 'material_id', 'material', 'kontroldenier'));

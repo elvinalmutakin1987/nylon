@@ -70,6 +70,10 @@
                                                 class="fas fa-file-excel"></i>
                                             Export</button>
                                     </div>
+                                    <div class="col-md-3">
+                                        <a type="button" class="btn btn-secondary" href="{{ route('laporan.index') }}"><i
+                                                class="fa fa-reply"></i> Kembali</a>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
