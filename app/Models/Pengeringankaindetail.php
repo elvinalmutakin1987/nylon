@@ -21,6 +21,7 @@ class Pengeringankaindetail extends Model
     }
 
     protected $fillable = [
+        'slug',
         'pengeringankain_id',
         'meter',
         'kerusakan',

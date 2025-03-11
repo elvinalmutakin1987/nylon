@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Number;
+@endphp
+
 @extends('partials.main')
 
 @section('content')
@@ -163,7 +167,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-8">
+                                        <div class="col-md-7">
                                             <table id="table1" class="table projects">
                                                 <thead>
                                                     <tr>
@@ -173,21 +177,26 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <input type="text" class="form-control" id="meter1"
-                                                                name="meter[]">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="form-control w-100"
-                                                                id="kerusakan1" name="kerusakan[]">
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <button type="button" class="btn btn-danger"
-                                                                id="hapus"><i class="fa fa-trash"></i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
+                                                    @foreach ($pengeringankain->pengeringankaindetail as $d)
+                                                        <tr>
+                                                            <td>
+                                                                <input type="text" class="form-control" id="meter1"
+                                                                    name="meter[]"
+                                                                    onblur="ubah_format('meter1', this.value)"
+                                                                    value="{{ Number::format((float) $d->meter, precision: 0) }}">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control w-100"
+                                                                    id="kerusakan1" name="kerusakan[]"
+                                                                    value="{{ $d->kerusakan }}">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button type="button" class="btn btn-danger"
+                                                                    id="hapus"><i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                     <tr>
                                                         <td colspan="2"></td>
                                                         <td class="text-center">
@@ -199,39 +208,9 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        {{-- <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="operator_1">Operator</label>
-                                                <input type="text"
-                                                    class="form-control @error('operator_1') is-invalid @enderror"
-                                                    id="operator_1" name="operator_1" value="{{ old('operator_1') }}">
-                                                @error('operator_1')
-                                                    <span id="operator_1-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="tanggal_1">Tanggal</label>
-                                                <div class="input-group date" id="div_tanggal_1"
-                                                    data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input"
-                                                        data-target="#div_tanggal_1" id="tanggal_1" name="tanggal_1"
-                                                        value="{{ old('tanggal_1') ?? date('Y-m-d') }}" />
-                                                    <div class="input-group-append" data-target="#div_tanggal_1"
-                                                        data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @error('tanggal')
-                                                    <span id="nama-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-md-4">
-                                            <div class="card card-primary card-tabs">
-                                                <div class="card-header p-0 pt-1">
+                                        <div class="col-md-5">
+                                            <div class="card card-primary card-outline card-outline-tabs">
+                                                <div class="card-header p-0 border-bottom-0">
                                                     <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                                                         <li class="nav-item">
                                                             <a class="nav-link active" id="custom-tabs-one-home-tab"
@@ -262,7 +241,7 @@
                                                                 <input type="text"
                                                                     class="form-control @error('operator_1') is-invalid @enderror"
                                                                     id="operator_1" name="operator_1"
-                                                                    value="{{ old('operator_1') }}">
+                                                                    value="{{ old('operator_1') ?? $pengeringankain->operator_1 }}">
                                                                 @error('operator_1')
                                                                     <span id="operator_1-error"
                                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -276,7 +255,7 @@
                                                                         class="form-control datetimepicker-input"
                                                                         data-target="#div_tanggal_1" id="tanggal_1"
                                                                         name="tanggal_1"
-                                                                        value="{{ old('tanggal_1') ?? date('Y-m-d') }}" />
+                                                                        value="{{ old('tanggal_1') ?? $pengeringankain->tanggal_1 }}" />
                                                                     <div class="input-group-append"
                                                                         data-target="#div_tanggal_1"
                                                                         data-toggle="datetimepicker">
@@ -298,7 +277,7 @@
                                                                         class="form-control datetimepicker-input"
                                                                         data-target="#div_jam_1" id="jam_1"
                                                                         name="jam_1"
-                                                                        value="{{ old('jam_1') ?? date('h:i:s') }}" />
+                                                                        value="{{ old('jam_1') ?? $pengeringankain->jam_1 }}" />
                                                                     <div class="input-group-append"
                                                                         data-target="#div_jam_1"
                                                                         data-toggle="datetimepicker">
@@ -317,8 +296,13 @@
                                                                 <select
                                                                     class="form-control select2 w-100 select-kondisi @error('kondisi_kain_1') is-invalid @enderror"
                                                                     id="kondisi_kain_1" name="kondisi_kain_1">
-                                                                    <option value="Kering">Kering</option>
-                                                                    <option value="Basah">Basah</option>
+                                                                    <option value=""></option>
+                                                                    <option value="Kering"
+                                                                        {{ $pengeringankain->kondisi_kain_1 == 'Kering' ? 'selected' : '' }}>
+                                                                        Kering</option>
+                                                                    <option value="Basah"
+                                                                        {{ $pengeringankain->kondisi_kain_2 == 'Basah' ? 'selected' : '' }}>
+                                                                        Basah</option>
                                                                 </select>
                                                                 @error('kondisi_kain_1')
                                                                     <span id="kondisi_kain_1-error"
@@ -330,7 +314,7 @@
                                                                 <input type="text"
                                                                     class="form-control @error('berat_1') is-invalid @enderror"
                                                                     id="berat_1" name="berat_1"
-                                                                    value="{{ old('berat_1') }}">
+                                                                    value="{{ old('berat_1') ?? $pengeringankain->berat_1 }}">
                                                                 @error('berat_1')
                                                                     <span id="berat_1-error"
                                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -341,7 +325,7 @@
                                                                 <input type="text"
                                                                     class="form-control @error('panjang_1') is-invalid @enderror"
                                                                     id="panjang_1" name="panjang_1"
-                                                                    value="{{ old('panjang_1') }}">
+                                                                    value="{{ old('panjang_1') ?? $pengeringankain->panjang_1 }}">
                                                                 @error('panjang_1')
                                                                     <span id="panjang_1-error"
                                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -352,29 +336,29 @@
                                                                 <input type="text"
                                                                     class="form-control @error('suhu_1') is-invalid @enderror"
                                                                     id="suhu_1" name="suhu_1"
-                                                                    value="{{ old('suhu_1') }}">
+                                                                    value="{{ old('suhu_1') ?? $pengeringankain->suhu_1 }}">
                                                                 @error('suhu_1')
                                                                     <span id="suhu_1-error"
                                                                         class="error invalid-feedback">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="kecepatan_screw_1">Kcpt. Screw</label>
+                                                                <label for="kecepatan_screw_2">Kecepatan Screw</label>
                                                                 <input type="text"
                                                                     class="form-control @error('kecepatan_screw_1') is-invalid @enderror"
                                                                     id="kecepatan_screw_1" name="kecepatan_screw_1"
-                                                                    value="{{ old('kecepatan_screw_1') }}">
+                                                                    value="{{ old('kecepatan_screw_1') ?? $pengeringankain->kecepatan_screw_1 }}">
                                                                 @error('kecepatan_screw_1')
                                                                     <span id="kecepatan_screw_1-error"
                                                                         class="error invalid-feedback">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="kecapatan_winder_1">Kcpt. Winder</label>
+                                                                <label for="kecapatan_winder_1">Kecepatan Winder</label>
                                                                 <input type="text"
                                                                     class="form-control @error('kecapatan_winder_1') is-invalid @enderror"
                                                                     id="kecapatan_winder_1" name="kecapatan_winder_1"
-                                                                    value="{{ old('kecapatan_winder_1') }}">
+                                                                    value="{{ old('kecapatan_winder_1') ?? $pengeringankain->kecepatan_winder_1 }}">
                                                                 @error('kecapatan_winder_1')
                                                                     <span id="kecapatan_winder_1-error"
                                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -386,9 +370,15 @@
                                                                     class="form-control select2 w-100 select-kondisi-2 @error('kondisi_kain2_1') is-invalid @enderror"
                                                                     id="kondisi_kain2_1" name="kondisi_kain2_1">
                                                                     <option value=""></option>
-                                                                    <option value="Bagus">Bagus</option>
-                                                                    <option value="Ngelewer">Ngelewer</option>
-                                                                    <option value="Nglipat">Nglipat</option>
+                                                                    <option value="Bagus"
+                                                                        {{ $pengeringankain->kondisi_kain2_1 == 'Bagus' ? 'selected' : '' }}>
+                                                                        Bagus</option>
+                                                                    <option value="Ngelewer"
+                                                                        {{ $pengeringankain->kondisi_kain2_1 == 'Ngelewer' ? 'selected' : '' }}>
+                                                                        Ngelewer</option>
+                                                                    <option value="Nglipat"
+                                                                        {{ $pengeringankain->kondisi_kain2_1 == 'Nglipat' ? 'selected' : '' }}>
+                                                                        Nglipat</option>
                                                                 </select>
                                                                 @error('kondisi_kain2_1')
                                                                     <span id="kondisi_kain2_1-error"
@@ -398,29 +388,308 @@
                                                         </div>
                                                         <div class="tab-pane fade" id="custom-tabs-one-profile"
                                                             role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
-                                                            Mauris tincidunt mi at erat gravida, eget tristique urna
-                                                            bibendum. Mauris pharetra purus ut ligula tempor, et vulputate
-                                                            metus facilisis. Lorem ipsum dolor sit amet, consectetur
-                                                            adipiscing elit. Vestibulum ante ipsum primis in faucibus orci
-                                                            luctus et ultrices posuere cubilia Curae; Maecenas sollicitudin,
-                                                            nisi a luctus interdum, nisl ligula placerat mi, quis posuere
-                                                            purus ligula eu lectus. Donec nunc tellus, elementum sit amet
-                                                            ultricies at, posuere nec nunc. Nunc euismod pellentesque diam.
+                                                            <div class="form-group">
+                                                                <label for="operator_2">Operator</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('operator_2') is-invalid @enderror"
+                                                                    id="operator_2" name="operator_2"
+                                                                    value="{{ old('operator_2') ?? $pengeringankain->operator_2 }}">
+                                                                @error('operator_2')
+                                                                    <span id="operator_1-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="tanggal_1">Tanggal</label>
+                                                                <div class="input-group date" id="div_tanggal_2"
+                                                                    data-target-input="nearest">
+                                                                    <input type="text"
+                                                                        class="form-control datetimepicker-input"
+                                                                        data-target="#div_tanggal_2" id="tanggal_2"
+                                                                        name="tanggal_2"
+                                                                        value="{{ old('tanggal_2') ?? $pengeringankain->tanggal_2 }}" />
+                                                                    <div class="input-group-append"
+                                                                        data-target="#div_tanggal_2"
+                                                                        data-toggle="datetimepicker">
+                                                                        <div class="input-group-text"><i
+                                                                                class="fa fa-calendar"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @error('tanggal')
+                                                                    <span id="nama-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="jam_2">Jam</label>
+                                                                <div class="input-group date" id="div_jam_2"
+                                                                    data-target-input="nearest">
+                                                                    <input type="text"
+                                                                        class="form-control datetimepicker-input"
+                                                                        data-target="#div_jam_2" id="jam_2"
+                                                                        name="jam_2"
+                                                                        value="{{ old('jam_2') ?? $pengeringankain->jam_2 }}" />
+                                                                    <div class="input-group-append"
+                                                                        data-target="#div_jam_2"
+                                                                        data-toggle="datetimepicker">
+                                                                        <div class="input-group-text"><i
+                                                                                class="fa fa-clock"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @error('tanggal')
+                                                                    <span id="nama-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="kondisi_kain_2">Kondisi Kain</label>
+                                                                <select
+                                                                    class="form-control select2 w-100 select-kondisi @error('kondisi_kain_2') is-invalid @enderror"
+                                                                    id="kondisi_kain_2" name="kondisi_kain_2">
+                                                                    <option value=""></option>
+                                                                    <option value="Kering"
+                                                                        {{ $pengeringankain->kondisi_kain_2 == 'Kering' ? 'selected' : '' }}>
+                                                                        Kering</option>
+                                                                    <option value="Basah"
+                                                                        {{ $pengeringankain->kondisi_kain_2 == 'Basah' ? 'selected' : '' }}>
+                                                                        Basah</option>
+                                                                </select>
+                                                                @error('kondisi_kain_2')
+                                                                    <span id="kondisi_kain_2-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="berat_2">Berat</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('berat_2') is-invalid @enderror"
+                                                                    id="berat_2" name="berat_2"
+                                                                    value="{{ old('berat_2') ?? $pengeringankain->berat_2 }}">
+                                                                @error('berat_2')
+                                                                    <span id="berat_2-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="panjang_2">Panjang</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('panjang_2') is-invalid @enderror"
+                                                                    id="panjang_2" name="panjang_2"
+                                                                    value="{{ old('panjang_2') ?? $pengeringankain->panjang_2 }}">
+                                                                @error('panjang_2')
+                                                                    <span id="panjang_2-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="suhu_2">Suhu</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('suhu_2') is-invalid @enderror"
+                                                                    id="suhu_2" name="suhu_2"
+                                                                    value="{{ old('suhu_2') ?? $pengeringankain->suhu_2 }}">
+                                                                @error('suhu_2')
+                                                                    <span id="suhu_2-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="kecepatan_screw_2">Kecepatan Screw</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('kecepatan_screw_2') is-invalid @enderror"
+                                                                    id="kecepatan_screw_2" name="kecepatan_screw_2"
+                                                                    value="{{ old('kecepatan_screw_2') ?? $pengeringankain->kecepetana_screw_2 }}">
+                                                                @error('kecepatan_screw_2')
+                                                                    <span id="kecepatan_screw_2-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="kecepatan_winder_2">Kecepatan Winder</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('kecepatan_winder_2') is-invalid @enderror"
+                                                                    id="kecepatan_winder_2" name="kecepatan_winder_2"
+                                                                    value="{{ old('kecepatan_winder_2') ?? $pengeringankain->kecepatana_winder_2 }}">
+                                                                @error('kecepatan_winder_2')
+                                                                    <span id="kecepatan_winder_2-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="kondisi_kain2_2">Kondisi Kain</label>
+                                                                <select
+                                                                    class="form-control select2 w-100 select-kondisi-2 @error('kondisi_kain2_2') is-invalid @enderror"
+                                                                    id="kondisi_kain2_2" name="kondisi_kain2_2">
+                                                                    <option value=""></option>
+                                                                    <option value="Bagus"
+                                                                        {{ $pengeringankain->kondisi_kain2_2 == 'Bagus' ? 'selected' : '' }}>
+                                                                        Bagus</option>
+                                                                    <option value="Ngelewer"
+                                                                        {{ $pengeringankain->kondisi_kain2_2 == 'Ngelewer' ? 'selected' : '' }}>
+                                                                        Ngelewer</option>
+                                                                    <option value="Nglipat"
+                                                                        {{ $pengeringankain->kondisi_kain2_2 == 'Ngelipat' ? 'selected' : '' }}>
+                                                                        Nglipat</option>
+                                                                </select>
+                                                                @error('kondisi_kain2_2')
+                                                                    <span id="kondisi_kain2_2-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
                                                         </div>
                                                         <div class="tab-pane fade" id="custom-tabs-one-messages"
                                                             role="tabpanel"
                                                             aria-labelledby="custom-tabs-one-messages-tab">
-                                                            Morbi turpis dolor, vulputate vitae felis non, tincidunt congue
-                                                            mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus
-                                                            faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac
-                                                            tristique nulla. Integer vestibulum orci odio. Cras nec augue
-                                                            ipsum. Suspendisse ut velit condimentum, mattis urna a,
-                                                            malesuada nunc. Curabitur eleifend facilisis velit finibus
-                                                            tristique. Nam vulputate, eros non luctus efficitur, ipsum odio
-                                                            volutpat massa, sit amet sollicitudin est libero sed ipsum.
-                                                            Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida
-                                                            arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu
-                                                            risus tincidunt eleifend ac ornare magna.
+                                                            <div class="form-group">
+                                                                <label for="operator_3">Operator</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('operator_3') is-invalid @enderror"
+                                                                    id="operator_3" name="operator_3"
+                                                                    value="{{ old('operator_3') ?? $pengeringankain->operator_3 }}">
+                                                                @error('operator_3')
+                                                                    <span id="operator_3-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="tanggal_3">Tanggal</label>
+                                                                <div class="input-group date" id="div_tanggal_3"
+                                                                    data-target-input="nearest">
+                                                                    <input type="text"
+                                                                        class="form-control datetimepicker-input"
+                                                                        data-target="#div_tanggal_3" id="tanggal_3"
+                                                                        name="tanggal_3"
+                                                                        value="{{ old('tanggal_3') ?? $pengeringankain->tanggal_3 }}" />
+                                                                    <div class="input-group-append"
+                                                                        data-target="#div_tanggal_3"
+                                                                        data-toggle="datetimepicker">
+                                                                        <div class="input-group-text"><i
+                                                                                class="fa fa-calendar"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @error('tanggal')
+                                                                    <span id="nama-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="jam_3">Jam</label>
+                                                                <div class="input-group date" id="div_jam_3"
+                                                                    data-target-input="nearest">
+                                                                    <input type="text"
+                                                                        class="form-control datetimepicker-input"
+                                                                        data-target="#div_jam_3" id="jam_3"
+                                                                        name="jam_3"
+                                                                        value="{{ old('jam_3') ?? $pengeringankain->jam_3 }}" />
+                                                                    <div class="input-group-append"
+                                                                        data-target="#div_jam_3"
+                                                                        data-toggle="datetimepicker">
+                                                                        <div class="input-group-text"><i
+                                                                                class="fa fa-clock"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @error('tanggal')
+                                                                    <span id="nama-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="kondisi_kain_3">Kondisi Kain</label>
+                                                                <select
+                                                                    class="form-control select2 w-100 select-kondisi @error('kondisi_kain_3') is-invalid @enderror"
+                                                                    id="kondisi_kain_3" name="kondisi_kain_3">
+                                                                    <option value=""></option>
+                                                                    <option value="Kering"
+                                                                        {{ $pengeringankain->kondisi_kain_3 == 'Kering' ? 'selected' : '' }}>
+                                                                        Kering</option>
+                                                                    <option value="Basah"
+                                                                        {{ $pengeringankain->kondisi_kain_3 == 'Basah' ? 'selected' : '' }}>
+                                                                        Basah</option>
+                                                                </select>
+                                                                @error('kondisi_kain_3')
+                                                                    <span id="kondisi_kain_3-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="berat_3">Berat</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('berat_3') is-invalid @enderror"
+                                                                    id="berat_3" name="berat_3"
+                                                                    value="{{ old('berat_3') ?? $pengeringankain->berat_3 }}">
+                                                                @error('berat_3')
+                                                                    <span id="berat_3-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="panjang_3">Panjang</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('panjang_3') is-invalid @enderror"
+                                                                    id="panjang_3" name="panjang_3"
+                                                                    value="{{ old('panjang_3') ?? $pengeringankain->panjang_3 }}">
+                                                                @error('panjang_3')
+                                                                    <span id="panjang_3-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="suhu_3">Suhu</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('suhu_3') is-invalid @enderror"
+                                                                    id="suhu_3" name="suhu_3"
+                                                                    value="{{ old('suhu_3') ?? $pengeringankain->suhu_3 }}">
+                                                                @error('suhu_3')
+                                                                    <span id="suhu_3-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="kecepatan_screw_3">Kecepatan Screw</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('kecepatan_screw_3') is-invalid @enderror"
+                                                                    id="kecepatan_screw_3" name="kecepatan_screw_3"
+                                                                    value="{{ old('kecepatan_screw_3') ?? $pengeringankain->kecepatan_screw_3 }}">
+                                                                @error('kecepatan_screw_3')
+                                                                    <span id="kecepatan_screw_3-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="kecepatan_winder_3">Kecepatan Winder</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('kecepatan_winder_3') is-invalid @enderror"
+                                                                    id="kecepatan_winder_3" name="kecepatan_winder_3"
+                                                                    value="{{ old('kecepatan_winder_3') ?? $pengeringankain->kecepatan_winder_3 }}">
+                                                                @error('kecepatan_winder_3')
+                                                                    <span id="kecepatan_winder_3-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="kondisi_kain2_3">Kondisi Kain</label>
+                                                                <select
+                                                                    class="form-control select2 w-100 select-kondisi-2 @error('kondisi_kain2_3') is-invalid @enderror"
+                                                                    id="kondisi_kain2_3" name="kondisi_kain2_3">
+                                                                    <option value=""></option>
+                                                                    <option value="Bagus"
+                                                                        {{ $pengeringankain->kondisi_kain2_3 == 'Bagus' ? 'selected' : '' }}>
+                                                                        Bagus</option>
+                                                                    <option value="Ngelewer"
+                                                                        {{ $pengeringankain->kondisi_kain2_3 == 'Ngelewer' ? 'selected' : '' }}>
+                                                                        Ngelewer</option>
+                                                                    <option value="Nglipat"
+                                                                        {{ $pengeringankain->kondisi_kain2_3 == 'Nglipat' ? 'selected' : '' }}>
+                                                                        Nglipat</option>
+                                                                </select>
+                                                                @error('kondisi_kain2_3')
+                                                                    <span id="kondisi_kain2_3-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
                                                         </div>
 
                                                     </div>
@@ -433,7 +702,8 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <a type="button" class="btn btn-default"
-                                        href="{{ route('produksiwjl.operator.index') }}"><i class="fa fa-reply"></i>
+                                        href="{{ route('produksilaminating.pengeringankain.index') }}"><i
+                                            class="fa fa-reply"></i>
                                         Kembali</a>
                                     <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>
                                         Simpan</button>
@@ -485,6 +755,20 @@
                 format: 'h:m:s'
             });
 
+            $('#div_tanggal_2').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+            $('#div_jam_2').datetimepicker({
+                format: 'h:m:s'
+            });
+
+            $('#div_tanggal_3').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+            $('#div_jam_3').datetimepicker({
+                format: 'h:m:s'
+            });
+
             format_select2();
         });
 
@@ -496,7 +780,8 @@
 
             $('.select-kondisi').select2({
                 width: '100%',
-                minimumResultsForSearch: -1,
+                placeholder: "- Pilih Kondisi -",
+                allowClear: true,
             });
 
             $('.select-kondisi-2').select2({
@@ -523,9 +808,37 @@
         }
 
         function ubah_format(field, nilai) {
-            var mynumeral = numeral(nilai).format('0,0.0');
+            var mynumeral = numeral(nilai).format('0,0');
             $("#" + field).val(mynumeral);
         }
+
+        function tambah() {
+            var tbody_row = $('#table1').find('tr').length;
+            var row_id = Date.now().toString(36) + Math.random().toString(36).substr(2);
+            $("#table1 > tbody > tr:last").before(`
+                <tr>
+                    <td>
+                        <input type="text" class="form-control" id="meter${row_id}"
+                            name="meter[]" onblur="ubah_format('meter${row_id}', this.value)">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control w-100"
+                            id="kerusakan${row_id}" name="kerusakan[]">
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-danger" id="hapus"><i
+                                class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `);
+
+        }
+
+        $("#table1").on("click", "#hapus", function() {
+            $(this).closest("tr").remove();
+        });
+
 
         @if (Session::has('message'))
             let timerInterval;
@@ -546,12 +859,5 @@
                 }
             });
         @endif
-
-        function hitung_hasil() {
-            var meter_awal = numeral($("#meter_awal").val()).format('0.0');
-            var meter_akhir = numeral($("#meter_akhir").val()).format('0.0');
-            var hasil = parseFloat(meter_akhir) - parseFloat(meter_awal);
-            $("#hasil").val(numeral(hasil).format('0,0.0'));
-        }
     </script>
 @endsection

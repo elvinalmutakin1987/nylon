@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pengeringankaindetails', function (Blueprint $table) {
             $table->id();
             $table->integer('pengeringankain_id')->nullable();
+            $table->string('slug')->nullable();
             $table->string('meter')->nullable();
             $table->text('kerusakan')->nullable();
             $table->string('created_by')->nullable();

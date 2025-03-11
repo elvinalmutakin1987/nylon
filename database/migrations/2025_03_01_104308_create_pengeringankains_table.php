@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('lebar_1')->nullable();
             $table->string('panjang_1')->nullable();
             $table->string('berat_1')->nullable();
+            $table->string('suhu_1')->nullable();
             $table->string('kecepatan_screw_1')->nullable();
             $table->string('kecepatan_winder_1')->nullable();
             $table->string('kondisi_kain2_1')->nullable();
@@ -42,6 +43,7 @@ return new class extends Migration
             $table->string('lebar_2')->nullable();
             $table->string('panjang_2')->nullable();
             $table->string('berat_2')->nullable();
+            $table->string('suhu_2')->nullable();
             $table->string('kecepatan_screw_2')->nullable();
             $table->string('kecepatan_winder_2')->nullable();
             $table->string('kondisi_kain2_2')->nullable();
@@ -52,6 +54,7 @@ return new class extends Migration
             $table->string('lebar_3')->nullable();
             $table->string('panjang_3')->nullable();
             $table->string('berat_3')->nullable();
+            $table->string('suhu_3')->nullable();
             $table->string('kecepatan_screw_3')->nullable();
             $table->string('kecepatan_winder_3')->nullable();
             $table->string('kondisi_kain2_3')->nullable();

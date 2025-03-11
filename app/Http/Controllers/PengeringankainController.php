@@ -126,7 +126,64 @@ class PengeringankainController extends Controller
      */
     public function update(Request $request, Pengeringankain $pengeringankain)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $pengeringankain->wjl_no_roll = $request->wjl_no_roll;
+            $pengeringankain->operator_1 = $request->operator_1;
+            $pengeringankain->tanggal_1 = Carbon::parse($request->tanggal_1)->format('Y-m-d');
+            $pengeringankain->jam_1 = Carbon::parse($request->jam_1)->format('h:i:s');
+            $pengeringankain->kondisi_kain_1 = $request->kondisi_kain_1;
+            $pengeringankain->lebar_1 = $request->lebar_1;
+            $pengeringankain->panjang_1 = $request->panjang_1;
+            $pengeringankain->berat_1 = $request->berat_1;
+            $pengeringankain->suhu_1 = $request->suhu_1;
+            $pengeringankain->kecepatan_screw_1 = $request->kecepatan_screw_1;
+            $pengeringankain->kecepatan_winder_1 = $request->kecepatan_winder_1;
+            $pengeringankain->kondisi_kain2_1 = $request->kondisi_kain2_1;
+            $pengeringankain->operator_2 = $request->operator_2;
+            $pengeringankain->tanggal_2 = Carbon::parse($request->tanggal_2)->format('Y-m-d');
+            $pengeringankain->jam_2 = Carbon::parse($request->jam_2)->format('h:i:s');
+            $pengeringankain->kondisi_kain_2 = $request->kondisi_kain_2;
+            $pengeringankain->lebar_2 = $request->lebar_2;
+            $pengeringankain->panjang_2 = $request->panjang_2;
+            $pengeringankain->berat_2 = $request->berat_2;
+            $pengeringankain->suhu_2 = $request->suhu_2;
+            $pengeringankain->kecepatan_screw_2 = $request->kecepatan_screw_2;
+            $pengeringankain->kecepatan_winder_2 = $request->kecepatan_winder_2;
+            $pengeringankain->kondisi_kain2_2 = $request->kondisi_kain2_2;
+            $pengeringankain->operator_3 = $request->operator_3;
+            $pengeringankain->tanggal_3 = Carbon::parse($request->tanggal_3)->format('Y-m-d');
+            $pengeringankain->jam_3 = Carbon::parse($request->jam_3)->format('h:i:s');
+            $pengeringankain->kondisi_kain_3 = $request->kondisi_kain_3;
+            $pengeringankain->lebar_3 = $request->lebar_3;
+            $pengeringankain->panjang_3 = $request->panjang_3;
+            $pengeringankain->berat_3 = $request->berat_3;
+            $pengeringankain->suhu_3 = $request->suhu_3;
+            $pengeringankain->kecepatan_screw_3 = $request->kecepatan_screw_3;
+            $pengeringankain->kecepatan_winder_3 = $request->kecepatan_winder_3;
+            $pengeringankain->kondisi_kain2_3 = $request->kondisi_kain2_3;
+            $pengeringankain->updated_by = Auth::user()->id;
+            $pengeringankain->save();
+            foreach ($request->meter as $key => $meter) {
+                $detail[] = [
+                    'slug' => Controller::gen_slug(),
+                    'pengeringankain_id' => $pengeringankain->id,
+                    'meter' => $meter,
+                    'kerusakan' => $request->kerusakan[$key],
+                    'created_by' => Auth::user()->id
+                ];
+            }
+            $pengeringankain->pengeringankaindetail()->delete();
+            $pengeringankain->pengeringankaindetail()->createMany($detail);
+            DB::commit();
+            return redirect()->route('produksilaminating.pengeringankain.index')->with([
+                'status' => 'success',
+                'message' => 'Data telah disimpan!'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return view('error', compact('th'));
+        }
     }
 
     /**
