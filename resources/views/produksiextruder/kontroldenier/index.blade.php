@@ -290,5 +290,10 @@
             url = url.replace('_k_min_top', $("#k_min_top").val());
             window.open(url, "_self");
         }
+
+        $("#material_id").on('change', function() {
+            var text = $("#material_id").select2('data')[0]['text'];
+            $("#jenis_benang").val(text.substr(text.length - 4, 3));
+        })
     </script>
 @endsection

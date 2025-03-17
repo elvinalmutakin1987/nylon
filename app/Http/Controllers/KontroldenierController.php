@@ -309,19 +309,36 @@ class KontroldenierController extends Controller
         DB::beginTransaction();
         try {
             $lokasi = $request->lokasi;
-            foreach ($request->no_lokasi as $key => $no_lokasi) {
-                $detail[] = [
-                    'kontroldenier_id' => $kontroldenier->id,
-                    'slug' => Controller::gen_slug(),
-                    'lokasi' => $lokasi,
-                    'no_lokasi' => $no_lokasi,
-                    'nilai' => $request->nilai[$key] ?? null,
-                    'rank' => $request->rank[$key] ?? null,
-                    'created_by' => Auth::user()->id
-                ];
+            if ($request->kr_nilai) {
+                foreach ($request->kr_no_lokasi as $key => $kr_no_lokasi) {
+                    $detail[] = [
+                        'kontroldenier_id' => $kontroldenier->id,
+                        'slug' => Controller::gen_slug(),
+                        'lokasi' => "KR",
+                        'no_lokasi' => $kr_no_lokasi,
+                        'nilai' => $request->kr_nilai[$key] ?? null,
+                        'rank' => $request->kr_rank[$key] ?? null,
+                        'created_by' => Auth::user()->id
+                    ];
+                }
+                $kontroldenier->kontroldenierdetail()->delete();
+                $kontroldenier->kontroldenierdetail()->createMany($detail);
             }
-            $kontroldenier->kontroldenierdetail()->delete();
-            $kontroldenier->kontroldenierdetail()->createMany($detail);
+            if ($request->kn_nilai) {
+                foreach ($request->kn_no_lokasi as $key => $kn_no_lokasi) {
+                    $detail[] = [
+                        'kontroldenier_id' => $kontroldenier->id,
+                        'slug' => Controller::gen_slug(),
+                        'lokasi' => "KN",
+                        'no_lokasi' => $kn_no_lokasi,
+                        'nilai' => $request->kn_nilai[$key] ?? null,
+                        'rank' => $request->kn_rank[$key] ?? null,
+                        'created_by' => Auth::user()->id
+                    ];
+                }
+                $kontroldenier->kontroldenierdetail()->delete();
+                $kontroldenier->kontroldenierdetail()->createMany($detail);
+            }
             DB::commit();
             return redirect()->route('produksiextruder-kontrol-denier.index')->with([
                 'status' => 'success',

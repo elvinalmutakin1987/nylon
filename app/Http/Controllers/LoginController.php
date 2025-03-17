@@ -44,7 +44,7 @@ class LoginController extends Controller
             DeviceTracker::flagAsVerifiedByUuid($device_uuid, $user_id);
             return redirect()->intended()->with([
                 'status' => 'success',
-                'message' => 'Selamat datang di HR - Etam!'
+                'message' => 'Selamat datang di ' . env('APP_NAME') . '!'
             ]);
         }
 
