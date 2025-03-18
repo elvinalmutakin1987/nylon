@@ -141,7 +141,7 @@
     <script type="text/javascript">
         var data = [{
                 id: 'EXTRUDER',
-                text: 'EXTRUDERS'
+                text: 'EXTRUDER'
             }, {
                 id: 'RASHEL',
                 text: 'RASHEL'
