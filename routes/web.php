@@ -277,6 +277,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('produksiextruder-kontrol-denier-get-detail', [KontroldenierController::class, 'get_detail'])->name('produksiextruder-kontrol-denier.get_detail');
         Route::get('produksiextruder-kontrol-denier-cek-sebelumnya', [KontroldenierController::class, 'cek_sebelumnya'])->name('produksiextruder-kontrol-denier.cek_sebelumnya');
         Route::get('produksiextruder-kontrol-denier-confirm/{produksiwjl}', [KontroldenierController::class, 'confirm'])->name('produksiextruder-kontrol-denier.confirm');
+        Route::post('produksiextruder-kontrol-denier/{kontroldenier}', [KontroldenierController::class, 'simpan_denier'])->name('produksiextruder-kontrol-denier.simpan_denier');
     });
 
     Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.kontrol-barmag']], function () {

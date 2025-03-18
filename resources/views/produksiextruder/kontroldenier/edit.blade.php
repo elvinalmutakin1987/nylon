@@ -186,7 +186,7 @@
                                         <div class="col-md-6">
                                             <table id="table1" class="table projects table-bordered">
                                                 <thead>
-                                                    <tr>
+                                                    <tr style="background-color: red; color: white">
                                                         <th colspan="4" class="text-center">KR</th>
                                                     </tr>
                                                     <tr>
@@ -208,7 +208,7 @@
                                                                 name="kr_no_lokasi[]" value="1">
                                                             <input type="text" class="form-control nilai_kiri"
                                                                 id="kr_nilai_1" name="kr_nilai[]"
-                                                                onblur="ubah_format('nilai_1', this.value); hitung_hasil('kr_rank_1', this.value)">
+                                                                onblur="ubah_format('nilai_1', this.value)">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control kr_rank"
@@ -226,7 +226,7 @@
                                         <div class="col-md-6">
                                             <table id="table2" class="table projects table-bordered">
                                                 <thead>
-                                                    <tr>
+                                                    <tr style="background-color: blue; color: white">
                                                         <th colspan="4" class="text-center">KN</th>
                                                     </tr>
                                                     <tr>
@@ -246,11 +246,11 @@
                                                                 name="kn_no_lokasi[]" value="1">
                                                             <input type="text" class="form-control nilai_kanan"
                                                                 id="kn_nilai_1" name="kn_nilai[]"
-                                                                onblur="ubah_format('nilai', this.value); hitung_hasil('kn_rank_1', this.value)">
+                                                                onblur="ubah_format('nilai', this.value); hitung_hasil', this.value)">
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control" id="kn_rank_1"
-                                                                name="kn_rank[]" readonly>
+                                                            <input type="text" class="form-control kn_rank"
+                                                                id="kn_rank_1" name="kn_rank[]" readonly>
                                                         </td>
                                                         <td>
                                                             <button type="button" class="btn btn-primary"
@@ -259,6 +259,62 @@
                                                         </td>
                                                     </tr>
                                                 </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <table id="table3" class="table projects table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="30">No.</th>
+                                                        <th>Rank</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>K -</td>
+                                                        <td id="hasil_k_minus"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>K</td>
+                                                        <td id="hasil_k"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>N</td>
+                                                        <td id="hasil_n"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>4</td>
+                                                        <td>B</td>
+                                                        <td id="hasil_b"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>5</td>
+                                                        <td>B +</td>
+                                                        <td id="hasil_b_plus"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="">KR</label>
+                                            <table id="table-kr" style="width: 100%; table-layout: fixed;;">
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="">KN</label>
+                                            <table id="table-kn" style="width: 100%; table-layout: fixed;">
+
                                             </table>
                                         </div>
                                     </div>
@@ -314,10 +370,18 @@
 
 @section('script')
     <script type="text/javascript">
+        $(window).keydown(function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+
         $(document).ready(function() {
             $('#div_tanggal').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
+
         });
 
         function ubah_format(field, nilai) {
@@ -371,91 +435,111 @@
             } else if (nilai >= parseInt(d_plus_bottom)) {
                 hasil = "B +";
             }
-
-            if (field == '') {
-                return hasil;
-            } else {
-                $("#" + field).val(hasil);
-            }
+            //$("#" + field).val(hasil);
+            return hasil
         }
 
         $("#table1").on("click", "#hapus", function() {
             $(this).closest("tr").remove();
             gen_urut_kiri();
+            rekap_rank();
         });
 
         $("#table2").on("click", "#hapus", function() {
             $(this).closest("tr").remove();
             gen_urut_kanan();
+            rekap_rank();
         });
 
         $(".nilai_kiri").on('keyup', function(e) {
             var code = (e.keyCode ? e.keyCode : e.which);
             if (code == 13) {
+                var tr = $(this).closest('tr')
                 var nilai = numeral(this.value).format('0');
-                var rank = hitung_hasil('', nilai);
+                var hasil = hitung_hasil('', nilai);
                 var tbody_row = $('#table1').find('tr').length;
                 var row_id = Date.now().toString(36) + Math.random().toString(36).substr(2);
                 $("#table1 > tbody > tr:last").before(`
-                    <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            <input class="kr_lokasi" type="hidden" id="kr_no_lokasi_${row_id}"
-                                name="kr_no_lokasi[]" value="1">
-                            <input type="text" class="form-control nilai_kiri"
-                                id="kr_nilai_${row_id}" name="kr_nilai[]"
-                                onblur="ubah_format('kr_nilai_${row_id}', this.value); hitung_hasil('kr_rank_${row_id}', '${nilai}')" value="${nilai}">
-                        </td>
-                        <td>
-                            <input type="text" class="form-control kr_rank" id="kr_rank_${row_id}"
-                                name="kr_rank[]" value="${rank}" readonly>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger"
-                                id="hapus"><i class="fa fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `);
-
+            <tr>
+                <td>
+                    1
+                </td>
+                <td>
+                    <input class="kr_lokasi" type="hidden" id="kr_no_lokasi_${row_id}"
+                        name="kr_no_lokasi[]" value="1">
+                    <input type="text" class="form-control nilai_kiri"
+                        id="kr_nilai_${row_id}" name="kr_nilai[]"
+                        onblur="ubah_format('kr_nilai_${row_id}', this.value);" value="${nilai}" readonly>
+                </td>
+                <td>
+                    <input type="text" class="form-control kr_rank" id="kr_rank_${row_id}"
+                        name="kr_rank[]" readonly value="${hasil}">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger"
+                        id="hapus"><i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        `);
                 gen_urut_kiri();
+                this.value = '';
+                tr.find('.kr_rank').val('')
+                rekap_rank()
             }
+        })
+
+        $(".nilai_kiri").blur(function(e) {
+            var tr = $(this).closest('tr')
+            var hasil = hitung_hasil('', this.value);
+            tr.find('.kr_rank').val(this.value != '' ? hasil : '')
+            rekap_rank()
         })
 
         $(".nilai_kanan").on('keyup', function(e) {
             var code = (e.keyCode ? e.keyCode : e.which);
             if (code == 13) {
+                var tr = $(this).closest('tr')
                 var nilai = numeral(this.value).format('0');
-                var rank = hitung_hasil('', nilai);
+                var hasil = hitung_hasil('', nilai);
                 var tbody_row = $('#table2').find('tr').length;
                 var row_id = Date.now().toString(36) + Math.random().toString(36).substr(2);
-                $("#table2 > tbody > tr:last").before(`
-                    <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            <input class="kn_lokasi" type="hidden" id="kn_no_lokasi_${row_id}"
-                                name="kn_no_lokasi[]" value="1">
-                            <input type="text" class="form-control nilai_kanan"
-                                id="kn_nilai_${row_id}" name="kn_nilai[]"
-                                onblur="ubah_format('kn_nilai_${row_id}', this.value); hitung_hasil('kn_rank_${row_id}', '${nilai}')" value="${nilai}">
-                        </td>
-                        <td>
-                            <input type="text" class="form-control kn_rank" id="kn_rank_${row_id}"
-                                name="kn_rank[]" value="${rank}" readonly>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger"
-                                id="hapus"><i class="fa fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `);
+                var lokasi =
+                    $("#table2 > tbody > tr:last").before(`
+            <tr>
+                <td>
+                    1
+                </td>
+                <td>
+                    <input class="kn_lokasi" type="hidden" id="kn_no_lokasi_${row_id}"
+                        name="kn_no_lokasi[]" value="1">
+                    <input type="text" class="form-control nilai_kanan"
+                        id="kn_nilai_${row_id}" name="kn_nilai[]"
+                        onblur="ubah_format('kn_nilai_${row_id}', this.value);" value="${nilai}" readonly>
+                </td>
+                <td>
+                    <input type="text" class="form-control kn_rank" id="kn_rank_${row_id}"
+                        name="kn_rank[]" readonly value="${hasil}">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger"
+                        id="hapus"><i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        `);
                 gen_urut_kanan();
+                this.value = '';
+                tr.find('.kn_rank').val('')
+                rekap_rank()
             }
+        })
+
+        $(".nilai_kanan").blur(function(e) {
+            var tr = $(this).closest('tr')
+            var hasil = hitung_hasil('', this.value);
+            tr.find('.kn_rank').val(this.value != '' ? hasil : '')
+            rekap_rank()
         })
 
         function gen_urut_kiri() {
@@ -476,71 +560,169 @@
 
         function tambah_kiri() {
             var nilai = numeral($("#kr_nilai_1").val()).format('0');
-            var rank = hitung_hasil('', nilai);
+            var hasil = hitung_hasil('', nilai);
             var tbody_row = $('#table1').find('tr').length;
             var row_id = Date.now().toString(36) + Math.random().toString(36).substr(2);
             $("#table1 > tbody > tr:last").before(`
-                    <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            <input class="kr_lokasi" type="hidden" id="kr_no_lokasi_${row_id}"
-                                name="kr_no_lokasi[]" value="1">
-                            <input type="text" class="form-control nilai_kiri"
-                                id="kr_nilai_${row_id}" name="kr_nilai[]"
-                                onblur="ubah_format('kr_nilai_${row_id}', this.value); hitung_hasil('kr_rank_${row_id}', '${nilai}')" value="${nilai}">
-                        </td>
-                        <td>
-                            <input type="text" class="form-control kr_rank" id="kr_rank_${row_id}"
-                                name="kr_rank[]" value="${rank}" readonly>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger"
-                                id="hapus"><i class="fa fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `);
+            <tr>
+                <td>
+                    1
+                </td>
+                <td>
+                    <input class="kr_lokasi" type="hidden" id="kr_no_lokasi_${row_id}"
+                        name="kr_no_lokasi[]" value="1">
+                    <input type="text" class="form-control nilai_kiri"
+                        id="kr_nilai_${row_id}" name="kr_nilai[]"
+                        onblur="ubah_format('kr_nilai_${row_id}', this.value);" value="${nilai}" readonly>
+                </td>
+                <td>
+                    <input type="text" class="form-control kr_rank" id="kr_rank_${row_id}"
+                        name="kr_rank[]" readonly value="${hasil}">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger"
+                        id="hapus"><i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        `);
             gen_urut_kiri();
+            $("#kr_nilai_1").val('')
+            $("#kr_rank_1").val('')
+            rekap_rank()
         }
 
         function tambah_kanan() {
             var nilai = numeral($("#kn_nilai_1").val()).format('0');
-            var rank = hitung_hasil('', nilai);
+            var hasil = hitung_hasil('', nilai);
             var tbody_row = $('#table2').find('tr').length;
             var row_id = Date.now().toString(36) + Math.random().toString(36).substr(2);
             $("#table2 > tbody > tr:last").before(`
-                    <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            <input class="kn_lokasi" type="hidden" id="kn_no_lokasi_${row_id}"
-                                name="kn_no_lokasi[]" value="1">
-                            <input type="text" class="form-control nilai_kanan"
-                                id="kn_nilai_${row_id}" name="kn_nilai[]"
-                                onblur="ubah_format('kn_nilai_${row_id}', this.value); hitung_hasil('kn_rank_${row_id}', '${nilai}')" value="${nilai}">
-                        </td>
-                        <td>
-                            <input type="text" class="form-control kn_rank" id="kn_rank_${row_id}"
-                                name="kn_rank[]" value="${rank}" readonly>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger"
-                                id="hapus"><i class="fa fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `);
+            <tr>
+                <td>
+                    1
+                </td>
+                <td>
+                    <input class="kn_lokasi" type="hidden" id="kr_no_lokasi_${row_id}"
+                        name="kr_no_lokasi[]" value="1">
+                    <input type="text" class="form-control nilai_kanan"
+                        id="kn_nilai_${row_id}" name="kn_nilai[]"
+                        onblur="ubah_format('kn_nilai_${row_id}', this.value);" value="${nilai}" readonly>
+                </td>
+                <td>
+                    <input type="text" class="form-control kn_rank" id="kn_rank_${row_id}"
+                        name="kn_rank[]" readonly value="${hasil}">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger"
+                        id="hapus"><i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        `);
             gen_urut_kanan();
+            $("#kn_nilai_1").val('')
+            $("#kn_rank_1").val('')
+            rekap_rank()
         }
 
-        $(window).keydown(function(event) {
-            if (event.keyCode == 13) {
-                event.preventDefault();
-                return false;
-            }
-        });
+        function rekap_rank() {
+            $("#table-kr").empty()
+            $("#table-kn").empty()
+            var hasil_k = 0;
+            var hasil_k_minus = 0;
+            var hasil_n = 0;
+            var hasil_b = 0;
+            var hasil_b_plus = 0;
+            var table1 = `<tr>`;
+            var table2 = `<tr>`;
+            $('#table1 > tbody  > tr').each(function(index, tr) {
+                if ($(tr).find(".kr_rank").val() != '' && $(tr).find(".nilai_kiri").val() != '') {
+                    if ($(tr).find(".kr_rank").val() == 'K -') {
+                        hasil_k_minus += 1;
+                        table1 += `
+                    <td style="background-color: red; color:white"
+                                                    class="text-center">${$(tr).find(".kr_lokasi").val()}</td>
+                    `;
+                    }
+                    if ($(tr).find(".kr_rank").val() == 'K') {
+                        hasil_k += 1;
+                        table1 += `
+                    <td style="background-color: yellow; color:black"
+                                                    class="text-center">${$(tr).find(".kr_lokasi").val()}</td>
+                    `;
+                    }
+                    if ($(tr).find(".kr_rank").val() == 'N') {
+                        hasil_n += 1;
+                        table1 += `
+                    <td style="background-color: green; color:white"
+                                                    class="text-center">${$(tr).find(".kr_lokasi").val()}</td>
+                    `;
+                    }
+                    if ($(tr).find(".kr_rank").val() == 'B') {
+                        hasil_b += 1;
+                        table1 += `
+                    <td style="background-color: aqua; color:black"
+                                                    class="text-center">${$(tr).find(".kr_lokasi").val()}</td>
+                    `;
+                    }
+                    if ($(tr).find(".kr_rank").val() == 'B +') {
+                        hasil_b_plus += 1;
+                        table1 += `
+                    <td style="background-color: blue; color:white"
+                                                    class="text-center">${$(tr).find(".kr_lokasi").val()}</td>
+                    `;
+                    }
+                }
+            });
+            $('#table2 > tbody  > tr').each(function(index, tr) {
+                if ($(tr).find(".kn_rank").val() != '' && $(tr).find(".nilai_kanan").val() != '') {
+                    if ($(tr).find(".kn_rank").val() == 'K -') {
+                        hasil_k_minus += 1;
+                        table2 += `
+                    <td style="background-color: red; color:white"
+                                                    class="text-center">${$(tr).find(".kn_lokasi").val()}</td>
+                    `;
+                    }
+                    if ($(tr).find(".kn_rank").val() == 'K') {
+                        hasil_k += 1;
+                        table2 += `
+                    <td style="background-color: yellow; color:black"
+                                                    class="text-center">${$(tr).find(".kn_lokasi").val()}</td>
+                    `;
+                    }
+                    if ($(tr).find(".kn_rank").val() == 'N') {
+                        hasil_n += 1;
+                        table2 += `
+                    <td style="background-color: green; color:white"
+                                                    class="text-center">${$(tr).find(".kn_lokasi").val()}</td>
+                    `;
+                    }
+                    if ($(tr).find(".kn_rank").val() == 'B') {
+                        hasil_b += 1;
+                        table2 += `
+                    <td style="background-color: aqua; color:black"
+                                                    class="text-center">${$(tr).find(".kn_lokasi").val()}</td>
+                    `;
+                    }
+                    if ($(tr).find(".kn_rank").val() == 'B +') {
+                        hasil_b_plus += 1;
+                        table2 += `
+                    <td style="background-color: blue; color:white"
+                                                    class="text-center">${$(tr).find(".kn_lokasi").val()}</td>
+                    `;
+                    }
+                }
+            });
+            $("#hasil_k_minus").html(hasil_k_minus);
+            $("#hasil_k").html(hasil_k);
+            $("#hasil_n").html(hasil_n);
+            $("#hasil_b").html(hasil_b);
+            $("#hasil_b_plus").html(hasil_b_plus);
+            table1 += `</tr>`;
+            table2 += `</tr>`;
+            $("#table-kr").append(table1);
+            $("#table-kn").append(table2);
+        }
     </script>
 @endsection
