@@ -56,6 +56,9 @@ class KartustokExport implements FromCollection, WithHeadings
         } elseif ($this->gudang == 'packing') {
             $jenis = "Packing";
             $gudang = "Gudang Packing";
+        } elseif ($this->gudang == 'avalan') {
+            $jenis = "Avalan";
+            $gudang = "Gudang Avalan";
         }
         return Kartustok::select(
             DB::raw('(select nama from materials where id=kartustoks.material_id) as material'),

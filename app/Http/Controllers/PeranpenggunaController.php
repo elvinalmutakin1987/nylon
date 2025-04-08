@@ -80,6 +80,10 @@ class PeranpenggunaController extends Controller
             if ($request->gudang_bahanbaku_barangkeluar) array_push($access, 'gudang.bahanbaku.barangkeluar');
             if ($request->gudang_bahanbaku_barangmasuk) array_push($access, 'gudang.bahanbaku.barangmasuk');
             if ($request->gudang_bahanbaku_retur) array_push($access, 'gudang.bahanbaku.retur');
+            if ($request->gudang_avalan_cekstok) array_push($access, 'gudang.avalan.cekstok');
+            if ($request->gudang_avalan_barangkeluar) array_push($access, 'gudang.avalan.barangkeluar');
+            if ($request->gudang_avalan_barangmasuk) array_push($access, 'gudang.avalan.barangmasuk');
+            if ($request->gudang_avalan_retur) array_push($access, 'gudang.avalan.retur');
             if (
                 $request->gudang_barangjadi_order ||
                 $request->gudang_barangjadi_cekstok ||
@@ -90,7 +94,11 @@ class PeranpenggunaController extends Controller
                 $request->gudang_bahanbaku_cekstok ||
                 $request->gudang_bahanbaku_barangkeluar ||
                 $request->gudang_bahanbaku_barangmasuk ||
-                $request->gudang_bahanbaku_retur
+                $request->gudang_bahanbaku_retur ||
+                $request->gudang_avalan_cekstok ||
+                $request->gudang_avalan_barangkeluar ||
+                $request->gudang_avalan_barangmasuk ||
+                $request->gudang_avalan_retur
             ) {
                 array_push($access, 'gudang');
             }
@@ -181,6 +189,10 @@ class PeranpenggunaController extends Controller
             if ($request->gudang_bahanbaku_barangkeluar) array_push($access, 'gudang.bahanbaku.barangkeluar');
             if ($request->gudang_bahanbaku_barangmasuk) array_push($access, 'gudang.bahanbaku.barangmasuk');
             if ($request->gudang_bahanbaku_retur) array_push($access, 'gudang.bahanbaku.retur');
+            if ($request->gudang_avalan_cekstok) array_push($access, 'gudang.avalan.cekstok');
+            if ($request->gudang_avalan_barangkeluar) array_push($access, 'gudang.avalan.barangkeluar');
+            if ($request->gudang_avalan_barangmasuk) array_push($access, 'gudang.avalan.barangmasuk');
+            if ($request->gudang_avalan_retur) array_push($access, 'gudang.avalan.retur');
             if (
                 $request->gudang_barangjadi_order ||
                 $request->gudang_barangjadi_cekstok ||
@@ -191,7 +203,11 @@ class PeranpenggunaController extends Controller
                 $request->gudang_bahanbaku_cekstok ||
                 $request->gudang_bahanbaku_barangkeluar ||
                 $request->gudang_bahanbaku_barangmasuk ||
-                $request->gudang_bahanbaku_retur
+                $request->gudang_bahanbaku_retur ||
+                $request->gudang_avalan_cekstok ||
+                $request->gudang_avalan_barangkeluar ||
+                $request->gudang_avalan_barangmasuk ||
+                $request->gudang_avalan_retur
             ) {
                 array_push($access, 'gudang');
             }

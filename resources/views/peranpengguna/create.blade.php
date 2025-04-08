@@ -147,6 +147,40 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
+                                                            <label class="form-check-label">Avalan</label>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="gudang.avalan.cekstok"
+                                                                    name="gudang.avalan.cekstok">
+                                                                <label class="form-check-label"
+                                                                    for="gudang.avalan.cekstok">Cek
+                                                                    Stok</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="gudang.avalan.barangkeluar"
+                                                                    name="gudang.avalan.barangkeluar">
+                                                                <label class="form-check-label"
+                                                                    for="gudang.avalan.barangkeluar">Barang
+                                                                    Keluar</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="gudang.avalan.barangmasuk"
+                                                                    name="gudang.avalan.barangmasuk">
+                                                                <label class="form-check-label"
+                                                                    for="gudang.avalan.barangmasuk">Barang
+                                                                    Masuk</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="gudang.avalan.retur" name="gudang.avalan.retur">
+                                                                <label class="form-check-label"
+                                                                    for="gudang.avalan.retur">Retur</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
                                                             <label class="form-check-label">Stock Opname</label>
                                                         </div>
                                                     </div>

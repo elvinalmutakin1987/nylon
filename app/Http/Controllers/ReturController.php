@@ -103,6 +103,8 @@ class ReturController extends Controller
             return view('gudangbeaming.retur.index');
         } elseif (request()->gudang == 'packing') {
             return view('gudangpacking.retur.index');
+        } elseif (request()->gudang == 'avalan') {
+            return view('gudangavalan.retur.index');
         }
     }
 
@@ -143,6 +145,9 @@ class ReturController extends Controller
         } elseif ($gudang == 'packing') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.packing.retur.butuh.approval')->first();
             return view('gudangpacking.retur.create', compact('pengaturan', 'gudang', 'satuan'));
+        } elseif ($gudang == 'avalan') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.avalan.retur.butuh.approval')->first();
+            return view('gudangavalan.retur.create', compact('pengaturan', 'gudang', 'satuan'));
         }
     }
 
@@ -189,6 +194,9 @@ class ReturController extends Controller
             } elseif ($request->gudang == 'packing') {
                 $jenis_gudang = 'packing.retur';
                 $kartustok_gudang = 'Gudang Packing';
+            } elseif ($request->gudang == 'avalan') {
+                $jenis_gudang = 'avalan.retur';
+                $kartustok_gudang = 'Gudang Avalan';
             }
             $gen_no_dokumen = Controller::gen_no_dokumen($jenis_gudang);
             $retur = new Retur();
@@ -259,6 +267,8 @@ class ReturController extends Controller
             return view('gudangbeaming.retur.show', compact('retur'));
         } elseif ($retur->gudang == 'packing') {
             return view('gudangpacking.retur.show', compact('retur'));
+        } elseif ($retur->gudang == 'avalan') {
+            return view('gudangavalan.retur.show', compact('retur'));
         }
     }
 
@@ -296,6 +306,8 @@ class ReturController extends Controller
             return view('gudangbeaming.retur.edit', compact('retur', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'packing') {
             return view('gudangpacking.retur.edit', compact('retur', 'pengaturan', 'gudang', 'satuan'));
+        } elseif ($gudang == 'avalan') {
+            return view('gudangavalan.retur.edit', compact('retur', 'pengaturan', 'gudang', 'satuan'));
         }
     }
 
@@ -342,6 +354,9 @@ class ReturController extends Controller
             } elseif ($request->gudang == 'packing') {
                 $jenis_gudang = 'packing.retur';
                 $kartustok_gudang = 'Gudang Packing';
+            } elseif ($request->gudang == 'avalan') {
+                $jenis_gudang = 'avalan.retur';
+                $kartustok_gudang = 'Gudang Avalan';
             }
             $retur->referensi = $request->dokumen;
             if ($request->dokumen == 'suratjalan') {
@@ -430,6 +445,8 @@ class ReturController extends Controller
                 $jenis = 'Work In Progress';
             } elseif ($request->gudang == 'packing') {
                 $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'avalan') {
+                $jenis = 'Avalan';
             }
             $material = Material::selectRaw("id, nama as text")
                 ->where('nama', 'like', '%' . $term . '%')
@@ -571,6 +588,8 @@ class ReturController extends Controller
             $gudang = 'gudangbeaming';
         } elseif ($retur->gudang == 'packing') {
             $gudang = 'gudangpacking';
+        } elseif ($retur->gudang == 'avalan') {
+            $gudang = 'gudangavalan';
         }
         $pdf = PDF::loadview($gudang . '.retur.cetak', compact(
             'retur'

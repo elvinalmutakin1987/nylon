@@ -62,6 +62,8 @@ class BarangmasukController extends Controller
                         $asal = 'Beaming';
                     } elseif ($item->asal == 'packing') {
                         $asal = 'Packing';
+                    } elseif ($item->asal == 'avalan') {
+                        $asal = 'Avalan';
                     }
                     return $asal;
                 })
@@ -122,6 +124,8 @@ class BarangmasukController extends Controller
             return view('gudangbeaming.barangmasuk.index');
         } elseif (request()->gudang == 'packing') {
             return view('gudangpacking.barangmasuk.index');
+        } elseif (request()->gudang == 'avalan') {
+            return view('gudangavalan.barangmasuk.index');
         }
     }
 
@@ -159,6 +163,9 @@ class BarangmasukController extends Controller
         } elseif ($gudang == 'packing') {
             $pengaturan = Pengaturan::where('keterangan', 'gudang.packing.barangmasuk.butuh.approval')->first();
             return view('gudangpacking.barangmasuk.create', compact('pengaturan', 'gudang', 'satuan'));
+        } elseif ($gudang == 'avalan') {
+            $pengaturan = Pengaturan::where('keterangan', 'gudang.avalan.barangmasuk.butuh.approval')->first();
+            return view('gudangavalan.barangmasuk.create', compact('pengaturan', 'gudang', 'satuan'));
         }
     }
 
@@ -202,6 +209,9 @@ class BarangmasukController extends Controller
             } elseif ($request->gudang == 'benang') {
                 $jenis_gudang = 'benang';
                 $kartustok_gudang = 'Gudang Benang';
+            } elseif ($request->gudang == 'avalan') {
+                $jenis_gudang = 'avalan';
+                $kartustok_gudang = 'Gudang Avalan';
             }
             $gen_no_dokumen = Controller::gen_no_dokumen($jenis_gudang . '.barangmasuk');
             $barangmasuk = new Barangmasuk();
@@ -268,6 +278,8 @@ class BarangmasukController extends Controller
             return view('gudangpacking.barangmasuk.show', compact('barangmasuk'));
         } elseif ($barangmasuk->gudang == 'benang') {
             return view('gudangbenang.barangmasuk.show', compact('barangmasuk'));
+        } elseif ($barangmasuk->gudang == 'avalan') {
+            return view('gudangavalan.barangmasuk.show', compact('barangmasuk'));
         }
     }
 
@@ -305,6 +317,8 @@ class BarangmasukController extends Controller
             return view('gudangpacking.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
         } elseif ($gudang == 'packing') {
             return view('gudangbenang.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
+        } elseif ($gudang == 'avalan') {
+            return view('gudangavalan.barangmasuk.edit', compact('barangmasuk', 'pengaturan', 'gudang', 'satuan'));
         }
     }
 
@@ -346,6 +360,9 @@ class BarangmasukController extends Controller
             } elseif ($request->gudang == 'benang') {
                 $jenis_gudang = 'benang';
                 $kartustok_gudang = 'Gudang Benang';
+            } elseif ($request->gudang == 'avalan') {
+                $jenis_gudang = 'avalan';
+                $kartustok_gudang = 'Gudang Avalan';
             }
             $barangmasuk->asal = $request->asal;
             $barangmasuk->barangkeluar_id = $request->barangkeluar_id;
@@ -432,6 +449,8 @@ class BarangmasukController extends Controller
                 $jenis = 'Work In Progress';
             } elseif ($request->gudang == 'benang') {
                 $jenis = 'Work In Progress';
+            } elseif ($request->gudang == 'avalan') {
+                $jenis = 'Avalan';
             }
             $material = Material::selectRaw("id, nama as text")
                 ->where('nama', 'like', '%' . $term . '%')
@@ -538,6 +557,8 @@ class BarangmasukController extends Controller
             $gudang = 'gudangbeaming';
         } elseif ($barangmasuk->gudang == 'packing') {
             $gudang = 'gudangpacking';
+        } elseif ($barangmasuk->gudang == 'avalan') {
+            $gudang = 'gudangavalan';
         }
 
         $pdf = PDF::loadview($gudang . '.barangmasuk.cetak', compact(

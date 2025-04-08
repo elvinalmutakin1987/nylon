@@ -139,6 +139,55 @@
                             </div>
                             <!-- /.card -->
                         @endif
+
+                        @if (auth()->user()->can('gudang.avalan.cekstok') ||
+                                auth()->user()->can('gudang.avalan.barangkeluar') ||
+                                auth()->user()->can('gudang.avalan.barangmasuk') ||
+                                auth()->user()->can('gudang.avalan.retur') ||
+                                auth()->user()->can('gudang.avalan.penerimaanbarang'))
+                            <!-- Application buttons -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Gudang Avalan</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <div class="col-md-12">
+                                            @if (auth()->user()->can('gudang.avalan.cekstok'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('cekstok.index', ['gudang' => 'avalan']) }}">
+                                                    <i class="fa fa-search"></i> Cek Stok
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('gudang.avalan.barangkeluar'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('barangkeluar.index', ['gudang' => 'avalan']) }}">
+                                                    <i class="fa fa-upload"></i> Barang Keluar
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('gudang.avalan.barangmasuk'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('barangmasuk.index', ['gudang' => 'avalan']) }}">
+                                                    <i class="fa fa-download"></i> Barang Masuk
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('gudang.avalan.retur'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('retur.index', ['gudang' => 'avalan']) }}">
+                                                    <i class="fa fa-mail-reply"></i> Retur
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        @endif
+
                         @if (auth()->user()->can('gudang.stockopname.cetakdata') || auth()->user()->can('gudang.stockopname.penyesuaianstok'))
                             <!-- Application buttons -->
                             <div class="card">

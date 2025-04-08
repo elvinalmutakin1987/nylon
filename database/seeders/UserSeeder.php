@@ -55,6 +55,12 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'gudang.barangjadi.barangkeluar']);
         Permission::create(['name' => 'gudang.barangjadi.barangmasuk']);
         Permission::create(['name' => 'gudang.barangjadi.retur']);
+        Permission::create(['name' => 'gudang.avalan.order']);
+        Permission::create(['name' => 'gudang.avalan.cekstok']);
+        Permission::create(['name' => 'gudang.avalan.suratjalan']);
+        Permission::create(['name' => 'gudang.avalan.barangkeluar']);
+        Permission::create(['name' => 'gudang.avalan.barangmasuk']);
+        Permission::create(['name' => 'gudang.avalan.retur']);
         //===========================================
 
         /**
