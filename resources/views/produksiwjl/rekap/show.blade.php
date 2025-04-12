@@ -20,7 +20,7 @@
     </p>
 </center>
 <div class="div" style="overflow-x: auto">
-    <table id="table1" class="table projects">
+    <table id="table1" class="table projects table-bordered">
         <thead>
             <tr>
                 <th width="25"></th>

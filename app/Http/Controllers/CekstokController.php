@@ -75,6 +75,16 @@ class CekstokController extends Controller
                         ->first();
                     return $kartustok ? SupportNumber::format((float) $kartustok->stok_akhir, precision: 1) : 0.0;
                 })
+                ->addColumn('satuan_2', function ($item) use ($gudang) {
+                    return $item->satuan_2;
+                })
+                ->addColumn('stok_2', function ($item) use ($gudang) {
+                    $kartustok = Kartustok::where('material_id', $item->material_id)
+                        ->where('gudang', $gudang)->where('satuan', $item->satuan)
+                        ->orderBy('id', 'desc')
+                        ->first();
+                    return $kartustok ? SupportNumber::format((float) $kartustok->stok_akhir_2, precision: 1) : 0.0;
+                })
                 ->addColumn('nama', function ($item) {
                     $material = Material::find($item->material_id);
                     return $material->nama;

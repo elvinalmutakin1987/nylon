@@ -193,9 +193,11 @@
             <table class="table-main font-10 garis-bawah">
                 <tr class="header-table">
                     <td width="50px">No.</td>
-                    <td style="width: 40%">Barang</td>
-                    <td style="width: 10%">Satuan</td>
-                    <td style="width: 15%">Jumlah</td>
+                    <th style="width: 40%">Barang</th>
+                    <th style="width: 10%">Satuan (Bobin)</th>
+                    <th style="width: 10%">Jumlah (Bobin)</th>
+                    <th style="width: 10%">Satuan (Kg)</th>
+                    <th style="width: 10%">Jumlah (Kg)</th>
                     <td>Keterangan</td>
                 </tr>
                 @foreach ($retur->returdetail as $d)
@@ -204,6 +206,8 @@
                         <td>{{ $d->material->nama }}</td>
                         <td>{{ $d->satuan }}</td>
                         <td>{{ Number::format((float) $d->jumlah, precision: 1) }}</td>
+                        <td>{{ $d->satuan_2 }}</td>
+                        <td>{{ Number::format((float) $d->jumlah_2, precision: 1) }}</td>
                         <td>{{ $d->keterangan }}</td>
                     </tr>
                 @endforeach

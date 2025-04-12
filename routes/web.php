@@ -28,6 +28,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProduksiController;
 use App\Http\Controllers\ProduksiwjlkepalareguController;
 use App\Http\Controllers\ProduksiwjloperatorController;
+use App\Http\Controllers\RekappengeringankainController;
 use App\Http\Controllers\RekapproduksiwjlController;
 use App\Http\Controllers\ReturController;
 use App\Http\Controllers\SuratjalanController;
@@ -298,7 +299,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('produksiextruder-kontrol-barmag-confirm/{produksiwjl}', [KontrolbarmagController::class, 'confirm'])->name('produksiextruder-kontrol-barmag.confirm');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.pengeringankain']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.laminating.pengeringankain']], function () {
         Route::get('laminanting-pengeringankain', [PengeringankainController::class, 'index'])->name('produksilaminating.pengeringankain.index');
         Route::get('laminanting-get-pengeringankain', [PengeringankainController::class, 'get_pengeringankain'])->name('produksilaminating.pengeringankain.get_pengeringankain');
         Route::post('laminanting-pengeringankain', [PengeringankainController::class, 'store'])->name('produksilaminating.pengeringankain.store');
@@ -323,6 +324,17 @@ Route::middleware(['auth'])->group(function () {
         Route::get('laminanting-pengeringankain-confirm/{pengeringankain}', [PengeringankainController::class, 'confirm'])->name('produksilaminating.pengeringankain.confirm');
 
         Route::get('laminanting-pengeringankain-export', [PengeringankainController::class, 'export'])->name('produksilaminating.pengeringankain.export');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.laminating.rekap']], function () {
+        Route::resource('laminanting-rekap', RekappengeringankainController::class)->names('produksilaminating.rekap');
+        Route::get('laminanting-rekap-get-rekap', [RekappengeringankainController::class, 'get_rekap'])->name('produksilaminating.rekap.get_rekap');
+
+        Route::get('laminanting-rekap-cetak', [RekappengeringankainController::class, 'cetak'])->name('produksilaminating.rekap.cetak');
+        Route::get('laminanting-rekap-get-mesin', [RekappengeringankainController::class, 'get_mesin'])->name('produksilaminating.rekap.get_mesin');
+        Route::get('laminanting-rekap-get-detail', [RekappengeringankainController::class, 'get_detail'])->name('produksilaminating.rekap.get_detail');
+
+        Route::get('laminanting-rekap-export', [RekappengeringankainController::class, 'export'])->name('produksilaminating.rekap.export');
     });
 
     Route::group(['middleware' => ['role_or_permission:superadmin|laporan']], function () {

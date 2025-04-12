@@ -90,9 +90,11 @@
                                                 <table id="table1" class="table border table-sm">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 40%">Barang</th>
-                                                            <th style="width: 10%">Satuan</th>
-                                                            <th style="width: 15%">Jumlah</th>
+                                                            <th style="width: 35%">Barang</th>
+                                                            <th style="width: 8%">Satuan (Bobin)</th>
+                                                            <th style="width: 8%">Jumlah (Bobin)</th>
+                                                            <th style="width: 8%">Satuan (Kg)</th>
+                                                            <th style="width: 8%">Jumlah (Kg)</th>
                                                             <th>Keterangan</th>
                                                             <th style="width: 50px" class="text-center"></th>
                                                         </tr>
@@ -107,20 +109,28 @@
                                                             <td>
                                                                 <select class="form-control select2 w-100 select-satuan"
                                                                     id="satuan1" name="satuan[]">
-                                                                    @foreach ($satuan as $d)
-                                                                        <option value="{{ $d->nama }}">
-                                                                            {{ $d->nama }}</option>
-                                                                    @endforeach
+                                                                    <option value="BOBIN">BOBIN</option>
                                                                 </select>
                                                             </td>
                                                             <td>
                                                                 <input type="text" class="form-control" id="jumlah1"
                                                                     name="jumlah[]"
-                                                                    onblur="ubah_format('jumlah1', this.value)">
+                                                                    onblur="ubah_format('jumlah_21', this.value)">
                                                             </td>
                                                             <td>
-                                                                <input type="text" class="form-control" id="keterangan1"
-                                                                    name="keterangan[]">
+                                                                <select class="form-control select2 w-100 select-satuan"
+                                                                    id="satuan_21" name="satuan_2[]">
+                                                                    <option value="KG">KG</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" id="jumlah_21"
+                                                                    name="jumlah_2[]"
+                                                                    onblur="ubah_format('jumlah_21', this.value)">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control"
+                                                                    id="keterangan1" name="keterangan[]">
                                                             </td>
                                                             <td class="text-center">
                                                                 <button type="button" class="btn btn-danger"
@@ -129,7 +139,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="text-right text-bold" colspan="4"></td>
+                                                            <td class="text-right text-bold" colspan="6"></td>
                                                             <td>
                                                                 <button type="button" class="btn btn-primary"
                                                                     onclick="tambah()"><i class="fa fa-plus"></i>
@@ -222,6 +232,9 @@
             }, {
                 id: 'welding',
                 text: 'Welding'
+            }, {
+                id: 'avalan',
+                text: 'Avalan'
             }
         ];
 
@@ -302,14 +315,22 @@
                     <td>
                         <select class="form-control select2 w-100 select-satuan"
                             id="satuan${row_id}" name="satuan[]">
-                            @foreach ($satuan as $d)
-                                <option value="{{ $d->nama }}">{{ $d->nama }}</option>
-                            @endforeach
+                            <option value="BOBIN">BOBIN</option>
                         </select>
                     </td>
                     <td>
                         <input type="text" class="form-control" id="jumlah${row_id}"
                             name="jumlah[]" onblur="ubah_format('jumlah${row_id}', this.value)">
+                    </td>
+                    <td>
+                        <select class="form-control select2 w-100 select-satuan"
+                            id="satuan_2${row_id}" name="satuan_2[]">
+                            <option value="KG">KG</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="jumlah_2${row_id}"
+                            name="jumlah_2[]" onblur="ubah_format('jumlah_2${row_id}', this.value)">
                     </td>
                     <td>
                         <input type="text" class="form-control" id="keterangan${row_id}"

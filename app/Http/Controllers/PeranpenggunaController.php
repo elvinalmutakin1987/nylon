@@ -84,6 +84,10 @@ class PeranpenggunaController extends Controller
             if ($request->gudang_avalan_barangkeluar) array_push($access, 'gudang.avalan.barangkeluar');
             if ($request->gudang_avalan_barangmasuk) array_push($access, 'gudang.avalan.barangmasuk');
             if ($request->gudang_avalan_retur) array_push($access, 'gudang.avalan.retur');
+            if ($request->gudang_packing_cekstok) array_push($access, 'gudang.packing.cekstok');
+            if ($request->gudang_packing_barangkeluar) array_push($access, 'gudang.packing.barangkeluar');
+            if ($request->gudang_packing_barangmasuk) array_push($access, 'gudang.packing.barangmasuk');
+            if ($request->gudang_packing_retur) array_push($access, 'gudang.packing.retur');
             if (
                 $request->gudang_barangjadi_order ||
                 $request->gudang_barangjadi_cekstok ||
@@ -98,7 +102,11 @@ class PeranpenggunaController extends Controller
                 $request->gudang_avalan_cekstok ||
                 $request->gudang_avalan_barangkeluar ||
                 $request->gudang_avalan_barangmasuk ||
-                $request->gudang_avalan_retur
+                $request->gudang_avalan_retur ||
+                $request->gudang_packing_cekstok ||
+                $request->gudang_packing_barangkeluar ||
+                $request->gudang_packing_barangmasuk ||
+                $request->gudang_packing_retur
             ) {
                 array_push($access, 'gudang');
             }
@@ -114,6 +122,9 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_wjl_edit) array_push($access, 'produksi.wjl.edit');
             if ($request->produksi_extruder_kontroldenier) array_push($access, 'produksi.extruder.kontrol-denier');
             if ($request->produksi_extruder_kontrolbarmag) array_push($access, 'produksi.extruder.kontrol-barmag');
+            if ($request->produksi_laminating_pengeringankain) array_push($access, 'produksi.laminating.pengeringankain');
+            if ($request->produksi_laminating_rekap) array_push($access, 'produksi.laminating.rekap');
+            if ($request->produksi_laminating_edit) array_push($access, 'produksi.laminating.edit');
             if (
                 $request->gudang_benang_cekstok ||
                 $request->gudang_benang_barangkeluar ||
@@ -124,7 +135,10 @@ class PeranpenggunaController extends Controller
                 $request->produksi_wjl_rekap ||
                 $request->produksi_wjl_edit ||
                 $request->produksi_extruder_kontroldenier ||
-                $request->produksi_extruder_kontrolbarmag
+                $request->produksi_extruder_kontrolbarmag ||
+                $request->produksi_laminating_pengeringankain ||
+                $request->produksi_laminating_rekap ||
+                $request->produksi_laminating_edit
             ) {
                 array_push($access, 'produksi');
             }
@@ -193,6 +207,10 @@ class PeranpenggunaController extends Controller
             if ($request->gudang_avalan_barangkeluar) array_push($access, 'gudang.avalan.barangkeluar');
             if ($request->gudang_avalan_barangmasuk) array_push($access, 'gudang.avalan.barangmasuk');
             if ($request->gudang_avalan_retur) array_push($access, 'gudang.avalan.retur');
+            if ($request->gudang_packing_cekstok) array_push($access, 'gudang.packing.cekstok');
+            if ($request->gudang_packing_barangkeluar) array_push($access, 'gudang.packing.barangkeluar');
+            if ($request->gudang_packing_barangmasuk) array_push($access, 'gudang.packing.barangmasuk');
+            if ($request->gudang_packing_retur) array_push($access, 'gudang.packing.retur');
             if (
                 $request->gudang_barangjadi_order ||
                 $request->gudang_barangjadi_cekstok ||
@@ -207,7 +225,11 @@ class PeranpenggunaController extends Controller
                 $request->gudang_avalan_cekstok ||
                 $request->gudang_avalan_barangkeluar ||
                 $request->gudang_avalan_barangmasuk ||
-                $request->gudang_avalan_retur
+                $request->gudang_avalan_retur ||
+                $request->gudang_packing_cekstok ||
+                $request->gudang_packing_barangkeluar ||
+                $request->gudang_packing_barangmasuk ||
+                $request->gudang_packing_retur
             ) {
                 array_push($access, 'gudang');
             }
@@ -223,6 +245,9 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_wjl_edit) array_push($access, 'produksi.wjl.edit');
             if ($request->produksi_extruder_kontroldenier) array_push($access, 'produksi.extruder.kontrol-denier');
             if ($request->produksi_extruder_kontrolbarmag) array_push($access, 'produksi.extruder.kontrol-barmag');
+            if ($request->produksi_laminating_pengeringankain) array_push($access, 'produksi.laminating.pengeringankain');
+            if ($request->produksi_laminating_rekap) array_push($access, 'produksi.laminating.rekap');
+            if ($request->produksi_laminating_edit) array_push($access, 'produksi.laminating.edit');
             if (
                 $request->gudang_benang_cekstok ||
                 $request->gudang_benang_barangkeluar ||
@@ -233,7 +258,10 @@ class PeranpenggunaController extends Controller
                 $request->produksi_wjl_rekap ||
                 $request->produksi_wjl_edit ||
                 $request->produksi_extruder_kontroldenier ||
-                $request->produksi_extruder_kontrolbarmag
+                $request->produksi_extruder_kontrolbarmag ||
+                $request->produksi_laminating_pengeringankain ||
+                $request->produksi_laminating_rekap ||
+                $request->produksi_laminating_edit
             ) {
                 array_push($access, 'produksi');
             }

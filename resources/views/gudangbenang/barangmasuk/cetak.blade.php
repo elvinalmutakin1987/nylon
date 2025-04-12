@@ -180,6 +180,8 @@
                                         $asal = 'Beaming';
                                     } elseif ($barangmasuk->asal == 'packing') {
                                         $asal = 'Packing';
+                                    } elseif ($barangmasuk->asal == 'avalan') {
+                                        $asal = 'Avalan';
                                     }
                                 @endphp
                                 <td>{{ $asal }}</td>
@@ -202,9 +204,11 @@
             <table class="table-main font-10 garis-bawah">
                 <tr class="header-table">
                     <td width="50px">No.</td>
-                    <td style="width: 40%">Barang</td>
-                    <td style="width: 10%">Satuan</td>
-                    <td style="width: 15%">Jumlah</td>
+                    <td style="width: 35%">Barang</td>
+                    <td style="width: 8%">Satuan</td>
+                    <td style="width: 8%">Jumlah</td>
+                    <td style="width: 8%">Satuan</td>
+                    <td style="width: 8%">Jumlah</td>
                     <td>Keterangan</td>
                 </tr>
                 @foreach ($barangmasuk->barangmasukdetail as $d)
@@ -213,6 +217,8 @@
                         <td>{{ $d->material->nama }}</td>
                         <td>{{ $d->satuan }}</td>
                         <td>{{ Number::format((float) $d->jumlah, precision: 1) }}</td>
+                        <td>{{ $d->satuan_2 }}</td>
+                        <td>{{ Number::format((float) $d->jumlah_2, precision: 1) }}</td>
                         <td>{{ $d->keterangan }}</td>
                     </tr>
                 @endforeach

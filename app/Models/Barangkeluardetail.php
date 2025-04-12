@@ -27,6 +27,8 @@ class Barangkeluardetail extends Model
         'slug',
         'jumlah',
         'satuan',
+        'jumlah_2',
+        'satuan_2',
         'keterangan',
         'created_by',
         'updated_by',

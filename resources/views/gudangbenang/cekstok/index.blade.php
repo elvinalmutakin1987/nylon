@@ -51,8 +51,8 @@
                                                 <tr>
                                                     <th></th>
                                                     <th>Nama Material</th>
-                                                    <th>Satuan</th>
-                                                    <th>Stok</th>
+                                                    <th>BOBIN</th>
+                                                    <th>KG</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -117,14 +117,14 @@
                         searchable: true,
                     },
                     {
-                        data: 'satuan',
-                        name: 'satuan',
+                        data: 'stok',
+                        name: 'stok',
                         orderable: true,
                         searchable: true,
                     },
                     {
-                        data: 'stok',
-                        name: 'stok',
+                        data: 'stok_2',
+                        name: 'stok_2',
                         orderable: true,
                         searchable: true,
                     },

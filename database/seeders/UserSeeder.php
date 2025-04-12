@@ -55,22 +55,26 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'gudang.barangjadi.barangkeluar']);
         Permission::create(['name' => 'gudang.barangjadi.barangmasuk']);
         Permission::create(['name' => 'gudang.barangjadi.retur']);
-        Permission::create(['name' => 'gudang.avalan.order']);
         Permission::create(['name' => 'gudang.avalan.cekstok']);
         Permission::create(['name' => 'gudang.avalan.suratjalan']);
         Permission::create(['name' => 'gudang.avalan.barangkeluar']);
         Permission::create(['name' => 'gudang.avalan.barangmasuk']);
         Permission::create(['name' => 'gudang.avalan.retur']);
+        Permission::create(['name' => 'gudang.packing.cekstok']);
+        Permission::create(['name' => 'gudang.packing.suratjalan']);
+        Permission::create(['name' => 'gudang.packing.barangkeluar']);
+        Permission::create(['name' => 'gudang.packing.barangmasuk']);
+        Permission::create(['name' => 'gudang.packing.retur']);
         //===========================================
 
         /**
          * Produksi
          */
         Permission::create(['name' => 'produksi']);
+        Permission::create(['name' => 'gudang.benang.cekstok']);
         Permission::create(['name' => 'gudang.benang.barangkeluar']);
         Permission::create(['name' => 'gudang.benang.barangmasuk']);
         Permission::create(['name' => 'gudang.benang.retur']);
-        Permission::create(['name' => 'gudang.benang.cekstok']);
         Permission::create(['name' => 'produksi.wjl.operator']);
         Permission::create(['name' => 'produksi.wjl.kepalaregu']);
         Permission::create(['name' => 'produksi.wjl.edit']);
@@ -85,8 +89,9 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'produksi.extruder.cek-wender']);
         Permission::create(['name' => 'produksi.extruder.kontrol-reifenhouzer']);
         Permission::create(['name' => 'produksi.extruder.rekap-reifenhouzer']);
-        Permission::create(['name' => 'produksi.laminanting.pengeringankain']);
-        Permission::create(['name' => 'produksi.laminanting.rekap']);
+        Permission::create(['name' => 'produksi.laminating.pengeringankain']);
+        Permission::create(['name' => 'produksi.laminating.rekap']);
+        Permission::create(['name' => 'produksi.laminating.edit']);
         Permission::create(['name' => 'approval']);
         //===========================================
 

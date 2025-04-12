@@ -81,6 +81,8 @@
                                                             $asal = 'Beaming';
                                                         } elseif ($barangmasuk->asal == 'packing') {
                                                             $asal = 'Packing';
+                                                        } elseif ($barangmasuk->asal == 'avalan') {
+                                                            $asal = 'Avalan';
                                                         }
                                                     @endphp
                                                     <option value="{{ $barangmasuk->asal }}">{{ $asal }}</option>
@@ -132,9 +134,11 @@
                                                 <table id="table1" class="table border table-sm">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 40%">Barang</th>
-                                                            <th style="width: 10%">Satuan</th>
-                                                            <th style="width: 15%">Jumlah</th>
+                                                            <th style="width: 35%">Barang</th>
+                                                            <th style="width: 8%">Satuan (Bobin)</th>
+                                                            <th style="width: 8%">Jumlah (Bobin)</th>
+                                                            <th style="width: 8%">Satuan (Kg)</th>
+                                                            <th style="width: 8%">Jumlah (Kg)</th>
                                                             <th>Keterangan</th>
                                                             <th style="width: 50px" class="text-center"></th>
                                                         </tr>
@@ -153,11 +157,7 @@
                                                                 <td>
                                                                     <select class="form-control select2 w-100 select-satuan"
                                                                         id="satuan{{ $d->id }}" name="satuan[]">
-                                                                        @foreach ($satuan as $s)
-                                                                            <option value="{{ $s->nama }}"
-                                                                                {{ $d->satuan == $s->nama ? 'selected' : '' }}>
-                                                                                {{ $s->nama }}</option>
-                                                                        @endforeach
+                                                                        <option value="BOBIN" selected>BOBIN</option>
                                                                     </select>
                                                                 </td>
                                                                 <td>
@@ -165,6 +165,21 @@
                                                                         id="jumlah{{ $d->id }}" name="jumlah[]"
                                                                         onblur="ubah_format('jumlah{{ $d->id }}', this.value)"
                                                                         value="{{ Number::format((float) $d->jumlah, precision: 1) }}">
+                                                                </td>
+                                                                <td>
+                                                                    <select
+                                                                        class="form-control select2 w-100 select-satuan"
+                                                                        id="satuan_2{{ $d->id }}"
+                                                                        name="satuan_2[]">
+                                                                        <option value="KG" selected>KG</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control"
+                                                                        id="jumlah_2{{ $d->id }}"
+                                                                        name="jumlah_2[]"
+                                                                        onblur="ubah_format('jumlah_2{{ $d->id }}', this.value)"
+                                                                        value="{{ Number::format((float) $d->jumlah_2, precision: 1) }}">
                                                                 </td>
                                                                 <td>
                                                                     <input type="text" class="form-control"
@@ -179,7 +194,7 @@
                                                             </tr>
                                                         @endforeach
                                                         <tr>
-                                                            <td class="text-right text-bold" colspan="4"></td>
+                                                            <td class="text-right text-bold" colspan="6"></td>
                                                             <td>
                                                                 <button type="button" class="btn btn-primary"
                                                                     onclick="tambah()"><i class="fa fa-plus"></i>
@@ -272,6 +287,9 @@
             }, {
                 id: 'welding',
                 text: 'Welding'
+            }, {
+                id: 'avalan',
+                text: 'Avalan'
             }
         ];
 
@@ -353,14 +371,22 @@
                     <td>
                         <select class="form-control select2 w-100 select-satuan"
                             id="satuan${row_id}" name="satuan[]">
-                            @foreach ($satuan as $d)
-                                <option value="{{ $d->nama }}">{{ $d->nama }}</option>
-                            @endforeach
+                            <option value="BOBIN">BOBIN</option>
                         </select>
                     </td>
                     <td>
                         <input type="text" class="form-control" id="jumlah${row_id}"
                             name="jumlah[]" onblur="ubah_format('jumlah${row_id}', this.value)">
+                    </td>
+                    <td>
+                        <select class="form-control select2 w-100 select-satuan"
+                            id="satuan_2${row_id}" name="satuan_2[]">
+                            <option value="KG">KG</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="jumlah_2${row_id}"
+                            name="jumlah_2[]" onblur="ubah_format('jumlah_2${row_id}', this.value)">
                     </td>
                     <td>
                         <input type="text" class="form-control" id="keterangan${row_id}"

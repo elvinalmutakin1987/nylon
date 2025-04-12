@@ -59,8 +59,10 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 40%">Barang</th>
-                                                        <th style="width: 10%">Satuan</th>
-                                                        <th style="width: 15%">Jumlah</th>
+                                                        <th style="width: 10%">Satuan (Bobin)</th>
+                                                        <th style="width: 10%">Jumlah (Bobin)</th>
+                                                        <th style="width: 10%">Satuan (Kg)</th>
+                                                        <th style="width: 10%">Jumlah (Kg)</th>
                                                         <th>Keterangan</th>
                                                     </tr>
                                                 </thead>
@@ -70,6 +72,9 @@
                                                             <td>{{ $d->material->nama }}</td>
                                                             <td>{{ $d->satuan }}</td>
                                                             <td>{{ Number::format((float) $d->jumlah, precision: 1) }}</td>
+                                                            <td>{{ $d->satuan_2 }}</td>
+                                                            <td>{{ Number::format((float) $d->jumlah_2, precision: 1) }}
+                                                            </td>
                                                             <td>{{ $d->keterangan }}</td>
                                                         </tr>
                                                     @endforeach

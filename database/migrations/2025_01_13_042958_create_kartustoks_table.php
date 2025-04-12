@@ -24,7 +24,12 @@ return new class extends Migration
             $table->decimal('masuk', 16, 2)->nullable();
             $table->decimal('keluar', 16, 2)->nullable();
             $table->decimal('stok_akhir', 16, 2)->nullable();
+            $table->decimal('stok_awal_2', 16, 2)->nullable();
+            $table->decimal('masuk_2', 16, 2)->nullable();
+            $table->decimal('keluar_2', 16, 2)->nullable();
+            $table->decimal('stok_akhir_2', 16, 2)->nullable();
             $table->string('satuan')->nullable();
+            $table->string('satuan_2')->nullable();
             $table->text('catatan')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();

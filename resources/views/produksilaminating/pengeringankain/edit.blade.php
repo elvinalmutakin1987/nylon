@@ -794,7 +794,7 @@
                 placeholder: "- Pilih Mesin -",
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('produksiwjl.operator.get_mesin') }}',
+                    url: '{{ route('produksilaminating.pengeringankain.get_mesin') }}',
                     dataType: 'json',
                     data: function(params) {
                         return {

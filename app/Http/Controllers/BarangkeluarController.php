@@ -201,6 +201,8 @@ class BarangkeluarController extends Controller
                     'material_id' => $material_id,
                     'jumlah' => $request->jumlah[$key] ? Controller::unformat_angka($request->jumlah[$key]) : 0,
                     'satuan' => $request->satuan[$key],
+                    'jumlah_2' => $request->jumlah_2 ? Controller::unformat_angka($request->jumlah_2[$key]) : 0,
+                    'satuan_2' => $request->satuan_2 ? $request->satuan_2[$key] : null,
                     'keterangan' => $request->keterangan[$key],
                     'created_by' => Auth::user()->id
                 ];
@@ -208,7 +210,7 @@ class BarangkeluarController extends Controller
             $barangkeluar->barangkeluardetail()->createMany($detail);
             if ($barangkeluar->status == 'Approved') {
                 foreach ($barangkeluar->barangkeluardetail as $d) {
-                    Controller::update_stok("Keluar", $kartustok_gudang, "Barang Keluar", $barangkeluar->id, $d->material_id, $d->jumlah, $d->satuan);
+                    Controller::update_stok("Keluar", $kartustok_gudang, "Barang Keluar", $barangkeluar->id, $d->material_id, $d->jumlah, $d->satuan, $d->jumlah_2, $d->satuan_2);
                 }
             }
             DB::commit();
@@ -350,6 +352,8 @@ class BarangkeluarController extends Controller
                     'material_id' => $material_id,
                     'jumlah' => $request->jumlah[$key] ? Controller::unformat_angka($request->jumlah[$key]) : 0,
                     'satuan' => $request->satuan[$key],
+                    'jumlah_2' => $request->jumlah_2 ? Controller::unformat_angka($request->jumlah_2[$key]) : 0,
+                    'satuan_2' => $request->satuan_2 ? $request->satuan_2[$key] : null,
                     'keterangan' => $request->keterangan[$key],
                     'created_by' => Auth::user()->id
                 ];
@@ -358,7 +362,7 @@ class BarangkeluarController extends Controller
             $barangkeluar->barangkeluardetail()->createMany($detail);
             if ($barangkeluar->status == 'Approved') {
                 foreach ($barangkeluar->barangkeluardetail as $d) {
-                    Controller::update_stok("Keluar", $kartustok_gudang, "Barang Keluar", $barangkeluar->id, $d->material_id, $d->jumlah, $d->satuan);
+                    Controller::update_stok("Keluar", $kartustok_gudang, "Barang Keluar", $barangkeluar->id, $d->material_id, $d->jumlah, $d->satuan, $d->jumlah_2, $d->satuan_2);
                 }
             }
             DB::commit();

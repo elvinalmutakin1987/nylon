@@ -147,6 +147,40 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
+                                                            <label class="form-check-label">Packing</label>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="gudang.packing.cekstok"
+                                                                    name="gudang.packing.cekstok">
+                                                                <label class="form-check-label"
+                                                                    for="gudang.packing.cekstok">Cek
+                                                                    Stok</label>
+                                                            </div>
+
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="gudang.packing.barangkeluar"
+                                                                    name="gudang.packing.barangkeluar">
+                                                                <label class="form-check-label"
+                                                                    for="gudang.packing.barangkeluar">Barang
+                                                                    Keluar</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="gudang.packing.barangmasuk"
+                                                                    name="gudang.packing.barangmasuk">
+                                                                <label class="form-check-label"
+                                                                    for="gudang.packing.barangmasuk">Barang
+                                                                    Masuk</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="gudang.packing.retur" name="gudang.packing.retur">
+                                                                <label class="form-check-label"
+                                                                    for="gudang.packing.retur">Retur</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
                                                             <label class="form-check-label">Avalan</label>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
@@ -179,9 +213,6 @@
                                                                 <label class="form-check-label"
                                                                     for="gudang.avalan.retur">Retur</label>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <label class="form-check-label">Stock Opname</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -233,6 +264,34 @@
                                                                 <label class="form-check-label"
                                                                     for="produksi.wjl.edit">Edit Produksi
                                                                     WJL</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label class="form-check-label">Laminating</label>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.laminating.pengeringankain"
+                                                                    name="produksi.laminating.pengeringankain">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.laminating.pengeringankain">Laporan
+                                                                    Pengeringan
+                                                                    Kain</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.laminating.rekap"
+                                                                    name="produksi.laminating.rekap">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.laminating.rekap">Rekap Pengeringan
+                                                                    Kain</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.laminating.edit"
+                                                                    name="produksi.laminating.edit">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.laminating.edit">Edit Pengeringan
+                                                                    Kain</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">

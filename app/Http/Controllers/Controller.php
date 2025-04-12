@@ -84,10 +84,12 @@ class Controller extends BaseController
         $histori->save();
     }
 
-    public static function update_stok(String $jenis, String $gudang, String $dokumen, String $dokumen_id, String $material_id, String $jumlah, String $satuan)
+    public static function update_stok(String $jenis, String $gudang, String $dokumen, String $dokumen_id, String $material_id, String $jumlah, String $satuan, String $jumlah_2 = "0", String $satuan_2 = null)
     {
         $kartustok_akhir = Kartustok::where('material_id', $material_id)->where('gudang', $gudang)->where('satuan', $satuan)->orderBy('id', 'desc')->first();
+        $kartustok_akhir_2 = Kartustok::where('material_id', $material_id)->where('gudang', $gudang)->where('satuan', $satuan)->orderBy('id', 'desc')->first();
         $stok_akhir = $kartustok_akhir ? $kartustok_akhir->stok_akhir : 0;
+        $stok_akhir_2 = $kartustok_akhir_2 ? $kartustok_akhir_2->stok_akhir_2 : 0;
         $kartustok = new Kartustok();
         $kartustok->gudang = $gudang;
         $kartustok->dokumen = $dokumen;
@@ -99,13 +101,24 @@ class Controller extends BaseController
             $kartustok->masuk = $jumlah;
             $kartustok->keluar = 0;
             $kartustok->stok_akhir = $stok_akhir + $jumlah;
+
+            $kartustok->stok_awal_2 = $stok_akhir_2;
+            $kartustok->masuk_2 = $jumlah_2;
+            $kartustok->keluar_2 = 0;
+            $kartustok->stok_akhir_2 = $stok_akhir_2 + $jumlah_2;
         } else {
             $kartustok->stok_awal = $stok_akhir;
             $kartustok->masuk = 0;
             $kartustok->keluar = $jumlah;
             $kartustok->stok_akhir = $stok_akhir - $jumlah;
+
+            $kartustok->stok_awal_2 = $stok_akhir_2;
+            $kartustok->masuk_2 = 0;
+            $kartustok->keluar_2 = $jumlah_2;
+            $kartustok->stok_akhir_2 = $stok_akhir_2 - $jumlah_2;
         }
         $kartustok->satuan = $satuan;
+        $kartustok->satuan_2 = $satuan_2;
         $kartustok->created_by = Auth::user()->id;
         $kartustok->save();
     }

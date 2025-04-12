@@ -31,7 +31,7 @@
                             <!-- Application buttons -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Gudang Barang Jadi</h3>
+                                    <h3 class="card-title">Barang Jadi</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="row text-center">
@@ -94,7 +94,7 @@
                             <!-- Application buttons -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Gudang Bahan Baku</h3>
+                                    <h3 class="card-title">Bahan Baku</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="row text-center">
@@ -140,6 +140,54 @@
                             <!-- /.card -->
                         @endif
 
+                        @if (auth()->user()->can('gudang.packing.cekstok') ||
+                                auth()->user()->can('gudang.packing.barangkeluar') ||
+                                auth()->user()->can('gudang.packing.barangmasuk') ||
+                                auth()->user()->can('gudang.packing.retur') ||
+                                auth()->user()->can('gudang.packing.penerimaanbarang'))
+                            <!-- Application buttons -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Packing</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <div class="col-md-12">
+                                            @if (auth()->user()->can('gudang.packing.cekstok'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('cekstok.index', ['gudang' => 'packing']) }}">
+                                                    <i class="fa fa-search"></i> Cek Stok
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('gudang.packing.barangkeluar'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('barangkeluar.index', ['gudang' => 'packing']) }}">
+                                                    <i class="fa fa-upload"></i> Barang Keluar
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('gudang.packing.barangmasuk'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('barangmasuk.index', ['gudang' => 'packing']) }}">
+                                                    <i class="fa fa-download"></i> Barang Masuk
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('gudang.packing.retur'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('retur.index', ['gudang' => 'packing']) }}">
+                                                    <i class="fa fa-mail-reply"></i> Retur
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        @endif
+
                         @if (auth()->user()->can('gudang.avalan.cekstok') ||
                                 auth()->user()->can('gudang.avalan.barangkeluar') ||
                                 auth()->user()->can('gudang.avalan.barangmasuk') ||
@@ -148,7 +196,7 @@
                             <!-- Application buttons -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Gudang Avalan</h3>
+                                    <h3 class="card-title">Avalan</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="row text-center">

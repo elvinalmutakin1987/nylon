@@ -79,7 +79,7 @@
                             <!-- /.card -->
                         @endif
 
-                        @if (auth()->user()->can('produksi.laminating.pengeringankain') || auth()->user()->can('produksi.laminanting.rekap'))
+                        @if (auth()->user()->can('produksi.laminating.pengeringankain') || auth()->user()->can('produksi.laminating.rekap'))
                             <!-- Application buttons -->
                             <div class="card">
                                 <div class="card-header">
@@ -88,16 +88,15 @@
                                 <div class="card-body">
                                     <div class="row text-center">
                                         <div class="col-md-12">
-                                            @if (auth()->user()->can('produksi.laminanting.pengeringankain'))
+                                            @if (auth()->user()->can('produksi.laminating.pengeringankain'))
                                                 <a class="btn btn-app"
                                                     href="{{ route('produksilaminating.pengeringankain.index') }}">
                                                     <i class="fa fa-pencil"></i> Laporan Pengeringan Kain
                                                 </a>
                                             @endif
 
-                                            @if (auth()->user()->can('produksi.laminanting.rekap'))
-                                                <a class="btn btn-app"
-                                                    href="{{ route('produksilaminating.pengeringankain.index') }}">
+                                            @if (auth()->user()->can('produksi.laminating.rekap'))
+                                                <a class="btn btn-app" href="{{ route('produksilaminating.rekap.index') }}">
                                                     <i class="fa fa-file"></i> Rekap Pengeringan Kain
                                                 </a>
                                             @endif
