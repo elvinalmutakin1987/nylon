@@ -132,7 +132,7 @@ class PenggunaController extends Controller
             }
             $user->save();
             $role = Role::find($request->role_id);
-            $user->assignRole($role);
+            $user->syncRoles($role);
             DB::commit();
             return redirect()->route('pengguna.index')->with([
                 'status' => 'success',

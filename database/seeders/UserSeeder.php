@@ -87,8 +87,14 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'produksi.extruder.kontrol-barmag']);
         Permission::create(['name' => 'produksi.extruder.rekap-barmag']);
         Permission::create(['name' => 'produksi.extruder.cek-wender']);
-        Permission::create(['name' => 'produksi.extruder.kontrol-reifenhouzer']);
-        Permission::create(['name' => 'produksi.extruder.rekap-reifenhouzer']);
+        Permission::create(['name' => 'produksi.extruder.kontrol-reifen']);
+        Permission::create(['name' => 'produksi.extruder.rekap-reifen']);
+        Permission::create(['name' => 'produksi.extruder.laporansulzer']);
+        Permission::create(['name' => 'produksi.extruder.laporansulzer.edit']);
+        Permission::create(['name' => 'produksi.extruder.rekapsulzer']);
+        Permission::create(['name' => 'produksi.extruder.laporanrashel']);
+        Permission::create(['name' => 'produksi.extruder.laporanrashel.edit']);
+        Permission::create(['name' => 'produksi.extruder.rekaprashel']);
         Permission::create(['name' => 'produksi.laminating.pengeringankain']);
         Permission::create(['name' => 'produksi.laminating.rekap']);
         Permission::create(['name' => 'produksi.laminating.edit']);

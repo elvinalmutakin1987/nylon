@@ -261,6 +261,33 @@
                                                                     for="produksi.extruder.kontrolbarmag">Laporan Kontrol
                                                                     Barmag</label>
                                                             </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.kontrolreifen"
+                                                                    name="produksi.extruder.kontrolreifen"
+                                                                    {{ $role->hasPermissionTo('produksi.extruder.kontrol-reifen') ? 'checked' : '' }}>
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.kontrolreifen">Laporan Kontrol
+                                                                    Reifen</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.laporansulzer"
+                                                                    name="produksi.extruder.laporansulzer"
+                                                                    {{ $role->hasPermissionTo('produksi.extruder.laporansulzer') ? 'checked' : '' }}>
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.laporansulzer">Laporan
+                                                                    Sulzer</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.laporanrashel"
+                                                                    name="produksi.extruder.laporanrashel"
+                                                                    {{ $role->hasPermissionTo('produksi.extruder.laporanrashel') ? 'checked' : '' }}>
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.laporanrashel">Laporan
+                                                                    Rashel</label>
+                                                            </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <label class="form-check-label">WJL</label>

@@ -17,7 +17,10 @@
                             <li class="breadcrumb-item"><a href="{{ route('produksi.index') }}"
                                     class="text-dark">Produksi</a>
                             </li>
-                            <li class="breadcrumb-item">Laporan Pengeringan Kain</li>
+                            <li class="breadcrumb-item"><a href="{{ route('produksilaminating.rekap.index') }}">Rekap
+                                    Pengeringan
+                                    Kain</a></li>
+                            <li class="breadcrumb-item" Active>Edit</li>
                         </ol>
                     </div>
                 </div>
@@ -102,7 +105,8 @@
                                                 <input type="text"
                                                     class="form-control @error('mesin_id') is-invalid @enderror"
                                                     id="mesin_id" name="mesin_id"
-                                                    value="{{ old('mesin_id') ?? $mesin->nama }}" readonly>
+                                                    value="{{ old('mesin_id') ?? $pengeringankain->mesin->nama }}"
+                                                    readonly>
                                                 @error('mesin_id')
                                                     <span id="mesin_id-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -702,7 +706,8 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <a type="button" class="btn btn-default"
-                                        href="{{ route('produksilaminating.rekap.index') }}"><i class="fa fa-reply"></i>
+                                        href="{{ route('produksilaminating.pengeringankain.index') }}"><i
+                                            class="fa fa-reply"></i>
                                         Kembali</a>
                                     <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>
                                         Simpan</button>
@@ -793,7 +798,7 @@
                 placeholder: "- Pilih Mesin -",
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('produksilaminating.rekap.get_mesin') }}',
+                    url: '{{ route('produksilaminating.pengeringankain.get_mesin') }}',
                     dataType: 'json',
                     data: function(params) {
                         return {

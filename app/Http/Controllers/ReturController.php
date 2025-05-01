@@ -89,7 +89,7 @@ class ReturController extends Controller
             return view('gudangbahanbaku.retur.index');
         } elseif (request()->gudang == 'benang') {
             return view('gudangbenang.retur.index');
-        } elseif (request()->gudang == 'benang') {
+        } elseif (request()->gudang == 'barang-jadi') {
             return view('gudangbarangjadi.retur.index');
         } elseif (request()->gudang == 'extruder') {
             return view('gudangextruder.retur.index');

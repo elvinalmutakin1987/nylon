@@ -68,20 +68,22 @@ class RekapproduksiwjlController extends Controller
     public function update(Request $request, Produksiwjl $produksiwjl)
     {
         $validator = Validator::make($request->all(), [
-            'operator' => 'required',
-            'mesin_id' => 'required',
-            'jenis_kain' => 'required',
-            'shift' => 'required',
-            'meter_awal' => 'required',
-            'meter_akhir' => 'required',
-            'hasil' => 'required',
-            'keterangan' => 'required',
+            // 'tanggal' => 'required',
+            // 'operator' => 'required',
+            // 'mesin_id' => 'required',
+            // 'jenis_kain' => 'required',
+            // 'shift' => 'required',
+            // 'meter_awal' => 'required',
+            // 'meter_akhir' => 'required',
+            // 'hasil' => 'required',
+            // 'keterangan' => 'required',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
         }
         DB::beginTransaction();
         try {
+            $produksiwjl->tanggal = $request->tanggal;
             $produksiwjl->operator = $request->operator;
             $produksiwjl->jenis_kain = $request->jenis_kain;
             $produksiwjl->meter_awal = Controller::unformat_angka($request->meter_awal ?? '0');

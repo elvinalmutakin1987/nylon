@@ -44,10 +44,17 @@
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="tanggal">Tanggal</label>
-                                                    <input type="text"
-                                                        class="form-control @error('tanggal') is-invalid @enderror"
-                                                        id="tanggal" name="tanggal"
-                                                        value="{{ old('tanggal') ?? $produksiwjl->tanggal }}" readonly>
+                                                    <div class="input-group date" id="div_tanggal"
+                                                        data-target-input="nearest">
+                                                        <input type="text" class="form-control datetimepicker-input"
+                                                            data-target="#div_tanggal" id="tanggal" name="tanggal"
+                                                            value="{{ old('tanggal') ?? $produksiwjl->tanggal }}" />
+                                                        <div class="input-group-append" data-target="#div_tanggal"
+                                                            data-toggle="datetimepicker">
+                                                            <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     @error('tanggal')
                                                         <span id="tanggal-error"
                                                             class="error invalid-feedback">{{ $message }}</span>

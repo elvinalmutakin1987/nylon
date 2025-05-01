@@ -321,6 +321,17 @@
                                                                 @enderror
                                                             </div>
                                                             <div class="form-group">
+                                                                <label for="lebar_1">Lebar</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('lebar_1') is-invalid @enderror"
+                                                                    id="lebar_1" name="lebar_1"
+                                                                    value="{{ old('lebar_1') ?? $pengeringankain->lebar_1 }}">
+                                                                @error('lebar_1')
+                                                                    <span id="berat_1-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
                                                                 <label for="panjang_1">Panjang</label>
                                                                 <input type="text"
                                                                     class="form-control @error('panjang_1') is-invalid @enderror"
@@ -469,6 +480,17 @@
                                                                     value="{{ old('berat_2') ?? $pengeringankain->berat_2 }}">
                                                                 @error('berat_2')
                                                                     <span id="berat_2-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="lebar_2">Lebar</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('lebar_2') is-invalid @enderror"
+                                                                    id="lebar_2" name="lebar_2"
+                                                                    value="{{ old('lebar_2') ?? $pengeringankain->lebar_2 }}">
+                                                                @error('lebar_2')
+                                                                    <span id="berat_1-error"
                                                                         class="error invalid-feedback">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
@@ -622,6 +644,17 @@
                                                                     value="{{ old('berat_3') ?? $pengeringankain->berat_3 }}">
                                                                 @error('berat_3')
                                                                     <span id="berat_3-error"
+                                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="lebar_3">Lebar</label>
+                                                                <input type="text"
+                                                                    class="form-control @error('lebar_3') is-invalid @enderror"
+                                                                    id="lebar_3" name="lebar_3"
+                                                                    value="{{ old('lebar_3') ?? $pengeringankain->lebar_3 }}">
+                                                                @error('lebar_3')
+                                                                    <span id="berat_1-error"
                                                                         class="error invalid-feedback">{{ $message }}</span>
                                                                 @enderror
                                                             </div>

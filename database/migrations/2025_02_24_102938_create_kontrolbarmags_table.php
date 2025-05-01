@@ -58,6 +58,7 @@ return new class extends Migration
             $table->string('approved_by')->nullable();
             $table->string('confirmed_by')->nullable();
             $table->timestamps();
+            $table->index('mesin_id');
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('confirmed_at')->nullable();
             $table->timestamp('deleted_at')->nullable();

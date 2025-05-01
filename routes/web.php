@@ -10,8 +10,11 @@ use App\Http\Controllers\GudangbarangjadiorderController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\KontrolbarmagController;
 use App\Http\Controllers\KontroldenierController;
+use App\Http\Controllers\KontrolreifenController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LaporangudangController;
+use App\Http\Controllers\LaporanrashelController;
+use App\Http\Controllers\LaporansulzerController;
 use App\Http\Controllers\LapproduksiwjlController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LokasiController;
@@ -125,7 +128,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('gudang', GudangController::class)->names('gudang');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.barangjadi.barangkeluar|gudang.bahanbaku.barangkeluar|gudang.benang.barangkeluar']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.barangjadi.barangkeluar|gudang.bahanbaku.barangkeluar|gudang.benang.barangkeluar|gudang.packing.barangkeluar']], function () {
         Route::resource('barangkeluar', BarangkeluarController::class)->names('barangkeluar');
 
         Route::get('barangkeluar/{barangkeluar}/cetak', [BarangkeluarController::class, 'cetak'])->name('barangkeluar.cetak');
@@ -140,7 +143,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('gudangbarangjadi-order-progress/{order}', [GudangbarangjadiorderController::class, 'store_progress'])->name('gudangbarangjadiorder.progress');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.barangjadi.cekstok|gudang.bahanbaku.cekstok|gudang.benang.cekstok']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.barangjadi.cekstok|gudang.bahanbaku.cekstok|gudang.benang.cekstok|gudang.packing.cekstok']], function () {
         Route::resource('cekstok', CekstokController::class)->names('cekstok');
 
         Route::get('cekstok-export', [CekstokController::class, 'export'])->name('cekstok.export');
@@ -159,7 +162,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('suratjalan-get-order-by-id', [SuratjalanController::class, 'get_order_by_id'])->name('suratjalan.get_order_by_id');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.barangjadi.barangmasuk|gudang.bahanbaku.barangmasuk|gudang.benang.barangmasuk']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.barangjadi.barangmasuk|gudang.bahanbaku.barangmasuk|gudang.benang.barangmasuk|gudang.packing.barangmasuk']], function () {
         Route::resource('barangmasuk', BarangmasukController::class)->names('barangmasuk');
 
         Route::get('barangmasuk/{barangmasuk}/cetak', [BarangmasukController::class, 'cetak'])->name('barangmasuk.cetak');
@@ -169,7 +172,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('barangmasuk-get-barangkeluar-by-id', [BarangmasukController::class, 'ge_barangkeluar_by_id'])->name('barangmasuk.get_barangkeluar_by_id');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.barangjadi.retur|gudang.bahanbaku.retur|gudang.benang.retur']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|gudang.barangjadi.retur|gudang.bahanbaku.retur|gudang.benang.retur|gudang.packing.retur']], function () {
         Route::resource('retur', ReturController::class)->names('retur');
 
         Route::get('retur/{retur}/cetak', [ReturController::class, 'cetak'])->name('retur.cetak');
@@ -313,10 +316,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('laminanting-pengeringankain/{pengeringankain}/edit', [PengeringankainController::class, 'edit'])->name('produksilaminating.pengeringankain.edit');
         });
 
-        Route::group(['middleware' => ['role_or_permission:superadmin|produksi.wjl.konfirmasi']], function () {
-            Route::get('laminanting-rekap-konfirmasi', [RekapproduksiwjlController::class, 'konfirmasi'])->name('produksilaminating.rekap.konfirmasi');
-        });
-
         Route::get('laminanting-pengeringankain-cetak', [PengeringankainController::class, 'cetak'])->name('produksilaminating.pengeringankain.cetak');
         Route::get('laminanting-pengeringankain-get-mesin', [PengeringankainController::class, 'get_mesin'])->name('produksilaminating.pengeringankain.get_mesin');
         Route::get('laminanting-pengeringankain-get-detail', [PengeringankainController::class, 'get_detail'])->name('produksilaminating.pengeringankain.get_detail');
@@ -329,6 +328,10 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => ['role_or_permission:superadmin|produksi.laminating.rekap']], function () {
         Route::resource('laminanting-rekap', RekappengeringankainController::class)->names('produksilaminating.rekap');
         Route::get('laminanting-rekap-get-rekap', [RekappengeringankainController::class, 'get_rekap'])->name('produksilaminating.rekap.get_rekap');
+
+        Route::group(['middleware' => ['role_or_permission:superadmin|produksi.laminanting.konfirmasi']], function () {
+            Route::get('laminanting-rekap-konfirmasi', [RekappengeringankainController::class, 'konfirmasi'])->name('produksilaminating.rekap.konfirmasi');
+        });
 
         Route::get('laminanting-rekap-cetak', [RekappengeringankainController::class, 'cetak'])->name('produksilaminating.rekap.cetak');
         Route::get('laminanting-rekap-get-mesin', [RekappengeringankainController::class, 'get_mesin'])->name('produksilaminating.rekap.get_mesin');
@@ -348,5 +351,72 @@ Route::middleware(['auth'])->group(function () {
         Route::get('laporangudang-cetak', [LaporangudangController::class, 'cetak'])->name('laporangudang.cetak');
         Route::get('laporangudang-export', [LaporangudangController::class, 'export'])->name('laporangudang.export');
         Route::post('laporangudang-store-keterangan', [LaporangudangController::class, 'store_keterangan'])->name('laporangudang.store_keterangan');
+    });
+
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.kontrol-reifen']], function () {
+        Route::get('produksiextruder-kontrol-reifen', [KontrolreifenController::class, 'index'])->name('produksiextruder-kontrol-reifen.index');
+        Route::post('produksiextruder-kontrol-reifen', [KontrolreifenController::class, 'store'])->name('produksiextruder-kontrol-reifen.store');
+        Route::post('produksiextruder-kontrol-reifen/store-laporan', [KontrolreifenController::class, 'store_laporan'])->name('produksiextruder-kontrol-reifen.store_laporan');
+        Route::get('produksiextruder-kontrol-reifen/create', [KontrolreifenController::class, 'create'])->name('produksiextruder-kontrol-reifen.create');
+        Route::get('produksiextruder-kontrol-reifen/create-laporan', [KontrolreifenController::class, 'create_laporan'])->name('produksiextruder-kontrol-reifen.create_laporan');
+        Route::get('produksiextruder-kontrol-reifen/{kontrolreifen}', [KontrolreifenController::class, 'show'])->name('produksiextruder-kontrol-reifen.show');
+        Route::put('produksiextruder-kontrol-reifen/{kontrolreifen}', [KontrolreifenController::class, 'update'])->name('produksiextruder-kontrol-reifen.update');
+        Route::delete('produksiextruder-kontrol-reifen/{kontrolreifen}', [KontrolreifenController::class, 'destroy'])->name('produksiextruder-kontrol-reifen.destroy');
+        Route::get('produksiextruder-kontrol-reifen/{kontrolreifen}/edit', [KontrolreifenController::class, 'edit'])->name('produksiextruder-kontrol-reifen.edit');
+
+        Route::get('produksiextruder-kontrol-reifen-create-laporan', [KontrolreifenController::class, 'create_laporan'])->name('produksiextruder-kontrol-reifen.create_laporan');
+        Route::get('produksiextruder-kontrol-reifen-get-material', [KontrolreifenController::class, 'get_material'])->name('produksiextruder-kontrol-reifen.get_material');
+        Route::get('produksiextruder-kontrol-reifen-get-detail', [KontrolreifenController::class, 'get_detail'])->name('produksiextruder-kontrol-reifen.get_detail');
+        Route::get('produksiextruder-kontrol-reifen-cek-sebelumnya', [KontrolreifenController::class, 'cek_sebelumnya'])->name('produksiextruder-kontrol-reifen.cek_sebelumnya');
+        Route::get('produksiextruder-kontrol-reifen-confirm/{produksiwjl}', [KontrolreifenController::class, 'confirm'])->name('produksiextruder-kontrol-reifen.confirm');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.laporansulzer']], function () {
+        Route::get('produksiextruder-laporansulzer', [LaporansulzerController::class, 'index'])->name('produksiextruder.laporansulzer.index');
+        Route::get('produksiextruder-get-laporansulzer', [LaporansulzerController::class, 'get_laporansulzer'])->name('produksiextruder.laporansulzer.get_laporansulzer');
+        Route::post('produksiextruder-laporansulzer', [LaporansulzerController::class, 'store'])->name('produksiextruder.laporansulzer.store');
+        Route::get('produksiextruder-laporansulzer/create', [LaporansulzerController::class, 'create'])->name('produksiextruder.laporansulzer.create');
+        Route::get('produksiextruder-laporansulzer/create-laporan', [LaporansulzerController::class, 'create_laporan'])->name('produksiextruder.laporansulzer.create_laporan');
+        Route::get('produksiextruder-laporansulzer/{laporansulzer}', [LaporansulzerController::class, 'show'])->name('produksiextruder.laporansulzer.show');
+        Route::put('produksiextruder-laporansulzer/{laporansulzer}', [LaporansulzerController::class, 'update'])->name('produksiextruder.laporansulzer.update');
+        Route::delete('produksiextruder-laporansulzer/{laporansulzer}', [LaporansulzerController::class, 'destroy'])->name('produksiextruder.laporansulzer.destroy');
+        Route::get('produksiextruder-laporansulzer/{laporansulzer}/edit', [LaporansulzerController::class, 'edit'])->name('produksiextruder.laporansulzer.edit');
+
+        // Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.laporansulzer.edit']], function () {
+        //     Route::get('produksiextruder-laporansulzer/{laporansulzer}/edit', [LaporansulzerController::class, 'edit'])->name('produksiextruder.laporansulzer.edit');
+        // });
+
+        Route::get('produksiextruder-laporansulzer-cetak', [LaporansulzerController::class, 'cetak'])->name('produksiextruder.laporansulzer.cetak');
+        Route::get('produksiextruder-laporansulzer-get-mesin', [LaporansulzerController::class, 'get_mesin'])->name('produksiextruder.laporansulzer.get_mesin');
+        Route::get('produksiextruder-laporansulzer-get-detail', [LaporansulzerController::class, 'get_detail'])->name('produksiextruder.laporansulzer.get_detail');
+        Route::get('produksiextruder-laporansulzer-cek-laporan-wjl', [LaporansulzerController::class, 'cek_laporan_wjl'])->name('produksiextruder.laporansulzer.cek_laporan_wjl');
+        Route::get('produksiextruder-laporansulzer-confirm/{laporansulzer}', [LaporansulzerController::class, 'confirm'])->name('produksiextruder.laporansulzer.confirm');
+
+        Route::get('produksiextruder-laporansulzer-export', [LaporansulzerController::class, 'export'])->name('produksiextruder.laporansulzer.export');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.laporanrashel']], function () {
+        Route::get('produksiextruder-laporanrashel', [LaporanrashelController::class, 'index'])->name('produksiextruder.laporanrashel.index');
+        Route::get('produksiextruder-get-laporanrashel', [LaporanrashelController::class, 'get_laporanrashel'])->name('produksiextruder.laporanrashel.get_laporanrashel');
+        Route::post('produksiextruder-laporanrashel', [LaporanrashelController::class, 'store'])->name('produksiextruder.laporanrashel.store');
+        Route::get('produksiextruder-laporanrashel/create', [LaporanrashelController::class, 'create'])->name('produksiextruder.laporanrashel.create');
+        Route::get('produksiextruder-laporanrashel/create-laporan', [LaporanrashelController::class, 'create_laporan'])->name('produksiextruder.laporanrashel.create_laporan');
+        Route::get('produksiextruder-laporanrashel/{laporanrashel}', [LaporanrashelController::class, 'show'])->name('produksiextruder.laporanrashel.show');
+        Route::put('produksiextruder-laporanrashel/{laporanrashel}', [LaporanrashelController::class, 'update'])->name('produksiextruder.laporanrashel.update');
+        Route::delete('produksiextruder-laporanrashel/{laporanrashel}', [LaporanrashelController::class, 'destroy'])->name('produksiextruder.laporanrashel.destroy');
+        Route::get('produksiextruder-laporanrashel/{laporanrashel}/edit', [LaporanrashelController::class, 'edit'])->name('produksiextruder.laporanrashel.edit');
+
+        // Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.laporanrashel.edit']], function () {
+        //     Route::get('produksiextruder-laporanrashel/{laporanrashel}/edit', [LaporanrashelController::class, 'edit'])->name('produksiextruder.laporanrashel.edit');
+        // });
+
+        Route::get('produksiextruder-laporanrashel-cetak', [LaporanrashelController::class, 'cetak'])->name('produksiextruder.laporanrashel.cetak');
+        Route::get('produksiextruder-laporanrashel-get-mesin', [LaporanrashelController::class, 'get_mesin'])->name('produksiextruder.laporanrashel.get_mesin');
+        Route::get('produksiextruder-laporanrashel-get-detail', [LaporanrashelController::class, 'get_detail'])->name('produksiextruder.laporanrashel.get_detail');
+        Route::get('produksiextruder-laporanrashel-cek-laporan-wjl', [LaporanrashelController::class, 'cek_laporan_wjl'])->name('produksiextruder.laporanrashel.cek_laporan_wjl');
+        Route::get('produksiextruder-laporanrashel-confirm/{laporanrashel}', [LaporanrashelController::class, 'confirm'])->name('produksiextruder.laporanrashel.confirm');
+
+        Route::get('produksiextruder-laporanrashel-export', [LaporanrashelController::class, 'export'])->name('produksiextruder.laporanrashel.export');
     });
 });

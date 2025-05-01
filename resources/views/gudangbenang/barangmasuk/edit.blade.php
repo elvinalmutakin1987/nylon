@@ -184,7 +184,7 @@
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         id="keterangan{{ $d->id }}"
-                                                                        name="keterangan[]">
+                                                                        name="keterangan[]" value="{{ $d->keterangan }}">
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <button type="button" class="btn btn-danger"

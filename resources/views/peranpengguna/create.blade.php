@@ -239,7 +239,30 @@
                                                                     for="produksi.extruder.kontrolbarmag">Laporan Kontrol
                                                                     Barmag</label>
                                                             </div>
-
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.kontrolreifen"
+                                                                    name="produksi.extruder.kontrolreifen">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.kontrolreifen">Laporan Kontrol
+                                                                    Reifen</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.laporansulzer"
+                                                                    name="produksi.extruder.laporansulzer">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.laporansulzer">Laporan
+                                                                    Sulzer</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.laporanrashel"
+                                                                    name="produksi.extruder.laporanrashel">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.laporanrashel">Laporan
+                                                                    Rashel</label>
+                                                            </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <label class="form-check-label">WJL</label>

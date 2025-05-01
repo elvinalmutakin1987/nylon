@@ -88,4 +88,9 @@ class Pengeringankain extends Model
     {
         return $this->belongsTo(Produksiwjl::class)->withDefault(['slug' => null]);
     }
+
+    public function mesin(): BelongsTo
+    {
+        return $this->belongsTo(Mesin::class)->withDefault(['nama' => null]);
+    }
 }

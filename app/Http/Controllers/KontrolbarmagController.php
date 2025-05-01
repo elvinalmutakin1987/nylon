@@ -121,79 +121,14 @@ class KontrolbarmagController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'operator' => 'required',
-            'shift' => 'required',
-            'tanggal' => 'required',
-            'keterangan' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
-        }
-        DB::beginTransaction();
-        try {
-            $order_shift = '';
-            if ($request->shift == 'Pagi') {
-                $order_shift = '1';
-            } elseif ($request->shift == 'Sore') {
-                $order_shift = '2';
-            } elseif ($request->shift == 'Malam') {
-                $order_shift = '3';
-            }
-            $gen_no_dokumen = Controller::gen_no_dokumen('produksiwjl');
-            $produksiwjl = new Produksiwjl();
-            $produksiwjl->slug = Controller::gen_slug();
-            $produksiwjl->tanggal = $request->tanggal;
-
-            $produksiwjl->created_by = Auth::user()->id;
-            $produksiwjl->status = 'Submit'; //$pengaturan->nilai == 'Ya' ? 'Submit' : 'Confirmed';
-            $produksiwjl->order_shift = $order_shift;
-            $produksiwjl->save();
-
-            if ($request->hasFile('foto')) {
-                $files = $request->file('foto');
-                foreach ($files as $file) {
-                    $realname = $file->getClientOriginalName();
-                    $extension = $file->getClientOriginalExtension();
-                    $directory = "produksiwjl";
-                    $filename = Str::random(24) . "." . $extension;
-                    $file->storeAs($directory, $filename);
-
-                    // $manager = new ImageManager(new Driver());
-                    // $image = ImageManager::imagick()->read('storage/' . $directory . '/' . $filename);
-                    // $image->resizeDown(height: 100);
-                    // $image->scaleDown(height: 100);
-
-                    $foto_db = new Foto();
-                    $foto_db->slug = Controller::gen_slug();
-                    $foto_db->dokumen = 'produksiwjl';
-                    $foto_db->dokumen_id = $produksiwjl->id;
-                    $foto_db->fulltext = 'storage/' . $directory . '/' . $filename;
-                    $foto_db->directory = $directory;
-                    $foto_db->filename = $filename;
-                    $foto_db->realname = $realname;
-                    $foto_db->extension = $extension;
-                    $foto_db->created_by = Auth::user()->id;
-                    $foto_db->save();
-                }
-            }
-
-            DB::commit();
-            return redirect()->route('produksiwjl.operator.index')->with([
-                'status' => 'success',
-                'message' => 'Data telah disimpan!'
-            ]);
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            return view('error', compact('th'));
-        }
+        //
     }
 
     public function store_laporan(Request $request)
     {
         $shift = $request->shift;
         $tanggal = $request->tanggal;
-        $kontrolbarmag = Kontrolbarmag::find($requet->kontrolbarmag_id);
+        $kontrolbarmag = Kontrolbarmag::find($request->kontrolbarmag_id);
     }
 
     /**

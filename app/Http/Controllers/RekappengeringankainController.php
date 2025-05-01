@@ -58,18 +58,20 @@ class RekappengeringankainController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pengeringankain $pengeringankain)
+    public function edit(String $slug, Pengeringankain $pengeringankain)
     {
+        $pengeringankain = Pengeringankain::where('slug', $slug)->first();
         return view('produksilaminating.rekap.edit', compact('pengeringankain'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pengeringankain $pengeringankain)
+    public function update(Request $request, String $slug, Pengeringankain $pengeringankain)
     {
         DB::beginTransaction();
         try {
+            $pengeringankain = Pengeringankain::where('slug', $slug)->first();
             $pengeringankain->wjl_no_roll = $request->wjl_no_roll;
             $pengeringankain->operator_1 = $request->operator_1;
             $pengeringankain->tanggal_1 = Carbon::parse($request->tanggal_1)->format('Y-m-d');
@@ -106,17 +108,19 @@ class RekappengeringankainController extends Controller
             $pengeringankain->kondisi_kain2_3 = $request->kondisi_kain2_3;
             $pengeringankain->updated_by = Auth::user()->id;
             $pengeringankain->save();
-            foreach ($request->meter as $key => $meter) {
-                $detail[] = [
-                    'slug' => Controller::gen_slug(),
-                    'pengeringankain_id' => $pengeringankain->id,
-                    'meter' => $meter,
-                    'kerusakan' => $request->kerusakan[$key],
-                    'created_by' => Auth::user()->id
-                ];
+            if ($request->meter) {
+                foreach ($request->meter as $key => $meter) {
+                    $detail[] = [
+                        'slug' => Controller::gen_slug(),
+                        'pengeringankain_id' => $pengeringankain->id,
+                        'meter' => $meter,
+                        'kerusakan' => $request->kerusakan[$key],
+                        'created_by' => Auth::user()->id
+                    ];
+                }
+                $pengeringankain->pengeringankaindetail()->delete();
+                $pengeringankain->pengeringankaindetail()->createMany($detail);
             }
-            $pengeringankain->pengeringankaindetail()->delete();
-            $pengeringankain->pengeringankaindetail()->createMany($detail);
             DB::commit();
             return redirect()->route('produksilaminating.rekap.index')->with([
                 'status' => 'success',
@@ -138,7 +142,6 @@ class RekappengeringankainController extends Controller
 
     public function konfirmasi(Request $request, Pengeringankain $pengeringankain)
     {
-
         DB::beginTransaction();
         try {
             $tanggal_dari = $request->tanggal_dari;
@@ -201,7 +204,7 @@ class RekappengeringankainController extends Controller
         $tanggal_dari = $request->tanggal_dari;
         $tanggal_sampai = $request->tanggal_sampai;
         $mesin_id = $request->mesin_id;
-        $pengeringankain = Pengeringankain::whereDate('wjl_tanggal', '>=', $tanggal_dari)
+        $pengeringankain = Pengeringankain::select('id')->whereDate('wjl_tanggal', '>=', $tanggal_dari)
             ->whereDate('wjl_tanggal', '<=', $tanggal_sampai)
             ->orderBy('wjl_tanggal', 'asc')
             ->orderBy('mesin_id', 'asc')
@@ -210,7 +213,8 @@ class RekappengeringankainController extends Controller
             $pengeringankain->where('mesin_id', $mesin_id);
         }
         $pengeringankain = $pengeringankain->get();
-        $view = view('produksilaminating.rekap.show', compact('tanggal_dari', 'tanggal_sampai', 'mesin_id', 'pengeringankain'))->render();
+        $pengeringankaindetail = Pengeringankaindetail::whereIn('pengeringankain_id', $pengeringankain)->get();
+        $view = view('produksilaminating.rekap.show', compact('tanggal_dari', 'tanggal_sampai', 'mesin_id', 'pengeringankain', 'pengeringankaindetail'))->render();
         return response()->json([
             'status' => 'success',
             'data' => $view,

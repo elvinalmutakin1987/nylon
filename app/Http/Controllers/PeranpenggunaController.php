@@ -122,6 +122,9 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_wjl_edit) array_push($access, 'produksi.wjl.edit');
             if ($request->produksi_extruder_kontroldenier) array_push($access, 'produksi.extruder.kontrol-denier');
             if ($request->produksi_extruder_kontrolbarmag) array_push($access, 'produksi.extruder.kontrol-barmag');
+            if ($request->produksi_extruder_kontrolreifen) array_push($access, 'produksi.extruder.kontrol-reifen');
+            if ($request->produksi_extruder_laporansulzer) array_push($access, 'produksi.extruder.laporansulzer');
+            if ($request->produksi_extruder_laporanrashel) array_push($access, 'produksi.extruder.laporanrashel');
             if ($request->produksi_laminating_pengeringankain) array_push($access, 'produksi.laminating.pengeringankain');
             if ($request->produksi_laminating_rekap) array_push($access, 'produksi.laminating.rekap');
             if ($request->produksi_laminating_edit) array_push($access, 'produksi.laminating.edit');
@@ -136,6 +139,9 @@ class PeranpenggunaController extends Controller
                 $request->produksi_wjl_edit ||
                 $request->produksi_extruder_kontroldenier ||
                 $request->produksi_extruder_kontrolbarmag ||
+                $request->produksi_extruder_kontrolreifen ||
+                $request->produksi_extruder_laporansulzer ||
+                $request->produksi_extruder_laporanrashel ||
                 $request->produksi_laminating_pengeringankain ||
                 $request->produksi_laminating_rekap ||
                 $request->produksi_laminating_edit
@@ -245,6 +251,9 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_wjl_edit) array_push($access, 'produksi.wjl.edit');
             if ($request->produksi_extruder_kontroldenier) array_push($access, 'produksi.extruder.kontrol-denier');
             if ($request->produksi_extruder_kontrolbarmag) array_push($access, 'produksi.extruder.kontrol-barmag');
+            if ($request->produksi_extruder_kontrolreifen) array_push($access, 'produksi.extruder.kontrol-reifen');
+            if ($request->produksi_extruder_laporansulzer) array_push($access, 'produksi.extruder.laporansulzer');
+            if ($request->produksi_extruder_laporanrashel) array_push($access, 'produksi.extruder.laporanrashel');
             if ($request->produksi_laminating_pengeringankain) array_push($access, 'produksi.laminating.pengeringankain');
             if ($request->produksi_laminating_rekap) array_push($access, 'produksi.laminating.rekap');
             if ($request->produksi_laminating_edit) array_push($access, 'produksi.laminating.edit');
@@ -259,6 +268,9 @@ class PeranpenggunaController extends Controller
                 $request->produksi_wjl_edit ||
                 $request->produksi_extruder_kontroldenier ||
                 $request->produksi_extruder_kontrolbarmag ||
+                $request->produksi_extruder_kontrolreifen ||
+                $request->produksi_extruder_laporansulzer ||
+                $request->produksi_extruder_laporanrashel ||
                 $request->produksi_laminating_pengeringankain ||
                 $request->produksi_laminating_rekap ||
                 $request->produksi_laminating_edit

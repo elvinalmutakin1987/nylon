@@ -164,17 +164,19 @@ class PengeringankainController extends Controller
             $pengeringankain->kondisi_kain2_3 = $request->kondisi_kain2_3;
             $pengeringankain->updated_by = Auth::user()->id;
             $pengeringankain->save();
-            foreach ($request->meter as $key => $meter) {
-                $detail[] = [
-                    'slug' => Controller::gen_slug(),
-                    'pengeringankain_id' => $pengeringankain->id,
-                    'meter' => $meter,
-                    'kerusakan' => $request->kerusakan[$key],
-                    'created_by' => Auth::user()->id
-                ];
+            if ($request->meter) {
+                foreach ($request->meter as $key => $meter) {
+                    $detail[] = [
+                        'slug' => Controller::gen_slug(),
+                        'pengeringankain_id' => $pengeringankain->id,
+                        'meter' => $meter,
+                        'kerusakan' => $request->kerusakan[$key],
+                        'created_by' => Auth::user()->id
+                    ];
+                }
+                $pengeringankain->pengeringankaindetail()->delete();
+                $pengeringankain->pengeringankaindetail()->createMany($detail);
             }
-            $pengeringankain->pengeringankaindetail()->delete();
-            $pengeringankain->pengeringankaindetail()->createMany($detail);
             DB::commit();
             return redirect()->route('produksilaminating.pengeringankain.index')->with([
                 'status' => 'success',

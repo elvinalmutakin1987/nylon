@@ -23,6 +23,9 @@
     <table id="table1" class="table projects table-bordered">
         <thead>
             <tr>
+                @if (auth()->user()->can('produksi.wjl.edit'))
+                    <th>Aksi</th>
+                @endif
                 <th width="25"></th>
                 <th width="25">#</th>
                 <th>Tanggal</th>
@@ -43,9 +46,6 @@
                 <th>Teknisi</th>
                 <th>Dibuat Pada</th>
                 <th>Dikonfirmasi Pada</th>
-                @if (auth()->user()->can('produksi.wjl.edit'))
-                    <th>Aksi</th>
-                @endif
             </tr>
         </thead>
         <tbody>
@@ -70,6 +70,12 @@
                     }
                 @endphp
                 <tr {!! $style !!}>
+                    @if (auth()->user()->can('produksi.wjl.edit'))
+                        <td class="align-top">
+                            <a class="btn btn-default" href="{{ route('produksiwjl.rekap.edit', $d->slug) }}"> <i
+                                    class="fas fa-pencil-alt"></i> Edit</a>
+                        </td>
+                    @endif
                     <td class="align-top">
                         @if ($d->status == 'Confirmed')
                             <small class="badge badge-success"><i class="fa fa-check"></i></small>
@@ -116,12 +122,7 @@
                     <td class="align-top">
                         {{ $d->confirmed_at }}
                     </td>
-                    @if (auth()->user()->can('produksi.wjl.edit'))
-                        <td class="align-top">
-                            <a class="btn btn-default" href="{{ route('produksiwjl.rekap.edit', $d->slug) }}"> <i
-                                    class="fas fa-pencil-alt"></i> Edit</a>
-                        </td>
-                    @endif
+
                 </tr>
                 @php
                     $tanggal_old = $tanggal_new;

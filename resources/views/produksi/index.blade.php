@@ -22,7 +22,11 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        @if (auth()->user()->can('produksi.extruder.kontrol-denier'))
+                        @if (auth()->user()->can('produksi.extruder.kontrol-denier') ||
+                                auth()->user()->can('produksi.extruder.kontrol-barmag') ||
+                                auth()->user()->can('produksi.extruder.kontrol-reifen') ||
+                                auth()->user()->can('produksi.extruder.laporansulzer') ||
+                                auth()->user()->can('produksi.extruder.laporanrashel'))
                             <!-- Application buttons -->
                             <div class="card">
                                 <div class="card-header">
@@ -42,6 +46,27 @@
                                                 <a class="btn btn-app"
                                                     href="{{ route('produksiextruder-kontrol-barmag.index') }}">
                                                     <i class="far fa-compass"></i> Laporan Kontrol Barmag
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('produksi.extruder.kontrol-reifen'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('produksiextruder-kontrol-reifen.index') }}">
+                                                    <i class="fa fa-hourglass-1"></i> Laporan Kontrol Reifen
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('produksi.extruder.laporansulzer'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('produksiextruder.laporansulzer.index') }}">
+                                                    <i class="fas fa-toilet-paper"></i> Laporan Sulzer
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('produksi.extruder.laporanrashel'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('produksiextruder.laporanrashel.index') }}">
+                                                    <i class="fas fa-scroll"></i> Laporan Rashel
                                                 </a>
                                             @endif
                                         </div>
