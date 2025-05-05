@@ -95,7 +95,7 @@
                             @php
                                 $materialstok = Materialstok::where('material_id', $d->id)->first();
                             @endphp
-                            {{ $materialstok->keterangan }}
+                            {{ $materialstok->keterangan ?? '' }}
                         </td>
                     </tr>
                 @endforeach

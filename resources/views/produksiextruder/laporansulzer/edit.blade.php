@@ -97,97 +97,226 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="meter_awal">Meter Awal</label>
-                                                <input type="text"
-                                                    class="form-control @error('meter_awal') is-invalid @enderror"
-                                                    id="meter_awal" name="meter_awal"
-                                                    value="{{ old('meter_awal') ?? $laporansulzer->meter_awal }}">
-                                                @error('meter_awal')
-                                                    <span id="meter_awal-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="meter_akhir">Meter Akhir</label>
-                                                <input type="text"
-                                                    class="form-control @error('meter_akhir') is-invalid @enderror"
-                                                    id="meter_akhir" name="meter_akhir"
-                                                    value="{{ old('meter_akhir') ?? $laporansulzer->meter_akhir }}">
-                                                @error('meter_akhir')
-                                                    <span id="meter_akhir-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="keterangan_produksi">Keterangan Trobel Produksi</label>
-                                                <textarea class="form-control @error('keterangan_produksi') is-invalid @enderror" rows="5"
-                                                    id="keterangan_produksi" name="keterangan_produksi">{!! old('keterangan_produksi') ?? $laporansulzer->keterangan_produksi !!}</textarea>
-                                                @error('keterangan_produksi')
-                                                    <span id="keterangan_produksi-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="keterangan_mesin">Keterangan Trobel Mesin</label>
-                                                <textarea class="form-control @error('keterangan_mesin') is-invalid @enderror" rows="5" id="keterangan_mesin"
-                                                    name="keterangan_mesin">{!! old('keterangan_mesin') ?? $laporansulzer->keterangan_mesin !!}</textarea>
-                                                @error('keterangan_mesin')
-                                                    <span id="keterangan_mesin-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="jam_stop">Stop</label>
-                                                <div class="input-group date" id="div_jam_stop"
-                                                    data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input"
-                                                        data-target="#div_jam_stop" id="jam_stop" name="jam_stop"
-                                                        value="{{ $laporansulzer->jam_stop ?? null }}" />
-                                                    <div class="input-group-append" data-target="#div_jam_stop"
-                                                        data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-clock"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @error('jam_stop')
-                                                    <span id="jam_stop-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="jam_jalan">Jalan</label>
-                                                <div class="input-group date" id="div_jam_jalan"
-                                                    data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input"
-                                                        data-target="#div_jam_jalan" id="jam_jalan" name="jam_jalan"
-                                                        value="{{ $laporansulzer->jam_jalan ?? null }}" />
-                                                    <div class="input-group-append" data-target="#div_jam_jalan"
-                                                        data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-clock"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @error('jam_jalan')
-                                                    <span id="jam_jalan-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
+                                        <div class="col-md-12">
+                                            <table id="table1" class="table projects table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center" colspan="2">Hasil Meter</th>
+                                                        <th class="text-center" rowspan="2">Keterangan <br> Trobel
+                                                            Produksi</th>
+                                                        <th class="text-center" rowspan="2">Keterangan <br> Trobel
+                                                            Mesin/Rusak</th>
+                                                        <th class="text-center" colspan="2">Jam</th>
+                                                        <th style="width: 50px" class="text-center"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="text-center">Meter Awal</th>
+                                                        <th class="text-center">Meter Akhir</th>
+                                                        <th class="text-center">Stop</th>
+                                                        <th class="text-center">Jalan</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($laporansulzer->laporansulzerdetail as $d)
+                                                        @if ($loop->last)
+                                                            <tr>
+                                                                <td style="vertical-align: top">
+                                                                    <input type="text"
+                                                                        class="form-control @error('meter_awal') is-invalid @enderror"
+                                                                        id="meter_awal1" name="meter_awal[]"
+                                                                        value="{{ $d->meter_awal ? Number::format($d->meter_awal) : null }}"
+                                                                        onkeyup="ubah_format('meter_awal1', this.value)">
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <input type="text"
+                                                                        class="form-control @error('meter_akhir') is-invalid @enderror"
+                                                                        id="meter_akhir1" name="meter_akhir[]"
+                                                                        value="{{ $d->meter_akhir ? Number::format($d->meter_akhir) : null }}"
+                                                                        onkeyup="ubah_format('meter_akhir1', this.value)">
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <textarea class="form-control @error('keterangan_produksi') is-invalid @enderror" rows="5"
+                                                                        id="keterangan_produksi1" name="keterangan_produksi[]">{!! $d->keterangan_produksi !!}</textarea>
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <textarea class="form-control @error('keterangan_mesin') is-invalid @enderror" rows="5" id="keterangan_mesin1"
+                                                                        name="keterangan_mesin[]">{!! $d->keterangan_mesin !!}</textarea>
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <div class="input-group date" id="div_jam_stop1"
+                                                                        data-target-input="nearest">
+                                                                        <input type="text"
+                                                                            class="form-control datetimepicker-input"
+                                                                            data-target="#div_jam_stop1" id="jam_stop1"
+                                                                            name="jam_stop[]"
+                                                                            value="{{ $d->jam_stop }}" />
+                                                                        <div class="input-group-append"
+                                                                            data-target="#div_jam_stop1"
+                                                                            data-toggle="datetimepicker">
+                                                                            <div class="input-group-text"><i
+                                                                                    class="fa fa-clock"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <div class="input-group date" id="div_jam_jalan1"
+                                                                        data-target-input="nearest">
+                                                                        <input type="text"
+                                                                            class="form-control datetimepicker-input"
+                                                                            data-target="#div_jam_jalan1" id="jam_jalan1"
+                                                                            name="jam_jalan[]"
+                                                                            value="{{ $d->jam_jalan }}" />
+                                                                        <div class="input-group-append"
+                                                                            data-target="#div_jam_jalan1"
+                                                                            data-toggle="datetimepicker">
+                                                                            <div class="input-group-text"><i
+                                                                                    class="fa fa-clock"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        onclick="tambah()"><i class="fa fa-plus"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        @else
+                                                            <tr>
+                                                                <td style="vertical-align: top">
+                                                                    <input type="text"
+                                                                        class="form-control @error('meter_awal') is-invalid @enderror"
+                                                                        id="meter_awal{{ $d->slug }}"
+                                                                        name="meter_awal[]"
+                                                                        value="{{ $d->meter_awal ? Number::format($d->meter_awal) : null }}"
+                                                                        onkeyup="ubah_format('meter_awal{{ $d->slug }}', this.value)">
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <input type="text"
+                                                                        class="form-control @error('meter_akhir') is-invalid @enderror"
+                                                                        id="meter_akhir{{ $d->slug }}"
+                                                                        name="meter_akhir[]"
+                                                                        value="{{ $d->meter_akhir ? Number::format($d->meter_akhir) : null }}"
+                                                                        onkeyup="ubah_format('meter_akhir{{ $d->slug }}', this.value)">
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <textarea class="form-control @error('keterangan_produksi') is-invalid @enderror" rows="5"
+                                                                        id="keterangan_produksi{{ $d->slug }}" name="keterangan_produksi[]">{!! $d->keterangan_produksi !!}</textarea>
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <textarea class="form-control @error('keterangan_mesin') is-invalid @enderror" rows="5"
+                                                                        id="keterangan_mesin{{ $d->slug }}" name="keterangan_mesin[]">{!! $d->keterangan_mesin !!}</textarea>
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <div class="input-group date"
+                                                                        id="div_jam_stop{{ $d->slug }}"
+                                                                        data-target-input="nearest">
+                                                                        <input type="text"
+                                                                            class="form-control datetimepicker-input"
+                                                                            data-target="#div_jam_stop{{ $d->slug }}"
+                                                                            id="jam_stop{{ $d->slug }}"
+                                                                            name="jam_stop[]"
+                                                                            value="{{ $d->jam_stop }}" />
+                                                                        <div class="input-group-append"
+                                                                            data-target="#div_jam_stop{{ $d->slug }}"
+                                                                            data-toggle="datetimepicker">
+                                                                            <div class="input-group-text"><i
+                                                                                    class="fa fa-clock"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <div class="input-group date"
+                                                                        id="div_jam_jalan{{ $d->slug }}"
+                                                                        data-target-input="nearest">
+                                                                        <input type="text"
+                                                                            class="form-control datetimepicker-input"
+                                                                            data-target="#div_jam_jalan{{ $d->slug }}"
+                                                                            id="jam_jalan{{ $d->slug }}"
+                                                                            name="jam_jalan[]"
+                                                                            value="{{ $d->jam_jalan }}" />
+                                                                        <div class="input-group-append"
+                                                                            data-target="#div_jam_jalan{{ $d->slug }}"
+                                                                            data-toggle="datetimepicker">
+                                                                            <div class="input-group-text"><i
+                                                                                    class="fa fa-clock"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="text-center" style="vertical-align: top">
+                                                                    <button type="button" class="btn btn-danger"
+                                                                        id="hapus"><i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                    @if (count($laporansulzer->laporansulzerdetail) == 0)
+                                                        <tr>
+                                                            <td style="vertical-align: top">
+                                                                <input type="text"
+                                                                    class="form-control @error('meter_awal') is-invalid @enderror"
+                                                                    id="meter_awal1" name="meter_awal[]"
+                                                                    onkeyup="ubah_format('meter_awal1', this.value)">
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                <input type="text"
+                                                                    class="form-control @error('meter_akhir') is-invalid @enderror"
+                                                                    id="meter_akhir1" name="meter_akhir[]"
+                                                                    onkeyup="ubah_format('meter_akhir1', this.value)">
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                <textarea class="form-control @error('keterangan_produksi') is-invalid @enderror" rows="5"
+                                                                    id="keterangan_produksi1" name="keterangan_produksi[]"></textarea>
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                <textarea class="form-control @error('keterangan_mesin') is-invalid @enderror" rows="5" id="keterangan_mesin1"
+                                                                    name="keterangan_mesin[]"></textarea>
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                <div class="input-group date" id="div_jam_stop1"
+                                                                    data-target-input="nearest">
+                                                                    <input type="text"
+                                                                        class="form-control datetimepicker-input"
+                                                                        data-target="#div_jam_stop1" id="jam_stop1"
+                                                                        name="jam_stop[]" />
+                                                                    <div class="input-group-append"
+                                                                        data-target="#div_jam_stop1"
+                                                                        data-toggle="datetimepicker">
+                                                                        <div class="input-group-text"><i
+                                                                                class="fa fa-clock"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                <div class="input-group date" id="div_jam_jalan1"
+                                                                    data-target-input="nearest">
+                                                                    <input type="text"
+                                                                        class="form-control datetimepicker-input"
+                                                                        data-target="#div_jam_jalan1" id="jam_jalan1"
+                                                                        name="jam_jalan[]" />
+                                                                    <div class="input-group-append"
+                                                                        data-target="#div_jam_jalan1"
+                                                                        data-toggle="datetimepicker">
+                                                                        <div class="input-group-text"><i
+                                                                                class="fa fa-clock"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                <button type="button" class="btn btn-primary"
+                                                                    onclick="tambah()"><i class="fa fa-plus"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -218,13 +347,23 @@
 @section('script')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#div_jam_stop').datetimepicker({
+            $('#div_jam_stop1').datetimepicker({
                 format: 'h:m:s'
             });
 
-            $('#div_jam_jalan').datetimepicker({
+            $('#div_jam_jalan1').datetimepicker({
                 format: 'h:m:s'
             });
+
+            @foreach ($laporansulzer->laporansulzerdetail as $d)
+                $('#div_jam_stop{{ $d->slug }}').datetimepicker({
+                    format: 'h:m:s'
+                });
+
+                $('#div_jam_jalan{{ $d->slug }}').datetimepicker({
+                    format: 'h:m:s'
+                });
+            @endforeach
 
             format_select2();
         });
@@ -260,30 +399,87 @@
         function tambah() {
             var tbody_row = $('#table1').find('tr').length;
             var row_id = Date.now().toString(36) + Math.random().toString(36).substr(2);
+            var meter_awal = $("#meter_awal1").val();
+            var meter_akhir = $("#meter_akhir1").val();
+            var keterangan_produksi = $("#keterangan_produksi1").val();
+            var keterangan_mesin = $("#keterangan_mesin1").val();
+            var jam_stop = $("#jam_stop1").val();
+            var jam_jalan = $("#jam_jalan1").val();
             $("#table1 > tbody > tr:last").before(`
                 <tr>
-                    <td>
-                        <input type="text" class="form-control" id="meter${row_id}"
-                            name="meter[]" onblur="ubah_format('meter${row_id}', this.value)">
+                    <td style="vertical-align: top">
+                        <input type="text"
+                            class="form-control @error('meter_awal') is-invalid @enderror"
+                            id="meter_awal${row_id}" name="meter_awal[]" value="${meter_awal}">
                     </td>
-                    <td>
-                        <input type="text" class="form-control w-100"
-                            id="kerusakan${row_id}" name="kerusakan[]">
+                    <td style="vertical-align: top">
+                        <input type="text"
+                            class="form-control @error('meter_akhir') is-invalid @enderror"
+                            id="meter_akhir${row_id}"
+                            name="meter_akhir[]" value="${meter_akhir}">
                     </td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-danger" id="hapus"><i
-                                class="fa fa-trash"></i>
+                    <td style="vertical-align: top">
+                        <textarea class="form-control @error('keterangan_produksi') is-invalid @enderror" rows="5"
+                            id="keterangan_produksi${row_id}" name="keterangan_produksi[]">${keterangan_produksi}</textarea>
+                    </td>
+                    <td style="vertical-align: top">
+                        <textarea class="form-control @error('keterangan_mesin') is-invalid @enderror" rows="5"
+                            id="keterangan_mesin${row_id}" name="keterangan_mesin[]">${keterangan_mesin}</textarea>
+                    </td>
+                    <td style="vertical-align: top">
+                        <div class="input-group date"
+                            id="div_jam_stop${row_id}"
+                            data-target-input="nearest">
+                            <input type="text"
+                                class="form-control datetimepicker-input"
+                                data-target="#div_jam_stop${row_id}"
+                                id="jam_stop${row_id}"
+                                name="jam_stop[]" value="${jam_stop}"/>
+                            <div class="input-group-append"
+                                data-target="#div_jam_stop${row_id}"
+                                data-toggle="datetimepicker">
+                                <div class="input-group-text"><i
+                                        class="fa fa-clock"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: top">
+                        <div class="input-group date"
+                            id="div_jam_jalan${row_id}"
+                            data-target-input="nearest">
+                            <input type="text"
+                                class="form-control datetimepicker-input"
+                                data-target="#div_jam_jalan${row_id}"
+                                id="jam_jalan${row_id}"
+                                name="jam_jalan[]" value="${jam_jalan}"/>
+                            <div class="input-group-append"
+                                data-target="#div_jam_jalan${row_id}"
+                                data-toggle="datetimepicker">
+                                <div class="input-group-text"><i
+                                        class="fa fa-clock"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center" style="vertical-align: top">
+                        <button type="button" class="btn btn-danger"
+                            id="hapus"><i class="fa fa-trash"></i>
                         </button>
                     </td>
                 </tr>
             `);
-
+            $("#meter_awal1").val("");
+            $("#meter_akhir1").val("");
+            $("#keterangan_produksi1").val("");
+            $("#keterangan_mesin1").val("");
+            $("#jam_stop1").val("");
+            $("#jam_jalan1").val("");
         }
 
         $("#table1").on("click", "#hapus", function() {
             $(this).closest("tr").remove();
         });
-
 
         @if (Session::has('message'))
             let timerInterval;

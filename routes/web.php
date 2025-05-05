@@ -15,6 +15,7 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LaporangudangController;
 use App\Http\Controllers\LaporanrashelController;
 use App\Http\Controllers\LaporansulzerController;
+use App\Http\Controllers\LaporanwjlefisiensiController;
 use App\Http\Controllers\LapproduksiwjlController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LokasiController;
@@ -418,5 +419,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('produksiextruder-laporanrashel-confirm/{laporanrashel}', [LaporanrashelController::class, 'confirm'])->name('produksiextruder.laporanrashel.confirm');
 
         Route::get('produksiextruder-laporanrashel-export', [LaporanrashelController::class, 'export'])->name('produksiextruder.laporanrashel.export');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|laporanwjl.efisiensi']], function () {
+        Route::resource('laporanwjl-efisiensi', LaporanwjlefisiensiController::class)->names('laporanwjl.efisiensi');
+
+        Route::get('laporanwjl-efisiensi-detail', [LaporanwjlefisiensiController::class, 'detail'])->name('laporanwjl.efisiensi.detail');
+        Route::get('laporanwjl-efisiensi-cetak', [LaporanwjlefisiensiController::class, 'cetak'])->name('laporanwjl.efisiensi.cetak');
+        Route::get('laporanwjl-efisiensi-export', [LaporanwjlefisiensiController::class, 'export'])->name('laporanwjl.efisiensi.export');
     });
 });

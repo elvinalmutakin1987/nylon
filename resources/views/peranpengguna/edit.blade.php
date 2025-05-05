@@ -393,31 +393,18 @@
                                                 <div class="col-md-12">
                                                     <label class="form-check-label text-bold">Laporan</label>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="rt"
-                                                            name="rt">
-                                                        <label class="form-check-label" for="rt">Daftar RT</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="pengguna_"
-                                                            name="pengguna_">
-                                                        <label class="form-check-label" for="pengguna_">Pengguna</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="profil"
-                                                            name="profil">
-                                                        <label class="form-check-label" for="profil">Profil</label>
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="laporan.gudang" name="laporan.gudang"
+                                                            {{ $role->hasPermissionTo('laporan.gudang') ? 'checked' : '' }}>
+                                                        <label class="form-check-label"
+                                                            for="laporan.gudang">Gudang</label>
                                                     </div>
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox"
-                                                            id="templatesurat" name="templatesurat">
-                                                        <label class="form-check-label" for="templatesurat">Template
-                                                            Surat</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="pengaturansistem" name="pengaturansistem">
-                                                        <label class="form-check-label" for="pengaturansistem">Pengaturan
-                                                            Sistem</label>
+                                                            id="laporan.wjl.efisiensi" name="laporan.wjl.efisiensi"
+                                                            {{ $role->hasPermissionTo('laporan.wjl.efisiensi') ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="laporan.wjl.efisiensi">WJL -
+                                                            Efisiensi</label>
                                                     </div>
                                                 </div>
                                             </div>

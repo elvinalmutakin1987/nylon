@@ -74,10 +74,12 @@ class LaporansulzerController extends Controller
 
         $laporansulzer = Laporansulzer::where('tanggal', $tanggal)
             ->where('shift', $shift)
+            ->where('mesin_id', $mesin_id)
             ->first();
 
         $laporansulzer_sebelumnya = Laporansulzer::where('tanggal', $tanggal_sebelumnya)
             ->where('shift', $shift_sebelumnya)
+            ->where('mesin_id', $mesin_id)
             ->first();
 
         $action = 'create';
@@ -95,12 +97,12 @@ class LaporansulzerController extends Controller
                 $laporansulzer->save();
             }
             $action = 'create';
-            return view('produksiextruder.laporansulzer.show', compact('shift', 'tanggal', 'action', 'mesin', 'laporansulzer', 'laporansulzer_sebelumnya'));
+            return view('produksiextruder.laporansulzer.show', compact('shift', 'tanggal', 'action', 'mesin', 'mesin_id', 'laporansulzer', 'laporansulzer_sebelumnya'));
         }
 
         if ($laporansulzer->status == 'Draft') {
             $action = 'edit';
-            return view('produksiextruder.laporansulzer.show', compact('shift', 'tanggal', 'action', 'mesin', 'laporansulzer', 'laporansulzer_sebelumnya'));
+            return view('produksiextruder.laporansulzer.show', compact('shift', 'tanggal', 'action', 'mesin', 'mesin_id', 'laporansulzer', 'laporansulzer_sebelumnya'));
         }
 
         return redirect()->back()->with([
@@ -134,13 +136,27 @@ class LaporansulzerController extends Controller
                 $laporansulzer->mesin_id = $request->mesin_id;
             }
             $laporansulzer->jenis_produksi = $request->jenis_produksi;
-            $laporansulzer->meter_awal = $request->meter_awal;
-            $laporansulzer->meter_akhir = $request->meter_akhir;
-            $laporansulzer->keterangan_produksi = $request->keterangan_produksi;
-            $laporansulzer->keterangan_mesin = $request->keterangan_mesin;
-            $laporansulzer->jam_stop = Carbon::parse($request->jam_stop)->format('H:i:s');
-            $laporansulzer->jam_jalan = Carbon::parse($request->jam_jalan)->format('H:i:s');
+            // $laporansulzer->meter_awal = $request->meter_awal;
+            // $laporansulzer->meter_akhir = $request->meter_akhir;
+            // $laporansulzer->keterangan_produksi = $request->keterangan_produksi;
+            // $laporansulzer->keterangan_mesin = $request->keterangan_mesin;
+            // $laporansulzer->jam_stop = Carbon::parse($request->jam_stop)->format('H:i:s');
+            // $laporansulzer->jam_jalan = Carbon::parse($request->jam_jalan)->format('H:i:s');
             $laporansulzer->save();
+            foreach ($request->meter_awal as $key => $meter_awal) {
+                $detail[] = [
+                    'laporansulzer_id' => $laporansulzer->id,
+                    'slug' => Controller::gen_slug(),
+                    'meter_awal' => $request->meter_awal[$key] ? Controller::unformat_angka($meter_awal) : null,
+                    'meter_akhir' => $request->meter_akhir[$key] ? Controller::unformat_angka($request->meter_akhir[$key]) : null,
+                    'keterangan_produksi' => $request->keterangan_produksi[$key],
+                    'keterangan_mesin' => $request->keterangan_mesin[$key],
+                    'jam_stop' => $request->jam_stop ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
+                    'jam_jalan' => $request->jam_jalan ? Carbon::parse($request->jam_jalan[$key])->format('H:i:s') : null
+                ];
+            }
+            $laporansulzer->laporansulzerdetail()->delete();
+            $laporansulzer->laporansulzerdetail()->createMany($detail);
             DB::commit();
             return redirect()->route('produksiextruder.laporansulzer.index')->with([
                 'status' => 'success',
@@ -194,13 +210,27 @@ class LaporansulzerController extends Controller
         DB::beginTransaction();
         try {
             $laporansulzer->jenis_produksi = $request->jenis_produksi;
-            $laporansulzer->meter_awal = $request->meter_awal;
-            $laporansulzer->meter_akhir = $request->meter_akhir;
-            $laporansulzer->keterangan_produksi = $request->keterangan_produksi;
-            $laporansulzer->keterangan_mesin = $request->keterangan_mesin;
-            $laporansulzer->jam_stop = Carbon::parse($request->jam_stop)->format('H:i:s');
-            $laporansulzer->jam_jalan = Carbon::parse($request->jam_jalan)->format('H:i:s');
+            // $laporansulzer->meter_awal = $request->meter_awal;
+            // $laporansulzer->meter_akhir = $request->meter_akhir;
+            // $laporansulzer->keterangan_produksi = $request->keterangan_produksi;
+            // $laporansulzer->keterangan_mesin = $request->keterangan_mesin;
+            // $laporansulzer->jam_stop = Carbon::parse($request->jam_stop)->format('H:i:s');
+            // $laporansulzer->jam_jalan = Carbon::parse($request->jam_jalan)->format('H:i:s');
             $laporansulzer->save();
+            foreach ($request->meter_awal as $key => $meter_awal) {
+                $detail[] = [
+                    'laporansulzer_id' => $laporansulzer->id,
+                    'slug' => Controller::gen_slug(),
+                    'meter_awal' => $request->meter_awal[$key] ? Controller::unformat_angka($meter_awal) : null,
+                    'meter_akhir' => $request->meter_akhir[$key] ? Controller::unformat_angka($request->meter_akhir[$key]) : null,
+                    'keterangan_produksi' => $request->keterangan_produksi[$key],
+                    'keterangan_mesin' => $request->keterangan_mesin[$key],
+                    'jam_stop' => $request->jam_stop ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
+                    'jam_jalan' => $request->jam_jalan ? Carbon::parse($request->jam_jalan[$key])->format('H:i:s') : null
+                ];
+            }
+            $laporansulzer->laporansulzerdetail()->delete();
+            $laporansulzer->laporansulzerdetail()->createMany($detail);
             DB::commit();
             return redirect()->route('produksiextruder.laporansulzer.index')->with([
                 'status' => 'success',

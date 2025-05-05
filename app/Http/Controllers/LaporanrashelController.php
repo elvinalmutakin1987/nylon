@@ -74,10 +74,12 @@ class LaporanrashelController extends Controller
 
         $laporanrashel = Laporanrashel::where('tanggal', $tanggal)
             ->where('shift', $shift)
+            ->where('mesin_id', $mesin_id)
             ->first();
 
         $laporanrashel_sebelumnya = Laporanrashel::where('tanggal', $tanggal_sebelumnya)
             ->where('shift', $shift_sebelumnya)
+            ->where('mesin_id', $mesin_id)
             ->first();
 
         $action = 'create';
@@ -134,13 +136,27 @@ class LaporanrashelController extends Controller
                 $laporanrashel->mesin_id = $request->mesin_id;
             }
             $laporanrashel->jenis_produksi = $request->jenis_produksi;
-            $laporanrashel->meter_awal = $request->meter_awal;
-            $laporanrashel->meter_akhir = $request->meter_akhir;
-            $laporanrashel->keterangan_produksi = $request->keterangan_produksi;
-            $laporanrashel->keterangan_mesin = $request->keterangan_mesin;
-            $laporanrashel->jam_stop = Carbon::parse($request->jam_stop)->format('H:i:s');
-            $laporanrashel->jam_jalan = Carbon::parse($request->jam_jalan)->format('H:i:s');
+            // $laporanrashel->meter_awal = $request->meter_awal;
+            // $laporanrashel->meter_akhir = $request->meter_akhir;
+            // $laporanrashel->keterangan_produksi = $request->keterangan_produksi;
+            // $laporanrashel->keterangan_mesin = $request->keterangan_mesin;
+            // $laporanrashel->jam_stop = Carbon::parse($request->jam_stop)->format('H:i:s');
+            // $laporanrashel->jam_jalan = Carbon::parse($request->jam_jalan)->format('H:i:s');
             $laporanrashel->save();
+            foreach ($request->meter_awal as $key => $meter_awal) {
+                $detail[] = [
+                    'laporanrashel_id' => $laporanrashel->id,
+                    'slug' => Controller::gen_slug(),
+                    'meter_awal' => $request->meter_awal[$key] ? Controller::unformat_angka($meter_awal) : null,
+                    'meter_akhir' => $request->meter_akhir[$key] ? Controller::unformat_angka($request->meter_akhir[$key]) : null,
+                    'keterangan_produksi' => $request->keterangan_produksi[$key],
+                    'keterangan_mesin' => $request->keterangan_mesin[$key],
+                    'jam_stop' => $request->jam_stop ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
+                    'jam_jalan' => $request->jam_jalan ? Carbon::parse($request->jam_jalan[$key])->format('H:i:s') : null
+                ];
+            }
+            $laporanrashel->laporanrasheldetail()->delete();
+            $laporanrashel->laporanrasheldetail()->createMany($detail);
             DB::commit();
             return redirect()->route('produksiextruder.laporanrashel.index')->with([
                 'status' => 'success',
@@ -156,6 +172,7 @@ class LaporanrashelController extends Controller
     {
         $shift = $request->shift;
         $tanggal = $request->tanggal;
+        $mesin_id = $request->mesin_id;
         $laporanrashel = Laporanrashel::find($request->laporanrashel_id);
     }
 
@@ -191,13 +208,27 @@ class LaporanrashelController extends Controller
         DB::beginTransaction();
         try {
             $laporanrashel->jenis_produksi = $request->jenis_produksi;
-            $laporanrashel->meter_awal = $request->meter_awal;
-            $laporanrashel->meter_akhir = $request->meter_akhir;
-            $laporanrashel->keterangan_produksi = $request->keterangan_produksi;
-            $laporanrashel->keterangan_mesin = $request->keterangan_mesin;
-            $laporanrashel->jam_stop = Carbon::parse($request->jam_stop)->format('H:i:s');
-            $laporanrashel->jam_jalan = Carbon::parse($request->jam_jalan)->format('H:i:s');
+            // $laporanrashel->meter_awal = $request->meter_awal;
+            // $laporanrashel->meter_akhir = $request->meter_akhir;
+            // $laporanrashel->keterangan_produksi = $request->keterangan_produksi;
+            // $laporanrashel->keterangan_mesin = $request->keterangan_mesin;
+            // $laporanrashel->jam_stop = Carbon::parse($request->jam_stop)->format('H:i:s');
+            // $laporanrashel->jam_jalan = Carbon::parse($request->jam_jalan)->format('H:i:s');
             $laporanrashel->save();
+            foreach ($request->meter_awal as $key => $meter_awal) {
+                $detail[] = [
+                    'laporanrashel_id' => $laporanrashel->id,
+                    'slug' => Controller::gen_slug(),
+                    'meter_awal' => $request->meter_awal[$key] ? Controller::unformat_angka($meter_awal) : null,
+                    'meter_akhir' => $request->meter_akhir[$key] ? Controller::unformat_angka($request->meter_akhir[$key]) : null,
+                    'keterangan_produksi' => $request->keterangan_produksi[$key],
+                    'keterangan_mesin' => $request->keterangan_mesin[$key],
+                    'jam_stop' => $request->jam_stop ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
+                    'jam_jalan' => $request->jam_jalan ? Carbon::parse($request->jam_jalan[$key])->format('H:i:s') : null
+                ];
+            }
+            $laporanrashel->laporanrasheldetail()->delete();
+            $laporanrashel->laporanrasheldetail()->createMany($detail);
             DB::commit();
             return redirect()->route('produksiextruder.laporanrashel.index')->with([
                 'status' => 'success',

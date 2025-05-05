@@ -38,6 +38,7 @@
             @foreach ($pengeringankaindetail as $d)
                 @php
                     $mesin_id = $d->pengeringankain->produksiwjl->mesin_id;
+                    $mesin_id = $d->pengeringankain->mesin_id;
                     $mesin = App\Models\Mesin::find($d->pengeringankain->produksiwjl->mesin_id);
                     $produksiwjl_id = $d->pengeringankain->produksiwjl_id;
                     $nama_mesin = $mesin->nama ?? '';
@@ -49,14 +50,17 @@
                         ->where('meter_awal', '0.0')
                         ->orderBy('id', 'desc')
                         ->first();
+
                 @endphp
                 @if ($produksiwjl_check)
                     @php
                         $tanggal = $produksiwjl_check->tanggal;
                         $produksiwjl = App\Models\Produksiwjl::where('mesin_id', $mesin_id)
-                            ->where('id', '>=', $produksiwjl_check->id)
-                            ->whereRaw('cast(meter_awal as decimal(16,2)) <= ' . (float) $d->meter)
-                            ->whereRaw('cast(meter_akhir as decimal(16,2)) >= ' . (float) $d->meter)
+                            ->whereRaw('id between ' . $produksiwjl_check->id . ' and ' . $produksiwjl_id)
+                            ->whereRaw(
+                                (float) str_replace(',', '', $d->meter) .
+                                    ' between cast(meter_awal as integer) and cast(meter_akhir as integer)',
+                            )
                             ->first();
                         $shift = $produksiwjl->shift ?? '';
                         $operator = $produksiwjl->operator ?? '';
@@ -64,7 +68,6 @@
                     @endphp
                     <tr>
                         <td class="align-top">
-                            {{ $d->id }}
                             @if ($d->pengeringankain->status == 'Confirmed')
                                 <small class="badge badge-success"><i class="fa fa-check"></i></small>
                             @endif

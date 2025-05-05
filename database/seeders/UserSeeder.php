@@ -106,6 +106,7 @@ class UserSeeder extends Seeder
          */
         Permission::create(['name' => 'laporan']);
         Permission::create(['name' => 'laporan.gudang']);
+        Permission::create(['name' => 'laporan.wjl.efisiensi']);
         //===========================================
 
         /**

@@ -148,6 +148,14 @@ class PeranpenggunaController extends Controller
             ) {
                 array_push($access, 'produksi');
             }
+            if ($request->laporan_gudang) array_push($access, 'laporan_gudang');
+            if ($request->laporan_wjl_efisiensi) array_push($access, 'laporan.wjl.efisiensi');
+            if (
+                $request->laporan_gudang ||
+                $request->laporan_wjl_efisiensi
+            ) {
+                array_push($access, 'laporan');
+            }
             $role->givePermissionTo($access);
             DB::commit();
             return redirect()->route('peranpengguna.index')->with([
@@ -276,6 +284,14 @@ class PeranpenggunaController extends Controller
                 $request->produksi_laminating_edit
             ) {
                 array_push($access, 'produksi');
+            }
+            if ($request->laporan_gudang) array_push($access, 'laporan_gudang');
+            if ($request->laporan_wjl_efisiensi) array_push($access, 'laporan.wjl.efisiensi');
+            if (
+                $request->laporan_gudang ||
+                $request->laporan_wjl_efisiensi
+            ) {
+                array_push($access, 'laporan');
             }
             $role->syncPermissions($access);
             DB::commit();

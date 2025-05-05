@@ -141,7 +141,7 @@ class ProduksiwjloperatorController extends Controller
             $produksiwjl = new Produksiwjl();
             $produksiwjl->slug = Controller::gen_slug();
             $produksiwjl->tanggal = $request->tanggal;
-            $produksiwjl->operator = $request->operator;
+            $produksiwjl->operator = Str::upper($request->operator);
             $produksiwjl->shift = $request->shift;
             $produksiwjl->mesin_id = $request->mesin_id;
             $produksiwjl->jenis_kain = $request->jenis_kain;
@@ -155,7 +155,7 @@ class ProduksiwjloperatorController extends Controller
             $produksiwjl->pgr = $request->pgr;
             $produksiwjl->lebar = Controller::unformat_angka($request->lebar ?? '0');
             $produksiwjl->mesin = $request->mesin;
-            $produksiwjl->teknisi = $request->teknisi;
+            $produksiwjl->teknisi = Str::upper($request->teknisi);
             $produksiwjl->created_by = Auth::user()->id;
             $produksiwjl->status = 'Submit'; //$pengaturan->nilai == 'Ya' ? 'Submit' : 'Confirmed';
             $produksiwjl->order_shift = $order_shift;
@@ -233,7 +233,7 @@ class ProduksiwjloperatorController extends Controller
         try {
             //$pengaturan = Pengaturan::where('keterangan', 'produksiwjl.operator.butuh.approval')->first();
             $produksiwjl->tanggal = $request->tanggal;
-            $produksiwjl->operator = $request->operator;
+            $produksiwjl->operator = Str::upper($request->operator);
             $produksiwjl->shift = $request->shift;
             $produksiwjl->mesin_id = $request->mesin_id;
             $produksiwjl->jenis_kain = $request->jenis_kain;
@@ -247,7 +247,7 @@ class ProduksiwjloperatorController extends Controller
             $produksiwjl->pgr = $request->pgr;
             $produksiwjl->lebar = Controller::unformat_angka($request->lebar ?? '0');
             $produksiwjl->mesin = $request->mesin;
-            $produksiwjl->teknisi = $request->teknisi;
+            $produksiwjl->teknisi = Str::upper($request->teknisi);
             $produksiwjl->updated_by = Auth::user()->id;
             $produksiwjl->status = 'Submit'; //$pengaturan->nilai == 'Ya' ? 'Submit' : 'Confirmed';
             $produksiwjl->order_shift = $order_shift;

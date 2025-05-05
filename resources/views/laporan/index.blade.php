@@ -62,6 +62,27 @@
                             </div>
                             <!-- /.card -->
                         @endif
+                        @if (auth()->user()->can('laporan.wjl.efisiensi'))
+                            <!-- Application buttons -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Laporan WJL</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row text-center">
+                                        <div class="col-md-12">
+                                            @if (auth()->user()->can('laporan.wjl.efisiensi'))
+                                                <a class="btn btn-app" href="{{ route('laporanwjl.efisiensi.index') }}">
+                                                    <i class="fa fa-pencil"></i> Efisiensi
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        @endif
                     </div>
                 </div>
                 <!-- /. row -->
