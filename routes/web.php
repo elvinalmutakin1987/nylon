@@ -345,7 +345,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('laporan', LaporanController::class)->names('laporan');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superadmin|laporangudang']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|laporan.gudang']], function () {
         Route::resource('laporangudang', LaporangudangController::class)->names('laporangudang');
 
         Route::get('laporangudang-detail', [LaporangudangController::class, 'detail'])->name('laporangudang.detail');
@@ -421,7 +421,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('produksiextruder-laporanrashel-export', [LaporanrashelController::class, 'export'])->name('produksiextruder.laporanrashel.export');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superadmin|laporanwjl.efisiensi']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|laporan.wjl.efisiensi']], function () {
         Route::resource('laporanwjl-efisiensi', LaporanwjlefisiensiController::class)->names('laporanwjl.efisiensi');
 
         Route::get('laporanwjl-efisiensi-detail', [LaporanwjlefisiensiController::class, 'detail'])->name('laporanwjl.efisiensi.detail');

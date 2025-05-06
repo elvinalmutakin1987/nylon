@@ -136,12 +136,6 @@ class LaporansulzerController extends Controller
                 $laporansulzer->mesin_id = $request->mesin_id;
             }
             $laporansulzer->jenis_produksi = $request->jenis_produksi;
-            // $laporansulzer->meter_awal = $request->meter_awal;
-            // $laporansulzer->meter_akhir = $request->meter_akhir;
-            // $laporansulzer->keterangan_produksi = $request->keterangan_produksi;
-            // $laporansulzer->keterangan_mesin = $request->keterangan_mesin;
-            // $laporansulzer->jam_stop = Carbon::parse($request->jam_stop)->format('H:i:s');
-            // $laporansulzer->jam_jalan = Carbon::parse($request->jam_jalan)->format('H:i:s');
             $laporansulzer->save();
             foreach ($request->meter_awal as $key => $meter_awal) {
                 $detail[] = [
@@ -151,8 +145,8 @@ class LaporansulzerController extends Controller
                     'meter_akhir' => $request->meter_akhir[$key] ? Controller::unformat_angka($request->meter_akhir[$key]) : null,
                     'keterangan_produksi' => $request->keterangan_produksi[$key],
                     'keterangan_mesin' => $request->keterangan_mesin[$key],
-                    'jam_stop' => $request->jam_stop ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
-                    'jam_jalan' => $request->jam_jalan ? Carbon::parse($request->jam_jalan[$key])->format('H:i:s') : null
+                    'jam_stop' => $request->jam_stop[$key] ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
+                    'jam_jalan' => $request->jam_jalan[$key] ? Carbon::parse($request->jam_jalan[$key])->format('H:i:s') : null
                 ];
             }
             $laporansulzer->laporansulzerdetail()->delete();
@@ -210,12 +204,6 @@ class LaporansulzerController extends Controller
         DB::beginTransaction();
         try {
             $laporansulzer->jenis_produksi = $request->jenis_produksi;
-            // $laporansulzer->meter_awal = $request->meter_awal;
-            // $laporansulzer->meter_akhir = $request->meter_akhir;
-            // $laporansulzer->keterangan_produksi = $request->keterangan_produksi;
-            // $laporansulzer->keterangan_mesin = $request->keterangan_mesin;
-            // $laporansulzer->jam_stop = Carbon::parse($request->jam_stop)->format('H:i:s');
-            // $laporansulzer->jam_jalan = Carbon::parse($request->jam_jalan)->format('H:i:s');
             $laporansulzer->save();
             foreach ($request->meter_awal as $key => $meter_awal) {
                 $detail[] = [
@@ -225,8 +213,8 @@ class LaporansulzerController extends Controller
                     'meter_akhir' => $request->meter_akhir[$key] ? Controller::unformat_angka($request->meter_akhir[$key]) : null,
                     'keterangan_produksi' => $request->keterangan_produksi[$key],
                     'keterangan_mesin' => $request->keterangan_mesin[$key],
-                    'jam_stop' => $request->jam_stop ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
-                    'jam_jalan' => $request->jam_jalan ? Carbon::parse($request->jam_jalan[$key])->format('H:i:s') : null
+                    'jam_stop' => $request->jam_stop[$key] ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
+                    'jam_jalan' => $request->jam_jalan[$key] ? Carbon::parse($request->jam_jalan[$key])->format('H:i:s') : null
                 ];
             }
             $laporansulzer->laporansulzerdetail()->delete();

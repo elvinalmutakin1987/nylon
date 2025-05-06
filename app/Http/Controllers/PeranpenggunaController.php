@@ -148,7 +148,7 @@ class PeranpenggunaController extends Controller
             ) {
                 array_push($access, 'produksi');
             }
-            if ($request->laporan_gudang) array_push($access, 'laporan_gudang');
+            if ($request->laporan_gudang) array_push($access, 'laporan.gudang');
             if ($request->laporan_wjl_efisiensi) array_push($access, 'laporan.wjl.efisiensi');
             if (
                 $request->laporan_gudang ||
@@ -285,7 +285,7 @@ class PeranpenggunaController extends Controller
             ) {
                 array_push($access, 'produksi');
             }
-            if ($request->laporan_gudang) array_push($access, 'laporan_gudang');
+            if ($request->laporan_gudang) array_push($access, 'laporan.gudang');
             if ($request->laporan_wjl_efisiensi) array_push($access, 'laporan.wjl.efisiensi');
             if (
                 $request->laporan_gudang ||

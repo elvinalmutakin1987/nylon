@@ -51,8 +51,8 @@ class Laporansulzerdetail extends Model
         'confirmed_at'
     ];
 
-    public function laporanrasheldetail(): BelongsTo
+    public function laporansulzer(): BelongsTo
     {
-        return $this->belongsTo(Laporanrashel::class)->withDefault(['slug' => null]);
+        return $this->belongsTo(Laporansulzer::class)->withDefault(['slug' => null]);
     }
 }

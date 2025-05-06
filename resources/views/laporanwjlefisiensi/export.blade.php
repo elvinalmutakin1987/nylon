@@ -30,46 +30,50 @@
             </table>
         </td>
     </tr>
-    <tr>
-        <td>
-            <table>
-                <tr>
-                    <td>No.</td>
-                    <td>Tanggal</td>
-                    <td>Shift</td>
-                    <td>Jenis Kain</td>
-                    <td>Hasil</td>
-                    <td>Keterangan</td>
-                </tr>
-                @foreach ($produksiwjl as $d)
-                    @php
-                        $mesin_ = Mesin::find($d->mesin_id);
-                        $hasil = $d->meter_akhir - $d->meter_awal;
-                        $persen = ($hasil / $mesin_->target_produksi) * 100;
-
-                        $total_persen += $persen;
-                    @endphp
+    @if ($produksiwjl->count() > 1)
+        <tr>
+            <td>
+                <table>
                     <tr>
-                        <td style="vertical-align: top">{{ $loop->iteration }}</td>
-                        <td style="vertical-align: top">{{ \Carbon\Carbon::parse($d->tanggal)->format('d/m/Y') }}</td>
-                        <td style="vertical-align: top">{{ $d->shift }}</td>
-                        <td style="vertical-align: top">{{ $d->jenis_kain }}</td>
-                        <td style="vertical-align: top">{{ Number::format((float) $persen, precision: 1) }} %</td>
-                        <td style="vertical-align: top">{!! nl2br($d->keterangan) !!}</td>
+                        <td>No.</td>
+                        <td>Tanggal</td>
+                        <td>Shift</td>
+                        <td>Jenis Kain</td>
+                        <td>Hasil</td>
+                        <td>Keterangan</td>
                     </tr>
-                @endforeach
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <table>
-                <tr>
-                    <td>Rata-rata : {{ Number::format((float) $total_persen / $produksiwjl->count(), precision: 1) }} %
-                    </td>
-                </tr>
-            </table>
+                    @foreach ($produksiwjl as $d)
+                        @php
+                            $mesin_ = Mesin::find($d->mesin_id);
+                            $hasil = $d->meter_akhir - $d->meter_awal;
+                            $persen = ($hasil / $mesin_->target_produksi) * 100;
 
-        </td>
-    </tr>
+                            $total_persen += $persen;
+                        @endphp
+                        <tr>
+                            <td style="vertical-align: top">{{ $loop->iteration }}</td>
+                            <td style="vertical-align: top">{{ \Carbon\Carbon::parse($d->tanggal)->format('d/m/Y') }}
+                            </td>
+                            <td style="vertical-align: top">{{ $d->shift }}</td>
+                            <td style="vertical-align: top">{{ $d->jenis_kain }}</td>
+                            <td style="vertical-align: top">{{ Number::format((float) $persen, precision: 1) }} %</td>
+                            <td style="vertical-align: top">{!! nl2br($d->keterangan) !!}</td>
+                        </tr>
+                    @endforeach
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>Rata-rata :
+                            {{ Number::format((float) $total_persen / $produksiwjl->count(), precision: 1) }} %
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+    @endif
 </table>

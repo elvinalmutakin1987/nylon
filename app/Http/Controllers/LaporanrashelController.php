@@ -136,12 +136,6 @@ class LaporanrashelController extends Controller
                 $laporanrashel->mesin_id = $request->mesin_id;
             }
             $laporanrashel->jenis_produksi = $request->jenis_produksi;
-            // $laporanrashel->meter_awal = $request->meter_awal;
-            // $laporanrashel->meter_akhir = $request->meter_akhir;
-            // $laporanrashel->keterangan_produksi = $request->keterangan_produksi;
-            // $laporanrashel->keterangan_mesin = $request->keterangan_mesin;
-            // $laporanrashel->jam_stop = Carbon::parse($request->jam_stop)->format('H:i:s');
-            // $laporanrashel->jam_jalan = Carbon::parse($request->jam_jalan)->format('H:i:s');
             $laporanrashel->save();
             foreach ($request->meter_awal as $key => $meter_awal) {
                 $detail[] = [
@@ -151,8 +145,8 @@ class LaporanrashelController extends Controller
                     'meter_akhir' => $request->meter_akhir[$key] ? Controller::unformat_angka($request->meter_akhir[$key]) : null,
                     'keterangan_produksi' => $request->keterangan_produksi[$key],
                     'keterangan_mesin' => $request->keterangan_mesin[$key],
-                    'jam_stop' => $request->jam_stop ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
-                    'jam_jalan' => $request->jam_jalan ? Carbon::parse($request->jam_jalan[$key])->format('H:i:s') : null
+                    'jam_stop' => $request->jam_stop[$key] ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
+                    'jam_jalan' => $request->jam_jalan[$key] ? Carbon::parse($request->jam_jalan[$key])->format('H:i:s') : null
                 ];
             }
             $laporanrashel->laporanrasheldetail()->delete();
@@ -208,12 +202,6 @@ class LaporanrashelController extends Controller
         DB::beginTransaction();
         try {
             $laporanrashel->jenis_produksi = $request->jenis_produksi;
-            // $laporanrashel->meter_awal = $request->meter_awal;
-            // $laporanrashel->meter_akhir = $request->meter_akhir;
-            // $laporanrashel->keterangan_produksi = $request->keterangan_produksi;
-            // $laporanrashel->keterangan_mesin = $request->keterangan_mesin;
-            // $laporanrashel->jam_stop = Carbon::parse($request->jam_stop)->format('H:i:s');
-            // $laporanrashel->jam_jalan = Carbon::parse($request->jam_jalan)->format('H:i:s');
             $laporanrashel->save();
             foreach ($request->meter_awal as $key => $meter_awal) {
                 $detail[] = [
@@ -223,8 +211,8 @@ class LaporanrashelController extends Controller
                     'meter_akhir' => $request->meter_akhir[$key] ? Controller::unformat_angka($request->meter_akhir[$key]) : null,
                     'keterangan_produksi' => $request->keterangan_produksi[$key],
                     'keterangan_mesin' => $request->keterangan_mesin[$key],
-                    'jam_stop' => $request->jam_stop ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
-                    'jam_jalan' => $request->jam_jalan ? Carbon::parse($request->jam_jalan[$key])->format('H:i:s') : null
+                    'jam_stop' => $request->jam_stop[$key] ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
+                    'jam_jalan' => $request->jam_jalan[$key] ? Carbon::parse($request->jam_jalan[$key])->format('H:i:s') : null
                 ];
             }
             $laporanrashel->laporanrasheldetail()->delete();

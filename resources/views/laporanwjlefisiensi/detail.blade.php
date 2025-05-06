@@ -45,7 +45,7 @@
                     @php
                         $mesin = Mesin::find($d->mesin_id);
                         $hasil = $d->meter_akhir - $d->meter_awal;
-                        $persen = ($hasil / $mesin->target_produksi) * 100;
+                        $persen = $mesin->target_produksi != 0 ? ($hasil / $mesin->target_produksi) * 100 : 0;
                         $style = '';
                         if ($persen < '75') {
                             $style = "style=\"background-color: red; color:white\"";
@@ -66,16 +66,18 @@
             </tbody>
         </table>
     </div>
-    <div class="col-md-12">
-        @if ($total_persen / $produksiwjl->count() < 75)
-            <h1>
-                <small class="badge badge-danger">Rata-rata :
-                    {{ Number::format((float) $total_persen / $produksiwjl->count(), precision: 1) }} %</small>
-            </h1>
-        @else
-            <h1>
-                Rata-rata : {{ Number::format((float) $total_persen / $produksiwjl->count(), precision: 1) }} %
-            </h1>
-        @endif
-    </div>
+    @if ($produksiwjl->count() > 1)
+        <div class="col-md-12">
+            @if ($total_persen / $produksiwjl->count() < 75)
+                <h1>
+                    <small class="badge badge-danger">Rata-rata :
+                        {{ Number::format((float) $total_persen / $produksiwjl->count(), precision: 1) }} %</small>
+                </h1>
+            @else
+                <h1>
+                    Rata-rata : {{ Number::format((float) $total_persen / $produksiwjl->count(), precision: 1) }} %
+                </h1>
+            @endif
+        </div>
+    @endif
 </div>

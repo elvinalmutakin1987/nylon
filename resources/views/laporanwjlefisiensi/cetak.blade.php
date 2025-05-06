@@ -149,85 +149,80 @@
     }
 </style>
 <table class="table-main">
+    <tr style="margin-bottom: 100px">
+        <td class="w-70 font-10">
+            PT. Abadi Nylon Rope & Fishing Net MFG<br>
+            Jl. Sukodono, Gedangan, Sidoarjo, Jawa Timur
+        </td>
+        <td class="w-30 float-right">
+            <b class="underline">Laporan Efisisensi </b>
+        </td>
+    </tr>
     <tr>
-        <td>
-            <table class="table-main">
+        <td class="w-100" colspan="2">
+            <table class="w-100 font-10">
                 <tr>
-                    <td class="w-70 font-10">
-                        PT. Abadi Nylon Rope & Fishing Net MFG<br>
-                        Jl. Sukodono, Gedangan, Sidoarjo, Jawa Timur
-                    </td>
-                    <td class="w-30 float-right">
-                        <b class="underline">Laporan Efisisensi </b>
-                    </td>
+                    <td width="150">Tanggal</td>
+                    <td width="10">:</td>
+                    <td>{{ \Carbon\Carbon::parse($tanggal_dari)->format('d/m/Y') }} -
+                        {{ \Carbon\Carbon::parse($tanggal_sampai)->format('d/m/Y') }}</td>
                 </tr>
                 <tr>
-                    <td><br></td>
+                    <td width="150">Operator</td>
+                    <td width="10">:</td>
+                    <td>{{ $operator }}</td>
                 </tr>
                 <tr>
-                    <td class="w-100">
-                        <table class="w-100 font-10">
-                            <tr>
-                                <td width="150">Tanggal</td>
-                                <td width="10">:</td>
-                                <td>{{ \Carbon\Carbon::parse($tanggal_dari)->format('d/m/Y') }} -
-                                    {{ \Carbon\Carbon::parse($tanggal_sampai)->format('d/m/Y') }}</td>
-                            </tr>
-                            <tr>
-                                <td width="150">Operator</td>
-                                <td width="10">:</td>
-                                <td>{{ $operator }}</td>
-                            </tr>
-                        </table>
-                    </td>
+                    <td width="150">Rata-rata</td>
+                    <td width="10">:</td>
+                    <td>{{ Number::format($total_persen / $produksiwjl->count(), precision: 1) }} %</td>
                 </tr>
             </table>
         </td>
     </tr>
-    <tr>
-        <td>
-            <table class="table-main font-10 garis-bawah">
-                <tr class="header-table">
-                    <td width="20px" class="garis">No.</td>
-                    <td class="garis">Tanggal</td>
-                    <td class="garis">Mesin</td>
-                    <td class="garis">Shift</td>
-                    <td class="garis">Jenis Kain</td>
-                    <td class="garis">Hasil</td>
-                    <td class="garis">Keterangan</td>
-                </tr>
-                @foreach ($produksiwjl as $d)
-                    @php
-                        $mesin_ = Mesin::find($d->mesin_id);
-                        $hasil = $d->meter_akhir - $d->meter_awal;
-                        $persen = ($hasil / $mesin_->target_produksi) * 100;
-
-                        $total_persen += $persen;
-                    @endphp
-                    <tr>
-                        <td class="v-align-top garis m-1">{{ $loop->iteration }}</td>
-                        <td class="v-align-top garis m-1">{{ \Carbon\Carbon::parse($d->tanggal)->format('d/m/Y') }}</td>
-                        <td class="v-align-top garis m-1">{{ $mesin_->nama }}</td>
-                        <td class="v-align-top garis m-1">{{ $d->shift }}</td>
-                        <td class="v-align-top garis m-1">{{ $d->jenis_kain }}</td>
-                        <td class="v-align-top garis m-1">
-                            {{ Number::format((float) $persen, precision: 1) }} %
-                        </td>
-                        <td class="v-align-top garis m-1">{!! nl2br($d->keterangan) !!}</td>
-                    </tr>
+    @if ($produksiwjl->count() > 1)
+        <tr>
+            <td colspan="2">
+                @foreach ($produksiwjl->chunk(20) as $chunk)
+                    <table class="table-main font-10 garis-bawah page">
+                        <thead>
+                            <tr class="header-table">
+                                <td width="20px" class="garis">No.</td>
+                                <td class="garis">Tanggal</td>
+                                <td class="garis">Mesin</td>
+                                <td class="garis">Shift</td>
+                                <td class="garis">Jenis Kain</td>
+                                <td class="garis">Hasil</td>
+                                <td class="garis">Keterangan</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($chunk as $d)
+                                @php
+                                    $mesin_ = Mesin::find($d->mesin_id);
+                                    $hasil = $d->meter_akhir - $d->meter_awal;
+                                    $persen = ($hasil / $mesin_->target_produksi) * 100;
+                                    $total_persen += $persen;
+                                @endphp
+                                <tr>
+                                    <td class="v-align-top garis m-1">
+                                        {{ $loop->parent->iteration * 20 - 20 + $loop->iteration }}</td>
+                                    <td class="v-align-top garis m-1">
+                                        {{ \Carbon\Carbon::parse($d->tanggal)->format('d/m/Y') }}</td>
+                                    <td class="v-align-top garis m-1">{{ $mesin_->nama }}</td>
+                                    <td class="v-align-top garis m-1">{{ $d->shift }}</td>
+                                    <td class="v-align-top garis m-1">{{ $d->jenis_kain }}</td>
+                                    <td class="v-align-top garis m-1">
+                                        {{ Number::format((float) $persen, precision: 1) }} %
+                                    </td>
+                                    <td class="v-align-top garis m-1">{!! nl2br($d->keterangan) !!}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div style="page-break-after: always;"></div>
                 @endforeach
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <table class="table-main">
-                <tr>
-                    <td>
-                        <b>Rata-rata : {{ Number::format($total_persen / $produksiwjl->count(), precision: 1) }} %</b>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
+            </td>
+        </tr>
+    @endif
 </table>
