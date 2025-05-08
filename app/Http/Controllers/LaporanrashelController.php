@@ -249,10 +249,10 @@ class LaporanrashelController extends Controller
         } elseif ($shitf == 'Malam') {
             $shift = "Sore";
         }
-        $laporansulzer = Laporansulzer::where('tanggal', $tanggal)->where('shift', $shift)->where('mesin_id', $mesin_id)->first();
+        $laporanrashel = Laporanrashel::where('tanggal', $tanggal)->where('shift', $shift)->where('mesin_id', $mesin_id)->first();
         return response()->json([
             'status' => 'success',
-            'data' => $Laporansulzer,
+            'data' => $laporanrashel,
             'message' => 'success'
         ]);
     }
