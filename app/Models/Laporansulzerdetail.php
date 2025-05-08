@@ -55,4 +55,9 @@ class Laporansulzerdetail extends Model
     {
         return $this->belongsTo(Laporansulzer::class)->withDefault(['slug' => null]);
     }
+
+    public function mesin(): BelongsTo
+    {
+        return $this->belongsTo(Mesin::class)->withDefault(['nama' => null]);
+    }
 }

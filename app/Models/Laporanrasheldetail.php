@@ -55,4 +55,9 @@ class Laporanrasheldetail extends Model
     {
         return $this->belongsTo(Laporanrashel::class)->withDefault(['slug' => null]);
     }
+
+    public function mesin(): BelongsTo
+    {
+        return $this->belongsTo(Mesin::class)->withDefault(['nama' => null]);
+    }
 }

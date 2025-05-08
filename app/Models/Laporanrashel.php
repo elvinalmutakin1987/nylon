@@ -55,8 +55,8 @@ class Laporanrashel extends Model
         return $this->hasMany(Laporanrasheldetail::class);
     }
 
-    public function lokasi(): BelongsTo
+    public function mesin(): BelongsTo
     {
-        return $this->belongsTo(Lokasi::class)->withDefault(['nama' => null]);
+        return $this->belongsTo(Mesin::class)->withDefault(['nama' => null]);
     }
 }

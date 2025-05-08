@@ -107,7 +107,7 @@
                                                         <th class="text-center" rowspan="2">Keterangan <br> Trobel
                                                             Mesin/Rusak</th>
                                                         <th class="text-center" colspan="2">Jam</th>
-                                                        <th style="width: 50px" class="text-center"></th>
+                                                        <th style="width: 50px" class="text-center" rowspan="2"></th>
                                                     </tr>
                                                     <tr>
                                                         <th class="text-center">Meter Awal</th>

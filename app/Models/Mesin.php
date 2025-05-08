@@ -42,9 +42,28 @@ class Mesin extends Model
         return $this->hasMany(Produksiwjl::class);
     }
 
-
     public function kontroldenier(): BelongsTo
     {
         return $this->belongsTo(Kontroldenier::class)->withDefault(['nama' => null]);
+    }
+
+    public function laporanrashel(): HasMany
+    {
+        return $this->hasMany(Laporanrashel::class);
+    }
+
+    public function laporansulzer(): HasMany
+    {
+        return $this->hasMany(Laporansulzer::class);
+    }
+
+    public function laporanrasheldetail(): HasMany
+    {
+        return $this->hasMany(Laporanrasheldetail::class);
+    }
+
+    public function laporansulzerdetail(): HasMany
+    {
+        return $this->hasMany(Laporansulzerdetail::class);
     }
 }
