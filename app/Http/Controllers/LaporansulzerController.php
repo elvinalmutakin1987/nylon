@@ -74,35 +74,32 @@ class LaporansulzerController extends Controller
 
         $laporansulzer = Laporansulzer::where('tanggal', $tanggal)
             ->where('shift', $shift)
-            ->where('mesin_id', $mesin_id)
             ->first();
 
         $laporansulzer_sebelumnya = Laporansulzer::where('tanggal', $tanggal_sebelumnya)
             ->where('shift', $shift_sebelumnya)
-            ->where('mesin_id', $mesin_id)
             ->first();
 
         $action = 'create';
         if (!$laporansulzer) {
             $shift = $request->shift;
             $tanggal = $request->tanggal;
-            $laporansulzer = Laporansulzer::where('shift', $shift)->where('tanggal', $tanggal)->where('mesin_id', $mesin_id)->where('status', 'Draft')->first();
+            $laporansulzer = Laporansulzer::where('shift', $shift)->where('tanggal', $tanggal)->where('status', 'Draft')->first();
             if (!$laporansulzer) {
                 $laporansulzer = new Laporansulzer();
                 $laporansulzer->slug = Controller::gen_slug();
                 $laporansulzer->shift = $shift;
                 $laporansulzer->tanggal = $tanggal;
-                $laporansulzer->mesin_id = $mesin_id;
                 $laporansulzer->status = 'Draft';
                 $laporansulzer->save();
             }
             $action = 'create';
-            return view('produksiextruder.laporansulzer.show', compact('shift', 'tanggal', 'action', 'mesin', 'mesin_id', 'laporansulzer', 'laporansulzer_sebelumnya'));
+            return view('produksiextruder.laporansulzer.show', compact('shift', 'tanggal', 'action', 'laporansulzer', 'laporansulzer_sebelumnya'));
         }
 
         if ($laporansulzer->status == 'Draft') {
             $action = 'edit';
-            return view('produksiextruder.laporansulzer.show', compact('shift', 'tanggal', 'action', 'mesin', 'mesin_id', 'laporansulzer', 'laporansulzer_sebelumnya'));
+            return view('produksiextruder.laporansulzer.show', compact('shift', 'tanggal', 'action', 'laporansulzer', 'laporansulzer_sebelumnya'));
         }
 
         return redirect()->back()->with([
@@ -115,9 +112,7 @@ class LaporansulzerController extends Controller
     {
         $shift = $request->shift;
         $tanggal = $request->tanggal;
-        $mesin_id = $request->mesin_id;
-        $mesin = Mesin::find($mesin_id);
-        return view('produksiextruder.laporansulzer.create', compact('shift', 'tanggal', 'mesin', 'mesin_id'));
+        return view('produksiextruder.laporansulzer.create', compact('shift', 'tanggal'));
     }
 
     /**
@@ -127,22 +122,23 @@ class LaporansulzerController extends Controller
     {
         DB::beginTransaction();
         try {
-            $laporansulzer = Laporansulzer::where('tanggal', Carbon::parse($request->tanggal)->format('Y-m-d'))->where('shift', $request->shift)->where('mesin_id', $request->mesin_id)->first();
+            $laporansulzer = Laporansulzer::where('tanggal', Carbon::parse($request->tanggal)->format('Y-m-d'))->where('shift', $request->shift)->first();
             if (!$laporansulzer) {
                 $laporansulzer = new Laporansulzer();
                 $laporansulzer->slug = Controller::gen_slug();
                 $laporansulzer->tanggal = Carbon::parse($request->tanggal)->format('Y-m-d');
                 $laporansulzer->shift = $request->shift;
-                $laporansulzer->mesin_id = $request->mesin_id;
             }
-            $laporansulzer->jenis_produksi = $request->jenis_produksi;
             $laporansulzer->save();
             foreach ($request->meter_awal as $key => $meter_awal) {
                 $detail[] = [
                     'laporansulzer_id' => $laporansulzer->id,
                     'slug' => Controller::gen_slug(),
-                    'meter_awal' => $request->meter_awal[$key] ? Controller::unformat_angka($meter_awal) : null,
+                    'mesin_id' => $request->mesin_id[$key] ?? null,
+                    'jenis_produksi' => $request->jenis_produksi[$key] ?? null,
+                    'meter_awal' => $request->meter_awal[$key] ? Controller::unformat_angka($request->meter_awal[$key]) : null,
                     'meter_akhir' => $request->meter_akhir[$key] ? Controller::unformat_angka($request->meter_akhir[$key]) : null,
+                    'hasil' => $request->hasil[$key] ? Controller::unformat_angka($request->hasil[$key]) : null,
                     'keterangan_produksi' => $request->keterangan_produksi[$key],
                     'keterangan_mesin' => $request->keterangan_mesin[$key],
                     'jam_stop' => $request->jam_stop[$key] ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
@@ -166,10 +162,8 @@ class LaporansulzerController extends Controller
     {
         $shift = $request->shift;
         $tanggal = $request->tanggal;
-        $mesin_id = $request->mesin_id;
-        $mesin = Mesin::find($mesin_id);
         $laporansulzer = Laporansulzer::find($request->laporansulzer_id);
-        return view('produksiextruder.laporansulzer.create', compact('shift', 'tanggal', 'mesin_id', 'mesin'));
+        return view('produksiextruder.laporansulzer.create', compact('shift', 'tanggal'));
     }
 
     /**
@@ -179,9 +173,7 @@ class LaporansulzerController extends Controller
     {
         $shift = $laporansulzer->shift;
         $tanggal = $laporansulzer->tanggal;
-        $mesin_id = $laporansulzer->mesin_id;
-        $mesin = Mesin::find($mesin_id);
-        return view('produksiextruder.laporansulzer.edit', compact('shift', 'tanggal', 'mesin_id', 'mesin', 'laporansulzer'));
+        return view('produksiextruder.laporansulzer.edit', compact('shift', 'tanggal', 'laporansulzer'));
     }
 
     /**
@@ -191,9 +183,7 @@ class LaporansulzerController extends Controller
     {
         $shift = $laporansulzer->shift;
         $tanggal = $laporansulzer->tanggal;
-        $mesin_id = $laporansulzer->mesin_id;
-        $mesin = Mesin::find($mesin_id);
-        return view('produksiextruder.laporansulzer.edit', compact('shift', 'tanggal', 'mesin_id', 'mesin', 'laporansulzer'));
+        return view('produksiextruder.laporansulzer.edit', compact('shift', 'tanggal', 'laporansulzer'));
     }
 
     /**
@@ -203,14 +193,16 @@ class LaporansulzerController extends Controller
     {
         DB::beginTransaction();
         try {
-            $laporansulzer->jenis_produksi = $request->jenis_produksi;
             $laporansulzer->save();
             foreach ($request->meter_awal as $key => $meter_awal) {
                 $detail[] = [
                     'laporansulzer_id' => $laporansulzer->id,
                     'slug' => Controller::gen_slug(),
-                    'meter_awal' => $request->meter_awal[$key] ? Controller::unformat_angka($meter_awal) : null,
+                    'mesin_id' => $request->mesin_id[$key] ?? null,
+                    'jenis_produksi' => $request->jenis_produksi[$key] ?? null,
+                    'meter_awal' => $request->meter_awal[$key] ? Controller::unformat_angka($request->meter_awal[$key]) : null,
                     'meter_akhir' => $request->meter_akhir[$key] ? Controller::unformat_angka($request->meter_akhir[$key]) : null,
+                    'hasil' => $request->hasil[$key] ? Controller::unformat_angka($request->hasil[$key]) : null,
                     'keterangan_produksi' => $request->keterangan_produksi[$key],
                     'keterangan_mesin' => $request->keterangan_mesin[$key],
                     'jam_stop' => $request->jam_stop[$key] ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
@@ -251,7 +243,7 @@ class LaporansulzerController extends Controller
         } elseif ($shitf == 'Malam') {
             $shift = "Sore";
         }
-        $laporansulzer = Laporansulzer::where('tanggal', $tanggal)->where('shift', $shift)->where('mesin_id', $mesin_id)->first();
+        $laporansulzer = Laporansulzer::where('tanggal', $tanggal)->where('shift', $shift)->first();
         return response()->json([
             'status' => 'success',
             'data' => $laporansulzer,
