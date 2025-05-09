@@ -31,7 +31,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="tanggal">Tanggal</label>
                                             <div class="input-group date" id="div_tanggal" data-target-input="nearest">
@@ -49,7 +49,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="shift">Shift</label>
                                             <select
@@ -64,19 +64,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="mesin_id">Mesin</label>
-                                            <select
-                                                class="form-control select2 w-100 select-mesin @error('mesin_id') is-invalid @enderror"
-                                                id="mesin_id" name="mesin_id">
-                                            </select>
-                                            @error('mesin_id')
-                                                <span id="mesin_id-error"
-                                                    class="error invalid-feedback">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">

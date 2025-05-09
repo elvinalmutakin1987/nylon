@@ -66,41 +66,13 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="mesin_id">Mesin</label>
-                                                <input type="text"
-                                                    class="form-control @error('mesin_id') is-invalid @enderror"
-                                                    id="nama_mesin" name="nama_mesin"
-                                                    value="{{ $laporanrashel_sebelumnya->mesin->nama }}" readonly>
-                                                <input type="hidden" name="mesin_id" id="mesin_id"
-                                                    value="{{ $laporanrashel_sebelumnya->mesin_id }}">
-                                                @error('mesin_id')
-                                                    <span id="shift-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="jenis_produksi">Jenis Produksi</label>
-                                                <input type="text"
-                                                    class="form-control @error('jenis_produksi') is-invalid @enderror"
-                                                    id="jenis_produksi" name="jenis_produksi"
-                                                    value="{{ $laporanrashel_sebelumnya->jenis_produksi }}" readonly>
-                                                @error('jenis_produksi')
-                                                    <span id="shift-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-12">
                                             <table id="table1" class="table projects table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th class="text-center" colspan="2">Hasil Meter</th>
+                                                        <th class="text-center" rowspan="2">Mesin</th>
+                                                        <th class="text-center" rowspan="2">Jenis Produksi</th>
+                                                        <th class="text-center" colspan="3">Hasil Meter</th>
                                                         <th class="text-center" rowspan="2">Keterangan <br> Trobel
                                                             Produksi</th>
                                                         <th class="text-center" rowspan="2">Keterangan <br> Trobel
@@ -110,6 +82,7 @@
                                                     <tr>
                                                         <th class="text-center">Meter Awal</th>
                                                         <th class="text-center">Meter Akhir</th>
+                                                        <th class="text-center">Hasil</th>
                                                         <th class="text-center">Stop</th>
                                                         <th class="text-center">Jalan</th>
                                                     </tr>
@@ -117,8 +90,11 @@
                                                 <tbody>
                                                     @foreach ($laporanrashel_sebelumnya->laporanrasheldetail as $d)
                                                         <tr>
+                                                            <td>{{ $d->mesin->nama }}</td>
+                                                            <td>{{ $d->jenis_produksi }}</td>
                                                             <td>{{ $d->meter_awal ?? 0 }}</td>
                                                             <td>{{ $d->meter_akhir ?? 0 }}</td>
+                                                            <td>{{ $d->hasil ?? 0 }}</td>
                                                             <td>{!! $d->keterangan_produksi !!}</td>
                                                             <td>{!! $d->keterangan_mesin !!}</td>
                                                             <td>{{ $d->jam_stop }}</td>
@@ -167,8 +143,7 @@
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <a type="button" class="btn btn-default"
-                                    href="{{ route('produksiextruder.laporanrashel.index') }}"><i
-                                        class="fa fa-reply"></i>
+                                    href="{{ route('produksiextruder.laporanrashel.index') }}"><i class="fa fa-reply"></i>
                                     Kembali</a>
                             </div>
                         </div>

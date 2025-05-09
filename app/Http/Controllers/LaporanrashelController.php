@@ -74,25 +74,22 @@ class LaporanrashelController extends Controller
 
         $laporanrashel = Laporanrashel::where('tanggal', $tanggal)
             ->where('shift', $shift)
-            ->where('mesin_id', $mesin_id)
             ->first();
 
         $laporanrashel_sebelumnya = Laporanrashel::where('tanggal', $tanggal_sebelumnya)
             ->where('shift', $shift_sebelumnya)
-            ->where('mesin_id', $mesin_id)
             ->first();
 
         $action = 'create';
         if (!$laporanrashel) {
             $shift = $request->shift;
             $tanggal = $request->tanggal;
-            $laporanrashel = Laporanrashel::where('shift', $shift)->where('tanggal', $tanggal)->where('mesin_id', $mesin_id)->where('status', 'Draft')->first();
+            $laporanrashel = Laporanrashel::where('shift', $shift)->where('tanggal', $tanggal)->where('status', 'Draft')->first();
             if (!$laporanrashel) {
                 $laporanrashel = new Laporanrashel();
                 $laporanrashel->slug = Controller::gen_slug();
                 $laporanrashel->shift = $shift;
                 $laporanrashel->tanggal = $tanggal;
-                $laporanrashel->mesin_id = $mesin_id;
                 $laporanrashel->status = 'Draft';
                 $laporanrashel->save();
             }
@@ -115,9 +112,7 @@ class LaporanrashelController extends Controller
     {
         $shift = $request->shift;
         $tanggal = $request->tanggal;
-        $mesin_id = $request->mesin_id;
-        $mesin = Mesin::find($mesin_id);
-        return view('produksiextruder.laporanrashel.create', compact('shift', 'tanggal', 'mesin_id', 'mesin'));
+        return view('produksiextruder.laporanrashel.create', compact('shift', 'tanggal'));
     }
 
     /**
@@ -127,22 +122,23 @@ class LaporanrashelController extends Controller
     {
         DB::beginTransaction();
         try {
-            $laporanrashel = Laporanrashel::where('tanggal', Carbon::parse($request->tanggal)->format('Y-m-d'))->where('shift', $request->shift)->where('mesin_id', $request->mesin_id)->first();
+            $laporanrashel = Laporanrashel::where('tanggal', Carbon::parse($request->tanggal)->format('Y-m-d'))->where('shift', $request->shift)->where('status', 'Draft')->first();
             if (!$laporanrashel) {
                 $laporanrashel = new Laporanrashel();
                 $laporanrashel->slug = Controller::gen_slug();
                 $laporanrashel->tanggal = Carbon::parse($request->tanggal)->format('Y-m-d');
                 $laporanrashel->shift = $request->shift;
-                $laporanrashel->mesin_id = $request->mesin_id;
             }
-            $laporanrashel->jenis_produksi = $request->jenis_produksi;
             $laporanrashel->save();
             foreach ($request->meter_awal as $key => $meter_awal) {
                 $detail[] = [
                     'laporanrashel_id' => $laporanrashel->id,
                     'slug' => Controller::gen_slug(),
+                    'mesin_id' => $request->mesin_id[$key] ?? null,
+                    'jenis_produksi' => $request->jenis_produksi[$key] ?? null,
                     'meter_awal' => $request->meter_awal[$key] ? Controller::unformat_angka($meter_awal) : null,
                     'meter_akhir' => $request->meter_akhir[$key] ? Controller::unformat_angka($request->meter_akhir[$key]) : null,
+                    'hasil' => $request->hasil[$key] ? Controller::unformat_angka($request->hasil[$key]) : null,
                     'keterangan_produksi' => $request->keterangan_produksi[$key],
                     'keterangan_mesin' => $request->keterangan_mesin[$key],
                     'jam_stop' => $request->jam_stop[$key] ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
@@ -166,7 +162,6 @@ class LaporanrashelController extends Controller
     {
         $shift = $request->shift;
         $tanggal = $request->tanggal;
-        $mesin_id = $request->mesin_id;
         $laporanrashel = Laporanrashel::find($request->laporanrashel_id);
     }
 
@@ -177,9 +172,7 @@ class LaporanrashelController extends Controller
     {
         $shift = $laporanrashel->shift;
         $tanggal = $laporanrashel->tanggal;
-        $mesin_id = $laporanrashel->mesin_id;
-        $mesin = Mesin::find($mesin_id);
-        return view('produksiextruder.laporanrashel.edit', compact('shift', 'tanggal', 'mesin_id', 'mesin', 'laporanrashel'));
+        return view('produksiextruder.laporanrashel.edit', compact('shift', 'tanggal', 'laporanrashel'));
     }
 
     /**
@@ -189,9 +182,7 @@ class LaporanrashelController extends Controller
     {
         $shift = $laporanrashel->shift;
         $tanggal = $laporanrashel->tanggal;
-        $mesin_id = $laporanrashel->mesin_id;
-        $mesin = Mesin::find($mesin_id);
-        return view('produksiextruder.laporanrashel.edit', compact('shift', 'tanggal', 'mesin_id', 'mesin', 'laporanrashel'));
+        return view('produksiextruder.laporanrashel.edit', compact('shift', 'tanggal', 'laporanrashel'));
     }
 
     /**
@@ -201,14 +192,16 @@ class LaporanrashelController extends Controller
     {
         DB::beginTransaction();
         try {
-            $laporanrashel->jenis_produksi = $request->jenis_produksi;
             $laporanrashel->save();
             foreach ($request->meter_awal as $key => $meter_awal) {
                 $detail[] = [
                     'laporanrashel_id' => $laporanrashel->id,
                     'slug' => Controller::gen_slug(),
+                    'mesin_id' => $request->mesin_id[$key] ?? null,
+                    'jenis_produksi' => $request->jenis_produksi[$key] ?? null,
                     'meter_awal' => $request->meter_awal[$key] ? Controller::unformat_angka($meter_awal) : null,
                     'meter_akhir' => $request->meter_akhir[$key] ? Controller::unformat_angka($request->meter_akhir[$key]) : null,
+                    'hasil' => $request->hasil[$key] ? Controller::unformat_angka($request->hasil[$key]) : null,
                     'keterangan_produksi' => $request->keterangan_produksi[$key],
                     'keterangan_mesin' => $request->keterangan_mesin[$key],
                     'jam_stop' => $request->jam_stop[$key] ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
@@ -249,7 +242,7 @@ class LaporanrashelController extends Controller
         } elseif ($shitf == 'Malam') {
             $shift = "Sore";
         }
-        $laporanrashel = Laporanrashel::where('tanggal', $tanggal)->where('shift', $shift)->where('mesin_id', $mesin_id)->first();
+        $laporanrashel = Laporanrashel::where('tanggal', $tanggal)->where('shift', $shift)->first();
         return response()->json([
             'status' => 'success',
             'data' => $laporanrashel,
