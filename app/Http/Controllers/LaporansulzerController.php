@@ -91,6 +91,7 @@ class LaporansulzerController extends Controller
                 $laporansulzer->shift = $shift;
                 $laporansulzer->tanggal = $tanggal;
                 $laporansulzer->status = 'Draft';
+                $laporansulzer->created_by = Auth::user()->id;
                 $laporansulzer->save();
             }
             $action = 'create';
@@ -128,6 +129,7 @@ class LaporansulzerController extends Controller
                 $laporansulzer->slug = Controller::gen_slug();
                 $laporansulzer->tanggal = Carbon::parse($request->tanggal)->format('Y-m-d');
                 $laporansulzer->shift = $request->shift;
+                $laporansulzer->created_by = Auth::user()->id;
             }
             $laporansulzer->save();
             foreach ($request->meter_awal as $key => $meter_awal) {

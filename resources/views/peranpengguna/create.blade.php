@@ -263,6 +263,14 @@
                                                                     for="produksi.extruder.laporanrashel">Laporan
                                                                     Rashel</label>
                                                             </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.checklistbeaming"
+                                                                    name="produksi.extruder.checklistbeaming">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.checklistbeaming">Check List
+                                                                    Beaming</label>
+                                                            </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <label class="form-check-label">WJL</label>

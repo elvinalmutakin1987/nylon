@@ -91,6 +91,7 @@ class LaporanrashelController extends Controller
                 $laporanrashel->shift = $shift;
                 $laporanrashel->tanggal = $tanggal;
                 $laporanrashel->status = 'Draft';
+                $laporanrashel->created_by = Auth::user()->id;
                 $laporanrashel->save();
             }
             $action = 'create';
@@ -128,6 +129,7 @@ class LaporanrashelController extends Controller
                 $laporanrashel->slug = Controller::gen_slug();
                 $laporanrashel->tanggal = Carbon::parse($request->tanggal)->format('Y-m-d');
                 $laporanrashel->shift = $request->shift;
+                $laporanrashel->created_by = Auth::user()->id;
             }
             $laporanrashel->save();
             foreach ($request->meter_awal as $key => $meter_awal) {

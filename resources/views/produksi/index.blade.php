@@ -69,6 +69,13 @@
                                                     <i class="fas fa-scroll"></i> Laporan Rashel
                                                 </a>
                                             @endif
+
+                                            @if (auth()->user()->can('produksi.extruder.checklistbeaming'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('produksiextruder.checklistbeaming.index') }}">
+                                                    <i class="fas fa-check"></i> Check List Beaming
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +128,8 @@
                                             @endif
 
                                             @if (auth()->user()->can('produksi.laminating.rekap'))
-                                                <a class="btn btn-app" href="{{ route('produksilaminating.rekap.index') }}">
+                                                <a class="btn btn-app"
+                                                    href="{{ route('produksilaminating.rekap.index') }}">
                                                     <i class="fa fa-file"></i> Rekap Pengeringan Kain
                                                 </a>
                                             @endif

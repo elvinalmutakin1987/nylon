@@ -3,6 +3,7 @@
 use App\Http\Controllers\BarangkeluarController;
 use App\Http\Controllers\BarangmasukController;
 use App\Http\Controllers\CekstokController;
+use App\Http\Controllers\ChecklistbeamingController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\DatamasterController;
 use App\Http\Controllers\GudangbarangjadicekstokController;
@@ -427,5 +428,28 @@ Route::middleware(['auth'])->group(function () {
         Route::get('laporanwjl-efisiensi-detail', [LaporanwjlefisiensiController::class, 'detail'])->name('laporanwjl.efisiensi.detail');
         Route::get('laporanwjl-efisiensi-cetak', [LaporanwjlefisiensiController::class, 'cetak'])->name('laporanwjl.efisiensi.cetak');
         Route::get('laporanwjl-efisiensi-export', [LaporanwjlefisiensiController::class, 'export'])->name('laporanwjl.efisiensi.export');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.checklistbeaming']], function () {
+        Route::get('produksiextruder-checklistbeaming', [ChecklistbeamingController::class, 'index'])->name('produksiextruder.checklistbeaming.index');
+        Route::get('produksiextruder-get-checklistbeaming', [ChecklistbeamingController::class, 'get_checklistbeaming'])->name('produksiextruder.checklistbeaming.get_checklistbeaming');
+        Route::post('produksiextruder-checklistbeaming', [ChecklistbeamingController::class, 'store'])->name('produksiextruder.checklistbeaming.store');
+        Route::get('produksiextruder-checklistbeaming/create', [ChecklistbeamingController::class, 'create'])->name('produksiextruder.checklistbeaming.create');
+        Route::get('produksiextruder-checklistbeaming/create-laporan', [ChecklistbeamingController::class, 'create_laporan'])->name('produksiextruder.checklistbeaming.create_laporan');
+        Route::get('produksiextruder-checklistbeaming/{checklistbeaming}', [ChecklistbeamingController::class, 'show'])->name('produksiextruder.checklistbeaming.show');
+        Route::put('produksiextruder-checklistbeaming/{checklistbeaming}', [ChecklistbeamingController::class, 'update'])->name('produksiextruder.checklistbeaming.update');
+        Route::delete('produksiextruder-checklistbeaming/{checklistbeaming}', [ChecklistbeamingController::class, 'destroy'])->name('produksiextruder.checklistbeaming.destroy');
+        Route::get('produksiextruder-checklistbeaming/{checklistbeaming}/edit', [ChecklistbeamingController::class, 'edit'])->name('produksiextruder.checklistbeaming.edit');
+
+        // Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.checklistbeaming.edit']], function () {
+        //     Route::get('produksiextruder-checklistbeaming/{checklistbeaming}/edit', [ChecklistbeamingController::class, 'edit'])->name('produksiextruder.checklistbeaming.edit');
+        // });
+
+        Route::get('produksiextruder-checklistbeaming-cetak', [ChecklistbeamingController::class, 'cetak'])->name('produksiextruder.checklistbeaming.cetak');
+        Route::get('produksiextruder-checklistbeaming-get-mesin', [ChecklistbeamingController::class, 'get_mesin'])->name('produksiextruder.checklistbeaming.get_mesin');
+        Route::get('produksiextruder-checklistbeaming-get-detail', [ChecklistbeamingController::class, 'get_detail'])->name('produksiextruder.checklistbeaming.get_detail');
+        Route::get('produksiextruder-checklistbeaming-confirm/{checklistbeaming}', [ChecklistbeamingController::class, 'confirm'])->name('produksiextruder.checklistbeaming.confirm');
+
+        Route::get('produksiextruder-checklistbeaming-export', [ChecklistbeamingController::class, 'export'])->name('produksiextruder.checklistbeaming.export');
     });
 });
