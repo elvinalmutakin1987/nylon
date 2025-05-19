@@ -68,35 +68,143 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <table id="table1" class="table projects table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-center" rowspan="2">Mesin</th>
-                                                        <th class="text-center" rowspan="2">Jenis Produksi</th>
-                                                        <th class="text-center" colspan="3">Hasil Meter</th>
-                                                        <th class="text-center" rowspan="2">Keterangan <br> Trobel
-                                                            Produksi</th>
-                                                        <th class="text-center" rowspan="2">Keterangan <br> Trobel
-                                                            Mesin/Rusak</th>
-                                                        <th class="text-center" colspan="2">Jam</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="text-center">Meter Awal</th>
-                                                        <th class="text-center">Meter Akhir</th>
-                                                        <th class="text-center">Hasil</th>
-                                                        <th class="text-center">Stop</th>
-                                                        <th class="text-center">Jalan</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                </tbody>
-                                            </table>
+                                            <div class="form-group">
+                                                <label for="">Motif Sesuai</label>
+                                                <div class="form-check d-inline m-4">
+                                                    <input type="checkbox" class="form-check-input" id="motif_sesuai_1"
+                                                        name="motif_sesuai_1"
+                                                        {{ $checklistbeaming_sebelumnya->motif_sesuai_1 == 1 ? 'checked' : '' }}
+                                                        disabled>
+                                                    <label class="form-check-label" for="motif_sesuai_1">1</label>
+                                                </div>
+                                                <div class="form-check d-inline m-4">
+                                                    <input type="checkbox" class="form-check-input" id="motif_sesuai_2"
+                                                        name="motif_sesuai_2"
+                                                        {{ $checklistbeaming_sebelumnya->motif_sesuai_2 == 1 ? 'checked' : '' }}
+                                                        disabled>
+                                                    <label class="form-check-label" for="motif_sesuai_2">2</label>
+                                                </div>
+                                                <div class="form-check d-inline m-4">
+                                                    <input type="checkbox" class="form-check-input" id="motif_sesuai_3"
+                                                        name="motif_sesuai_3"
+                                                        {{ $checklistbeaming_sebelumnya->motif_sesuai_3 == 1 ? 'checked' : '' }}
+                                                        disabled>
+                                                    <label class="form-check-label" for="motif_sesuai_3">3</label>
+                                                </div>
+                                                <div class="form-check d-inline m-4">
+                                                    <input type="checkbox" class="form-check-input" id="motif_sesuai_4"
+                                                        name="motif_sesuai_4"
+                                                        {{ $checklistbeaming_sebelumnya->motif_sesuai_4 == 1 ? 'checked' : '' }}
+                                                        disabled>
+                                                    <label class="form-check-label" for="motif_sesuai_4">4</label>
+                                                </div>
+                                                <div class="form-check d-inline m-4">
+                                                    <input type="checkbox" class="form-check-input" id="motif_sesuai_5"
+                                                        name="motif_sesuai_5"
+                                                        {{ $checklistbeaming_sebelumnya->motif_sesuai_5 == 1 ? 'checked' : '' }}
+                                                        disabled>
+                                                    <label class="form-check-label" for="motif_sesuai_5">5</label>
+                                                </div>
+                                                <div class="form-check d-inline m-4">
+                                                    <input type="checkbox" class="form-check-input" id="motif_sesuai_6"
+                                                        name="motif_sesuai_6"
+                                                        {{ $checklistbeaming_sebelumnya->motif_sesuai_6 == 1 ? 'checked' : '' }}
+                                                        disabled>
+                                                    <label class="form-check-label" for="motif_sesuai_6">6</label>
+                                                </div>
+                                                <div class="form-check d-inline m-4">
+                                                    <input type="checkbox" class="form-check-input" id="motif_sesuai_7"
+                                                        name="motif_sesuai_7"
+                                                        {{ $checklistbeaming_sebelumnya->motif_sesuai_7 == 1 ? 'checked' : '' }}
+                                                        disabled>
+                                                    <label class="form-check-label" for="motif_sesuai_7">7</label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <p>Tidak ada data untuk di serah terima.</p>
+                                            <div class="table-responsive p-0">
+                                                <table id="table1" class="table projects table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="text-center" style="width: 30%">
+                                                                Lingkaran (M)
+                                                            </th>
+                                                            <th scope="col" class="text-center" style="width: 30%">
+                                                                Nilai (cm)
+                                                            </th>
+                                                            <th scope="col" class="text-center" style="width: 30%">
+                                                                Waktu
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($checklistbeaming_sebelumnya->checklistbeamingdetail as $d)
+                                                            <tr>
+                                                                <td>
+                                                                    {{ $d->diameter_beam_timur }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ $d->diameter_beam_barat }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ $d->diameter_beam_1m_dari_timur }}
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="jumlah_benang_putus">Jumlah Benang Putus</label>
+                                                    <input type="text"
+                                                        class="form-control @error('jumlah_benang_putus') is-invalid @enderror"
+                                                        id="jumlah_benang_putus" name="jumlah_benang_putus"
+                                                        value="{{ $checklistbeaming_sebelumnya->jumlah_benang_putus }}"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="jumlah_benang">Jumlah Benang</label>
+                                                <input type="text"
+                                                    class="form-control @error('jumlah_benang') is-invalid @enderror"
+                                                    id="jumlah_benang" name="jumlah_benang"
+                                                    value="{{ $checklistbeaming_sebelumnya->jumlah_benang }}" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="produksi">Produksi</label>
+                                                    <input type="text"
+                                                        class="form-control @error('produksi') is-invalid @enderror"
+                                                        id="produksi" name="produksi"
+                                                        value="{{ $checklistbeaming_sebelumnya->produksi }}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="lebar_beam">Lebar Beam</label>
+                                                <input type="text"
+                                                    class="form-control @error('lebar_beam') is-invalid @enderror"
+                                                    id="lebar_beam" name="lebar_beam"
+                                                    value="{{ $checklistbeaming_sebelumnya->lebar_beam }}" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
                                             @if ($action == 'create')
                                                 <a type="button" class="btn btn-success"
                                                     href="{{ route('produksiextruder.checklistbeaming.create_laporan', ['tanggal' => $tanggal, 'shift' => $shift, 'mesin_id' => $mesin_id]) }}"><i

@@ -46,7 +46,7 @@
                                                     <input type="text"
                                                         class="form-control @error('tanggal') is-invalid @enderror"
                                                         id="tanggal" name="tanggal"
-                                                        value="{{ old('tanggal') ?? $tanggal }}" readonly>
+                                                        value="{{ old('tanggal') ?? $checklistbeaming->tanggal }}" readonly>
                                                     @error('tanggal')
                                                         <span id="tanggal-error"
                                                             class="error invalid-feedback">{{ $message }}</span>
@@ -59,7 +59,8 @@
                                                 <label for="shift">Shift</label>
                                                 <input type="text"
                                                     class="form-control @error('shift') is-invalid @enderror" id="shift"
-                                                    name="shift" value="{{ old('shift') ?? $shift }}" readonly>
+                                                    name="shift" value="{{ old('shift') ?? $checklistbeaming->shift }}"
+                                                    readonly>
                                                 @error('shift')
                                                     <span id="shift-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -69,47 +70,182 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="">Motif Sesuai</label>
+                                                <div class="form-check d-inline m-4">
+                                                    <input type="checkbox" class="form-check-input" id="motif_sesuai_1"
+                                                        name="motif_sesuai_1"
+                                                        {{ $checklistbeaming->motif_sesuai_1 == 1 ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="motif_sesuai_1">1</label>
+                                                </div>
+                                                <div class="form-check d-inline m-4">
+                                                    <input type="checkbox" class="form-check-input" id="motif_sesuai_2"
+                                                        name="motif_sesuai_2"
+                                                        {{ $checklistbeaming->motif_sesuai_2 == 1 ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="motif_sesuai_2">2</label>
+                                                </div>
+                                                <div class="form-check d-inline m-4">
+                                                    <input type="checkbox" class="form-check-input" id="motif_sesuai_3"
+                                                        name="motif_sesuai_3"
+                                                        {{ $checklistbeaming->motif_sesuai_3 == 1 ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="motif_sesuai_3">3</label>
+                                                </div>
+                                                <div class="form-check d-inline m-4">
+                                                    <input type="checkbox" class="form-check-input" id="motif_sesuai_4"
+                                                        name="motif_sesuai_4"
+                                                        {{ $checklistbeaming->motif_sesuai_4 == 1 ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="motif_sesuai_4">4</label>
+                                                </div>
+                                                <div class="form-check d-inline m-4">
+                                                    <input type="checkbox" class="form-check-input" id="motif_sesuai_5"
+                                                        name="motif_sesuai_5"
+                                                        {{ $checklistbeaming->motif_sesuai_5 == 1 ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="motif_sesuai_5">5</label>
+                                                </div>
+                                                <div class="form-check d-inline m-4">
+                                                    <input type="checkbox" class="form-check-input" id="motif_sesuai_6"
+                                                        name="motif_sesuai_6"
+                                                        {{ $checklistbeaming->motif_sesuai_6 == 1 ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="motif_sesuai_6">6</label>
+                                                </div>
+                                                <div class="form-check d-inline m-4">
+                                                    <input type="checkbox" class="form-check-input" id="motif_sesuai_7"
+                                                        name="motif_sesuai_7"
+                                                        {{ $checklistbeaming->motif_sesuai_7 == 1 ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="motif_sesuai_7">7</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
                                             <div class="table-responsive p-0">
                                                 <table id="table1" class="table projects table-bordered">
                                                     <thead>
                                                         <tr>
-                                                            <th class="text-center"></th>
-                                                            <th class="text-center" style="width: 150px">
-                                                                Pengecekan
+                                                            <th scope="col" class="text-center" style="width: 30%">
+                                                                Lingkaran (M)
                                                             </th>
-                                                            <th class="text-center" style="width: 50px">
-                                                                1
+                                                            <th scope="col" class="text-center" style="width: 30%">
+                                                                Nilai (cm)
                                                             </th>
-                                                            <th class="text-center" style="width: 50px">
-                                                                2
+                                                            <th scope="col" class="text-center" style="width: 30%">
+                                                                Waktu
                                                             </th>
-                                                            <th class="text-center" style="width: 50px">
-                                                                3
-                                                            </th>
-                                                            <th class="text-center" style="width: 50px">
-                                                                4
-                                                            </th>
-                                                            <th class="text-center" style="width: 50px">
-                                                                5
-                                                            </th>
-                                                            <th class="text-center" style="width: 50px">
-                                                                6
-                                                            </th>
-                                                            <th class="text-center" style="width: 50px">
-                                                                7
+                                                            <th style="width: 10%">
+
                                                             </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @foreach ($checklistbeaming->checklistbeamingdetail as $d)
-                                                            @if ($loop->last)
-                                                            @else
-                                                            @endif
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="text" class="form-control"
+                                                                        id="diameter_beam_timur1"
+                                                                        name="diameter_beam_timur[]"
+                                                                        onblur="ubah_format('diameter_beam_timur{{ $d->id }}', this.value)"
+                                                                        value="{{ $d->diameter_beam_timur }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control"
+                                                                        id="diameter_beam_barat1"
+                                                                        name="diameter_beam_barat[]"
+                                                                        onblur="ubah_format('diameter_beam_barat{{ $d->id }}', this.value)"
+                                                                        value="{{ $d->diameter_beam_barat }}">
+                                                                </td>
+                                                                <td>
+                                                                    <div class="input-group date"
+                                                                        id="div_diameter_beam_1m_dari_timur{{ $d->id }}"
+                                                                        data-target-input="nearest">
+                                                                        <input type="text"
+                                                                            class="form-control datetimepicker-input"
+                                                                            data-target="#div_diameter_beam_1m_dari_timur{{ $d->id }}"
+                                                                            id="diameter_beam_1m_dari_timur{{ $d->id }}"
+                                                                            name="diameter_beam_1m_dari_timur[]"
+                                                                            value="{{ $d->diameter_beam_1m_dari_timur }}" />
+                                                                    </div>
+                                                                </td>
+                                                                @if ($loop->last)
+                                                                    <td class="text-center">
+                                                                        <button type="button" class="btn btn-primary"
+                                                                            onclick="tambah()"><i class="fa fa-plus"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                @else
+                                                                    <td class="text-center">
+                                                                        <button type="button" class="btn btn-danger"
+                                                                            id="hapus"><i class="fa fa-trash"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                @endif
+
+                                                            </tr>
                                                         @endforeach
-                                                        @if (count($checklistbeaming->checklistbeamingdetail) == 0)
-                                                        @endif
                                                     </tbody>
                                                 </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="jumlah_benang_putus">Jumlah Benang Putus</label>
+                                                    <input type="text"
+                                                        class="form-control @error('jumlah_benang_putus') is-invalid @enderror"
+                                                        id="jumlah_benang_putus" name="jumlah_benang_putus"
+                                                        value="{{ old('jumlah_benang_putus') ?? $checklistbeaming->jumlah_benang_putus }}"
+                                                        onblur="ubah_format('jumlah_benang_putus', this.value)">
+                                                    @error('jumlah_benang_putus')
+                                                        <span id="jumlah_benang_putus-error"
+                                                            class="error invalid-feedback">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="jumlah_benang">Jumlah Benang</label>
+                                                <input type="text"
+                                                    class="form-control @error('jumlah_benang') is-invalid @enderror"
+                                                    id="jumlah_benang" name="jumlah_benang"
+                                                    value="{{ old('jumlah_benang') ?? $checklistbeaming->jumlah_benang }}"
+                                                    onblur="ubah_format('jumlah_benang', this.value)">
+                                                @error('jumlah_benang')
+                                                    <span id="jumlah_benang-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="produksi">Produksi</label>
+                                                    <input type="text"
+                                                        class="form-control @error('produksi') is-invalid @enderror"
+                                                        id="produksi" name="produksi"
+                                                        value="{{ old('produksi') ?? $checklistbeaming->produksi }}">
+                                                    @error('produksi')
+                                                        <span id="produksi-error"
+                                                            class="error invalid-feedback">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="lebar_beam">Lebar Beam</label>
+                                                <input type="text"
+                                                    class="form-control @error('lebar_beam') is-invalid @enderror"
+                                                    id="lebar_beam" name="lebar_beam"
+                                                    value="{{ old('lebar_beam') ?? $checklistbeaming->lebar_beam }}">
+                                                @error('lebar_beam')
+                                                    <span id="lebar_beam-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -141,25 +277,17 @@
 @section('script')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#div_jam_stop1').datetimepicker({
-                format: 'h:m:s'
+            $('#div_diameter_beam_1m_dari_timur1').datetimepicker({
+                format: 'HH:mm',
             });
-
-            $('#div_jam_jalan1').datetimepicker({
-                format: 'h:m:s'
-            });
-
-            @foreach ($checklistbeaming->checklistbeamingdetail as $d)
-                $('#div_jam_stop{{ $d->slug }}').datetimepicker({
-                    format: 'h:m:s'
-                });
-
-                $('#div_jam_jalan{{ $d->slug }}').datetimepicker({
-                    format: 'h:m:s'
-                });
-            @endforeach
 
             format_select2();
+
+            @foreach ($checklistbeaming->checklistbeamingdetail as $d)
+                $('#div_diameter_beam_1m_dari_timur{{ $d->id }}').datetimepicker({
+                    format: 'HH:mm',
+                });
+            @endforeach
         });
 
         function format_select2() {
@@ -176,7 +304,7 @@
                 placeholder: "- Pilih Mesin -",
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('produksiextruder.checklistbeaming.get_mesin') }}',
+                    url: '{{ route('produksiextruder.laporanrashel.get_mesin') }}',
                     dataType: 'json',
                     data: function(params) {
                         return {
@@ -197,98 +325,48 @@
         function tambah() {
             var tbody_row = $('#table1').find('tr').length;
             var row_id = Date.now().toString(36) + Math.random().toString(36).substr(2);
-            var meter_awal = $("#meter_awal1").val();
-            var meter_akhir = $("#meter_akhir1").val();
-            var hasil = parseFloat(numeral(meter_akhir).format('0')) - parseFloat(numeral(meter_awal).format('0'));
-            var keterangan_produksi = $("#keterangan_produksi1").val();
-            var keterangan_mesin = $("#keterangan_mesin1").val();
-            var jam_stop = $("#jam_stop1").val();
-            var jam_jalan = $("#jam_jalan1").val();
-            var mesin_id = $("#mesin_id1 option:selected").val();
-            var mesin = $("#mesin_id1 option:selected").text();
-            var jenis_produksi = $("#jenis_produksi1 option:selected").val();
+            var diameter_beam_timur1 = $("#diameter_beam_timur1").val();
+            var diameter_beam_barat1 = $("#diameter_beam_barat1").val();
+            var diameter_beam_1m_dari_timur1 = $("#diameter_beam_1m_dari_timur1").val();
             $("#table1 > tbody > tr:last").before(`
                 <tr>
-                    <td class="text-center" style="vertical-align: top">
-                        <button type="button" class="btn btn-danger"
+                    <td>
+                        <input type="text" class="form-control"
+                            id="diameter_beam_timur${row_id}" name="diameter_beam_timur[]"
+                            onblur="ubah_format('diameter_beam_timur${row_id}', this.value)"
+                            value="${diameter_beam_timur1}">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control"
+                            id="diameter_beam_barat${row_id}" name="diameter_beam_barat[]"
+                            onblur="ubah_format('diameter_beam_barat${row_id}', this.value)"
+                            value="${diameter_beam_barat1}">
+                    </td>
+                    <td>
+                        <div class="input-group date"
+                            id="div_diameter_beam_1m_dari_timur${row_id}"
+                            data-target-input="nearest">
+                            <input type="text"
+                                class="form-control datetimepicker-input"
+                                data-target="#div_diameter_beam_1m_dari_timur${row_id}"
+                                id="diameter_beam_1m_dari_timur${row_id}"
+                                name="diameter_beam_1m_dari_timur[]"
+                                value="${diameter_beam_1m_dari_timur1}"/>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                       <button type="button" class="btn btn-danger"
                             id="hapus"><i class="fa fa-trash"></i>
                         </button>
                     </td>
-                    <td style="vertical-align: top">
-                        <select
-                            class="form-control select2 w-100 select-mesin @error('mesin_id') is-invalid @enderror"
-                            id="mesin_id${row_id}" name="mesin_id[]">
-                            <option value="${mesin_id}">${mesin}</option>
-                        </select>
-                    </td>
-                    <td style="vertical-align: top">
-                        <select
-                            class="form-control select2 w-100 select-jenis-produksi @error('jenis_produksi') is-invalid @enderror"
-                            id="jenis_produksi${row_id}" name="jenis_produksi[]">
-                            <option value="${jenis_produksi}">
-                                ${jenis_produksi}</option>
-                        </select>
-                    </td>
-                    <td style="vertical-align: top">
-                        <label for="meter_awal${row_id}">Meter Awal</label>
-                        <input type="text"
-                            class="form-control @error('meter_awal') is-invalid @enderror"
-                            id="meter_awal${row_id}" name="meter_awal[]" value="${meter_awal}" onkeyup="ubah_format('meter_awal${row_id}', this.value); hitung_hasil('${row_id}')">
-                        <br>
-                        <label for="meter_akhir${row_id}">Meter Akhir</label>
-                        <input type="text"
-                            class="form-control @error('meter_akhir') is-invalid @enderror"
-                            id="meter_akhir${row_id}"
-                            name="meter_akhir[]" value="${meter_akhir}" onkeyup="ubah_format('meter_akhir${row_id}', this.value); hitung_hasil('${row_id}')">
-                        <br>
-                        <label for="hasil${row_id}">Hasil</label>
-                        <input type="text"
-                            class="form-control @error('hasil') is-invalid @enderror"
-                            id="hasil${row_id}"
-                            name="hasil[]" value="${numeral(hasil).format('0,0')}" readonly>
-                    </td>
-                    <td style="vertical-align: top">
-                        <textarea class="form-control @error('keterangan_produksi') is-invalid @enderror" rows="5"
-                            id="keterangan_produksi${row_id}" name="keterangan_produksi[]">${keterangan_produksi}</textarea>
-                    </td>
-                    <td style="vertical-align: top">
-                        <textarea class="form-control @error('keterangan_mesin') is-invalid @enderror" rows="5"
-                            id="keterangan_mesin${row_id}" name="keterangan_mesin[]">${keterangan_mesin}</textarea>
-                    </td>
-                    <td style="vertical-align: top">
-                        <label for="div_jam_stop${row_id}">Jam Stop</label>
-                        <div class="input-group date"
-                            id="div_jam_stop${row_id}"
-                            data-target-input="nearest">
-                            <input type="text"
-                                class="form-control datetimepicker-input"
-                                data-target="#div_jam_stop${row_id}"
-                                id="jam_stop${row_id}"
-                                name="jam_stop[]" value="${jam_stop}"/>
-                        </div>
-                        <br>
-                        <label for="div_jam_jalan${row_id}">Jam Jalan</label>
-                        <div class="input-group date"
-                            id="div_jam_jalan${row_id}"
-                            data-target-input="nearest">
-                            <input type="text"
-                                class="form-control datetimepicker-input"
-                                data-target="#div_jam_jalan${row_id}"
-                                id="jam_jalan${row_id}"
-                                name="jam_jalan[]" value="${jam_jalan}"/>
-                        </div>
-                    </td>
                 </tr>
             `);
-            $("#hasil1").val("");
-            $("#mesin_id1").val(null).trigger('change');
-            $("#jenis_produksi1").val(null).trigger('change');
-            $("#meter_awal1").val("");
-            $("#meter_akhir1").val("");
-            $("#keterangan_produksi1").val("");
-            $("#keterangan_mesin1").val("");
-            $("#jam_stop1").val("");
-            $("#jam_jalan1").val("");
+            $("#diameter_beam_timur1").val("");
+            $("#diameter_beam_barat1").val("");
+            $("#div_diameter_beam_1m_dari_timur" + row_id).datetimepicker({
+                format: 'HH:mm',
+            });
+            $("#diameter_beam_1m_dari_timur1").val(null);
 
             format_select2();
         }

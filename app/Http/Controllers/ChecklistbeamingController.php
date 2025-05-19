@@ -131,13 +131,13 @@ class ChecklistbeamingController extends Controller
                 $checklistbeaming->created_by = Auth::user()->id;
                 $checklistbeaming->shift = $request->shift;
             }
-            $checklistbeaming->motif_sesuai_1 = $request->motif_sesuai_1;
-            $checklistbeaming->motif_sesuai_2 = $request->motif_sesuai_2;
-            $checklistbeaming->motif_sesuai_3 = $request->motif_sesuai_3;
-            $checklistbeaming->motif_sesuai_4 = $request->motif_sesuai_4;
-            $checklistbeaming->motif_sesuai_5 = $request->motif_sesuai_5;
-            $checklistbeaming->motif_sesuai_6 = $request->motif_sesuai_6;
-            $checklistbeaming->motif_sesuai_7 = $request->motif_sesuai_7;
+            $checklistbeaming->motif_sesuai_1 = $request->motif_sesuai_1 ? '1' : null;
+            $checklistbeaming->motif_sesuai_2 = $request->motif_sesuai_2 ? '1' : null;
+            $checklistbeaming->motif_sesuai_3 = $request->motif_sesuai_3 ? '1' : null;
+            $checklistbeaming->motif_sesuai_4 = $request->motif_sesuai_4 ? '1' : null;
+            $checklistbeaming->motif_sesuai_5 = $request->motif_sesuai_5 ? '1' : null;
+            $checklistbeaming->motif_sesuai_6 = $request->motif_sesuai_6 ? '1' : null;
+            $checklistbeaming->motif_sesuai_7 = $request->motif_sesuai_7 ? '1' : null;
             $checklistbeaming->jumlah_benang_putus = $request->jumlah_benang_putus;
             $checklistbeaming->jumlah_benang = $request->jumlah_benang;
             $checklistbeaming->lebar_benang = $request->lebar_benang;
@@ -149,8 +149,6 @@ class ChecklistbeamingController extends Controller
                     'slug' => Controller::gen_slug(),
                     'diameter_beam_timur' => $request->diameter_beam_timur[$key],
                     'diameter_beam_1m_dari_timur' => $request->diameter_beam_1m_dari_timur[$key],
-                    'diameter_beam_2m_dari_timur' => $request->diameter_beam_2m_dari_timur[$key],
-                    'diameter_beam_1m_dari_barat' => $request->diameter_beam_1m_dari_barat[$key],
                     'diameter_beam_barat' => $request->diameter_beam_barat[$key],
                 ];
             }
@@ -201,26 +199,24 @@ class ChecklistbeamingController extends Controller
     {
         DB::beginTransaction();
         try {
-            $checklistbeaming->motif_sesuai_1 = $request->motif_sesuai_1;
-            $checklistbeaming->motif_sesuai_2 = $request->motif_sesuai_2;
-            $checklistbeaming->motif_sesuai_3 = $request->motif_sesuai_3;
-            $checklistbeaming->motif_sesuai_4 = $request->motif_sesuai_4;
-            $checklistbeaming->motif_sesuai_5 = $request->motif_sesuai_5;
-            $checklistbeaming->motif_sesuai_6 = $request->motif_sesuai_6;
-            $checklistbeaming->motif_sesuai_7 = $request->motif_sesuai_7;
+            $checklistbeaming->motif_sesuai_1 = $request->motif_sesuai_1 ? '1' : null;
+            $checklistbeaming->motif_sesuai_2 = $request->motif_sesuai_2 ? '1' : null;
+            $checklistbeaming->motif_sesuai_3 = $request->motif_sesuai_3 ? '1' : null;
+            $checklistbeaming->motif_sesuai_4 = $request->motif_sesuai_4 ? '1' : null;
+            $checklistbeaming->motif_sesuai_5 = $request->motif_sesuai_5 ? '1' : null;
+            $checklistbeaming->motif_sesuai_6 = $request->motif_sesuai_6 ? '1' : null;
+            $checklistbeaming->motif_sesuai_7 = $request->motif_sesuai_7 ? '1' : null;
             $checklistbeaming->jumlah_benang_putus = $request->jumlah_benang_putus;
             $checklistbeaming->jumlah_benang = $request->jumlah_benang;
             $checklistbeaming->lebar_benang = $request->lebar_benang;
             $checklistbeaming->keterangan_produksi = $request->keterangan_produksi;
             $checklistbeaming->save();
-            foreach ($request->meter_awal as $key => $meter_awal) {
+            foreach ($request->diameter_beam_timur as $key => $diameter_beam_timur) {
                 $detail[] = [
                     'checklistbeaming_id' => $checklistbeaming->id,
                     'slug' => Controller::gen_slug(),
                     'diameter_beam_timur' => $request->diameter_beam_timur[$key],
                     'diameter_beam_1m_dari_timur' => $request->diameter_beam_1m_dari_timur[$key],
-                    'diameter_beam_2m_dari_timur' => $request->diameter_beam_2m_dari_timur[$key],
-                    'diameter_beam_1m_dari_barat' => $request->diameter_beam_1m_dari_barat[$key],
                     'diameter_beam_barat' => $request->diameter_beam_barat[$key],
                 ];
             }
