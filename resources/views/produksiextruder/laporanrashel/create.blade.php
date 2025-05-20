@@ -190,11 +190,11 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#div_jam_stop1').datetimepicker({
-                format: 'h:m:s'
+                format: 'HH:mm',
             });
 
             $('#div_jam_jalan1').datetimepicker({
-                format: 'h:m:s'
+                format: 'HH:mm',
             });
 
             format_select2();

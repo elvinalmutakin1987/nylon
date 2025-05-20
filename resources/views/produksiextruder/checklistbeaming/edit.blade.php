@@ -138,21 +138,65 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($checklistbeaming->checklistbeamingdetail as $d)
+                                                        @if ($checklistbeaming->count() >= 0)
+                                                            @foreach ($checklistbeaming->checklistbeamingdetail as $d)
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            id="diameter_beam_timur1"
+                                                                            name="diameter_beam_timur[]"
+                                                                            onblur="ubah_format('diameter_beam_timur{{ $d->id }}', this.value)"
+                                                                            value="{{ $d->diameter_beam_timur }}">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            id="diameter_beam_barat1"
+                                                                            name="diameter_beam_barat[]"
+                                                                            onblur="ubah_format('diameter_beam_barat{{ $d->id }}', this.value)"
+                                                                            value="{{ $d->diameter_beam_barat }}">
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="input-group date"
+                                                                            id="div_diameter_beam_1m_dari_timur{{ $d->id }}"
+                                                                            data-target-input="nearest">
+                                                                            <input type="text"
+                                                                                class="form-control datetimepicker-input"
+                                                                                data-target="#div_diameter_beam_1m_dari_timur{{ $d->id }}"
+                                                                                id="diameter_beam_1m_dari_timur{{ $d->id }}"
+                                                                                name="diameter_beam_1m_dari_timur[]"
+                                                                                value="{{ $d->diameter_beam_1m_dari_timur }}" />
+                                                                        </div>
+                                                                    </td>
+                                                                    @if ($loop->last)
+                                                                        <td class="text-center">
+                                                                            <button type="button" class="btn btn-primary"
+                                                                                onclick="tambah()"><i
+                                                                                    class="fa fa-plus"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                    @else
+                                                                        <td class="text-center">
+                                                                            <button type="button" class="btn btn-danger"
+                                                                                id="hapus"><i class="fa fa-trash"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                    @endif
+
+                                                                </tr>
+                                                            @endforeach
+                                                        @else
                                                             <tr>
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         id="diameter_beam_timur1"
                                                                         name="diameter_beam_timur[]"
-                                                                        onblur="ubah_format('diameter_beam_timur{{ $d->id }}', this.value)"
-                                                                        value="{{ $d->diameter_beam_timur }}">
+                                                                        onblur="ubah_format('diameter_beam_timur{{ $d->id }}', this.value)">
                                                                 </td>
                                                                 <td>
                                                                     <input type="text" class="form-control"
                                                                         id="diameter_beam_barat1"
                                                                         name="diameter_beam_barat[]"
-                                                                        onblur="ubah_format('diameter_beam_barat{{ $d->id }}', this.value)"
-                                                                        value="{{ $d->diameter_beam_barat }}">
+                                                                        onblur="ubah_format('diameter_beam_barat{{ $d->id }}', this.value)">
                                                                 </td>
                                                                 <td>
                                                                     <div class="input-group date"
@@ -162,26 +206,16 @@
                                                                             class="form-control datetimepicker-input"
                                                                             data-target="#div_diameter_beam_1m_dari_timur{{ $d->id }}"
                                                                             id="diameter_beam_1m_dari_timur{{ $d->id }}"
-                                                                            name="diameter_beam_1m_dari_timur[]"
-                                                                            value="{{ $d->diameter_beam_1m_dari_timur }}" />
+                                                                            name="diameter_beam_1m_dari_timur[]" />
                                                                     </div>
                                                                 </td>
-                                                                @if ($loop->last)
-                                                                    <td class="text-center">
-                                                                        <button type="button" class="btn btn-primary"
-                                                                            onclick="tambah()"><i class="fa fa-plus"></i>
-                                                                        </button>
-                                                                    </td>
-                                                                @else
-                                                                    <td class="text-center">
-                                                                        <button type="button" class="btn btn-danger"
-                                                                            id="hapus"><i class="fa fa-trash"></i>
-                                                                        </button>
-                                                                    </td>
-                                                                @endif
-
+                                                                <td class="text-center">
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        onclick="tambah()"><i class="fa fa-plus"></i>
+                                                                    </button>
+                                                                </td>
                                                             </tr>
-                                                        @endforeach
+                                                        @endif
                                                     </tbody>
                                                 </table>
                                             </div>

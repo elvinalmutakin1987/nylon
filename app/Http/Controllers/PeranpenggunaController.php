@@ -125,6 +125,7 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_extruder_kontrolreifen) array_push($access, 'produksi.extruder.kontrol-reifen');
             if ($request->produksi_extruder_laporansulzer) array_push($access, 'produksi.extruder.laporansulzer');
             if ($request->produksi_extruder_laporanrashel) array_push($access, 'produksi.extruder.laporanrashel');
+            if ($request->produksi_extruder_laporanbeaming) array_push($access, 'produksi.extruder.laporanbeaming');
             if ($request->produksi_extruder_checklistbeaming) array_push($access, 'produksi.extruder.checklistbeaming');
             if ($request->produksi_laminating_pengeringankain) array_push($access, 'produksi.laminating.pengeringankain');
             if ($request->produksi_laminating_rekap) array_push($access, 'produksi.laminating.rekap');
@@ -143,6 +144,7 @@ class PeranpenggunaController extends Controller
                 $request->produksi_extruder_kontrolreifen ||
                 $request->produksi_extruder_laporansulzer ||
                 $request->produksi_extruder_laporanrashel ||
+                $request->produksi_extruder_laporanbeaming ||
                 $request->produksi_extruder_checklistbeaming ||
                 $request->produksi_laminating_pengeringankain ||
                 $request->produksi_laminating_rekap ||
@@ -264,6 +266,7 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_extruder_kontrolreifen) array_push($access, 'produksi.extruder.kontrol-reifen');
             if ($request->produksi_extruder_laporansulzer) array_push($access, 'produksi.extruder.laporansulzer');
             if ($request->produksi_extruder_laporanrashel) array_push($access, 'produksi.extruder.laporanrashel');
+            if ($request->produksi_extruder_laporanbeaming) array_push($access, 'produksi.extruder.laporanbeaming');
             if ($request->produksi_extruder_checklistbeaming) array_push($access, 'produksi.extruder.checklistbeaming');
             if ($request->produksi_laminating_pengeringankain) array_push($access, 'produksi.laminating.pengeringankain');
             if ($request->produksi_laminating_rekap) array_push($access, 'produksi.laminating.rekap');
@@ -282,6 +285,7 @@ class PeranpenggunaController extends Controller
                 $request->produksi_extruder_kontrolreifen ||
                 $request->produksi_extruder_laporansulzer ||
                 $request->produksi_extruder_laporanrashel ||
+                $request->produksi_extruder_laporanbeaming ||
                 $request->produksi_extruder_checklistbeaming ||
                 $request->produksi_laminating_pengeringankain ||
                 $request->produksi_laminating_rekap ||

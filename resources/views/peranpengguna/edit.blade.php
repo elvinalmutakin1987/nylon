@@ -281,6 +281,15 @@
                                                             </div>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.laporansulzer"
+                                                                    name="produksi.extruder.laporansulzer"
+                                                                    {{ $role->hasPermissionTo('produksi.extruder.laporanbeaming') ? 'checked' : '' }}>
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.laporansulzer">Laporan
+                                                                    Sulzer</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
                                                                     id="produksi.extruder.laporanrashel"
                                                                     name="produksi.extruder.laporanrashel"
                                                                     {{ $role->hasPermissionTo('produksi.extruder.laporanrashel') ? 'checked' : '' }}>

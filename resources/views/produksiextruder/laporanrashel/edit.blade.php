@@ -364,20 +364,20 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#div_jam_stop1').datetimepicker({
-                format: 'h:m:s'
+                format: 'HH:mm',
             });
 
             $('#div_jam_jalan1').datetimepicker({
-                format: 'h:m:s'
+                format: 'HH:mm',
             });
 
             @foreach ($laporanrashel->laporanrasheldetail as $d)
                 $('#div_jam_stop{{ $d->slug }}').datetimepicker({
-                    format: 'h:m:s'
+                    format: 'HH:mm',
                 });
 
                 $('#div_jam_jalan{{ $d->slug }}').datetimepicker({
-                    format: 'h:m:s'
+                    format: 'HH:mm',
                 });
             @endforeach
 

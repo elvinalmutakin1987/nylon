@@ -257,6 +257,14 @@
                                                             </div>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.laporanbeaming"
+                                                                    name="produksi.extruder.laporanbeaming">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.laporanbeaming">Laporan
+                                                                    Beaming</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
                                                                     id="produksi.extruder.laporanrashel"
                                                                     name="produksi.extruder.laporanrashel">
                                                                 <label class="form-check-label"

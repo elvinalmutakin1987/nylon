@@ -16,6 +16,7 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LaporangudangController;
 use App\Http\Controllers\LaporanrashelController;
 use App\Http\Controllers\LaporansulzerController;
+use App\Http\Controllers\LaporanbeamingController;
 use App\Http\Controllers\LaporanwjlefisiensiController;
 use App\Http\Controllers\LapproduksiwjlController;
 use App\Http\Controllers\LoginController;
@@ -451,5 +452,28 @@ Route::middleware(['auth'])->group(function () {
         Route::get('produksiextruder-checklistbeaming-confirm/{checklistbeaming}', [ChecklistbeamingController::class, 'confirm'])->name('produksiextruder.checklistbeaming.confirm');
 
         Route::get('produksiextruder-checklistbeaming-export', [ChecklistbeamingController::class, 'export'])->name('produksiextruder.checklistbeaming.export');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.laporanbeaming']], function () {
+        Route::get('produksiextruder-laporanbeaming', [LaporanbeamingController::class, 'index'])->name('produksiextruder.laporanbeaming.index');
+        Route::get('produksiextruder-get-laporanbeaming', [LaporanbeamingController::class, 'get_laporanbeaming'])->name('produksiextruder.laporanbeaming.get_laporanbeaming');
+        Route::post('produksiextruder-laporanbeaming', [LaporanbeamingController::class, 'store'])->name('produksiextruder.laporanbeaming.store');
+        Route::get('produksiextruder-laporanbeaming/create', [LaporanbeamingController::class, 'create'])->name('produksiextruder.laporanbeaming.create');
+        Route::get('produksiextruder-laporanbeaming/create-laporan', [LaporanbeamingController::class, 'create_laporan'])->name('produksiextruder.laporanbeaming.create_laporan');
+        Route::get('produksiextruder-laporanbeaming/{laporanbeaming}', [LaporanbeamingController::class, 'show'])->name('produksiextruder.laporanbeaming.show');
+        Route::put('produksiextruder-laporanbeaming/{laporanbeaming}', [LaporanbeamingController::class, 'update'])->name('produksiextruder.laporanbeaming.update');
+        Route::delete('produksiextruder-laporanbeaming/{laporanbeaming}', [LaporanbeamingController::class, 'destroy'])->name('produksiextruder.laporanbeaming.destroy');
+        Route::get('produksiextruder-laporanbeaming/{laporanbeaming}/edit', [LaporanbeamingController::class, 'edit'])->name('produksiextruder.laporanbeaming.edit');
+
+        // Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.laporanbeaming.edit']], function () {
+        //     Route::get('produksiextruder-laporanbeaming/{laporanbeaming}/edit', [LaporanbeamingController::class, 'edit'])->name('produksiextruder.laporanbeaming.edit');
+        // });
+
+        Route::get('produksiextruder-laporanbeaming-cetak', [LaporanbeamingController::class, 'cetak'])->name('produksiextruder.laporanbeaming.cetak');
+        Route::get('produksiextruder-laporanbeaming-get-mesin', [LaporanbeamingController::class, 'get_mesin'])->name('produksiextruder.laporanbeaming.get_mesin');
+        Route::get('produksiextruder-laporanbeaming-get-detail', [LaporanbeamingController::class, 'get_detail'])->name('produksiextruder.laporanbeaming.get_detail');
+        Route::get('produksiextruder-laporanbeaming-confirm/{laporanbeaming}', [LaporanbeamingController::class, 'confirm'])->name('produksiextruder.laporanbeaming.confirm');
+
+        Route::get('produksiextruder-laporanbeaming-export', [LaporanbeamingController::class, 'export'])->name('produksiextruder.laporanbeaming.export');
     });
 });

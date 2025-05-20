@@ -70,6 +70,13 @@
                                                 </a>
                                             @endif
 
+                                            @if (auth()->user()->can('produksi.extruder.laporanbeaming'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('produksiextruder.laporanbeaming.index') }}">
+                                                    <i class="fas fa-cog"></i> Laporan Beaming
+                                                </a>
+                                            @endif
+
                                             @if (auth()->user()->can('produksi.extruder.checklistbeaming'))
                                                 <a class="btn btn-app"
                                                     href="{{ route('produksiextruder.checklistbeaming.index') }}">
