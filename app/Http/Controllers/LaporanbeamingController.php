@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Material;
 use App\Models\Mesin;
 use App\Models\Laporanbeaming;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -81,7 +82,7 @@ class LaporanbeamingController extends Controller
 
         if ($laporanbeaming->status == 'Draft') {
             $action = 'edit';
-            return view('produksiextruder.laporanbeaming.show', compact('beam_numbr', 'tanggal',  'jenis_produksi',  'action', 'laporanbeaming', 'laporanbeaming_sebelumnya'));
+            return view('produksiextruder.laporanbeaming.show', compact('beam_number', 'tanggal',  'jenis_produksi',  'action', 'laporanbeaming', 'laporanbeaming_sebelumnya'));
         }
 
         return redirect()->back()->with([
@@ -95,7 +96,7 @@ class LaporanbeamingController extends Controller
         $jenis_produksi = $request->jenis_produksi;
         $beam_number = $request->beam_number;
         $tanggal = $request->tanggal;
-        return view('produksiextruder.laporanbeaming.create', compact('jenis_produksi','beam_number','tanggal'));
+        return view('produksiextruder.laporanbeaming.create', compact('jenis_produksi', 'beam_number', 'tanggal'));
     }
 
     /**
@@ -140,7 +141,7 @@ class LaporanbeamingController extends Controller
                     'laporanbeaming' => $laporanbeaming->id,
                     'slug' => Controller::gen_slug(),
                     'panen_ke' => $request->panen_ke[$key] ? Controller::unformat_angka($panen_ke) : null,
-                    'tanggal' = Carbon::parse($request->tanggal_panen[$key])->format('Y-m-d');
+                    'tanggal' => Carbon::parse($request->tanggal_panen[$key])->format('Y-m-d'),
                     'meter' => $request->meter[$key] ? Controller::unformat_angka($request->meter[$key]) : null,
                 ];
             }
@@ -174,7 +175,7 @@ class LaporanbeamingController extends Controller
         $beam_number = $laporanbeaming->beam_number;
         $jenis_produksi = $laporanbeaming->jenis_produksi;
         $tanggal = $laporanbeaming->tanggal;
-        return view('produksiextruder.laporanbeaming.edit', compact('beam_number','jenis_produksi','tanggal', 'laporanbeaming'));
+        return view('produksiextruder.laporanbeaming.edit', compact('beam_number', 'jenis_produksi', 'tanggal', 'laporanbeaming'));
     }
 
     /**
@@ -185,7 +186,7 @@ class LaporanbeamingController extends Controller
         $jenis_produksi = $laporanbeaming->jenis_produksi;
         $beam_number = $laporanbeaming->beam_number;
         $tanggal = $laporanbeaming->tanggal;
-        return view('produksiextruder.laporanbeaming.edit', compact('beam_number','jenis_produksi','tanggal','laporanbeaming'));
+        return view('produksiextruder.laporanbeaming.edit', compact('beam_number', 'jenis_produksi', 'tanggal', 'laporanbeaming'));
     }
 
     /**
@@ -215,7 +216,7 @@ class LaporanbeamingController extends Controller
                     'laporanbeaming' => $laporanbeaming->id,
                     'slug' => Controller::gen_slug(),
                     'panen_ke' => $request->panen_ke[$key] ? Controller::unformat_angka($panen_ke) : null,
-                    'tanggal' = Carbon::parse($request->tanggal_panen[$key])->format('Y-m-d');
+                    'tanggal' => Carbon::parse($request->tanggal_panen[$key])->format('Y-m-d'),
                     'meter' => $request->meter[$key] ? Controller::unformat_angka($request->meter[$key]) : null,
                 ];
             }
@@ -246,9 +247,9 @@ class LaporanbeamingController extends Controller
         $beam_number = $request->beam_number;
         $tanggal = Carbon::parse($request->tanggal)->format('Y-m-d') ?? date('Y-m-d');
         $laporanbeaming = Laporanbeaming::where('tanggal', $tanggal)
-        ->where('jenis_produksi', $jenis_produksi)
-        ->where('beam_number', $beam_number)
-        ->first();
+            ->where('jenis_produksi', $jenis_produksi)
+            ->where('beam_number', $beam_number)
+            ->first();
         return response()->json([
             'status' => 'success',
             'data' => $laporanbeaming,

@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('slug')->nullable();
             $table->date('tanggal')->nullable();
+            $table->string('number')->nullable();
             $table->string('beam_number')->nullable();
             $table->string('lembar_tenunan')->nullable();
+            $table->string('denier')->nullable();
+            $table->string('lebar_benang')->nullable();
             $table->string('jenis_produksi')->nullable();
             $table->string('jumlah_lungsi')->nullable();
             $table->string('lebar_beam')->nullable();
@@ -41,6 +44,7 @@ return new class extends Migration
             $table->string('confirmed_by')->nullable();
             $table->string('nomor_sulzer')->nullable();
             $table->date('tanggal_sulzer')->nullable();
+            $table->text('keterangan')->nullable();
             $table->text('status')->nullable();
             $table->timestamps();
             $table->timestamp('approved_at')->nullable();

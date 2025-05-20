@@ -68,7 +68,8 @@
                                                 class="form-control select2 w-100 select-bentuk @error('operator') is-invalid @enderror"
                                                 id="operator" name="operator">
                                                 @foreach ($operator as $d)
-                                                    <option value="{{ $d->operator }}">{{ $d->operator }}</option>
+                                                    <option value="{{ strtoupper($d->operator) }}">
+                                                        {{ strtoupper($d->operator) }}</option>
                                                 @endforeach
                                             </select>
                                             @error('jenis')
