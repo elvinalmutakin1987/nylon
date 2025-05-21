@@ -70,7 +70,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="table-responsive p-0">
-                                                <table id="table1" class="table projects table-bordered">
+                                                <table id="table1" class="table projects table-bordered table-sm">
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center"></th>

@@ -42,22 +42,6 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <label for="number">Number</label>
-                                                    <input type="text"
-                                                        class="form-control @error('number') is-invalid @enderror"
-                                                        id="number" name="number">
-                                                    @error('number')
-                                                        <span id="number-error"
-                                                            class="error invalid-feedback">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <div class="form-group">
                                                     <label for="tanggal">Tanggal</label>
                                                     <input type="text"
                                                         class="form-control @error('tanggal') is-invalid @enderror"
@@ -97,6 +81,465 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <label for="nomor">Nomor</label>
+                                                    <input type="text"
+                                                        class="form-control @error('nomor') is-invalid @enderror"
+                                                        id="nomor" name="nomor">
+                                                    @error('nomor')
+                                                        <span id="nomor-error"
+                                                            class="error invalid-feedback">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="jenis_bahan">Jenis Bahan</label>
+                                                <select
+                                                    class="form-control select2 w-100 select-shift @error('jenis_bahan') is-invalid @enderror"
+                                                    id="jenis_bahan" name="jenis_bahan">
+                                                    <option value="PP">
+                                                        PP</option>
+                                                    <option value="PE">
+                                                        PE</option>
+                                                </select>
+                                                @error('jenis_bahan')
+                                                    <span id="jenis_bahan-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="denier">Denier</label>
+                                                <input
+                                                    type="text"class="form-control @error('denier') is-invalid @enderror"
+                                                    id="denier" name="denier">
+                                                @error('denier')
+                                                    <span id="denier-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="lebar_benang">Lebar Benang</label>
+                                                <input
+                                                    type="text"class="form-control @error('lebar_benang') is-invalid @enderror"
+                                                    id="lebar_benang" name="lebar_benang">
+                                                @error('lebar_benang')
+                                                    <span id="lebar_benang-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="warna_benang">Warna Benang</label>
+                                                <input
+                                                    type="text"class="form-control @error('warna_benang') is-invalid @enderror"
+                                                    id="warna_benang" name="warna_benang">
+                                                @error('warna_benang')
+                                                    <span id="warna_benang-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="jumlah_lungsi">Jumlah Lungsi</label>
+                                                <input
+                                                    type="text"class="form-control @error('jumlah_lungsi') is-invalid @enderror"
+                                                    id="jumlah_lungsi" name="jumlah_lungsi">
+                                                @error('jumlah_lungsi')
+                                                    <span id="jumlah_lungsi-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="lebar_beam">Lebar Beam</label>
+                                                <input
+                                                    type="text"class="form-control @error('lebar_beam') is-invalid @enderror"
+                                                    id="lebar_beam" name="lebar_beam">
+                                                @error('lebar_beam')
+                                                    <span id="lebar_beam-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="front_reed">Front Reed</label>
+                                                <input
+                                                    type="text"class="form-control @error('front_reed') is-invalid @enderror"
+                                                    id="front_reed" name="front_reed">
+                                                @error('front_reed')
+                                                    <span id="front_reed-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="rear_read">Rear Reed</label>
+                                                <input
+                                                    type="text"class="form-control @error('rear_read') is-invalid @enderror"
+                                                    id="rear_read" name="rear_read">
+                                                @error('rear_read')
+                                                    <span id="rear_read-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="traverse_reed">Traverse Reed</label>
+                                                <input
+                                                    type="text"class="form-control @error('traverse_reed') is-invalid @enderror"
+                                                    id="traverse_reed" name="traverse_reed">
+                                                @error('traverse_reed')
+                                                    <span id="traverse_reed-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="benang_pinggiran_kiri">Benang Pinggiran (Kiri)</label>
+                                                <input
+                                                    type="text"class="form-control @error('benang_pinggiran_kiri') is-invalid @enderror"
+                                                    id="benang_pinggiran_kiri" name="benang_pinggiran_kiri">
+                                                @error('benang_pinggiran_kiri')
+                                                    <span id="benang_pinggiran_kiri-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="benang_pinggiran_kanan">Benang Pinggiran (Kanan)</label>
+                                                <input
+                                                    type="text"class="form-control @error('benang_pinggiran_kanan') is-invalid @enderror"
+                                                    id="benang_pinggiran_kanan" name="benang_pinggiran_kanan">
+                                                @error('benang_pinggiran_kanan')
+                                                    <span id="benang_pinggiran_kanan-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="benang_pinggiran_benang">Benang Pinggiran (Benang)</label>
+                                                <input
+                                                    type="text"class="form-control @error('benang_pinggiran_benang') is-invalid @enderror"
+                                                    id="benang_pinggiran_benang" name="benang_pinggiran_benang">
+                                                @error('benang_pinggiran_benang')
+                                                    <span id="benang_pinggiran_benang-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="lebar_traverse">Lebar Traverse</label>
+                                                <input
+                                                    type="text"class="form-control @error('lebar_traverse') is-invalid @enderror"
+                                                    id="lebar_traverse" name="lebar_traverse">
+                                                @error('lebar_traverse')
+                                                    <span id="lebar_traverse-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="kecepatan_traverse">Kecepatan Traverse</label>
+                                                <input
+                                                    type="text"class="form-control @error('kecepatan_traverse') is-invalid @enderror"
+                                                    id="kecepatan_traverse" name="kecepatan_traverse">
+                                                @error('kecepatan_traverse')
+                                                    <span id="kecepatan_traverse-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="kecepatan_beaming">Kecepatan Beaming</label>
+                                                <input
+                                                    type="text"class="form-control @error('kecepatan_beaming') is-invalid @enderror"
+                                                    id="kecepatan_beaming" name="kecepatan_beaming">
+                                                @error('kecepatan_beaming')
+                                                    <span id="kecepatan_beaming-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="cut_mark">Cut Mark</label>
+                                                <input
+                                                    type="text"class="form-control @error('cut_mark') is-invalid @enderror"
+                                                    id="cut_mark" name="cut_mark">
+                                                @error('cut_mark')
+                                                    <span id="cut_mark-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="panjang_press_roller">Panjang Press Roller</label>
+                                                <input
+                                                    type="text"class="form-control @error('panjang_press_roller') is-invalid @enderror"
+                                                    id="panjang_press_roller" name="panjang_press_roller">
+                                                @error('panjang_press_roller')
+                                                    <span id="panjang_press_roller-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="tekanan_press_roller">Tekanan Press Roller</label>
+                                                <input
+                                                    type="text"class="form-control @error('tekanan_press_roller') is-invalid @enderror"
+                                                    id="tekanan_press_roller" name="tekanan_press_roller">
+                                                @error('tekanan_press_roller')
+                                                    <span id="tekanan_press_roller-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="tension_roller_no_1">Tension Roller No. 1</label>
+                                                <input
+                                                    type="text"class="form-control @error('tension_roller_no_1') is-invalid @enderror"
+                                                    id="tension_roller_no_1" name="tension_roller_no_1">
+                                                @error('tension_roller_no_1')
+                                                    <span id="tension_roller_no_1-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="tension_roller_no_2">Tension Roller No. 2</label>
+                                                <input
+                                                    type="text"class="form-control @error('tension_roller_no_2') is-invalid @enderror"
+                                                    id="tension_roller_no_2" name="tension_roller_no_2">
+                                                @error('tension_roller_no_2')
+                                                    <span id="tension_roller_no_2-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="traverse_reed_design">Traverse Reed Design</label>
+                                                <input
+                                                    type="text"class="form-control @error('traverse_reed_design') is-invalid @enderror"
+                                                    id="traverse_reed_design" name="traverse_reed_design">
+                                                @error('traverse_reed_design')
+                                                    <span id="traverse_reed_design-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive p-0">
+                                                <table id="table1" class="table projects table-bordered table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="text-center" style="width: 19%">
+                                                                Tanggal
+                                                            </th>
+                                                            <th scope="col" class="text-center" style="width: 19%">
+                                                                Shift
+                                                            </th>
+                                                            <th scope="col" class="text-center" style="width: 19%">
+                                                                Meter Awal
+                                                            </th>
+                                                            <th scope="col" class="text-center" style="width: 19%">
+                                                                Meter Akhir
+                                                            </th>
+                                                            <th scope="col" class="text-center" style="width: 19%">
+                                                                Meter Hasil
+                                                            </th>
+                                                            <th style="width: 5%">
+
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="date" class="form-control"
+                                                                    id="tanggal_detail1" name="tanggal_detail[]"
+                                                                    value="{{ date('Y-m-d') }}" />
+                                                            </td>
+                                                            <td>
+                                                                <select
+                                                                    class="form-control select2 w-100 select-shift @error('shift_detail') is-invalid @enderror"
+                                                                    id="shift_detail1" name="shift_detail[]">
+                                                                    <option value="Pagi">Pagi</option>
+                                                                    <option value="Sore">Sore</option>
+                                                                    <option value="Malam">Malam</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control"
+                                                                    id="meter_awal1" name="meter_awal[]"
+                                                                    onblur="ubah_format('meter_awal1', this.value); hitung_hasil('1'); hitung_total_meter()">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control"
+                                                                    id="meter_akhir1" name="meter_akhir[]"
+                                                                    onblur="ubah_format('meter_akhir1', this.value); hitung_hasil('1'); hitung_total_meter()">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control"
+                                                                    id="meter_hasil1" name="meter_hasil[]" readonly>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button type="button" class="btn btn-primary"
+                                                                    onclick="tambah()"><i class="fa fa-plus"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="4" class="text-right">Total</th>
+                                                            <th><input type="text" class="form-control"
+                                                                    id="meter_total" name="meter_total" readonly>
+                                                            </th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="nomor_sulzer">Nomor Sulzer</label>
+                                                <input
+                                                    type="text"class="form-control @error('nomor_sulzer') is-invalid @enderror"
+                                                    id="nomor_sulzer" name="nomor_sulzer">
+                                                @error('nomor_sulzer')
+                                                    <span id="nomor_sulzer-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="nomor_sulzer">Tanggal Sulzer</label>
+                                                <div class="input-group date" id="div_tanggal_sulzer"
+                                                    data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-inpsut"
+                                                        data-target="#div_tanggal_sulzer" id="tanggal_sulzer"
+                                                        name="tanggal_sulzer"
+                                                        value="{{ old('tanggal_sulzer') ?? date('Y-m-d') }}" />
+                                                    <div class="input-group-append" data-target="#div_tanggal_sulzer"
+                                                        data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @error('tanggal_sulzer')
+                                                    <span id="tanggal_sulzer-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive p-0">
+                                                <table id="table2" class="table projects table-bordered table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="text-center" style="width: 45%">
+                                                                Panen Ke
+                                                            </th>
+                                                            <th scope="col" class="text-center" style="width: 50%">
+                                                                Meter
+                                                            </th>
+                                                            <th style="width: 5%">
+
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="number" class="form-control" id="panen_ke1"
+                                                                    name="panen_ke[]"
+                                                                    onblur="ubah_format('panen_ke1', this.value)">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" id="meter1"
+                                                                    name="meter[]"
+                                                                    onblur="ubah_format('meter1', this.value); hitung_total_panen()">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button type="button" class="btn btn-primary"
+                                                                    onclick="tambah2()"><i class="fa fa-plus"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-right">Total</th>
+                                                            <th>
+                                                                <input type="text" class="form-control"
+                                                                    id="panen_total" name="panen_total" readonly>
+                                                            </th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="keterangan">Keterangan</label>
+                                                <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="10" id="keterangan"
+                                                    name="keterangan"></textarea>
+                                                @error('keterangan')
+                                                    <span id="keterangan-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
@@ -125,12 +568,8 @@
 @section('script')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#div_jam_stop1').datetimepicker({
-                format: 'HH:mm',
-            });
-
-            $('#div_jam_jalan1').datetimepicker({
-                format: 'HH:mm',
+            $('#div_tanggal_detail1').datetimepicker({
+                format: 'YYYY-MM-DD'
             });
 
             format_select2();
@@ -171,104 +610,97 @@
         function tambah() {
             var tbody_row = $('#table1').find('tr').length;
             var row_id = Date.now().toString(36) + Math.random().toString(36).substr(2);
-            var meter_awal = $("#meter_awal1").val();
-            var meter_akhir = $("#meter_akhir1").val();
-            var hasil = parseFloat(numeral(meter_akhir).format('0')) - parseFloat(numeral(meter_awal).format('0'));
-            var keterangan_produksi = $("#keterangan_produksi1").val();
-            var keterangan_mesin = $("#keterangan_mesin1").val();
-            var jam_stop = $("#jam_stop1").val();
-            var jam_jalan = $("#jam_jalan1").val();
-            var mesin_id = $("#mesin_id1 option:selected").val();
-            var mesin = $("#mesin_id1 option:selected").text();
-            var jenis_produksi = $("#jenis_produksi1 option:selected").val();
+            var meter_awal = numeral($("#meter_awal1").val()).format('0');
+            var meter_akhir = numeral($("#meter_akhir1").val()).format('0');
+            var meter_hasil = parseFloat(numeral(meter_akhir).format('0')) - parseFloat(numeral(meter_awal).format('0'));
+            var tanggal_detail = $("#tanggal_detail1").val();
+            var shift_detail = $("#shift_detail1 option:selected").val();
             $("#table1 > tbody > tr:last").before(`
-            <tr>
-                <td class="text-center" style="vertical-align: top">
-                    <button type="button" class="btn btn-danger"
-                        id="hapus"><i class="fa fa-trash"></i>
-                    </button>
-                </td>
-                <td style="vertical-align: top">
-                    <select
-                        class="form-control select2 w-100 select-mesin @error('mesin_id${row_id}') is-invalid @enderror"
-                        id="mesin_id${row_id}" name="mesin_id[]">
-                        <option value="${mesin_id}">${mesin}</option>
-                    </select>
-                </td>
-                <td style="vertical-align: top">
-                    <select
-                        class="form-control select2 w-100 select-jenis-produksi @error('jenis_produksi${row_id}') is-invalid @enderror"
-                        id="jenis_produksi${row_id}" name="jenis_produksi[]">
-                        <option value="${jenis_produksi}">
-                            ${jenis_produksi}</option>
-                    </select>
-                </td>
-                <td style="vertical-align: top">
-                    <label for="meter_awal${row_id}">Meter Awal</label>
-                    <input type="text"
-                        class="form-control @error('meter_awal') is-invalid @enderror"
-                        id="meter_awal${row_id}" name="meter_awal[]" value="${meter_awal}" onkeyup="ubah_format('meter_awal${row_id}', this.value); hitung_hasil('${row_id}')">
-                    <br>
-                    <label for="meter_akhir${row_id}">Meter Akhir</label>
-                    <input type="text"
-                        class="form-control @error('meter_akhir') is-invalid @enderror"
-                        id="meter_akhir${row_id}"
-                        name="meter_akhir[]" value="${meter_akhir}" onkeyup="ubah_format('meter_akhir${row_id}', this.value); hitung_hasil('${row_id}')">
-                    <br>
-                    <label for="hasil${row_id}">Hasil</label>
-                    <input type="text"
-                        class="form-control @error('hasil') is-invalid @enderror"
-                        id="hasil${row_id}"
-                        name="hasil[]" value="${numeral(hasil).format('0,0')}" readonly>
-                </td>
-                <td style="vertical-align: top">
-                    <textarea class="form-control @error('keterangan_produksi') is-invalid @enderror" rows="5"
-                        id="keterangan_produksi${row_id}" name="keterangan_produksi[]">${keterangan_produksi}</textarea>
-                </td>
-                <td style="vertical-align: top">
-                    <textarea class="form-control @error('keterangan_mesin') is-invalid @enderror" rows="5"
-                        id="keterangan_mesin${row_id}" name="keterangan_mesin[]">${keterangan_mesin}</textarea>
-                </td>
-                <td style="vertical-align: top">
-                    <label for="div_jam_stop${row_id}">Jam Stop</label>
-                    <div class="input-group date"
-                        id="div_jam_stop${row_id}"
-                        data-target-input="nearest">
-                        <input type="text"
-                            class="form-control datetimepicker-input"
-                            data-target="#div_jam_stop${row_id}"
-                            id="jam_stop${row_id}"
-                            name="jam_stop[]" value="${jam_stop}"/>
-                    </div>
-                    <br>
-                    <label for="div_jam_jalan${row_id}">Jam Jalan</label>
-                    <div class="input-group date"
-                        id="div_jam_jalan${row_id}"
-                        data-target-input="nearest">
-                        <input type="text"
-                            class="form-control datetimepicker-input"
-                            data-target="#div_jam_jalan${row_id}"
-                            id="jam_jalan${row_id}"
-                            name="jam_jalan[]" value="${jam_jalan}"/>
-                    </div>
-                </td>
-            </tr>
-        `);
-            $("#hasil1").val("");
-            $("#mesin_id1").val(null).trigger('change');
-            $("#jenis_produksi1").val(null).trigger('change');
+                <tr>
+                    <td>
+                        <input type="date" class="form-control"
+                            id="tanggal_detail${row_id}" name="tanggal_detail[]"
+                            value="${tanggal_detail}" />
+                    </td>
+                    <td>
+                        <select
+                            class="form-control select2 w-100 select-shift @error('shift_detail') is-invalid @enderror"
+                            id="shift_detail${row_id}" name="shift_detail[]">
+                            <option value="Pagi" ${shift_detail === 'Pagi' ? 'selected' : ''}>Pagi</option>
+                            <option value="Sore" ${shift_detail === 'Sore' ? 'selected' : ''}>Sore</option>
+                            <option value="Malam" ${shift_detail === 'Malam' ? 'selected' : ''}>Malam</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control"
+                            id="meter_awal${row_id}" name="meter_awal[]"
+                            onblur="ubah_format('meter_awal${row_id}', this.value); hitung_hasil('${row_id}'); hitung_total_meter();" value="${numeral(meter_awal).format('0,0')}">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control"
+                            id="meter_akhir${row_id}" name="meter_akhir[]"
+                            onblur="ubah_format('meter_akhir${row_id}', this.value); hitung_hasil('${row_id}'); hitung_total_meter();" value="${numeral(meter_akhir).format('0,0')}">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control"
+                            id="meter_hasil${row_id}" name="meter_hasil[]" readonly value="${numeral(meter_hasil).format('0,0')}">
+                    </td>
+                    <td class="text-center">
+                         <button type="button" class="btn btn-danger"
+                            id="hapus"><i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `);
+            $("#tanggal_detail1").val("{{ date('Y-m-d') }}");
+            $("#shift_detail1").val("Pagi").trigger('change');
             $("#meter_awal1").val("");
             $("#meter_akhir1").val("");
-            $("#keterangan_produksi1").val("");
-            $("#keterangan_mesin1").val("");
-            $("#jam_stop1").val("");
-            $("#jam_jalan1").val("");
+            $("#meter_hasil1").val("");
 
             format_select2();
+
+            hitung_total_meter();
+        }
+
+        function tambah2() {
+            var tbody_row = $('#table2').find('tr').length;
+            var row_id = Date.now().toString(36) + Math.random().toString(36).substr(2);
+            var panen_ke = numeral($("#panen_ke1").val()).format('0');
+            var meter = numeral($("#meter1").val()).format('0');
+            $("#table2 > tbody > tr:last").before(`
+                <tr>
+                    <td>
+                        <input type="number" class="form-control"
+                            id="panen_ke${row_id}" name="panen_ke[]"
+                            onblur="ubah_format('meter_awal${row_id}', this.value);" value="${numeral(panen_ke).format('0,0')}">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control"
+                            id="meter${row_id}" name="meter[]"
+                            onblur="ubah_format('meter${row_id}', this.value); hitung_total_panen()" value="${numeral(meter).format('0,0')}">
+                    </td>
+                    <td class="text-center">
+                         <button type="button" class="btn btn-danger"
+                            id="hapus"><i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `);
+            $("#panen_ke1").val("");
+            $("#meter1").val("");
+
+            hitung_total_panen();
         }
 
         $("#table1").on("click", "#hapus", function() {
             $(this).closest("tr").remove();
+            hitung_total_meter();
+        });
+
+        $("#table2").on("click", "#hapus", function() {
+            $(this).closest("tr").remove();
+            hitung_total_panen();
         });
 
         @if (Session::has('message'))
@@ -294,8 +726,30 @@
         function hitung_hasil(field) {
             var meter_awal = numeral($("#meter_awal" + field).val()).format('0');
             var meter_akhir = numeral($("#meter_akhir" + field).val()).format('0');
-            var hasil = parseFloat(meter_akhir) - parseFloat(meter_awal);
-            $("#hasil" + field).val(numeral(hasil).format('0,0'));
+            var meter_hasil = parseFloat(numeral(meter_akhir).format('0')) - parseFloat(numeral(meter_awal).format('0'));
+            $("#meter_hasil" + field).val(numeral(meter_hasil).format('0,0'));
+        }
+
+        function hitung_total_meter() {
+            var total = 0;
+            $('#table1 tbody tr').each(function() {
+                var meter_hasil = $(this).find('input[name="meter_hasil[]"]').val();
+                if (meter_hasil) {
+                    total += parseFloat(meter_hasil.replace(/,/g, ''));
+                }
+            });
+            $("#meter_total").val(numeral(total).format('0,0'));
+        }
+
+        function hitung_total_panen() {
+            var total = 0;
+            $('#table2 tbody tr').each(function() {
+                var meter = $(this).find('input[name="meter[]"]').val();
+                if (meter) {
+                    total += parseFloat(meter.replace(/,/g, ''));
+                }
+            });
+            $("#panen_total").val(numeral(total).format('0,0'));
         }
     </script>
 @endsection

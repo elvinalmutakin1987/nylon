@@ -39,12 +39,27 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
+                                                <label for="number">No.</label>
+                                                <input type="text"
+                                                    class="form-control @error('number') is-invalid @enderror"
+                                                    id="number" name="number"
+                                                    value="{{ $laporanbeaming_sebelumnya->number }}" readonly>
+                                                @error('number')
+                                                    <span id="number-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="tanggal">Tanggal</label>
                                                     <input type="text"
                                                         class="form-control @error('tanggal') is-invalid @enderror"
                                                         id="tanggal" name="tanggal"
-                                                        value="{{ $laporanbeamin_sebelumnya->tanggal }}" readonly>
+                                                        value="{{ $laporanbeaming_sebelumnya->tanggal }}" readonly>
                                                     @error('tanggal')
                                                         <span id="tanggal-error"
                                                             class="error invalid-feedback">{{ $message }}</span>
@@ -82,19 +97,17 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="beam_number">Baem Number</label>
+                                                <label for="lebar_tenunan">Lebar Tenunan</label>
                                                 <input type="text"
-                                                    class="form-control @error('beam_number') is-invalid @enderror"
-                                                    id="beam_number" name="beam_number"
-                                                    value="{{ $laporanbeaming_sebelumnya->beam_number }}" readonly>
-                                                @error('beam_number')
-                                                    <span id="beam_number-error"
+                                                    class="form-control @error('lebar_tenunan') is-invalid @enderror"
+                                                    id="lebar_tenunan" name="lebar_tenunan"
+                                                    value="{{ $laporanbeaming_sebelumnya->lebar_tenunan }}" readonly>
+                                                @error('lebar_tenunan')
+                                                    <span id="lebar_tenunan-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-4"></div>
-                                        <div class="col-md-4"></div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">

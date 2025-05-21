@@ -47,6 +47,20 @@ class LaporanbeamingController extends Controller
             ]);
         }
 
+        if ($beam_number == 'null' || $beam_number == '') {
+            return redirect()->back()->with([
+                'status' => 'error',
+                'message' => 'Beam Number tidak boleh kosong!'
+            ]);
+        }
+
+        if ($jenis_produksi == 'null' || $jenis_produksi == '') {
+            return redirect()->back()->with([
+                'status' => 'error',
+                'message' => 'Pilih jenis produksi!'
+            ]);
+        }
+
         $laporanbeaming = Laporanbeaming::where('tanggal', $tanggal)
             ->where('beam_number', $beam_number)
             ->where('jenis_produksi', $jenis_produksi)
@@ -119,34 +133,56 @@ class LaporanbeamingController extends Controller
                 $laporanbeaming->beam_number = $request->beam_number;
                 $laporanbeaming->created_by = Auth::user()->id;
             }
-
+            $laporanbeaming->nomor = $request->nomor;
+            $laporanbeaming->jenis_bahan = $request->jenis_bahan;
+            $laporanbeaming->denier = $request->denier;
+            $laporanbeaming->lebar_benang = $request->lebar_benang;
+            $laporanbeaming->warna_benang = $request->warna_benang;
+            $laporanbeaming->jumlah_lungsi = $request->jumlah_lungsi;
+            $laporanbeaming->lebar_beam = $request->lebar_beam;
+            $laporanbeaming->front_reed = $request->front_reed;
+            $laporanbeaming->rear_reed = $request->rear_reed;
+            $laporanbeaming->traverse_reed = $request->traverse_reed;
+            $laporanbeaming->benang_pinggiran_kiri = $request->benang_pinggiran_kiri;
+            $laporanbeaming->benang_pinggiran_kanan = $request->benang_pinggiran_kanan;
+            $laporanbeaming->benang_pinggiran_benang = $request->benang_pinggiran_benang;
+            $laporanbeaming->lebar_traverse = $request->lebar_traverse;
+            $laporanbeaming->kecepatan_beaming = $request->kecepatan_beaming;
+            $laporanbeaming->cut_mark = $request->cut_mark;
+            $laporanbeaming->panjang_press_roller = $request->panjang_press_roller;
+            $laporanbeaming->tekanan_press_roller = $request->tekanan_press_roller;
+            $laporanbeaming->tension_roller_no_1 = $request->tension_roller_no_1;
+            $laporanbeaming->tension_roller_no_2 = $request->tension_roller_no_2;
+            $laporanbeaming->traverse_reed_design = $request->traverse_reed_design;
+            $laporanbeaming->nomor_sulzer = $request->nomor_sulzer;
+            $laporanbeaming->tanggal_sulzer = Carbon::parse($request->tanggal_sulzer)->format('Y-m-d');
+            $laporanbeaming->keterangan = $request->keterangan;
+            $laporanbeaming->status = 'Draft';
+            $laporanbeaming->updated_by = Auth::user()->id;
             $laporanbeaming->save();
-            foreach ($request->meter_awal as $key => $meter_awal) {
+            foreach ($request->tanggal_detail as $key => $tanggal_detail) {
                 $detail[] = [
-                    'laporanbeaming' => $laporanbeaming->id,
+                    'laporanbeaming_id' => $laporanbeaming->id,
                     'slug' => Controller::gen_slug(),
-                    'meter_awal' => $request->meter_awal[$key] ? Controller::unformat_angka($meter_awal) : null,
+                    'tanggal' => Carbon::parse($request->tanggal_detail[$key])->format('Y-m-d'),
+                    'shift' => $request->shift_detail[$key],
+                    'meter_awal' => $request->meter_awal[$key] ? Controller::unformat_angka($request->meter_awal[$key]) : null,
                     'meter_akhir' => $request->meter_akhir[$key] ? Controller::unformat_angka($request->meter_akhir[$key]) : null,
                     'meter_hasil' => $request->meter_hasil[$key] ? Controller::unformat_angka($request->meter_hasil[$key]) : null,
-                    'rata' => $request->rata[$key],
-                    'pinggiran_terjepit' => $request->pinggiran_terjepit[$key],
-                    'benang_hilang' => $request->benang_hilang[$key],
-                    'salah_motif' => $request->salah_motif[$key],
                 ];
             }
             $laporanbeaming->laporanbeamingdetail()->delete();
             $laporanbeaming->laporanbeamingdetail()->createMany($detail);
             foreach ($request->panen_ke as $key => $panen_ke) {
-                $detail[] = [
-                    'laporanbeaming' => $laporanbeaming->id,
+                $detail2[] = [
+                    'laporanbeaming_id  ' => $laporanbeaming->id,
                     'slug' => Controller::gen_slug(),
-                    'panen_ke' => $request->panen_ke[$key] ? Controller::unformat_angka($panen_ke) : null,
-                    'tanggal' => Carbon::parse($request->tanggal_panen[$key])->format('Y-m-d'),
+                    'panen_ke' => $request->panen_ke[$key] ? Controller::unformat_angka($request->panen_ke[$key]) : null,
                     'meter' => $request->meter[$key] ? Controller::unformat_angka($request->meter[$key]) : null,
                 ];
             }
             $laporanbeaming->laporanbeamingpanen()->delete();
-            $laporanbeaming->laporanbeamingpanen()->createMany($detail);
+            $laporanbeaming->laporanbeamingpanen()->createMany($detail2);
             DB::commit();
             return redirect()->route('produksiextruder.laporanbeaming.index')->with([
                 'status' => 'success',
@@ -196,32 +232,56 @@ class LaporanbeamingController extends Controller
     {
         DB::beginTransaction();
         try {
-            foreach ($request->meter_awal as $key => $meter_awal) {
+            $laporanbeaming->nomor = $request->nomor;
+            $laporanbeaming->jenis_bahan = $request->jenis_bahan;
+            $laporanbeaming->denier = $request->denier;
+            $laporanbeaming->lebar_benang = $request->lebar_benang;
+            $laporanbeaming->warna_benang = $request->warna_benang;
+            $laporanbeaming->jumlah_lungsi = $request->jumlah_lungsi;
+            $laporanbeaming->lebar_beam = $request->lebar_beam;
+            $laporanbeaming->front_reed = $request->front_reed;
+            $laporanbeaming->rear_reed = $request->rear_reed;
+            $laporanbeaming->traverse_reed = $request->traverse_reed;
+            $laporanbeaming->benang_pinggiran_kiri = $request->benang_pinggiran_kiri;
+            $laporanbeaming->benang_pinggiran_kanan = $request->benang_pinggiran_kanan;
+            $laporanbeaming->benang_pinggiran_benang = $request->benang_pinggiran_benang;
+            $laporanbeaming->lebar_traverse = $request->lebar_traverse;
+            $laporanbeaming->kecepatan_beaming = $request->kecepatan_beaming;
+            $laporanbeaming->cut_mark = $request->cut_mark;
+            $laporanbeaming->panjang_press_roller = $request->panjang_press_roller;
+            $laporanbeaming->tekanan_press_roller = $request->tekanan_press_roller;
+            $laporanbeaming->tension_roller_no_1 = $request->tension_roller_no_1;
+            $laporanbeaming->tension_roller_no_2 = $request->tension_roller_no_2;
+            $laporanbeaming->traverse_reed_design = $request->traverse_reed_design;
+            $laporanbeaming->nomor_sulzer = $request->nomor_sulzer;
+            $laporanbeaming->tanggal_sulzer = Carbon::parse($request->tanggal_sulzer)->format('Y-m-d');
+            $laporanbeaming->keterangan = $request->keterangan;
+            $laporanbeaming->status = 'Draft';
+            $laporanbeaming->updated_by = Auth::user()->id;
+            $laporanbeaming->save();
+            foreach ($request->tanggal_detail as $key => $tanggal_detail) {
                 $detail[] = [
-                    'laporanbeaming' => $laporanbeaming->id,
+                    'laporanbeaming_id' => $laporanbeaming->id,
                     'slug' => Controller::gen_slug(),
-                    'meter_awal' => $request->meter_awal[$key] ? Controller::unformat_angka($meter_awal) : null,
+                    'tanggal' => Carbon::parse($request->tanggal_detail[$key])->format('Y-m-d'),
+                    'shift' => $request->shift_detail[$key],
+                    'meter_awal' => $request->meter_awal[$key] ? Controller::unformat_angka($request->meter_awal[$key]) : null,
                     'meter_akhir' => $request->meter_akhir[$key] ? Controller::unformat_angka($request->meter_akhir[$key]) : null,
                     'meter_hasil' => $request->meter_hasil[$key] ? Controller::unformat_angka($request->meter_hasil[$key]) : null,
-                    'rata' => $request->rata[$key],
-                    'pinggiran_terjepit' => $request->pinggiran_terjepit[$key],
-                    'benang_hilang' => $request->benang_hilang[$key],
-                    'salah_motif' => $request->salah_motif[$key],
                 ];
             }
             $laporanbeaming->laporanbeamingdetail()->delete();
             $laporanbeaming->laporanbeamingdetail()->createMany($detail);
             foreach ($request->panen_ke as $key => $panen_ke) {
-                $detail[] = [
-                    'laporanbeaming' => $laporanbeaming->id,
+                $detail2[] = [
+                    'laporanbeaming_id  ' => $laporanbeaming->id,
                     'slug' => Controller::gen_slug(),
-                    'panen_ke' => $request->panen_ke[$key] ? Controller::unformat_angka($panen_ke) : null,
-                    'tanggal' => Carbon::parse($request->tanggal_panen[$key])->format('Y-m-d'),
+                    'panen_ke' => $request->panen_ke[$key] ? Controller::unformat_angka($request->panen_ke[$key]) : null,
                     'meter' => $request->meter[$key] ? Controller::unformat_angka($request->meter[$key]) : null,
                 ];
             }
             $laporanbeaming->laporanbeamingpanen()->delete();
-            $laporanbeaming->laporanbeamingpanen()->createMany($detail);
+            $laporanbeaming->laporanbeamingpanen()->createMany($detail2);
             DB::commit();
             return redirect()->route('produksiextruder.laporanbeaming.index')->with([
                 'status' => 'success',
