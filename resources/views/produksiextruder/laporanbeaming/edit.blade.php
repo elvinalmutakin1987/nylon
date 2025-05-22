@@ -419,67 +419,108 @@
                                                         @php
                                                             $total_meter = 0;
                                                         @endphp
-                                                        @foreach ($laporanbeaming->laporanbeamingdetail as $d)
+                                                        @if ($laporanbeaming->laporanbeamingdetail->count() == 0)
                                                             <tr>
                                                                 <td>
                                                                     <input type="date" class="form-control"
-                                                                        id="tanggal_detail{{ $d->id }}"
-                                                                        name="tanggal_detail[]"
-                                                                        value="{{ $d->tanggal }}" />
+                                                                        id="tanggal_detail1" name="tanggal_detail[]"
+                                                                        value="{{ date('Y-m-d') }}" />
                                                                 </td>
                                                                 <td>
                                                                     <select
                                                                         class="form-control select2 w-100 select-shift @error('shift_detail') is-invalid @enderror"
-                                                                        id="shift_detail{{ $d->id }}"
-                                                                        name="shift_detail[]">
-                                                                        <option value="Pagi"
-                                                                            {{ $d->shift == 'Pagi' ? 'selected' : '' }}>
-                                                                            Pagi</option>
-                                                                        <option value="Sore"
-                                                                            {{ $d->shift == 'Sore' ? 'selected' : '' }}>
-                                                                            Sore</option>
-                                                                        <option value="Malam"
-                                                                            {{ $d->shift == 'Malam' ? 'selected' : '' }}>
-                                                                            Malam</option>
+                                                                        id="shift_detail1" name="shift_detail[]">
+                                                                        <option value="Pagi">Pagi</option>
+                                                                        <option value="Sore">Sore</option>
+                                                                        <option value="Malam">Malam</option>
                                                                     </select>
                                                                 </td>
                                                                 <td>
                                                                     <input type="text" class="form-control"
-                                                                        id="meter_awal{{ $d->id }}"
-                                                                        name="meter_awal[]"
-                                                                        onblur="ubah_format('meter_awal{{ $d->i }}', this.value); hitung_hasil('{{ $d->id }}'); hitung_total_meter()"
-                                                                        value="{{ Illuminate\Support\Number::format((float) $d->meter_awal) }}">
+                                                                        id="meter_awal1" name="meter_awal[]"
+                                                                        onblur="ubah_format('meter_awal1', this.value); hitung_hasil('1'); hitung_total_meter()"
+                                                                        value="">
                                                                 </td>
                                                                 <td>
                                                                     <input type="text" class="form-control"
-                                                                        id="meter_akhir{{ $d->id }}"
-                                                                        name="meter_akhir[]"
-                                                                        onblur="ubah_format('meter_akhir{{ $d->id }}', this.value); hitung_hasil('{{ $d->id }}'); hitung_total_meter()"
-                                                                        value="{{ Illuminate\Support\Number::format((float) $d->meter_akhir) }}">
+                                                                        id="meter_akhir1" name="meter_akhir[]"
+                                                                        onblur="ubah_format('meter_akhir1', this.value); hitung_hasil('1'); hitung_total_meter()"
+                                                                        value="">
                                                                 </td>
                                                                 <td>
                                                                     <input type="text" class="form-control"
-                                                                        id="meter_hasil{{ $d->id }}"
-                                                                        name="meter_hasil[]" readonly
-                                                                        value="{{ Illuminate\Support\Number::format((float) $d->meter_hasil) }}">
+                                                                        id="meter_hasil1" name="meter_hasil[]" readonly
+                                                                        value="">
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    @if ($loop->first && $laporanbeaming->laporanbeamingdetail->count() > 1)
-                                                                        <button type="button" class="btn btn-danger"
-                                                                            id="hapus"><i class="fa fa-trash"></i>
-                                                                        </button>
-                                                                    @else
-                                                                        <button type="button" class="btn btn-primary"
-                                                                            onclick="tambah()"><i class="fa fa-plus"></i>
-                                                                        </button>
-                                                                    @endif
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        onclick="tambah()"><i
+                                                                            class="fa fa-plus"></i></button>
                                                                 </td>
                                                             </tr>
-                                                            @php
-                                                                $total_meter += (float) $d->meter_hasil;
-                                                            @endphp
-                                                        @endforeach
-
+                                                        @else
+                                                            @foreach ($laporanbeaming->laporanbeamingdetail as $d)
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="date" class="form-control"
+                                                                            id="tanggal_detail{{ $d->id }}"
+                                                                            name="tanggal_detail[]"
+                                                                            value="{{ $d->tanggal }}" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <select
+                                                                            class="form-control select2 w-100 select-shift @error('shift_detail') is-invalid @enderror"
+                                                                            id="shift_detail{{ $d->id }}"
+                                                                            name="shift_detail[]">
+                                                                            <option value="Pagi"
+                                                                                {{ $d->shift == 'Pagi' ? 'selected' : '' }}>
+                                                                                Pagi</option>
+                                                                            <option value="Sore"
+                                                                                {{ $d->shift == 'Sore' ? 'selected' : '' }}>
+                                                                                Sore</option>
+                                                                            <option value="Malam"
+                                                                                {{ $d->shift == 'Malam' ? 'selected' : '' }}>
+                                                                                Malam</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            id="meter_awal{{ $d->id }}"
+                                                                            name="meter_awal[]"
+                                                                            onblur="ubah_format('meter_awal{{ $d->i }}', this.value); hitung_hasil('{{ $d->id }}'); hitung_total_meter()"
+                                                                            value="{{ Illuminate\Support\Number::format((float) $d->meter_awal) }}">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            id="meter_akhir{{ $d->id }}"
+                                                                            name="meter_akhir[]"
+                                                                            onblur="ubah_format('meter_akhir{{ $d->id }}', this.value); hitung_hasil('{{ $d->id }}'); hitung_total_meter()"
+                                                                            value="{{ Illuminate\Support\Number::format((float) $d->meter_akhir) }}">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            id="meter_hasil{{ $d->id }}"
+                                                                            name="meter_hasil[]" readonly
+                                                                            value="{{ Illuminate\Support\Number::format((float) $d->meter_hasil) }}">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        @if ($loop->first && $laporanbeaming->laporanbeamingdetail->count() > 1)
+                                                                            <button type="button" class="btn btn-danger"
+                                                                                id="hapus"><i class="fa fa-trash"></i>
+                                                                            </button>
+                                                                        @else
+                                                                            <button type="button" class="btn btn-primary"
+                                                                                onclick="tambah()"><i
+                                                                                    class="fa fa-plus"></i>
+                                                                            </button>
+                                                                        @endif
+                                                                    </td>
+                                                                </tr>
+                                                                @php
+                                                                    $total_meter += (float) $d->meter_hasil;
+                                                                @endphp
+                                                            @endforeach
+                                                        @endif
                                                     </tbody>
                                                     <thead>
                                                         <tr>
@@ -552,38 +593,60 @@
                                                         @php
                                                             $total_panen = 0;
                                                         @endphp
-                                                        @foreach ($laporanbeaming->laporanbeamingpanen as $d)
+                                                        @if ($laporanbeaming->laporanbeamingpanen->count() == 0)
                                                             <tr>
                                                                 <td>
                                                                     <input type="number" class="form-control"
-                                                                        id="panen_ke{{ $d->id }}"
-                                                                        name="panen_ke[]"
-                                                                        onblur="ubah_format('panen_ke{{ $d->id }}', this.value)"
-                                                                        value="{{ $d->panen_ke }}">
+                                                                        id="panen_ke1" name="panen_ke[]"
+                                                                        onblur="ubah_format('panen_ke1', this.value)"
+                                                                        value="">
                                                                 </td>
                                                                 <td>
                                                                     <input type="text" class="form-control"
-                                                                        id="meter{{ $d->id }}" name="meter[]"
-                                                                        onblur="ubah_format('meter{{ $d->id }}', this.value); hitung_total_panen()"
-                                                                        value="{{ Illuminate\Support\Number::format($d->meter) }}">
+                                                                        id="meter1" name="meter[]"
+                                                                        onblur="ubah_format('meter1', this.value); hitung_total_panen()"
+                                                                        value="">
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    @if ($loop->first && $laporanbeaming->laporanbeamingpanen->count() > 1)
-                                                                        <button type="button" class="btn btn-danger"
-                                                                            id="hapus"><i class="fa fa-trash"></i>
-                                                                        </button>
-                                                                    @else
-                                                                        <button type="button" class="btn btn-primary"
-                                                                            onclick="tambah2()"><i class="fa fa-plus"></i>
-                                                                        </button>
-                                                                    @endif
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        onclick="tambah2()"><i
+                                                                            class="fa fa-plus"></i></button>
                                                                 </td>
                                                             </tr>
-                                                            @php
-                                                                $total_panen += (float) $d->meter;
-                                                            @endphp
-                                                        @endforeach
-
+                                                        @else
+                                                            @foreach ($laporanbeaming->laporanbeamingpanen as $d)
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="number" class="form-control"
+                                                                            id="panen_ke{{ $d->id }}"
+                                                                            name="panen_ke[]"
+                                                                            onblur="ubah_format('panen_ke{{ $d->id }}', this.value)"
+                                                                            value="{{ $d->panen_ke }}">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            id="meter{{ $d->id }}" name="meter[]"
+                                                                            onblur="ubah_format('meter{{ $d->id }}', this.value); hitung_total_panen()"
+                                                                            value="{{ Illuminate\Support\Number::format($d->meter) }}">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        @if ($loop->first && $laporanbeaming->laporanbeamingpanen->count() > 1)
+                                                                            <button type="button" class="btn btn-danger"
+                                                                                id="hapus"><i class="fa fa-trash"></i>
+                                                                            </button>
+                                                                        @else
+                                                                            <button type="button" class="btn btn-primary"
+                                                                                onclick="tambah2()"><i
+                                                                                    class="fa fa-plus"></i>
+                                                                            </button>
+                                                                        @endif
+                                                                    </td>
+                                                                </tr>
+                                                                @php
+                                                                    $total_panen += (float) $d->meter;
+                                                                @endphp
+                                                            @endforeach
+                                                        @endif
                                                     </tbody>
                                                     <thead>
                                                         <tr>

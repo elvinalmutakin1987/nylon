@@ -98,6 +98,8 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'produksi.extruder.laporanbeaming.edit']);
         Permission::create(['name' => 'produksi.extruder.checklistbeaming']);
         Permission::create(['name' => 'produksi.extruder.rekaprashel']);
+        Permission::create(['name' => 'produksi.extruder.beamatasmesin']);
+        Permission::create(['name' => 'produksi.extruder.beambawahmesin']);
         Permission::create(['name' => 'produksi.laminating.pengeringankain']);
         Permission::create(['name' => 'produksi.laminating.rekap']);
         Permission::create(['name' => 'produksi.laminating.edit']);
@@ -110,6 +112,7 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'laporan']);
         Permission::create(['name' => 'laporan.gudang']);
         Permission::create(['name' => 'laporan.wjl.efisiensi']);
+        Permission::create(['name' => 'laporan.extruder.stokbeaming']);
         //===========================================
 
         /**

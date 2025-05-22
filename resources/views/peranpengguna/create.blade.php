@@ -257,14 +257,6 @@
                                                             </div>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    id="produksi.extruder.laporanbeaming"
-                                                                    name="produksi.extruder.laporanbeaming">
-                                                                <label class="form-check-label"
-                                                                    for="produksi.extruder.laporanbeaming">Laporan
-                                                                    Beaming</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox"
                                                                     id="produksi.extruder.laporanrashel"
                                                                     name="produksi.extruder.laporanrashel">
                                                                 <label class="form-check-label"
@@ -273,11 +265,35 @@
                                                             </div>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.laporanbeaming"
+                                                                    name="produksi.extruder.laporanbeaming">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.laporanbeaming">Laporan
+                                                                    Beaming</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
                                                                     id="produksi.extruder.checklistbeaming"
                                                                     name="produksi.extruder.checklistbeaming">
                                                                 <label class="form-check-label"
                                                                     for="produksi.extruder.checklistbeaming">Check List
                                                                     Beaming</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.beamatasmesin"
+                                                                    name="produksi.extruder.beamatasmesin">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.beamatasmesin">Beam Atas
+                                                                    Mesin</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.beambawahmesin"
+                                                                    name="produksi.extruder.beambawahmesin">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.beambawahmesin">Beam Bawah
+                                                                    Mesin</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">

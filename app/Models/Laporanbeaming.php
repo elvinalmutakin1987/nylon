@@ -72,4 +72,14 @@ class Laporanbeaming extends Model
     {
         return $this->hasMany(Laporanbeamingpanen::class);
     }
+
+    public function beamatasmesin(): HasMany
+    {
+        return $this->hasMany(Beamatasmesin::class);
+    }
+
+    public function beambawahmesin(): HasMany
+    {
+        return $this->hasMany(Beambawahmesin::class);
+    }
 }

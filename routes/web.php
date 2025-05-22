@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\BarangkeluarController;
 use App\Http\Controllers\BarangmasukController;
+use App\Http\Controllers\BeamatasmesinController;
+use App\Http\Controllers\BeambawahmesinController;
 use App\Http\Controllers\CekstokController;
 use App\Http\Controllers\ChecklistbeamingController;
 use App\Http\Controllers\Controller;
@@ -475,5 +477,53 @@ Route::middleware(['auth'])->group(function () {
         Route::get('produksiextruder-laporanbeaming-confirm/{laporanbeaming}', [LaporanbeamingController::class, 'confirm'])->name('produksiextruder.laporanbeaming.confirm');
 
         Route::get('produksiextruder-laporanbeaming-export', [LaporanbeamingController::class, 'export'])->name('produksiextruder.laporanbeaming.export');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.beamatasmesin']], function () {
+        Route::get('produksiextruder-beamatasmesin', [BeamatasmesinController::class, 'index'])->name('produksiextruder.beamatasmesin.index');
+        Route::get('produksiextruder-get-beamatasmesin', [BeamatasmesinController::class, 'get_beamatasmesin'])->name('produksiextruder.beamatasmesin.get_beamatasmesin');
+        Route::post('produksiextruder-beamatasmesin', [BeamatasmesinController::class, 'store'])->name('produksiextruder.beamatasmesin.store');
+        Route::get('produksiextruder-beamatasmesin/create', [BeamatasmesinController::class, 'create'])->name('produksiextruder.beamatasmesin.create');
+        Route::get('produksiextruder-beamatasmesin/create-laporan', [BeamatasmesinController::class, 'create_laporan'])->name('produksiextruder.beamatasmesin.create_laporan');
+        Route::get('produksiextruder-beamatasmesin/{beamatasmesin}', [BeamatasmesinController::class, 'show'])->name('produksiextruder.beamatasmesin.show');
+        Route::put('produksiextruder-beamatasmesin/{beamatasmesin}', [BeamatasmesinController::class, 'update'])->name('produksiextruder.beamatasmesin.update');
+        Route::delete('produksiextruder-beamatasmesin/{beamatasmesin}', [BeamatasmesinController::class, 'destroy'])->name('produksiextruder.beamatasmesin.destroy');
+        Route::get('produksiextruder-beamatasmesin/{beamatasmesin}/edit', [BeamatasmesinController::class, 'edit'])->name('produksiextruder.beamatasmesin.edit');
+
+        // Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.beamatasmesin.edit']], function () {
+        //     Route::get('produksiextruder-beamatasmesin/{beamatasmesin}/edit', [beamatasmesinController::class, 'edit'])->name('produksiextruder.beamatasmesin.edit');
+        // });
+
+        Route::get('produksiextruder-beamatasmesin-cetak', [BeamatasmesinController::class, 'cetak'])->name('produksiextruder.beamatasmesin.cetak');
+        Route::get('produksiextruder-beamatasmesin-get-mesin', [BeamatasmesinController::class, 'get_mesin'])->name('produksiextruder.beamatasmesin.get_mesin');
+        Route::get('produksiextruder-beamatasmesin-get-detail', [BeamatasmesinController::class, 'get_detail'])->name('produksiextruder.beamatasmesin.get_detail');
+        Route::get('produksiextruder-beamatasmesin-get-beamatasmesin', [BeamatasmesinController::class, 'get_beamatasmesin'])->name('produksiextruder.beamatasmesin.get_beamatasmesin');
+        Route::get('produksiextruder-beamatasmesin-confirm/{beamatasmesin}', [BeamatasmesinController::class, 'confirm'])->name('produksiextruder.beamatasmesin.confirm');
+
+        Route::get('produksiextruder-beamatasmesin-export', [BeamatasmesinController::class, 'export'])->name('produksiextruder.laporanbeaming.export');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.beambawahmesin']], function () {
+        Route::get('produksiextruder-beambawahmesin', [BeambawahmesinController::class, 'index'])->name('produksiextruder.beambawahmesin.index');
+        Route::get('produksiextruder-get-beambawahmesin', [BeambawahmesinController::class, 'get_Beambawahmesin'])->name('produksiextruder.beambawahmesin.get_beambawahmesin');
+        Route::post('produksiextruder-beambawahmesin', [BeambawahmesinController::class, 'store'])->name('produksiextruder.beambawahmesin.store');
+        Route::get('produksiextruder-beambawahmesin/create', [BeambawahmesinController::class, 'create'])->name('produksiextruder.beambawahmesin.create');
+        Route::get('produksiextruder-beambawahmesin/create-laporan', [BeambawahmesinController::class, 'create_laporan'])->name('produksiextruder.beambawahmesin.create_laporan');
+        Route::get('produksiextruder-beambawahmesin/{beambawahmesin}', [BeambawahmesinController::class, 'show'])->name('produksiextruder.beambawahmesin.show');
+        Route::put('produksiextruder-beambawahmesin/{beambawahmesin}', [BeambawahmesinController::class, 'update'])->name('produksiextruder.beambawahmesin.update');
+        Route::delete('produksiextruder-beambawahmesin/{beambawahmesin}', [BeambawahmesinController::class, 'destroy'])->name('produksiextruder.beambawahmesin.destroy');
+        Route::get('produksiextruder-beambawahmesin/{beambawahmesin}/edit', [BeambawahmesinController::class, 'edit'])->name('produksiextruder.beambawahmesin.edit');
+
+        // Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.beambawahmesin.edit']], function () {
+        //     Route::get('produksiextruder-beambawahmesin/{beambawahmesin}/edit', [beambawahmesin::class, 'edit'])->name('produksiextruder.beambawahmesin.edit');
+        // });
+
+        Route::get('produksiextruder-beambawahmesin-cetak', [BeambawahmesinController::class, 'cetak'])->name('produksiextruder.beambawahmesin.cetak');
+        Route::get('produksiextruder-beambawahmesin-get-mesin', [BeambawahmesinController::class, 'get_mesin'])->name('produksiextruder.beambawahmesin.get_mesin');
+        Route::get('produksiextruder-beambawahmesin-get-detail', [BeambawahmesinController::class, 'get_detail'])->name('produksiextruder.beambawahmesin.get_detail');
+        Route::get('produksiextruder-beambawahmesin-get-Beambawahmesin', [BeambawahmesinController::class, 'get_beambawahmesin'])->name('produksiextruder.beambawahmesin.get_beambawahmesin');
+        Route::get('produksiextruder-beambawahmesin-confirm/{Beambawahmesin}', [BeambawahmesinController::class, 'confirm'])->name('produksiextruder.beambawahmesin.confirm');
+
+        Route::get('produksiextruder-beambawahmesin-export', [BeambawahmesinController::class, 'export'])->name('produksiextruder.laporanbeaming.export');
     });
 });

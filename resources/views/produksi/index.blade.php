@@ -26,7 +26,11 @@
                                 auth()->user()->can('produksi.extruder.kontrol-barmag') ||
                                 auth()->user()->can('produksi.extruder.kontrol-reifen') ||
                                 auth()->user()->can('produksi.extruder.laporansulzer') ||
-                                auth()->user()->can('produksi.extruder.laporanrashel'))
+                                auth()->user()->can('produksi.extruder.laporanrashel') ||
+                                auth()->user()->can('produksi.extruder.checklistbeaming') ||
+                                auth()->user()->can('produksi.extruder.laporanbeaming') ||
+                                auth()->user()->can('produksi.extruder.beamatasmesin') ||
+                                auth()->user()->can('produksi.extruder.beambawahmesin'))
                             <!-- Application buttons -->
                             <div class="card">
                                 <div class="card-header">
@@ -81,6 +85,20 @@
                                                 <a class="btn btn-app"
                                                     href="{{ route('produksiextruder.checklistbeaming.index') }}">
                                                     <i class="fas fa-check"></i> Check List Beaming
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('produksi.extruder.beamatasmesin'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('produksiextruder.beamatasmesin.index') }}">
+                                                    <i class="fa fa-arrow-up"></i> Beam Atas Mesin
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('produksi.extruder.beambawahmesin'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('produksiextruder.beambawahmesin.index') }}">
+                                                    <i class="fa fa-arrow-down"></i> Beam Bawah Mesin
                                                 </a>
                                             @endif
                                         </div>
