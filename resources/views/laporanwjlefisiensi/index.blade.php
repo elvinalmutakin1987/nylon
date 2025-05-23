@@ -77,7 +77,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <button type="button" class="btn btn-secondary" onclick="get_data()"><i
                                                 class="fa fa-search"></i>
                                             Cari</button>
@@ -87,8 +87,6 @@
                                         <button type="button" class="btn btn-success" onclick="export_()"><i
                                                 class="fas fa-file-excel"></i>
                                             Export</button>
-                                    </div>
-                                    <div class="col-md-3">
                                         <a type="button" class="btn btn-secondary" href="{{ route('laporan.index') }}"><i
                                                 class="fa fa-reply"></i> Kembali</a>
                                     </div>

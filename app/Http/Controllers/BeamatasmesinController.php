@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BeamatasmesinExport;
 use App\Models\Laporanbeaming;
 use App\Models\Laporanbeamingdetail;
 use App\Models\Laporanbeamingpanen;
@@ -27,25 +28,8 @@ class BeamatasmesinController extends Controller
      */
     public function index()
     {
-        if (request()->ajax()) {
-            $beamatasmesin = Beamatasmesin::all();
-            return DataTables::of($beamatasmesin)
-                ->addIndexColumn()
-                ->addColumn('action', function ($item) {
-                    $button = '
-                        <button type="button" class="btn btn-info" data-toggle="dropdown"><i
-                                class="fa fa-wrench"></i>
-                            Aksi</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="' . route('produksiextruder.beamatasmesin.show', $item->slug) . '")"> <i class="fas fa-search"></i> Detail</a>
-                            <a class="dropdown-item" href="' . route('produksiextruder.beamatasmesin.cetak', $item->slug) . '")"> <i class="fas fa-print"></i> Cetak</a>
-                            <a class="dropdown-item" href="' . route('produksiextruder.beamatasmesin.edit', $item->slug) . '")"> <i class="fas fa-pencil-alt"></i> Edit</a>
-                            <button class="dropdown-item" onClick="hapus(\'' . $item->slug . '\')"><i class="fas fa-trash"></i> Hapus</button>
-                        </div>';
-                })
-                ->make();
-        }
-        return view('produksiextruder.beamatasmesin.index');
+        $beamatasmesin = Beamatasmesin::all();
+        return view('produksiextruder.beamatasmesin.index', compact('beamatasmesin'));
     }
 
     /**
@@ -53,7 +37,7 @@ class BeamatasmesinController extends Controller
      */
     public function create()
     {
-        //
+        return view('produksiextruder.beamatasmesin.create');
     }
 
     /**
@@ -61,7 +45,51 @@ class BeamatasmesinController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'beam_sisa' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
+        }
+        DB::beginTransaction();
+        try {
+            $beamatasmesin = Beamatasmesin::where('tanggal', $request->tanggal)
+                ->where('beam_number', $request->beam_number)
+                ->where('jenis_produksi', $request->jenis_produksi)
+                ->first();
+            if (!$beamatasmesin) {
+                $beamatasmesin = new Beamatasmesin();
+                $beamatasmesin->slug = Controller::gen_slug();
+                $beamatasmesin->tanggal = $request->tanggal;
+                $beamatasmesin->beam_number = $request->beam_number;
+                $beamatasmesin->jenis_produksi = $request->jenis_produksi;
+            }
+            $laporanbeaming = Laporanbeaming::where('tanggal', $request->tanggal)
+                ->where('beam_number', $request->beam_number)
+                ->where('jenis_produksi', $request->jenis_produksi)
+                ->first();
+            $config = config('jenisproduksi');
+            $jenisproduksi = collect($config)->where('jenis_produksi', $request->jenis_produksi)->first();
+            $beamatasmesin->laporanbeaming_id = $laporanbeaming->id ?? null;
+            $beamatasmesin->rajutan_lusi = $jenisproduksi['rajutan_lusi'];
+            $beamatasmesin->lebar_kain = $jenisproduksi['lebar_kain'];
+            $beamatasmesin->jumlah_benang = $jenisproduksi['jumlah_benang'];
+            $beamatasmesin->lebar_benang = $jenisproduksi['lebar_benang'];
+            $beamatasmesin->denier = $jenisproduksi['denier'];
+            $beamatasmesin->beam_isi = $jenisproduksi['beam_isi'];
+            $beamatasmesin->beam_sisa = $request->beam_sisa ? Controller::unformat_angka($request->beam_sisa) : null;
+            $beamatasmesin->berat = $request->berat ? Controller::unformat_angka($request->berat) : null;
+            $beamatasmesin->created_by = Auth::user()->id;
+            $beamatasmesin->save();
+            DB::commit();
+            return redirect()->route('produksiextruder.beamatasmesin.index')->with([
+                'status' => 'success',
+                'message' => 'Data telah disimpan!'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return view('error', compact('th'));
+        }
     }
 
     /**
@@ -69,7 +97,7 @@ class BeamatasmesinController extends Controller
      */
     public function show(Beamatasmesin $beamatasmesin)
     {
-        //
+        return view('produksiextruder.beamatasmesin.show', compact('beamatasmesin'));
     }
 
     /**
@@ -77,7 +105,7 @@ class BeamatasmesinController extends Controller
      */
     public function edit(Beamatasmesin $beamatasmesin)
     {
-        //
+        return view('produksiextruder.beamatasmesin.edit', compact('beamatasmesin'));
     }
 
     /**
@@ -85,7 +113,35 @@ class BeamatasmesinController extends Controller
      */
     public function update(Request $request, Beamatasmesin $beamatasmesin)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'beam_sisa' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
+        }
+        DB::beginTransaction();
+        try {
+            $config = config('jenisproduksi');
+            $jenisproduksi = collect($config)->where('jenis_produksi', $request->jenis_produksi)->first();
+            $beamatasmesin->rajutan_lusi = $jenisproduksi['rajutan_lusi'];
+            $beamatasmesin->lebar_kain = $jenisproduksi['lebar_kain'];
+            $beamatasmesin->jumlah_benang = $jenisproduksi['jumlah_benang'];
+            $beamatasmesin->lebar_benang = $jenisproduksi['lebar_benang'];
+            $beamatasmesin->denier = $jenisproduksi['denier'];
+            $beamatasmesin->beam_isi = $jenisproduksi['beam_isi'];
+            $beamatasmesin->beam_sisa = $request->beam_sisa ? Controller::unformat_angka($request->beam_sisa) : null;
+            $beamatasmesin->berat = $request->berat ? Controller::unformat_angka($request->berat) : null;
+            $beamatasmesin->created_by = Auth::user()->id;
+            $beamatasmesin->save();
+            DB::commit();
+            return redirect()->route('produksiextruder.beamatasmesin.index')->with([
+                'status' => 'success',
+                'message' => 'Data telah disimpan!'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return view('error', compact('th'));
+        }
     }
 
     /**
@@ -93,6 +149,56 @@ class BeamatasmesinController extends Controller
      */
     public function destroy(Beamatasmesin $beamatasmesin)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $beamatasmesin->delete();
+            DB::commit();
+            return redirect()->route('produksiextruder.beamatasmesin.index')->with([
+                'status' => 'success',
+                'message' => 'Data telah disimpan!'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return view('error', compact('th'));
+        }
+    }
+
+    public function get_beamnumber(Request $request)
+    {
+        if ($request->ajax()) {
+            $term = trim($request->term);
+            $laporanbeaming = Laporanbeaming::selectRaw("beam_number as id, beam_number as text")
+                ->where('tanggal', '=', $request->tanggal)
+                ->where('beam_number', 'like', '%' . $term . '%')
+                ->orderByRaw('CONVERT(beam_number, SIGNED) asc')->simplePaginate(10);
+            $total_count = count($laporanbeaming);
+            $morePages = true;
+            $pagination_obj = json_encode($laporanbeaming);
+            if (empty($laporanbeaming->nextPageUrl())) {
+                $morePages = false;
+            }
+            $result = [
+                "results" => $laporanbeaming->items(),
+                "pagination" => [
+                    "more" => $morePages
+                ],
+                "total_count" => $total_count
+            ];
+            return response()->json($result);
+        }
+    }
+
+    public function cetak(Request $request)
+    {
+        $beamatasmesin = Beamatasmesin::all();
+        $pdf = PDF::loadview('produksiextruder.beamatasmesin.cetak', compact(
+            'beamatasmesin'
+        ));
+        return $pdf->download('beam_atas_mesin.pdf');
+    }
+
+    public function export(Request $request)
+    {
+        return Excel::download(new BeamatasmesinExport(), 'beam_atas_mesin.xlsx');
     }
 }

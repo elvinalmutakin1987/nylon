@@ -34,10 +34,17 @@
                                 <div class="row mb-4">
                                     <div class="col-md-12">
                                         <a type="button" class="btn btn-success m-1"
-                                            href="{{ route('pengguna.create') }}"><i class="fa fa-plus"></i> Tambah
+                                            href="{{ route('produksiextruder.beamatasmesin.create') }}"><i
+                                                class="fa fa-plus"></i> Tambah
                                             Data</a>
+                                        <button type="button" class="btn btn-primary m-1" onclick="cetak()"><i
+                                                class="fa fa-print"></i>
+                                            Cetak</button>
+                                        <button type="button" class="btn btn-info m-1" onclick="export_()"><i
+                                                class="fas fa-file-excel"></i>
+                                            Export</button>
                                         <a type="button" class="btn btn-secondary m-1"
-                                            href="{{ route('pengaturan.index') }}"><i class="fa fa-reply"></i> Kembali</a>
+                                            href="{{ route('produksi.index') }}"><i class="fa fa-reply"></i> Kembali</a>
                                     </div>
                                 </div>
                                 <div class="card ">
@@ -56,16 +63,44 @@
                                                     <th>Beam Isi</th>
                                                     <th>Beam Sisa</th>
                                                     <th>Berat (Kg)</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+                                                @foreach ($beamatasmesin as $d)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $d->tanggal }}</td>
+                                                        <td>{{ $d->beam_number }}</td>
+                                                        <td>{{ $d->jenis_produksi }}</td>
+                                                        <td>{{ $d->rajutan_lusi }}</td>
+                                                        <td>{{ $d->lebar_kain }}</td>
+                                                        <td>{{ Illuminate\Support\Number::format($d->jumlah_benang) }}
+                                                        </td>
+                                                        <td>{{ $d->denier }}</td>
+                                                        <td>{{ $d->beam_isi }}</td>
+                                                        <td>{{ Illuminate\Support\Number::format($d->beam_sisa) }}
+                                                        </td>
+                                                        <td>{{ $d->berat }}</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-info"
+                                                                data-toggle="dropdown"><i
+                                                                    class="fa fa-wrench"></i>Aksi</button>
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('produksiextruder.beamatasmesin.edit', $d->slug) }}")">
+                                                                    <i class="fas fa-pencil-alt"></i> Edit</a>
+                                                                <button class="dropdown-item"
+                                                                    onClick="hapus('{{ $d->slug }}')"><i
+                                                                        class="fas fa-trash"></i> Hapus</button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
-
                                 </div>
-
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -89,53 +124,6 @@
 
 @section('script')
     <script type="text/javascript">
-        const table1 = $('#table1');
-
-        $(document).ready(function() {
-            get_data();
-        });
-
-        function get_data() {
-            table1.DataTable({
-                "paging": true,
-                "responsive": true,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-                "processing": true,
-                "serverSide": true,
-                "ajax": '{{ url()->current() }}',
-                "columns": [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false,
-                        width: '35px',
-                        className: 'dt-center',
-                        targets: '_all'
-                    },
-                    {
-                        data: 'name',
-                        name: 'name',
-                        orderable: true,
-                        searchable: true,
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false,
-                        width: '100px',
-                        className: 'project-actions text-center',
-                        targets: '_all'
-                    }
-                ],
-            });
-        }
-
         function hapus(id) {
             Swal.fire({
                 title: 'Apakah anda yakin menghapus data?',
@@ -147,7 +135,7 @@
                 cancelButtonText: 'Tidak'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let url = `{!! route('pengguna.destroy', ':_id') !!}`;
+                    let url = `{!! route('produksiextruder.beamatasmesin.destroy', ':_id') !!}`;
                     url = url.replace(':_id', id);
                     $("#_method").val('DELETE');
                     $('#form-delete').attr('action', url);
@@ -179,5 +167,15 @@
         $('#modal-default').on('hidden.bs.modal', function() {
             $("#card-tabs").html('');
         });
+
+        function cetak() {
+            var url = "{!! route('produksiextruder.beamatasmesin.cetak') !!}";
+            window.open(url, '_blank');
+        }
+
+        function export_() {
+            var url = "{!! route('produksiextruder.beamatasmesin.export') !!}";
+            window.open(url, '_blank');
+        }
     </script>
 @endsection
