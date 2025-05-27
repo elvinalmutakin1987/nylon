@@ -129,6 +129,7 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_extruder_checklistbeaming) array_push($access, 'produksi.extruder.checklistbeaming');
             if ($request->produksi_extruder_beamatasmesin) array_push($access, 'produksi.extruder.beamatasmesin');
             if ($request->produksi_extruder_beambawahmesin) array_push($access, 'produksi.extruder.beambawahmesin');
+            if ($request->produksi_extruder_stockbeaming) array_push($access, 'produksi.extruder.stockbeaming');
             if ($request->produksi_laminating_pengeringankain) array_push($access, 'produksi.laminating.pengeringankain');
             if ($request->produksi_laminating_rekap) array_push($access, 'produksi.laminating.rekap');
             if ($request->produksi_laminating_edit) array_push($access, 'produksi.laminating.edit');
@@ -150,6 +151,7 @@ class PeranpenggunaController extends Controller
                 $request->produksi_extruder_checklistbeaming ||
                 $request->produksi_extruder_beamatasmesin ||
                 $request->produksi_extruder_beambawahmesin ||
+                $request->produksi_extruder_stockbeaming ||
                 $request->produksi_laminating_pengeringankain ||
                 $request->produksi_laminating_rekap ||
                 $request->produksi_laminating_edit
@@ -274,6 +276,7 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_extruder_checklistbeaming) array_push($access, 'produksi.extruder.checklistbeaming');
             if ($request->produksi_extruder_beamatasmesin) array_push($access, 'produksi.extruder.beamatasmesin');
             if ($request->produksi_extruder_beambawahmesin) array_push($access, 'produksi.extruder.beambawahmesin');
+            if ($request->produksi_extruder_stockbeaming) array_push($access, 'produksi.extruder.stockbeaming');
             if ($request->produksi_laminating_pengeringankain) array_push($access, 'produksi.laminating.pengeringankain');
             if ($request->produksi_laminating_rekap) array_push($access, 'produksi.laminating.rekap');
             if ($request->produksi_laminating_edit) array_push($access, 'produksi.laminating.edit');
@@ -295,6 +298,7 @@ class PeranpenggunaController extends Controller
                 $request->produksi_extruder_checklistbeaming ||
                 $request->produksi_extruder_beamatasmesin ||
                 $request->produksi_extruder_beambawahmesin ||
+                $request->produksi_extruder_stockbeaming ||
                 $request->produksi_laminating_pengeringankain ||
                 $request->produksi_laminating_rekap ||
                 $request->produksi_laminating_edit

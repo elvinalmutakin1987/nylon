@@ -454,7 +454,7 @@
                 placeholder: "- Pilih Mesin -",
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('produksiextruder.laporanrashel.get_mesin') }}',
+                    url: '{{ route('produksiextruder.laporansulzer.get_mesin') }}',
                     dataType: 'json',
                     data: function(params) {
                         return {

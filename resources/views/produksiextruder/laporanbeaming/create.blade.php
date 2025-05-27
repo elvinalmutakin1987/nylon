@@ -30,7 +30,7 @@
                     <div class="col-md-12">
                         <!-- Application buttons -->
                         <form action="{{ route('produksiextruder.laporanbeaming.store') }}" enctype="multipart/form-data"
-                            method="POST">
+                            method="POST" id="form-submit">
                             @csrf
                             @method('POST')
                             <div class="card">
@@ -442,7 +442,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    {{-- <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="nomor_sulzer">Nomor Sulzer</label>
@@ -526,7 +526,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -547,8 +547,12 @@
                                         href="{{ route('produksiextruder.laporanbeaming.index') }}"><i
                                             class="fa fa-reply"></i>
                                         Kembali</a>
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>
+                                    <button type="submit" class="btn btn-success" id="status" name="status"
+                                        value="Draft"><i class="fa fa-save"></i>
                                         Simpan</button>
+                                    <button type="button" class="btn btn-primary" id="status2" name="status"
+                                        value="Panen" onclick="simpan_panen()"><i class="fa fa-thumbs-o-up"></i>
+                                        Panen</button>
                                 </div>
                             </div>
                             <!-- /.card -->
@@ -750,6 +754,22 @@
                 }
             });
             $("#panen_total").val(numeral(total).format('0,0'));
+        }
+
+        function simpan_panen() {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#5156be',
+                cancelButtonColor: '#fd625e',
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#form-submit').submit();
+                }
+            });
         }
     </script>
 @endsection

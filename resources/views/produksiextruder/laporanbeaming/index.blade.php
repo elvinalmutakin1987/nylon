@@ -52,11 +52,9 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="beam_number">Beam Number</label>
-                                            <div class="input-group date" id="beam_number" data-target-input="nearest">
-                                                <input type="text"
-                                                    class="form-control @error('beam_number') is-invalid @enderror"
-                                                    id="beam_number" name="beam_number">
-                                            </div>
+                                            <input type="text"
+                                                class="form-control @error('beam_number') is-invalid @enderror"
+                                                id="beam_number" name="beam_number">
                                             @error('tanggal')
                                                 <span id="beam_number-error"
                                                     class="error invalid-feedback">{{ $message }}</span>

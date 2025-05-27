@@ -82,4 +82,9 @@ class Laporanbeaming extends Model
     {
         return $this->hasMany(Beambawahmesin::class);
     }
+
+    public function stockbeaming(): HasMany
+    {
+        return $this->hasMany(Stockbeaming::class);
+    }
 }

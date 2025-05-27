@@ -454,7 +454,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    {{-- <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="nomor_sulzer">Nomor Sulzer</label>
@@ -534,7 +534,7 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">

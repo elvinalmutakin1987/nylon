@@ -30,7 +30,8 @@
                                 auth()->user()->can('produksi.extruder.checklistbeaming') ||
                                 auth()->user()->can('produksi.extruder.laporanbeaming') ||
                                 auth()->user()->can('produksi.extruder.beamatasmesin') ||
-                                auth()->user()->can('produksi.extruder.beambawahmesin'))
+                                auth()->user()->can('produksi.extruder.beambawahmesin') ||
+                                auth()->user()->can('produksi.extruder.stockbeaming'))
                             <!-- Application buttons -->
                             <div class="card">
                                 <div class="card-header">
@@ -88,7 +89,7 @@
                                                 </a>
                                             @endif
 
-                                            @if (auth()->user()->can('produksi.extruder.beamatasmesin'))
+                                            {{-- @if (auth()->user()->can('produksi.extruder.beamatasmesin'))
                                                 <a class="btn btn-app"
                                                     href="{{ route('produksiextruder.beamatasmesin.index') }}">
                                                     <i class="fa fa-arrow-up"></i> Beam Atas Mesin
@@ -99,6 +100,13 @@
                                                 <a class="btn btn-app"
                                                     href="{{ route('produksiextruder.beambawahmesin.index') }}">
                                                     <i class="fa fa-arrow-down"></i> Beam Bawah Mesin
+                                                </a>
+                                            @endif --}}
+
+                                            @if (auth()->user()->can('produksi.extruder.stockbeaming'))
+                                                <a class="btn btn-app"
+                                                    href="{{ route('produksiextruder.stockbeaming.index') }}">
+                                                    <i class="fas fa-boxes"></i> Stock Beaming
                                                 </a>
                                             @endif
                                         </div>

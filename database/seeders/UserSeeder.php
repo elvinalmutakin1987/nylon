@@ -100,6 +100,7 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'produksi.extruder.rekaprashel']);
         Permission::create(['name' => 'produksi.extruder.beamatasmesin']);
         Permission::create(['name' => 'produksi.extruder.beambawahmesin']);
+        Permission::create(['name' => 'produksi.extruder.stockbeaming']);
         Permission::create(['name' => 'produksi.laminating.pengeringankain']);
         Permission::create(['name' => 'produksi.laminating.rekap']);
         Permission::create(['name' => 'produksi.laminating.edit']);

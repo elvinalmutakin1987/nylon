@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Material;
 use App\Models\Mesin;
 use App\Models\Laporanbeaming;
+use App\Models\Stockbeaming;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -94,6 +95,13 @@ class LaporanbeamingController extends Controller
             return view('produksiextruder.laporanbeaming.show', compact('beam_number', 'tanggal', 'jenis_produksi', 'action', 'laporanbeaming', 'laporanbeaming_sebelumnya'));
         }
 
+        if ($laporanbeaming->status == 'Panen') {
+            return redirect()->back()->with([
+                'status' => 'error',
+                'message' => 'Beam telah dipanen!'
+            ]);
+        }
+
         if ($laporanbeaming->status == 'Draft') {
             $action = 'edit';
             return view('produksiextruder.laporanbeaming.show', compact('beam_number', 'tanggal',  'jenis_produksi',  'action', 'laporanbeaming', 'laporanbeaming_sebelumnya'));
@@ -157,7 +165,7 @@ class LaporanbeamingController extends Controller
             $laporanbeaming->nomor_sulzer = $request->nomor_sulzer;
             $laporanbeaming->tanggal_sulzer = Carbon::parse($request->tanggal_sulzer)->format('Y-m-d');
             $laporanbeaming->keterangan = $request->keterangan;
-            $laporanbeaming->status = 'Draft';
+            $laporanbeaming->status = $request->status ?? "Panen";
             $laporanbeaming->updated_by = Auth::user()->id;
             $laporanbeaming->save();
             foreach ($request->tanggal_detail as $key => $tanggal_detail) {
@@ -173,16 +181,26 @@ class LaporanbeamingController extends Controller
             }
             $laporanbeaming->laporanbeamingdetail()->delete();
             $laporanbeaming->laporanbeamingdetail()->createMany($detail);
-            foreach ($request->panen_ke as $key => $panen_ke) {
-                $detail2[] = [
-                    'laporanbeaming_id  ' => $laporanbeaming->id,
-                    'slug' => Controller::gen_slug(),
-                    'panen_ke' => $request->panen_ke[$key] ? Controller::unformat_angka($request->panen_ke[$key]) : null,
-                    'meter' => $request->meter[$key] ? Controller::unformat_angka($request->meter[$key]) : null,
-                ];
+            // foreach ($request->panen_ke as $key => $panen_ke) {
+            //     $detail2[] = [
+            //         'laporanbeaming_id  ' => $laporanbeaming->id,
+            //         'slug' => Controller::gen_slug(),
+            //         'panen_ke' => $request->panen_ke[$key] ? Controller::unformat_angka($request->panen_ke[$key]) : null,
+            //         'meter' => $request->meter[$key] ? Controller::unformat_angka($request->meter[$key]) : null,
+            //     ];
+            // }
+            // $laporanbeaming->laporanbeamingpanen()->delete();
+            // $laporanbeaming->laporanbeamingpanen()->createMany($detail2);
+            if ($laporanbeaming->status == "Panen") {
+                $stockbeaming = new Stockbeaming();
+                $stockbeaming->slug = Controller::gen_slug();
+                $stockbeaming->laporanbeaming_id = $laporanbeaming->id;
+                $stockbeaming->posisi = 'Bawah';
+                $stockbeaming->meter_hasil = $laporanbeaming->laporanbeamingdetail->sum('meter_hasil');
+                $stockbeaming->status = 'Aktif';
+                $stockbeaming->updated_by = Auth::user()->id;
+                $stockbeaming->save();
             }
-            $laporanbeaming->laporanbeamingpanen()->delete();
-            $laporanbeaming->laporanbeamingpanen()->createMany($detail2);
             DB::commit();
             return redirect()->route('produksiextruder.laporanbeaming.index')->with([
                 'status' => 'success',
@@ -256,7 +274,7 @@ class LaporanbeamingController extends Controller
             $laporanbeaming->nomor_sulzer = $request->nomor_sulzer;
             $laporanbeaming->tanggal_sulzer = Carbon::parse($request->tanggal_sulzer)->format('Y-m-d');
             $laporanbeaming->keterangan = $request->keterangan;
-            $laporanbeaming->status = 'Draft';
+            $laporanbeaming->status = $request->status ?? "Panen";
             $laporanbeaming->updated_by = Auth::user()->id;
             $laporanbeaming->save();
             foreach ($request->tanggal_detail as $key => $tanggal_detail) {
@@ -272,16 +290,26 @@ class LaporanbeamingController extends Controller
             }
             $laporanbeaming->laporanbeamingdetail()->delete();
             $laporanbeaming->laporanbeamingdetail()->createMany($detail);
-            foreach ($request->panen_ke as $key => $panen_ke) {
-                $detail2[] = [
-                    'laporanbeaming_id  ' => $laporanbeaming->id,
-                    'slug' => Controller::gen_slug(),
-                    'panen_ke' => $request->panen_ke[$key] ? Controller::unformat_angka($request->panen_ke[$key]) : null,
-                    'meter' => $request->meter[$key] ? Controller::unformat_angka($request->meter[$key]) : null,
-                ];
+            // foreach ($request->panen_ke as $key => $panen_ke) {
+            //     $detail2[] = [
+            //         'laporanbeaming_id  ' => $laporanbeaming->id,
+            //         'slug' => Controller::gen_slug(),
+            //         'panen_ke' => $request->panen_ke[$key] ? Controller::unformat_angka($request->panen_ke[$key]) : null,
+            //         'meter' => $request->meter[$key] ? Controller::unformat_angka($request->meter[$key]) : null,
+            //     ];
+            // }
+            // $laporanbeaming->laporanbeamingpanen()->delete();
+            // $laporanbeaming->laporanbeamingpanen()->createMany($detail2);
+            if ($laporanbeaming->status == "Panen") {
+                $stockbeaming = new Stockbeaming();
+                $stockbeaming->slug = Controller::gen_slug();
+                $stockbeaming->laporanbeaming_id = $laporanbeaming->id;
+                $stockbeaming->posisi = 'Bawah';
+                $stockbeaming->meter_hasil = $laporanbeaming->laporanbeamingdetail->sum('meter_hasil');
+                $stockbeaming->status = 'Aktif';
+                $stockbeaming->updated_by = Auth::user()->id;
+                $stockbeaming->save();
             }
-            $laporanbeaming->laporanbeamingpanen()->delete();
-            $laporanbeaming->laporanbeamingpanen()->createMany($detail2);
             DB::commit();
             return redirect()->route('produksiextruder.laporanbeaming.index')->with([
                 'status' => 'success',

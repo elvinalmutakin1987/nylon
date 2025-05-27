@@ -279,7 +279,7 @@
                                                                     for="produksi.extruder.checklistbeaming">Check List
                                                                     Beaming</label>
                                                             </div>
-                                                            <div class="form-check">
+                                                            {{-- <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                     id="produksi.extruder.beamatasmesin"
                                                                     name="produksi.extruder.beamatasmesin">
@@ -294,6 +294,14 @@
                                                                 <label class="form-check-label"
                                                                     for="produksi.extruder.beambawahmesin">Beam Bawah
                                                                     Mesin</label>
+                                                            </div> --}}
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.extruder.stockbeaming"
+                                                                    name="produksi.extruder.stockbeaming">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.extruder.stockbeaming">Stock
+                                                                    Beaming</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
