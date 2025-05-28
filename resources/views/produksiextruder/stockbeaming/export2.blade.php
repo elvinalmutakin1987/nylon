@@ -54,8 +54,35 @@
                 <tr>
                     <td colspan="6">Per Tanggal {{ $tanggal . ' ' . $bulan . ' ' . $tahun }}</td>
                 </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="table-main">
                 <tr>
-                    <td colspan="6"><br></td>
+                    <td>Tanggal</td>
+                    <td>: {{ $stockbeaming->laporanbeaming->tanggal }}</td>
+                </tr>
+                <tr>
+                    <td>Beam Number</td>
+                    <td>: {{ $stockbeaming->laporanbeaming->beam_number }}</td>
+                </tr>
+                <tr>
+                    <td>Jenis Produksi</td>
+                    <td>:
+                        {{ $stockbeaming->laporanbeaming->jenis_produksi }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Meter Hasil</td>
+                    <td>:
+                        {{ Number::format($stockbeaming->meter_hasil) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Posisi</td>
+                    <td>: {{ $stockbeaming->posisi }}</td>
                 </tr>
             </table>
         </td>
@@ -65,43 +92,35 @@
             <table>
                 <tr>
                     <td>No.</td>
-                    <td>Beam Number</td>
-                    <td>Jenis Produksi</td>
                     <td>Tanggal</td>
+                    <td>Shift</td>
                     <td>Posisi</td>
-                    <td>Hasil Panen</td>
-                    <td>Sisa</td>
-                    <td>Status</td>
+                    <td>Operator</td>
+                    <td>Meter</td>
+                    <td>Keterangan</td>
                 </tr>
-                @foreach ($stockbeaming as $d)
+                @php
+                    $meter_hasil = 0;
+                @endphp
+                @foreach ($stockbeaming->stockbeamingdetail as $d)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $d->laporanbeaming->beam_number }}</td>
-                        <td>{{ $d->laporanbeaming->jenis_produksi }}</td>
-                        <td>{{ $d->laporanbeaming->tanggal }}</td>
+                        <td>{{ $d->tanggal }}</td>
+                        <td>{{ $d->shift }}</td>
                         <td>{{ $d->posisi }}</td>
-                        <td>{{ Number::format($d->meter_hasil) }}</td>
-                        <td>
-                            @php
-                                $sisa = 0;
-
-                                $stockbeamingdetail = DB::select(
-                                    '
-                                        select
-                                            sum(cast(meter as float)) as meter
-                                        from stockbemaingdetails
-                                        where stockbeaming_id = ' .
-                                        $d->id .
-                                        '
-                                        ',
-                                );
-                                $stockbeamingdetail = collect($stockbeamingdetail)->first();
-                                $sisa = $d->meter_hasil - $stockbeamingdetail->meter;
-                            @endphp
-                            {{ Number::format($sisa) }}</td>
-                        <td>{{ $d->status }}</td>
+                        <td>{{ $d->operator }}</td>
+                        <td>{{ Number::format($d->meter) }}</td>
+                        <td>{!! $d->keterangan !!}</td>
                     </tr>
+                    @php
+                        $meter_hasil += (float) $d->meter;
+                    @endphp
                 @endforeach
+                <tr>
+                    <td colspan="5" style="text-align: right">Total &nbsp;&nbsp;&nbsp;</td>
+                    <td>{{ Number::format($meter_hasil) }}</td>
+                    <td></td>
+                </tr>
             </table>
         </td>
     </tr>

@@ -38,6 +38,11 @@ class Stockbeaming extends Model
 
     public function stockbeamingdetail(): HasMany
     {
-        return $this->hasMany(Stockbeamingdetail::class);
+        return $this->hasMany(Stockbemaingdetail::class);
+    }
+
+    public function laporanbeaming(): BelongsTo
+    {
+        return $this->belongsTo(Laporanbeaming::class)->withDefault(['slug' => null]);
     }
 }

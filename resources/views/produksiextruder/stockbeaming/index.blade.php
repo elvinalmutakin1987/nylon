@@ -301,5 +301,23 @@
                 }
             });
         }
+
+        function cetak() {
+            let posisi = $("#posisi").val();
+            let status = $("#status").val();
+            let url = `{!! route('produksiextruder.stockbeaming.cetak', ['posisi' => '_posisi', 'status' => '_status']) !!}`;
+            url = url.replace('_posisi', posisi);
+            url = url.replace('_status', status);
+            window.open(url, '_blank');
+        }
+
+        function export_() {
+            let posisi = $("#posisi").val();
+            let status = $("#status").val();
+            let url = `{!! route('produksiextruder.stockbeaming.export', ['posisi' => '_posisi', 'status' => '_status']) !!}`;
+            url = url.replace('_posisi', posisi);
+            url = url.replace('_status', status);
+            window.open(url, '_blank');
+        }
     </script>
 @endsection

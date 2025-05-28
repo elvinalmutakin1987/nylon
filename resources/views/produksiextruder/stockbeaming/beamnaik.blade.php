@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Application buttons -->
-                        <form action="{{ route('produksiextruder.stockbeaming.update', $stockbeaming->slug) }}"
+                        <form action="{{ route('produksiextruder.stockbeaming.update_beamnaik', $stockbeaming->slug) }}"
                             enctype="multipart/form-data" method="POST">
                             @csrf
                             @method('PUT')
@@ -35,63 +35,78 @@
                                     <h3 class="card-title">Beam Naik</h3>
                                 </div>
                                 <div class="card-body">
-                                    <div class="mb-3">
-                                        <div class="form-group">
-                                            <label for="tanggal">Tanggal</label>
-                                            <div class="input-group date" id="div_tanggal" data-target-input="nearest">
-                                                <input type="text" class="form-control datetimepicker-input"
-                                                    data-target="#div_tanggal" id="tanggal" name="tanggal"
-                                                    value="{{ old('tanggal') ?? date('Y-m-d') }}" />
-                                                <div class="input-group-append" data-target="#div_tanggal"
-                                                    data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="tanggal">Tanggal</label>
+                                                <div class="input-group date" id="div_tanggal" data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input"
+                                                        data-target="#div_tanggal" id="tanggal" name="tanggal"
+                                                        value="{{ old('tanggal') ?? date('Y-m-d') }}" />
+                                                    <div class="input-group-append" data-target="#div_tanggal"
+                                                        data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                @error('tanggal')
+                                                    <span id="nama-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
                                             </div>
-                                            @error('tanggal')
-                                                <span id="nama-error" class="error invalid-feedback">{{ $message }}</span>
-                                            @enderror
                                         </div>
-                                        <div class="form-group">
-                                            <label for="shift">Shift</label>
-                                            <select
-                                                class="form-control select2 w-100 select-shift @error('shift') is-invalid @enderror"
-                                                id="shift" name="shift">
-                                                <option value="Pagi">Pagi</option>
-                                                <option value="Sore">Sore</option>
-                                                <option value="Malam">Malam</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="operator">Operator</label>
-                                            <input type="text"
-                                                class="form-control @error('operator') is-invalid @enderror" id="operator"
-                                                name="operator" value="{{ old('operator') }}">
-                                            @error('operator')
-                                                <span id="operator-error"
-                                                    class="error invalid-feedback">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="meter">Meter</label>
-                                            <input type="text" class="form-control @error('meter') is-invalid @enderror"
-                                                id="meter" name="meter" value="{{ old('meter') }}">
-                                            @error('meter')
-                                                <span id="meter-error" class="error invalid-feedback">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="keterangan">Keterangan</label>
-                                            <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="10" id="keterangan"
-                                                name="keterangan"></textarea>
-                                            @error('keterangan')
-                                                <span id="keterangan-error"
-                                                    class="error invalid-feedback">{{ $message }}</span>
-                                            @enderror
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="shift">Shift</label>
+                                                <select
+                                                    class="form-control select2 w-100 select-shift @error('shift') is-invalid @enderror"
+                                                    id="shift" name="shift">
+                                                    <option value="Pagi">Pagi</option>
+                                                    <option value="Sore">Sore</option>
+                                                    <option value="Malam">Malam</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                    <!-- /.card-body -->
-
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="operator">Operator</label>
+                                                <input type="text"
+                                                    class="form-control @error('operator') is-invalid @enderror"
+                                                    id="operator" name="operator" value="{{ old('operator') }}">
+                                                @error('operator')
+                                                    <span id="operator-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="meter">Meter</label>
+                                                <input type="text"
+                                                    class="form-control @error('meter') is-invalid @enderror" id="meter"
+                                                    name="meter" value="{{ old('meter') }}" required>
+                                                @error('meter')
+                                                    <span id="meter-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="keterangan">Keterangan</label>
+                                                <textarea class="form-control @error('keterangan') is-invalid @enderror" rows="10" id="keterangan"
+                                                    name="keterangan"></textarea>
+                                                @error('keterangan')
+                                                    <span id="keterangan-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
