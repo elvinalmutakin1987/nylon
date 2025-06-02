@@ -242,7 +242,7 @@
                                                     <label class="form-check-label text-bold">Produksi</label>
                                                     <div class="row">
                                                         <div class="col-md-3">
-                                                            <label class="form-check-label">Extruder</label>
+                                                            <label class="form-check-label">Produksi Depan</label>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                     id="produksi.extruder.kontroldenier"
@@ -330,11 +330,12 @@
                                                                     name="produksi.extruder.stockbeaming"
                                                                     {{ $role->hasPermissionTo('produksi.extruder.stockbeaming') ? 'checked' : '' }}>
                                                                 <label class="form-check-label"
-                                                                    for="produksi.extruder.stockbeaming">Stock Beaming</label>
+                                                                    for="produksi.extruder.stockbeaming">Stock
+                                                                    Beaming</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
-                                                            <label class="form-check-label">WJL</label>
+                                                            <label class="form-check-label">Produksi Belakang</label>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                     id="produksi.wjl.operator"
@@ -360,9 +361,6 @@
                                                                     for="produksi.wjl.edit">Edit Produksi
                                                                     WJL</label>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <label class="form-check-label">Laminating</label>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                     id="produksi.laminating.pengeringankain"
@@ -402,7 +400,6 @@
                                                                     for="gudang.benang.cekstok">Cek
                                                                     Stok</label>
                                                             </div>
-
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                     id="gudang.benang.barangkeluar"

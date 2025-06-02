@@ -35,7 +35,7 @@
                             <!-- Application buttons -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Extruder</h3>
+                                    <h3 class="card-title">Produksi Depan</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="row text-center">
@@ -116,11 +116,14 @@
                             </div>
                             <!-- /.card -->
                         @endif
-                        @if (auth()->user()->can('produksi.wjl.operator') || auth()->user()->can('produksi.wjl.rekap'))
+                        @if (auth()->user()->can('produksi.wjl.operator') ||
+                                auth()->user()->can('produksi.wjl.rekap') ||
+                                auth()->user()->can('produksi.laminating.pengeringankain') ||
+                                auth()->user()->can('produksi.laminating.rekap'))
                             <!-- Application buttons -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">WJL</h3>
+                                    <h3 class="card-title">Produksi Belakang</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="row text-center">
@@ -131,32 +134,16 @@
                                                 </a>
                                             @endif
 
-                                            @if (auth()->user()->can('produksi.wjl.rekap'))
-                                                <a class="btn btn-app" href="{{ route('produksiwjl.rekap.index') }}">
-                                                    <i class="fa fa-file"></i> Rekap Produksi WJL
-                                                </a>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        @endif
-
-                        @if (auth()->user()->can('produksi.laminating.pengeringankain') || auth()->user()->can('produksi.laminating.rekap'))
-                            <!-- Application buttons -->
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Laminanting</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row text-center">
-                                        <div class="col-md-12">
                                             @if (auth()->user()->can('produksi.laminating.pengeringankain'))
                                                 <a class="btn btn-app"
                                                     href="{{ route('produksilaminating.pengeringankain.index') }}">
                                                     <i class="fa fa-pencil"></i> Laporan Pengeringan Kain
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('produksi.wjl.rekap'))
+                                                <a class="btn btn-app" href="{{ route('produksiwjl.rekap.index') }}">
+                                                    <i class="fa fa-file"></i> Rekap Produksi WJL
                                                 </a>
                                             @endif
 

@@ -81,9 +81,9 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <button type="button" class="btn btn-success" data-toggle="modal"
-                                            data-target="#modal-import" onclick="cek_laporan_wjl()"><i
+                                            data-target="#modal-import" onclick="cek_laporan_pengeringan_kain()"><i
                                                 class="fa fa-plus"></i>
-                                            Cek Laporan Produksi WJL</button>
+                                            Cek Laporan Pengeringan Kain</button>
                                     </div>
                                 </div>
 
@@ -166,7 +166,7 @@
             });
         @endif
 
-        function cek_laporan_wjl() {
+        function cek_laporan_pengeringan_kain() {
             var url =
                 '{!! route('produksilaminating.pengeringankain.create', [
                     'mesin_id' => '_mesin',

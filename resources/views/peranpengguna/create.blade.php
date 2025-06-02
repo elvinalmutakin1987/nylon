@@ -222,7 +222,7 @@
                                                     <label class="form-check-label text-bold">Produksi</label>
                                                     <div class="row">
                                                         <div class="col-md-3">
-                                                            <label class="form-check-label">Extruder</label>
+                                                            <label class="form-check-label">Produksi Depan</label>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                     id="produksi.extruder.kontroldenier"
@@ -305,7 +305,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
-                                                            <label class="form-check-label">WJL</label>
+                                                            <label class="form-check-label">Produksi Belakang</label>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                     id="produksi.wjl.operator"
@@ -328,9 +328,7 @@
                                                                     for="produksi.wjl.edit">Edit Produksi
                                                                     WJL</label>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <label class="form-check-label">Laminating</label>
+                                                            <br>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                     id="produksi.laminating.pengeringankain"
