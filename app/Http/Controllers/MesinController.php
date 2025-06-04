@@ -61,7 +61,6 @@ class MesinController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required|unique:mesins,nama,NULL,id,deleted_at,NULL',
-            // 'lokasi_id' => 'required'
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
@@ -71,20 +70,9 @@ class MesinController extends Controller
             $mesin = new Mesin();
             $mesin->slug = Controller::gen_slug();
             $mesin->nama = $request->nama;
-            $mesin->bagian = $request->bagian;
             $mesin->lokasi_id = $request->lokasi_id;
             $mesin->target_produksi = Controller::unformat_angka($request->target_produksi);
             $mesin->keterangan = $request->keterangan;
-            $mesin->b_plus_top = $mesin->b_plus_top ? Controller::unformat_angka($request->b_plus_top) : '0';
-            $mesin->b_plus_bottom = $mesin->b_plus_top ? Controller::unformat_angka($request->b_plus_bottom) : '0';
-            $mesin->b_top =  $mesin->b_plus_top ? Controller::unformat_angka($request->b_top) : '0';
-            $mesin->b_bottom = $mesin->b_plus_top ? Controller::unformat_angka($request->b_bottom) : '0';
-            $mesin->n_top = $mesin->b_plus_top ? Controller::unformat_angka($request->n_top) : '0';
-            $mesin->n_bottom = $mesin->b_plus_top ? Controller::unformat_angka($request->n_bottom) : '0';
-            $mesin->k_top = $mesin->b_plus_top ? Controller::unformat_angka($request->k_top) : '0';
-            $mesin->k_bottom = $mesin->b_plus_top ? Controller::unformat_angka($request->k_bottom) : '0';
-            $mesin->k_min_top = $mesin->b_plus_top ? Controller::unformat_angka($request->k_min_top) : '0';
-            $mesin->k_min_bottom = $mesin->b_plus_top ? Controller::unformat_angka($request->k_min_bottom) : '0';
             $mesin->created_by = Auth::user()->id;
             $mesin->save();
             DB::commit();
@@ -121,7 +109,6 @@ class MesinController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama' => 'required|unique:mesins,nama,' . $mesin->id . ',id,deleted_at,NULL',
-            // 'lokasi_id' => 'required'
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
@@ -130,19 +117,8 @@ class MesinController extends Controller
         try {
             $mesin->nama = $request->nama;
             $mesin->lokasi_id = $request->lokasi_id;
-            $mesin->bagian = $request->bagian;
             $mesin->target_produksi = Controller::unformat_angka($request->target_produksi);
             $mesin->keterangan = $request->keterangan;
-            $mesin->b_plus_top = $mesin->b_plus_top ? Controller::unformat_angka($request->b_plus_top) : '0';
-            $mesin->b_plus_bottom = $mesin->b_plus_top ? Controller::unformat_angka($request->b_plus_bottom) : '0';
-            $mesin->b_top =  $mesin->b_plus_top ? Controller::unformat_angka($request->b_top) : '0';
-            $mesin->b_bottom = $mesin->b_plus_top ? Controller::unformat_angka($request->b_bottom) : '0';
-            $mesin->n_top = $mesin->b_plus_top ? Controller::unformat_angka($request->n_top) : '0';
-            $mesin->n_bottom = $mesin->b_plus_top ? Controller::unformat_angka($request->n_bottom) : '0';
-            $mesin->k_top = $mesin->b_plus_top ? Controller::unformat_angka($request->k_top) : '0';
-            $mesin->k_bottom = $mesin->b_plus_top ? Controller::unformat_angka($request->k_bottom) : '0';
-            $mesin->k_min_top = $mesin->b_plus_top ? Controller::unformat_angka($request->k_min_top) : '0';
-            $mesin->k_min_bottom = $mesin->b_plus_top ? Controller::unformat_angka($request->k_min_bottom) : '0';
             $mesin->created_by = Auth::user()->id;
             $mesin->save();
             DB::commit();

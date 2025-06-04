@@ -81,6 +81,9 @@
                                                                 Jenis
                                                                 Produksi
                                                             </th>
+                                                            <th class="text-center" style="width: 150px">
+                                                                Operator
+                                                            </th>
                                                             <th class="text-center">Hasil Meter</th>
                                                             <th class="text-center">Keterangan <br> Trobel
                                                                 Produksi</th>
@@ -109,6 +112,11 @@
                                                                     <option value="⁠RH3/ 2.150">
                                                                         ⁠RH3/ 2.150</option>
                                                                 </select>
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                <input type="text"
+                                                                    class="form-control @error('operator') is-invalid @enderror"
+                                                                    id="operator1" name="operator[]">
                                                             </td>
                                                             <td style="vertical-align: top">
                                                                 <label for="meter_awal1">Meter Awal</label>
@@ -245,6 +253,7 @@
             var mesin_id = $("#mesin_id1 option:selected").val();
             var mesin = $("#mesin_id1 option:selected").text();
             var jenis_produksi = $("#jenis_produksi1 option:selected").val();
+            var operator = $("#operator1").val();
             $("#table1 > tbody > tr:last").before(`
             <tr>
                 <td class="text-center" style="vertical-align: top">
@@ -266,6 +275,11 @@
                         <option value="${jenis_produksi}">
                             ${jenis_produksi}</option>
                     </select>
+                </td>
+                 <td style="vertical-align: top">
+                     <input type="text"
+                        class="form-control @error('operator') is-invalid @enderror"
+                        id="operator${row_id}" name="operator[]">
                 </td>
                 <td style="vertical-align: top">
                     <label for="meter_awal${row_id}">Meter Awal</label>
@@ -325,6 +339,7 @@
             $("#meter_akhir1").val("");
             $("#keterangan_produksi1").val("");
             $("#keterangan_mesin1").val("");
+            $("#operator1").val("");
             $("#jam_stop1").val("");
             $("#jam_jalan1").val("");
 

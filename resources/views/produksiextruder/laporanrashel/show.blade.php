@@ -72,6 +72,7 @@
                                                     <tr>
                                                         <th class="text-center" rowspan="2">Mesin</th>
                                                         <th class="text-center" rowspan="2">Jenis Produksi</th>
+                                                        <th class="text-center" rowspan="2">Operator</th>
                                                         <th class="text-center" colspan="3">Hasil Meter</th>
                                                         <th class="text-center" rowspan="2">Keterangan <br> Trobel
                                                             Produksi</th>
@@ -92,6 +93,7 @@
                                                         <tr>
                                                             <td>{{ $d->mesin->nama }}</td>
                                                             <td>{{ $d->jenis_produksi }}</td>
+                                                            <td>{{ $d->operator }}</td>
                                                             <td>{{ $d->meter_awal ?? 0 }}</td>
                                                             <td>{{ $d->meter_akhir ?? 0 }}</td>
                                                             <td>{{ $d->hasil ?? 0 }}</td>

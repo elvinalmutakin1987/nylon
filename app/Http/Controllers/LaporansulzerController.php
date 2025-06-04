@@ -143,6 +143,7 @@ class LaporansulzerController extends Controller
                     'hasil' => $request->hasil[$key] ? Controller::unformat_angka($request->hasil[$key]) : null,
                     'keterangan_produksi' => $request->keterangan_produksi[$key],
                     'keterangan_mesin' => $request->keterangan_mesin[$key],
+                    'operator' => $request->operator[$key],
                     'jam_stop' => $request->jam_stop[$key] ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
                     'jam_jalan' => $request->jam_jalan[$key] ? Carbon::parse($request->jam_jalan[$key])->format('H:i:s') : null
                 ];
@@ -207,6 +208,7 @@ class LaporansulzerController extends Controller
                     'hasil' => $request->hasil[$key] ? Controller::unformat_angka($request->hasil[$key]) : null,
                     'keterangan_produksi' => $request->keterangan_produksi[$key],
                     'keterangan_mesin' => $request->keterangan_mesin[$key],
+                    'operator' => $request->operator[$key],
                     'jam_stop' => $request->jam_stop[$key] ? Carbon::parse($request->jam_stop[$key])->format('H:i:s') : null,
                     'jam_jalan' => $request->jam_jalan[$key] ? Carbon::parse($request->jam_jalan[$key])->format('H:i:s') : null
                 ];

@@ -81,6 +81,9 @@
                                                                 Jenis
                                                                 Produksi
                                                             </th>
+                                                            <th class="text-center" style="width: 150px">
+                                                                Operator
+                                                            </th>
                                                             <th class="text-center">Hasil Meter</th>
                                                             <th class="text-center">Keterangan <br> Trobel
                                                                 Produksi</th>
@@ -137,6 +140,12 @@
                                                                         </select>
                                                                     </td>
                                                                     <td style="vertical-align: top">
+                                                                        <input type="text"
+                                                                            class="form-control @error('operator') is-invalid @enderror"
+                                                                            id="operator1" name="operator[]"
+                                                                            value="{{ $d->operator }}">
+                                                                    </td>
+                                                                    <td style="vertical-align: top">
                                                                         <label for="meter_awal1">Meter
                                                                             Awal</label>
                                                                         <input type="text"
@@ -161,11 +170,11 @@
                                                                             onkeyup="ubah_format('hasil1', this.value)">
                                                                     </td>
                                                                     <td style="vertical-align: top">
-                                                                        <textarea class="form-control @error('keterangan_produksi') is-invalid @enderror" rows="5"
-                                                                            id="keterangan_produksi1" name="keterangan_produksi[]">{!! $d->keterangan_produksi !!}</textarea>
+                                                                        <textarea class="form-control @error('keterangan_produksi') is-invalid @enderror"rows="10" id="keterangan_produksi1"
+                                                                            name="keterangan_produksi[]">{!! $d->keterangan_produksi !!}</textarea>
                                                                     </td>
                                                                     <td style="vertical-align: top">
-                                                                        <textarea class="form-control @error('keterangan_mesin') is-invalid @enderror" rows="5" id="keterangan_mesin1"
+                                                                        <textarea class="form-control @error('keterangan_mesin') is-invalid @enderror"rows="10" id="keterangan_mesin1"
                                                                             name="keterangan_mesin[]">{!! $d->keterangan_mesin !!}</textarea>
                                                                     </td>
                                                                     <td style="vertical-align: top">
@@ -238,6 +247,13 @@
                                                                                 {{ $d->jenis_produksi == 'PWU' ? 'selected' : '' }}>
                                                                                 PWU</option>
                                                                         </select>
+                                                                    </td>
+                                                                    <td style="vertical-align: top">
+                                                                        <input type="text"
+                                                                            class="form-control @error('operator') is-invalid @enderror"
+                                                                            id="operator{{ $d->slug }}"
+                                                                            name="operator[]"
+                                                                            value="{{ $d->operator }}">
                                                                     </td>
                                                                     <td style="vertical-align: top">
                                                                         <label for="meter_awal{{ $d->slug }}">Meter
@@ -338,6 +354,11 @@
                                                                         <option value="PWU">
                                                                             PWU</option>
                                                                     </select>
+                                                                </td>
+                                                                <td style="vertical-align: top">
+                                                                    <input type="text"
+                                                                        class="form-control @error('operator') is-invalid @enderror"
+                                                                        id="operator1" name="operator[]">
                                                                 </td>
                                                                 <td style="vertical-align: top">
                                                                     <label for="meter_awal1">Meter Awal</label>
@@ -485,6 +506,7 @@
             var mesin_id = $("#mesin_id1 option:selected").val();
             var mesin = $("#mesin_id1 option:selected").text();
             var jenis_produksi = $("#jenis_produksi1 option:selected").val();
+            var operator = $("#operator1").val();
             var selected_1 = "";
             var selected_2 = "";
             var selected_3 = "";
@@ -547,6 +569,11 @@
                     </select>
                 </td>
                 <td style="vertical-align: top">
+                    <input type="text"
+                        class="form-control @error('operator') is-invalid @enderror"
+                        id="operator${row_id}" name="operator[]" value="${operator}">
+                </td>
+                <td style="vertical-align: top">
                     <label for="meter_awal${row_id}">Meter Awal</label>
                     <input type="text"
                         class="form-control @error('meter_awal') is-invalid @enderror"
@@ -606,6 +633,7 @@
             $("#keterangan_mesin1").val("");
             $("#jam_stop1").val("");
             $("#jam_jalan1").val("");
+            $("#operator1").val("");
 
             format_select2();
         }
