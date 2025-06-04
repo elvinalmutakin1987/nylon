@@ -153,6 +153,14 @@
                                                     <i class="fa fa-file"></i> Rekap Pengeringan Kain
                                                 </a>
                                             @endif
+
+                                            <br>
+
+                                            @if (auth()->user()->can('produksi.wjl'))
+                                                <a class="btn btn-app" href="{{ route('prodwjl.index') }}">
+                                                    <i class="fa fa-asterisk"></i> Produksi WJL
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

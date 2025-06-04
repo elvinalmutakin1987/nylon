@@ -66,4 +66,9 @@ class Mesin extends Model
     {
         return $this->hasMany(Laporansulzerdetail::class);
     }
+
+    public function prodwjl(): HasMany
+    {
+        return $this->hasMany(Prodwjl::class);
+    }
 }

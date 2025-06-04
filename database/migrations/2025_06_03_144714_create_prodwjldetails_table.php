@@ -16,13 +16,21 @@ return new class extends Migration
             $table->integer('prodwjl_id')->nullable();
             $table->integer('material_id')->nullable();
             $table->string('slug')->nullable();
-            $table->string('satuan')->nullable()
-            $table->string('satuan2')->nullable()
-            $table->string('jumlah')->nullable()
-            $table->string('jumlah2')->nullable()
+            $table->string('satuan')->nullable();
+            $table->string('satuan2')->nullable();
+            $table->string('jumlah')->nullable();
+            $table->string('jumlah2')->nullable();
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
+            $table->string('approved_by')->nullable();
+            $table->string('confirmed_by')->nullable();
             $table->timestamps();
             $table->index('prodwjl_id');
             $table->index('material_id');
+            $table->timestamp('approved_at')->nullable();
+            $table->timestamp('confirmed_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

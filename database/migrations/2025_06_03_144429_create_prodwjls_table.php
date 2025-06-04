@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('prodwjls', function (Blueprint $table) {
             $table->id();
+            $table->integer('mesin_id')->nullable();
             $table->string('slug')->nullable();
             $table->date('tanggal')->nullable();
+            $table->string('shift')->nullable();
+            $table->string('operator')->nullable();
             $table->string('nomor')->nullable();
             $table->string('nomor_roll')->nullable();
             $table->string('nomor_so')->nullable();
@@ -26,6 +29,7 @@ return new class extends Migration
             $table->string('approved_by')->nullable();
             $table->string('confirmed_by')->nullable();
             $table->timestamps();
+            $table->index('mesin_id');
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('confirmed_at')->nullable();
             $table->timestamp('deleted_at')->nullable();

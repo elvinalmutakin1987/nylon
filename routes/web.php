@@ -36,6 +36,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProduksiController;
 use App\Http\Controllers\ProduksiwjlkepalareguController;
 use App\Http\Controllers\ProduksiwjloperatorController;
+use App\Http\Controllers\ProdwjlController;
 use App\Http\Controllers\RekappengeringankainController;
 use App\Http\Controllers\RekapproduksiwjlController;
 use App\Http\Controllers\ReturController;
@@ -560,5 +561,15 @@ Route::middleware(['auth'])->group(function () {
         Route::put('produksiextruder-stockbeaming-beamturun/{stockbeaming}', [StockbeamingController::class, 'update_beamturun'])->name('produksiextruder.stockbeaming.update_beamturun');
 
         Route::get('produksiextruder-stockbeaming-export', [StockbeamingController::class, 'export'])->name('produksiextruder.stockbeaming.export');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.stockbeaming']], function () {
+        Route::get('prodwjl', [ProdwjlController::class, 'index'])->name('prodwjl.index');
+        Route::post('prodwjl', [ProdwjlController::class, 'store'])->name('prodwjl.store');
+        Route::get('prodwjl/create', [ProdwjlController::class, 'create'])->name('prodwjl.create');
+        Route::get('prodwjl/{prodwjl}', [ProdwjlController::class, 'show'])->name('prodwjl.show');
+        Route::put('prodwjl/{prodwjl}', [ProdwjlController::class, 'update'])->name('prodwjl.update');
+        Route::delete('prodwjl/{prodwjl}', [ProdwjlController::class, 'destroy'])->name('prodwjl.destroy');
+        Route::get('prodwjl/{prodwjl}/edit', [ProdwjlController::class, 'edit'])->name('prodwjl.edit');
     });
 });
