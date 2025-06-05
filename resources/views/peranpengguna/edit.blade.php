@@ -363,6 +363,13 @@
                                                             </div>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.wjl.panen" name="produksi.wjl.panen"
+                                                                    {{ $role->hasPermissionTo('produksi.wjl.panen') ? 'checked' : '' }}>
+                                                                <label class="form-check-label"
+                                                                    for="produksi.wjl.panen">Panen WJL</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
                                                                     id="produksi.laminating.pengeringankain"
                                                                     name="produksi.laminating.pengeringankain"
                                                                     {{ $role->hasPermissionTo('produksi.laminating.pengeringankain') ? 'checked' : '' }}>

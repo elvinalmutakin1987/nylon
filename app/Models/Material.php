@@ -56,4 +56,14 @@ class Material extends Model
     {
         return $this->hasMany(Materialstok::class);
     }
+
+    public function prodwjl(): HasMany
+    {
+        return $this->hasMany(Prodwjl::class);
+    }
+
+    public function prodwjldetail(): HasMany
+    {
+        return $this->hasMany(Prodwjldetail::class);
+    }
 }

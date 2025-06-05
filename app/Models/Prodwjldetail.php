@@ -44,4 +44,9 @@ class Prodwjldetail extends Model
     {
         return $this->belongsTo(Prodwjl::class)->withDefault(['slug' => null]);
     }
+
+    public function material(): BelongsTo
+    {
+        return $this->belongsTo(Material::class)->withDefault(['nama' => null]);
+    }
 }

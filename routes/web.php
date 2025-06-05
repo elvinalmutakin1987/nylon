@@ -569,7 +569,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('prodwjl/create', [ProdwjlController::class, 'create'])->name('prodwjl.create');
         Route::get('prodwjl/{prodwjl}', [ProdwjlController::class, 'show'])->name('prodwjl.show');
         Route::put('prodwjl/{prodwjl}', [ProdwjlController::class, 'update'])->name('prodwjl.update');
+        Route::put('prodwjl/{prodwjl}', [ProdwjlController::class, 'update_panen'])->name('prodwjl.update_panen');
         Route::delete('prodwjl/{prodwjl}', [ProdwjlController::class, 'destroy'])->name('prodwjl.destroy');
         Route::get('prodwjl/{prodwjl}/edit', [ProdwjlController::class, 'edit'])->name('prodwjl.edit');
+
+        Route::get('prodwjl-get-mesin', [ProdwjlController::class, 'get_mesin'])->name('prodwjl.get_mesin');
+        Route::get('prodwjl-get-material', [ProdwjlController::class, 'get_material'])->name('prodwjl.get_material');
+        Route::get('prodwjl/{prodwjl}/panen', [ProdwjlController::class, 'panen'])->name('prodwjl.panen');
     });
 });

@@ -40,10 +40,15 @@ class Prodwjl extends Model
         'updated_at',
         'deleted_at',
         'approved_at',
-        'confirmed_at'
+        'confirmed_at',
+        'material_id',
+        'satuan',
+        'jumlah',
+        'satuan2',
+        'jumlah2'
     ];
 
-    public function prodwjl(): HasMany
+    public function prodwjldetail(): HasMany
     {
         return $this->hasMany(Prodwjldetail::class);
     }
@@ -51,5 +56,10 @@ class Prodwjl extends Model
     public function mesin(): BelongsTo
     {
         return $this->belongsTo(Mesin::class)->withDefault(['slug' => null]);
+    }
+
+    public function material(): BelongsTo
+    {
+        return $this->belongsTo(Material::class)->withDefault(['slug' => null]);
     }
 }
