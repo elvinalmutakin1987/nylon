@@ -201,8 +201,8 @@
                                                                 <tr>
                                                                     <td style="vertical-align: top">
                                                                         <select
-                                                                            class="form-control select2 w-100 select-material @error('mesin_id') is-invalid @enderror"
-                                                                            id="material_id{{ $d->id }}"
+                                                                            class="form-control select2 w-100 select-material @error('material_id') is-invalid @enderror"
+                                                                            id="material_id{{ $d->slug }}"
                                                                             name="material_id[]">
                                                                             <option value="{{ $d->material_id }}">
                                                                                 {{ $d->material->nama }}</option>
@@ -211,7 +211,7 @@
                                                                     <td style="vertical-align: top">
                                                                         <input type="text"
                                                                             class="form-control @error('jumlah') is-invalid @enderror"
-                                                                            id="jumlah{{ $d->id }}"
+                                                                            id="jumlah{{ $d->slug }}"
                                                                             name="jumlah[]"
                                                                             onkeyup="ubah_format('jumlah{{ $d->id }}', this.value);"
                                                                             value="{{ $d->jumlah ? Number::format($d->jumlah) : '' }}">
@@ -219,14 +219,14 @@
                                                                     <td style="vertical-align: top">
                                                                         <input type="text"
                                                                             class="form-control @error('jumlah2') is-invalid @enderror"
-                                                                            id="jumlah2{{ $d->id }}"
+                                                                            id="jumlah2{{ $d->slug }}"
                                                                             name="jumlah2[]"
                                                                             onkeyup="ubah_format('jumlah2{{ $d->id }}', this.value)"
                                                                             value="{{ $d->jumlah2 ? Number::format($d->jumlah2) : '' }}">
                                                                     </td>
-                                                                    <td style="vertical-align: top" class="text-center">
-                                                                        <button type="button" class="btn btn-primary"
-                                                                            onclick="tambah()"><i class="fa fa-plus"></i>
+                                                                    <td class="text-center" style="vertical-align: top">
+                                                                        <button type="button" class="btn btn-danger"
+                                                                            id="hapus"><i class="fa fa-trash"></i>
                                                                         </button>
                                                                     </td>
                                                                 </tr>
@@ -264,23 +264,49 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="row">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="tanggal_panen">Tanggal Panen</label>
+                                                <div class="input-group date" id="div_tanggal_panen"
+                                                    data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input"
+                                                        data-target="#div_tanggal_panen" id="tanggal_panen"
+                                                        name="tanggal_panen"
+                                                        value="{{ old('tanggal_panen') ?? $prodwjl->tanggal_panen }}" />
+                                                    <div class="input-group-append" data-target="#div_tanggal_panen"
+                                                        data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @error('tanggal')
+                                                    <span id="nama-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="material_id_panen">Material Panen</label>
                                                 <select
                                                     class="form-control select2 w-100 select-material @error('material_id_panen') is-invalid @enderror"
-                                                    id="material_id_panen" name="material_id_panen[]">
+                                                    id="material_id_panen" name="material_id_panen">
+                                                    <option value="{{ $prodwjl->material_id }}">
+                                                        {{ $prodwjl->material->nama }}</option>
                                                 </select>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="jumlah_panen2">Meter</label>
+                                                <label for="jumlah_panen">Meter</label>
                                                 <input type="text"
                                                     class="form-control @error('jumlah_panen') is-invalid @enderror"
-                                                    id="jumlah_panen" name="jumlah_panen[]"
-                                                    onkeyup="ubah_format('jumlah_panen', this.value)">
+                                                    id="jumlah_panen" name="jumlah_panen"
+                                                    onkeyup="ubah_format('jumlah_panen', this.value)"
+                                                    value="{{ Number::format((float) $prodwjl->jumlah) }}">
                                             </div>
                                         </div>
                                         <div class="col">
@@ -288,11 +314,12 @@
                                                 <label for="jumlah_panen2">KG</label>
                                                 <input type="text"
                                                     class="form-control @error('jumlah_panen2') is-invalid @enderror"
-                                                    id="jumlah_panen2" name="jumlah_panen2[]"
-                                                    onkeyup="ubah_format('jumlah_panen2', this.value)">
+                                                    id="jumlah_panen2" name="jumlah_panen2"
+                                                    onkeyup="ubah_format('jumlah_panen2', this.value)"
+                                                    value="{{ Number::format((float) $prodwjl->jumlah2) }}">
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                     <!-- /.card-body -->
 
                                 </div>
@@ -374,38 +401,38 @@
             var row_id = Date.now().toString(36) + Math.random().toString(36).substr(2);
             var material_id = $("#material_id1 option:selected").val();
             var material = $("#material_id1 option:selected").text();
-            var jumlah = $("#jumlah1").val();
-            var jumlah2 = $("#jumlah21").val();
+            var jumlah = $("#jumlah1").val() ?? '';
+            var jumlah2 = $("#jumlah21").val() ?? '';
             $("#table1 > tbody > tr:last").before(`
-            <tr>
-                <td style="vertical-align: top">
-                    <select
-                        class="form-control select2 w-100 select-material @error('mesin_id') is-invalid @enderror"
-                        id="material_id${row_id}" name="material_id[]">
-                        <option value="${material_id}">${material}</option>
-                    </select>
-                </td>
-                <td style="vertical-align: top">
-                    <input type="text"
-                        class="form-control @error('jumlah') is-invalid @enderror"
-                        id="jumlah${row_id}" name="jumlah[]"
-                        onkeyup="ubah_format('jumlah1', this.value);"
-                         value="${jumlah}">
-                </td>
-                <td style="vertical-align: top">
-                    <input type="text"
-                        class="form-control @error('jumlah2') is-invalid @enderror"
-                        id="jumlah2${row_id}" name="jumlah2[]"
-                        onkeyup="ubah_format('jumlah21', this.value)"
-                        value="${jumlah2}">
-                </td>
-                <td class="text-center" style="vertical-align: top">
-                    <button type="button" class="btn btn-danger"
-                        id="hapus"><i class="fa fa-trash"></i>
-                    </button>
-                </td>
-            </tr>
-        `);
+                <tr>
+                    <td style="vertical-align: top">
+                        <select
+                            class="form-control select2 w-100 select-material @error('mesin_id') is-invalid @enderror"
+                            id="material_id${row_id}" name="material_id[]">
+                            <option value="${material_id}">${material}</option>
+                        </select>
+                    </td>
+                    <td style="vertical-align: top">
+                        <input type="text"
+                            class="form-control @error('jumlah') is-invalid @enderror"
+                            id="jumlah${row_id}" name="jumlah[]"
+                            onkeyup="ubah_format('jumlah1', this.value);"
+                            value="${jumlah}">
+                    </td>
+                    <td style="vertical-align: top">
+                        <input type="text"
+                            class="form-control @error('jumlah2') is-invalid @enderror"
+                            id="jumlah2${row_id}" name="jumlah2[]"
+                            onkeyup="ubah_format('jumlah21', this.value)"
+                            value="${jumlah2}">
+                    </td>
+                    <td class="text-center" style="vertical-align: top">
+                        <button type="button" class="btn btn-danger"
+                            id="hapus"><i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `);
             $("#material_id1").val(null).trigger('change');
             $("#jumlah1").val("");
             $("#jumlah21").val("");

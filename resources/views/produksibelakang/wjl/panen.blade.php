@@ -57,7 +57,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="tanggal_panen">tanggal_panen</label>
+                                                <label for="tanggal_panen">Tanggal Panen</label>
                                                 <div class="input-group date" id="div_tanggal_panen"
                                                     data-target-input="nearest">
                                                     <input type="text" class="form-control datetimepicker-input"

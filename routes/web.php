@@ -32,6 +32,7 @@ use App\Http\Controllers\PengeringankainController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PeranpenggunaController;
 use App\Http\Controllers\PermintaanmaterialController;
+use App\Http\Controllers\ProdlaminatingController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProduksiController;
 use App\Http\Controllers\ProduksiwjlkepalareguController;
@@ -563,18 +564,34 @@ Route::middleware(['auth'])->group(function () {
         Route::get('produksiextruder-stockbeaming-export', [StockbeamingController::class, 'export'])->name('produksiextruder.stockbeaming.export');
     });
 
-    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.extruder.stockbeaming']], function () {
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.wjl']], function () {
         Route::get('prodwjl', [ProdwjlController::class, 'index'])->name('prodwjl.index');
         Route::post('prodwjl', [ProdwjlController::class, 'store'])->name('prodwjl.store');
         Route::get('prodwjl/create', [ProdwjlController::class, 'create'])->name('prodwjl.create');
         Route::get('prodwjl/{prodwjl}', [ProdwjlController::class, 'show'])->name('prodwjl.show');
         Route::put('prodwjl/{prodwjl}', [ProdwjlController::class, 'update'])->name('prodwjl.update');
-        Route::put('prodwjl/{prodwjl}', [ProdwjlController::class, 'update_panen'])->name('prodwjl.update_panen');
+        Route::put('prodwjl/{prodwjl}/update', [ProdwjlController::class, 'update_panen'])->name('prodwjl.update_panen');
         Route::delete('prodwjl/{prodwjl}', [ProdwjlController::class, 'destroy'])->name('prodwjl.destroy');
         Route::get('prodwjl/{prodwjl}/edit', [ProdwjlController::class, 'edit'])->name('prodwjl.edit');
 
         Route::get('prodwjl-get-mesin', [ProdwjlController::class, 'get_mesin'])->name('prodwjl.get_mesin');
         Route::get('prodwjl-get-material', [ProdwjlController::class, 'get_material'])->name('prodwjl.get_material');
         Route::get('prodwjl/{prodwjl}/panen', [ProdwjlController::class, 'panen'])->name('prodwjl.panen');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.laminating']], function () {
+        Route::get('prodlaminating', [ProdlaminatingController::class, 'index'])->name('prodlaminating.index');
+        Route::post('prodlaminating', [ProdlaminatingController::class, 'store'])->name('prodlaminating.store');
+        Route::get('prodlaminating/create', [ProdlaminatingController::class, 'create'])->name('prodlaminating.create');
+        Route::get('prodlaminating/{prodlaminating}', [ProdlaminatingController::class, 'show'])->name('prodlaminating.show');
+        Route::put('prodlaminating/{prodlaminating}', [ProdlaminatingController::class, 'update'])->name('prodlaminating.update');
+        Route::put('prodlaminating/{prodlaminating}/update', [ProdlaminatingController::class, 'update_panen'])->name('prodlaminating.update_panen');
+        Route::delete('prodlaminating/{prodlaminating}', [ProdlaminatingController::class, 'destroy'])->name('prodlaminating.destroy');
+        Route::get('prodlaminating/{prodlaminating}/edit', [ProdlaminatingController::class, 'edit'])->name('prodlaminating.edit');
+
+        Route::get('prodlaminating-get-mesin', [ProdlaminatingController::class, 'get_mesin'])->name('prodlaminating.get_mesin');
+        Route::get('prodlaminating-get-material', [ProdlaminatingController::class, 'get_material'])->name('prodlaminating.get_material');
+        Route::get('prodlaminating-get-prowjl', [ProdlaminatingController::class, 'get_prodwjl'])->name('prodlaminating.get_prodwjl');
+        Route::get('prodlaminating/{prodlaminating}/panen', [ProdlaminatingController::class, 'panen'])->name('prodlaminating.panen');
     });
 });

@@ -52,6 +52,7 @@
                                                     <th>Tanggal</th>
                                                     <th>Shift</th>
                                                     <th>Operator</th>
+                                                    <th>Status</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -149,6 +150,21 @@
                         name: 'operator',
                         orderable: true,
                         searchable: true
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
+                        orderable: true,
+                        searchable: true,
+                        render: function(data, type, row) {
+                            if (data == 'Draft') {
+                                return '<span class="badge bg-secondary" style="font-size: 13px">' + data +
+                                    '</span>';
+                            } else if (data == 'Panen') {
+                                return '<span class="badge bg-success" style="font-size: 13px">' + data +
+                                    '</span>';
+                            }
+                        }
                     },
                     {
                         data: 'action',

@@ -161,6 +161,12 @@
                                                     <i class="fa fa-asterisk"></i> Produksi WJL
                                                 </a>
                                             @endif
+
+                                            @if (auth()->user()->can('produksi.laminating'))
+                                                <a class="btn btn-app" href="{{ route('prodlaminating.index') }}">
+                                                    <i class="fa fa-asterisk"></i> Produksi Laminating
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
