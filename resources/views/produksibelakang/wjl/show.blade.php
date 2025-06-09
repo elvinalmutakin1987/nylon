@@ -16,8 +16,7 @@
                             <li class="breadcrumb-item"><a href="{{ route('produksi.index') }}"
                                     class="text-dark">Produksi</a>
                             </li>
-                            <li class="breadcrumb-item">Barang Jadi</li>
-                            <li class="breadcrumb-item">Barang Masuk</li>
+                            <li class="breadcrumb-item">Produksi JWL</li>
                             <li class="breadcrumb-item" Active>Detail Data</li>
                         </ol>
                     </div>
@@ -32,7 +31,7 @@
                         <!-- Application buttons -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Detail Barang Masuk</h3>
+                                <h3 class="card-title">Detail Produksi WJL</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">

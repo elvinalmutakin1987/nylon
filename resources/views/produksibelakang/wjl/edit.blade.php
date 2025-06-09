@@ -70,6 +70,19 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
+                                                <label for="nomor_roll">Nomor Roll</label>
+                                                <input type="text"
+                                                    class="form-control @error('nomor_roll') is-invalid @enderror"
+                                                    id="nomor_roll" name="nomor_roll"
+                                                    value="{{ old('nomor_roll') ?? $prodwjl->nomor_roll }}">
+                                                @error('nomor_roll')
+                                                    <span id="nomor_roll-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
                                                 <label for="mesin_id">Mesin</label>
                                                 <select
                                                     class="form-control select2 w-100 select-mesin @error('mesin_id') is-invalid @enderror"
@@ -83,6 +96,8 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="tanggal">Tanggal</label>
@@ -102,17 +117,21 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="shift">Shift</label>
                                                 <select
                                                     class="form-control select2 w-100 select-shift @error('shift') is-invalid @enderror"
                                                     id="shift" name="shift">
-                                                    <option value="Pagi">Pagi</option>
-                                                    <option value="Sore">Sore</option>
-                                                    <option value="Malam">Malam</option>
+                                                    <option value="Pagi"
+                                                        {{ $prodwjl->shift == 'Pagi' ? 'selected' : '' }}>Pagi
+                                                    </option>
+                                                    <option value="Sore"
+                                                        {{ $prodwjl->shift == 'Sore' ? 'selected' : '' }}>Sore
+                                                    </option>
+                                                    <option value="Malam"
+                                                        {{ $prodwjl->shift == 'Malam' ? 'selected' : '' }}>Malam
+                                                    </option>
                                                 </select>
                                                 @error('shift')
                                                     <span id="shift-error"
@@ -133,6 +152,8 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="keterangan">Keterangan</label>
@@ -153,7 +174,8 @@
                                                 <table id="table1" class="table projects table-bordered table-sm">
                                                     <thead>
                                                         <tr>
-                                                            <th class="text-center" rowspan="2">
+                                                            <th class="text-center" rowspan="2"
+                                                                style="vertical-align: middle">
                                                                 Material
                                                             </th>
                                                             <th class="text-center" colspan="2">Satuan</th>
@@ -202,7 +224,7 @@
                                                                     <td style="vertical-align: top">
                                                                         <select
                                                                             class="form-control select2 w-100 select-material @error('material_id') is-invalid @enderror"
-                                                                            id="material_id{{ $d->slug }}"
+                                                                            id="material_id{{ $d->id }}"
                                                                             name="material_id[]">
                                                                             <option value="{{ $d->material_id }}">
                                                                                 {{ $d->material->nama }}</option>
@@ -211,7 +233,7 @@
                                                                     <td style="vertical-align: top">
                                                                         <input type="text"
                                                                             class="form-control @error('jumlah') is-invalid @enderror"
-                                                                            id="jumlah{{ $d->slug }}"
+                                                                            id="jumlah{{ $d->id }}"
                                                                             name="jumlah[]"
                                                                             onkeyup="ubah_format('jumlah{{ $d->id }}', this.value);"
                                                                             value="{{ $d->jumlah ? Number::format($d->jumlah) : '' }}">
@@ -219,7 +241,7 @@
                                                                     <td style="vertical-align: top">
                                                                         <input type="text"
                                                                             class="form-control @error('jumlah2') is-invalid @enderror"
-                                                                            id="jumlah2{{ $d->slug }}"
+                                                                            id="jumlah2{{ $d->id }}"
                                                                             name="jumlah2[]"
                                                                             onkeyup="ubah_format('jumlah2{{ $d->id }}', this.value)"
                                                                             value="{{ $d->jumlah2 ? Number::format($d->jumlah2) : '' }}">
@@ -350,6 +372,10 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#div_tanggal').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+
+            $('#div_tanggal_panen').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
 

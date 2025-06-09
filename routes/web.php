@@ -593,5 +593,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('prodlaminating-get-material', [ProdlaminatingController::class, 'get_material'])->name('prodlaminating.get_material');
         Route::get('prodlaminating-get-prowjl', [ProdlaminatingController::class, 'get_prodwjl'])->name('prodlaminating.get_prodwjl');
         Route::get('prodlaminating/{prodlaminating}/panen', [ProdlaminatingController::class, 'panen'])->name('prodlaminating.panen');
+        Route::get('prodlaminating-get-prodwjl-by-id', [ProdlaminatingController::class, 'get_prodwjl_by_id'])->name('prodlaminating.get_prodwjl_by_id');
     });
 });

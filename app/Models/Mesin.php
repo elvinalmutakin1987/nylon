@@ -71,4 +71,9 @@ class Mesin extends Model
     {
         return $this->hasMany(Prodwjl::class);
     }
+
+    public function prodlaminating(): HasMany
+    {
+        return $this->hasMany(Prodlaminating::class);
+    }
 }

@@ -51,6 +51,18 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
+                                                <label for="nomor_roll">Nomor Roll</label>
+                                                <input type="text"
+                                                    class="form-control @error('nomor_roll') is-invalid @enderror"
+                                                    id="nomor_roll" name="nomor_roll" value="{{ old('nomor_roll') }}">
+                                                @error('nomor_roll')
+                                                    <span id="nomor_roll-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
                                                 <label for="mesin_id">Mesin</label>
                                                 <select
                                                     class="form-control select2 w-100 select-mesin @error('mesin_id') is-invalid @enderror"
@@ -62,6 +74,8 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="tanggal">Tanggal</label>
@@ -81,8 +95,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="shift">Shift</label>
@@ -111,6 +123,8 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="keterangan">Keterangan</label>

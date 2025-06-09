@@ -62,4 +62,9 @@ class Prodwjl extends Model
     {
         return $this->belongsTo(Material::class)->withDefault(['slug' => null]);
     }
+
+    public function prodlaminating(): HasMany
+    {
+        return $this->hasMany(Prodlaminating::class);
+    }
 }

@@ -53,4 +53,19 @@ class Prodlaminating extends Model
     {
         return $this->hasMany(Prodlaminatingdetail::class);
     }
+
+    public function prodwjl(): BelongsTo
+    {
+        return $this->belongsTo(Prodwjl::class)->withDefault(['slug' => null]);
+    }
+
+    public function mesin(): BelongsTo
+    {
+        return $this->belongsTo(Mesin::class)->withDefault(['slug' => null]);
+    }
+
+    public function material(): BelongsTo
+    {
+        return $this->belongsTo(Material::class)->withDefault(['slug' => null]);
+    }
 }

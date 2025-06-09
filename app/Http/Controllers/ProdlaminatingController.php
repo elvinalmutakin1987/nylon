@@ -99,31 +99,32 @@ class ProdlaminatingController extends Controller
         DB::beginTransaction();
         try {
             $gen_no_dokumen = Controller::gen_no_dokumen('produksiwjl');
-            $prodlaminationg = new Prodlaminating();
-            $prodlaminationg->prodwjl_id = $request->prodwjl_id;
-            $prodlaminationg->nomor = $gen_no_dokumen['nomor'];
-            $prodlaminationg->mesin_id = $request->mesin_id;
-            $prodlaminationg->nomor_so = $request->nomor_so;
-            $prodlaminationg->slug = Str::slug($request->nomor_so . '-' . time());
-            $prodlaminationg->status = 'Draft';
-            $prodlaminationg->shift = $request->shift;
-            $prodlaminationg->operator = $request->operator;
-            $prodlaminationg->tanggal = $request->tanggal;
-            $prodlaminationg->keterangan = $request->keterangan;
-            $prodlaminationg->created_by = Auth::user()->id;
-            $prodlaminationg->save();
+            $prodlaminating = new Prodlaminating();
+            $prodlaminating->prodwjl_id = $request->prodwjl_id;
+            $prodlaminating->nomor = $gen_no_dokumen['nomor'];
+            $prodlaminating->mesin_id = $request->mesin_id;
+            $prodlaminating->nomor_so = $request->nomor_so;
+            $prodlaminating->nomor_roll = $request->nomor_roll;
+            $prodlaminating->slug = Controller::gen_slug();
+            $prodlaminating->status = 'Draft';
+            $prodlaminating->shift = $request->shift;
+            $prodlaminating->operator = $request->operator;
+            $prodlaminating->tanggal = $request->tanggal;
+            $prodlaminating->keterangan = $request->keterangan;
+            $prodlaminating->created_by = Auth::user()->id;
+            $prodlaminating->save();
             if ($request->has('material_id')) {
                 foreach ($request->material_id as $key => $material_id) {
                     $detail[] = [
-                        'prodlaminating_id' => $prodlaminationg->id,
+                        'prodlaminating_id' => $prodlaminating->id,
                         'slug' => Controller::gen_slug(),
                         'material_id' => $request->material_id[$key] ?? null,
                         'jumlah' => $request->jumlah[$key] ? Controller::unformat_angka($request->jumlah[$key]) : null,
                         'jumlah2' => $request->jumlah2[$key] ? Controller::unformat_angka($request->jumlah2[$key]) : null,
                     ];
                 }
-                $prodlaminationg->prodlaminatingdetail()->delete();
-                $prodlaminationg->prodlaminatingdetail()->createMany($detail);
+                $prodlaminating->prodlaminatingdetail()->delete();
+                $prodlaminating->prodlaminatingdetail()->createMany($detail);
             }
             DB::commit();
             return redirect()->route('prodlaminating.index')->with([
@@ -141,7 +142,7 @@ class ProdlaminatingController extends Controller
      */
     public function show(Prodlaminating $prodlaminating)
     {
-        //
+        return view('produksibelakang.laminating.show', compact('prodlaminating'));
     }
 
     /**
@@ -149,7 +150,7 @@ class ProdlaminatingController extends Controller
      */
     public function edit(Prodlaminating $prodlaminating)
     {
-        //
+        return view('produksibelakang.laminating.edit', compact('prodlaminating'));
     }
 
     /**
@@ -157,7 +158,47 @@ class ProdlaminatingController extends Controller
      */
     public function update(Request $request, Prodlaminating $prodlaminating)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'prodwjl_id' => 'required',
+            'nomor_so' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
+        }
+        DB::beginTransaction();
+        try {
+            $prodlaminating->prodwjl_id = $request->prodwjl_id;
+            $prodlaminating->mesin_id = $request->mesin_id;
+            $prodlaminating->nomor_so = $request->nomor_so;
+            $prodlaminating->nomor_roll = $request->nomor_roll;
+            $prodlaminating->shift = $request->shift;
+            $prodlaminating->operator = $request->operator;
+            $prodlaminating->tanggal = $request->tanggal;
+            $prodlaminating->keterangan = $request->keterangan;
+            $prodlaminating->created_by = Auth::user()->id;
+            $prodlaminating->save();
+            if ($request->has('material_id')) {
+                foreach ($request->material_id as $key => $material_id) {
+                    $detail[] = [
+                        'prodlaminating_id' => $prodlaminating->id,
+                        'slug' => Controller::gen_slug(),
+                        'material_id' => $request->material_id[$key] ?? null,
+                        'jumlah' => $request->jumlah[$key] ? Controller::unformat_angka($request->jumlah[$key]) : null,
+                        'jumlah2' => $request->jumlah2[$key] ? Controller::unformat_angka($request->jumlah2[$key]) : null,
+                    ];
+                }
+                $prodlaminating->prodlaminatingdetail()->delete();
+                $prodlaminating->prodlaminatingdetail()->createMany($detail);
+            }
+            DB::commit();
+            return redirect()->route('prodlaminating.index')->with([
+                'status' => 'success',
+                'message' => 'Data telah disimpan!'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return view('error', compact('th'));
+        }
     }
 
     /**
@@ -165,7 +206,19 @@ class ProdlaminatingController extends Controller
      */
     public function destroy(Prodlaminating $prodlaminating)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $prodlaminating->prodlaminatingdetail()->delete();
+            $prodlaminating->delete();
+            DB::commit();
+            return redirect()->route('prodlaminating.index')->with([
+                'status' => 'success',
+                'message' => 'Data telah dihapus!'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return view('error', compact('th'));
+        }
     }
 
     public function get_mesin(Request $request)
@@ -238,6 +291,53 @@ class ProdlaminatingController extends Controller
                 "total_count" => $total_count
             ];
             return response()->json($result);
+        }
+    }
+
+    public function get_prodwjl_by_id(Request $request)
+    {
+        if ($request->ajax()) {
+            $prodwjl = Prodwjl::find($request->prodwjl_id);
+            $mesin = Mesin::find($prodwjl->mesin_id);
+            $data = [
+                'prodwjl' => $prodwjl,
+                'mesin' => $mesin,
+            ];
+            return response()->json($data);
+        }
+    }
+
+    public function panen(Prodlaminating $prodlaminating)
+    {
+        if ($prodlaminating->status != 'Draft') {
+            return redirect()->back()->with([
+                'status' => 'error',
+                'message' => 'Data sudah dipanen!'
+            ]);
+        }
+        return view('produksibelakang.laminating.panen', compact('prodlaminating'));
+    }
+
+    public function update_panen(Request $request, Prodlaminating $prodlaminating)
+    {
+        DB::beginTransaction();
+        try {
+            $prodlaminating->tanggal_panen  = $request->tanggal_panen;
+            $prodlaminating->keterangan_panen = $request->keterangan_panen;
+            $prodlaminating->status = 'Panen';
+            $prodlaminating->jumlah = $request->jumlah_panen ? Controller::unformat_angka($request->jumlah_panen) : null;
+            $prodlaminating->jumlah2 = $request->jumlah_panen2 ? Controller::unformat_angka($request->jumlah_panen2) : null;
+            $prodlaminating->material_id = $request->material_id_panen;
+            $prodlaminating->updated_by = Auth::user()->id;
+            $prodlaminating->save();
+            DB::commit();
+            return redirect()->route('prodlaminating.index')->with([
+                'status' => 'success',
+                'message' => 'Data telah disimpan!'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return view('error', compact('th'));
         }
     }
 }

@@ -67,6 +67,18 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
+                                                <label for="nomor_roll">Nomor Roll</label>
+                                                <input type="text"
+                                                    class="form-control @error('nomor_roll') is-invalid @enderror"
+                                                    id="nomor_roll" name="nomor_roll" readonly>
+                                                @error('nomor_roll')
+                                                    <span id="nomor_roll-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
                                                 <label for="mesin">Mesin</label>
                                                 <input type="text"
                                                     class="form-control @error('mesin') is-invalid @enderror" id="mesin"
@@ -78,6 +90,9 @@
                                                 @enderror
                                             </div>
                                         </div>
+
+                                    </div>
+                                    <div class="row">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="tanggal">Tanggal</label>
@@ -97,8 +112,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="shift">Shift</label>
@@ -127,6 +140,9 @@
                                                 @enderror
                                             </div>
                                         </div>
+
+                                    </div>
+                                    <div class="row">
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="keterangan">Keterangan</label>
@@ -315,7 +331,10 @@
                 var url = "{!! route('prodlaminating.get_prodwjl_by_id', ['prodwjl_id' => '_prodwjl_id']) !!}"
                 url = url.replace('_prodwjl_id', this.value)
                 $.get(url, function(data) {
-                    $("#total").val(numeral(data.goodreceipt.total).format("0,0"))
+                    $("#nomor_so").val(data.prodwjl.nomor_so);
+                    $("#nomor_roll").val(data.prodwjl.nomor_roll);
+                    $("#mesin").val(data.mesin.nama);
+                    $("#mesin_id").val(data.prodwjl.mesin_id);
                 });
             });
         }

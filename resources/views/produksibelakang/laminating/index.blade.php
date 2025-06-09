@@ -49,6 +49,7 @@
                                                     <th>Nomor</th>
                                                     <th>No. WJL</th>
                                                     <th>No. SO</th>
+                                                    <th>No. Roll</th>
                                                     <th>Mesin</th>
                                                     <th>Tanggal</th>
                                                     <th>Shift</th>
@@ -131,6 +132,12 @@
                     {
                         data: 'nomor_so',
                         name: 'nomor_so',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'nomor_roll',
+                        name: 'nomor_roll',
                         orderable: true,
                         searchable: true
                     },

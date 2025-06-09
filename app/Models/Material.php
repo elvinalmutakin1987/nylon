@@ -66,4 +66,14 @@ class Material extends Model
     {
         return $this->hasMany(Prodwjldetail::class);
     }
+
+    public function prodlaminating(): HasMany
+    {
+        return $this->hasMany(Prodlaminating::class);
+    }
+
+    public function prodlaminatingdetail(): HasMany
+    {
+        return $this->hasMany(Prodlaminatingdetail::class);
+    }
 }

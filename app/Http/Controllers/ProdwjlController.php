@@ -86,6 +86,7 @@ class ProdwjlController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nomor_so' => 'required',
+            'mesin_id' => 'required',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
@@ -97,7 +98,8 @@ class ProdwjlController extends Controller
             $prodwjl->nomor = $gen_no_dokumen['nomor'];
             $prodwjl->mesin_id = $request->mesin_id;
             $prodwjl->nomor_so = $request->nomor_so;
-            $prodwjl->slug = Str::slug($request->nomor_so . '-' . time());
+            $prodwjl->nomor_roll = $request->nomor_roll;
+            $prodwjl->slug = Controller::gen_slug();
             $prodwjl->status = 'Draft';
             $prodwjl->shift = $request->shift;
             $prodwjl->operator = $request->operator;
@@ -152,20 +154,24 @@ class ProdwjlController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nomor_so' => 'required',
+            'mesin_id' => 'required',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
         }
         DB::beginTransaction();
         try {
-
             $prodwjl->mesin_id = $request->mesin_id;
             $prodwjl->nomor_so = $request->nomor_so;
-            $prodwjl->slug = Str::slug($request->nomor_so . '-' . time());
+            $prodwjl->nomor_roll = $request->nomor_roll;
             $prodwjl->shift = $request->shift;
             $prodwjl->operator = $request->operator;
             $prodwjl->tanggal = $request->tanggal;
             $prodwjl->keterangan = $request->keterangan;
+            $prodwjl->tanggal_panen  = $request->tanggal_panen;
+            $prodwjl->jumlah = $request->jumlah_panen ? Controller::unformat_angka($request->jumlah_panen) : null;
+            $prodwjl->jumlah2 = $request->jumlah_panen2 ? Controller::unformat_angka($request->jumlah_panen2) : null;
+            $prodwjl->material_id = $request->material_id_panen;
             $prodwjl->updated_by = Auth::user()->id;
             $prodwjl->save();
             if ($request->has('material_id')) {
@@ -197,7 +203,19 @@ class ProdwjlController extends Controller
      */
     public function destroy(Prodwjl $prodwjl)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $prodwjl->prodwjldetail()->delete();
+            $prodwjl->delete();
+            DB::commit();
+            return redirect()->route('prodwjl.index')->with([
+                'status' => 'success',
+                'message' => 'Data telah dihapus!'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return view('error', compact('th'));
+        }
     }
 
     public function get_mesin(Request $request)
