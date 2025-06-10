@@ -334,7 +334,7 @@ class ProdweldingController extends Controller
         if ($prodwelding->status != 'Draft') {
             return redirect()->back()->with([
                 'status' => 'error',
-                'message' => 'Data sudah dipanen!'
+                'message' => 'Data sudah dipanen!'  
             ]);
         }
         return view('produksibelakang.welding.panen', compact('prodwelding'));
