@@ -70,7 +70,7 @@
                                                 <label for="nomor_roll">Nomor Roll</label>
                                                 <input type="text"
                                                     class="form-control @error('nomor_roll') is-invalid @enderror"
-                                                    id="nomor_roll" name="nomor_roll" readonly>
+                                                    id="nomor_roll" name="nomor_roll">
                                                 @error('nomor_roll')
                                                     <span id="nomor_roll-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -79,11 +79,11 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="mesin">Mesin</label>
-                                                <input type="text"
-                                                    class="form-control @error('mesin') is-invalid @enderror" id="mesin"
-                                                    name="mesin" readonly>
-                                                <input type="hidden" id="mesin_id" name="mesin_id">
+                                                <label for="mesin_id">Mesin</label>
+                                                <select
+                                                    class="form-control select2 w-100 select-mesin @error('mesin_id') is-invalid @enderror"
+                                                    id="mesin_id" name="mesin_id">
+                                                </select>
                                                 @error('mesin_id')
                                                     <span id="mesin_id-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -243,8 +243,8 @@
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <a type="button" class="btn btn-default" href="{{ route('prodwjl.index') }}"><i
-                                            class="fa fa-reply"></i>
+                                    <a type="button" class="btn btn-default"
+                                        href="{{ route('prodlaminating.index') }}"><i class="fa fa-reply"></i>
                                         Kembali</a>
                                     <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>
                                         Simpan</button>
@@ -285,7 +285,7 @@
                 placeholder: "- Pilih Mesin -",
                 allowClear: true,
                 ajax: {
-                    url: '{{ route('prodwjl.get_mesin') }}',
+                    url: '{{ route('prodlaminating.get_mesin') }}',
                     dataType: 'json',
                     data: function(params) {
                         return {
@@ -333,8 +333,6 @@
                 $.get(url, function(data) {
                     $("#nomor_so").val(data.prodwjl.nomor_so);
                     $("#nomor_roll").val(data.prodwjl.nomor_roll);
-                    $("#mesin").val(data.mesin.nama);
-                    $("#mesin_id").val(data.prodwjl.mesin_id);
                 });
             });
         }

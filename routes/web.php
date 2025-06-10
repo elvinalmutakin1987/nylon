@@ -37,6 +37,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProduksiController;
 use App\Http\Controllers\ProduksiwjlkepalareguController;
 use App\Http\Controllers\ProduksiwjloperatorController;
+use App\Http\Controllers\ProdweldingController;
 use App\Http\Controllers\ProdwjlController;
 use App\Http\Controllers\RekappengeringankainController;
 use App\Http\Controllers\RekapproduksiwjlController;
@@ -594,5 +595,24 @@ Route::middleware(['auth'])->group(function () {
         Route::get('prodlaminating-get-prowjl', [ProdlaminatingController::class, 'get_prodwjl'])->name('prodlaminating.get_prodwjl');
         Route::get('prodlaminating/{prodlaminating}/panen', [ProdlaminatingController::class, 'panen'])->name('prodlaminating.panen');
         Route::get('prodlaminating-get-prodwjl-by-id', [ProdlaminatingController::class, 'get_prodwjl_by_id'])->name('prodlaminating.get_prodwjl_by_id');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.welding']], function () {
+        Route::get('prodwelding', [ProdweldingController::class, 'index'])->name('prodwelding.index');
+        Route::post('prodwelding', [ProdweldingController::class, 'store'])->name('prodwelding.store');
+        Route::get('prodwelding/create', [ProdweldingController::class, 'create'])->name('prodwelding.create');
+        Route::get('prodwelding/{prodwelding}', [ProdweldingController::class, 'show'])->name('prodwelding.show');
+        Route::put('prodwelding/{prodwelding}', [ProdweldingController::class, 'update'])->name('prodwelding.update');
+        Route::put('prodwelding/{prodwelding}/update', [ProdweldingController::class, 'update_panen'])->name('prodwelding.update_panen');
+        Route::delete('prodwelding/{prodwelding}', [ProdweldingController::class, 'destroy'])->name('prodwelding.destroy');
+        Route::get('prodwelding/{prodwelding}/edit', [ProdweldingController::class, 'edit'])->name('prodwelding.edit');
+
+        Route::get('prodwelding-get-mesin', [ProdweldingController::class, 'get_mesin'])->name('prodwelding.get_mesin');
+        Route::get('prodwelding-get-material', [ProdweldingController::class, 'get_material'])->name('prodwelding.get_material');
+        Route::get('prodwelding-get-prowjl', [ProdweldingController::class, 'get_prodwjl'])->name('prodwelding.get_prodwjl');
+        Route::get('prodwelding-get-prodlaminating', [ProdweldingController::class, 'get_prodlaminating'])->name('prodwelding.get_prodlaminating');
+        Route::get('prodwelding/{prodwelding}/panen', [ProdweldingController::class, 'panen'])->name('prodwelding.panen');
+        Route::get('prodwelding-get-prodwjl-by-id', [ProdweldingController::class, 'get_prodwjl_by_id'])->name('prodwelding.get_prodwjl_by_id');
+        Route::get('prodwelding-get-prodlaminating-by-id', [ProdweldingController::class, 'get_prodlaminating_by_id'])->name('prodwelding.get_prodlaminating_by_id');
     });
 });

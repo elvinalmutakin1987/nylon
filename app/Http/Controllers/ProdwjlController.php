@@ -95,7 +95,7 @@ class ProdwjlController extends Controller
         try {
             $gen_no_dokumen = Controller::gen_no_dokumen('produksiwjl');
             $prodwjl = new Prodwjl();
-            $prodwjl->nomor = $gen_no_dokumen['nomor'];
+            $prodwjl->nomor = "WJL-" . $gen_no_dokumen['nomor'];
             $prodwjl->mesin_id = $request->mesin_id;
             $prodwjl->nomor_so = $request->nomor_so;
             $prodwjl->nomor_roll = $request->nomor_roll;

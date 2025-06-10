@@ -87,19 +87,20 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="mesin">Mesin</label>
-                                                <input type="text"
-                                                    class="form-control @error('mesin') is-invalid @enderror" id="mesin"
-                                                    name="mesin" readonly value="{{ $prodlaminating->mesin->nama }}">
-                                                <input type="hidden" id="mesin_id" name="mesin_id"
-                                                    value="{{ $prodlaminating->mesin_id }}">
+                                                <label for="mesin_id">Mesin</label>
+                                                <select
+                                                    class="form-control select2 w-100 select-mesin @error('mesin_id') is-invalid @enderror"
+                                                    id="mesin_id" name="mesin_id">
+                                                    <option value="{{ $prodlaminating->mesin_id }}">
+                                                        {{ $prodlaminating->mesin->nama }}
+                                                    </option>
+                                                </select>
                                                 @error('mesin_id')
                                                     <span id="mesin_id-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="row">
                                         <div class="col">

@@ -321,19 +321,6 @@
                                                                     for="produksi.wjl.rekap">Rekap Produksi
                                                                     WJL</label>
                                                             </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    id="produksi.wjl.edit" name="produksi.wjl.edit">
-                                                                <label class="form-check-label"
-                                                                    for="produksi.wjl.edit">Edit Produksi
-                                                                    WJL</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    id="produksi.wjl.panen" name="produksi.wjl.panen">
-                                                                <label class="form-check-label"
-                                                                    for="produksi.wjl.panen">Panen WJL</label>
-                                                            </div>
                                                             <br>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
@@ -354,11 +341,79 @@
                                                             </div>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.laminating.edit.kering"
+                                                                    name="produksi.laminating.edit.kering">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.laminating.edit.kering">Edit Pengeringan
+                                                                    Kain</label>
+                                                            </div>
+                                                            <br>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.wjl" name="produksi.wjl">
+                                                                <label class="form-check-label" for="produksi.wjl">
+                                                                    Produksi
+                                                                    WJL</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.wjl.edit" name="produksi.wjl.edit">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.wjl.edit">Edit Produksi
+                                                                    WJL</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.wjl.panen" name="produksi.wjl.panen">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.wjl.panen">Panen WJL</label>
+                                                            </div>
+                                                            <br>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.laminating" name="produksi.laminating">
+                                                                <label class="form-check-label" for="produksi.laminating">
+                                                                    Produksi
+                                                                    Laminating</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
                                                                     id="produksi.laminating.edit"
                                                                     name="produksi.laminating.edit">
                                                                 <label class="form-check-label"
-                                                                    for="produksi.laminating.edit">Edit Pengeringan
-                                                                    Kain</label>
+                                                                    for="produksi.laminating.edit">Edit Produksi
+                                                                    Laminating</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.laminating.panen"
+                                                                    name="produksi.laminating.panen">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.laminating.panen">Panen
+                                                                    Laminating</label>
+                                                            </div>
+                                                            <br>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.welding" name="produksi.welding">
+                                                                <label class="form-check-label" for="produksi.welding">
+                                                                    Produksi
+                                                                    Welding</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.welding.edit"
+                                                                    name="produksi.welding.edit">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.welding.edit">Edit Produksi
+                                                                    Welding</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.welding.panen"
+                                                                    name="produksi.welding.panen">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.welding.panen">Panen Welding</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
@@ -419,20 +474,19 @@
                                                 <div class="col-md-12">
                                                     <label class="form-check-label text-bold">Data Master</label>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="agenda"
-                                                            name="agenda">
-                                                        <label class="form-check-label" for="agenda">Agenda &
-                                                            Pengumuman</label>
+                                                        <input class="form-check-input" type="checkbox" id="material"
+                                                            name="material">
+                                                        <label class="form-check-label" for="material">Material</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="surat"
-                                                            name="surat">
-                                                        <label class="form-check-label" for="surat">Surat</label>
+                                                        <input class="form-check-input" type="checkbox" id="mesin"
+                                                            name="mesin">
+                                                        <label class="form-check-label" for="mesin">Mesin</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="kejadian"
-                                                            name="kejadian">
-                                                        <label class="form-check-label" for="kejadian">Kejadian</label>
+                                                        <input class="form-check-input" type="checkbox" id="lokasi"
+                                                            name="lokasi">
+                                                        <label class="form-check-label" for="lokasi">Lokasi</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -440,20 +494,20 @@
                                                 <div class="col-md-12">
                                                     <label class="form-check-label text-bold">Pengaturan</label>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="agenda"
-                                                            name="agenda" onclick="semua_menu_jadi_cek()">
-                                                        <label class="form-check-label" for="agenda">Agenda &
-                                                            Pengumuman</label>
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="peranpengguna" name="peranpengguna">
+                                                        <label class="form-check-label" for="peranpengguna">Peran
+                                                            Pengguna</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="surat"
-                                                            name="surat" onclick="semua_menu_jadi_cek()">
-                                                        <label class="form-check-label" for="surat">Surat</label>
+                                                        <input class="form-check-input" type="checkbox" id="pengguna"
+                                                            name="pengguna">
+                                                        <label class="form-check-label" for="pengguna">Pengguna</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="kejadian"
-                                                            name="kejadian" onclick="semua_menu_jadi_cek()">
-                                                        <label class="form-check-label" for="kejadian">Kejadian</label>
+                                                        <input class="form-check-input" type="checkbox" id="approval"
+                                                            name="approval">
+                                                        <label class="form-check-label" for="approval">Approval</label>
                                                     </div>
                                                 </div>
                                             </div>

@@ -25,11 +25,11 @@ class UserSeeder extends Seeder
          */
         Permission::create(['name' => 'datamaster']);
         //-------------------------------------------
-        Permission::create(['name' => 'mesin']);
+        // Permission::create(['name' => 'mesin']);
         Permission::create(['name' => 'usergroup']);
         Permission::create(['name' => 'user']);
-        Permission::create(['name' => 'lokasi']);
-        Permission::create(['name' => 'material']);
+        // Permission::create(['name' => 'lokasi']);
+        // Permission::create(['name' => 'material']);
         Permission::create(['name' => 'produk']);
         Permission::create(['name' => 'varian']);
         //===========================================
@@ -104,11 +104,14 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'produksi.laminating.pengeringankain']);
         Permission::create(['name' => 'produksi.laminating.rekap']);
         Permission::create(['name' => 'produksi.laminating.edit']);
+        Permission::create(['name' => 'produksi.laminating.edit.kering']);
         Permission::create(['name' => 'produksi.wjl']);
         Permission::create(['name' => 'produksi.wjl.panen']);
         Permission::create(['name' => 'produksi.laminating']);
         Permission::create(['name' => 'produksi.laminating.panen']);
         Permission::create(['name' => 'produksi.welding']);
+        Permission::create(['name' => 'produksi.welding.edit']);
+        Permission::create(['name' => 'produksi.welding.panen']);
         Permission::create(['name' => 'approval']);
         //===========================================
 
@@ -128,6 +131,15 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'peranpengguna']);
         Permission::create(['name' => 'pengguna']);
         Permission::create(['name' => 'approvallaporan']);
+        //===========================================
+
+        /**
+         * Master Data
+         */
+        Permission::create(['name' => 'masterdata']);
+        Permission::create(['name' => 'material']);
+        Permission::create(['name' => 'mesin']);
+        Permission::create(['name' => 'lokasi']);
         //===========================================
 
         $data = [

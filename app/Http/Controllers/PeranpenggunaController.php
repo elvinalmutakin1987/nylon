@@ -116,6 +116,7 @@ class PeranpenggunaController extends Controller
             if ($request->gudang_benang_barangmasuk) array_push($access, 'gudang.benang.barangmasuk');
             if ($request->gudang_benang_retur) array_push($access, 'gudang.benang.retur');
             if ($request->gudang_benang_retur) array_push($access, 'gudang.benang.retur');
+            if ($request->produksi_wjl) array_push($access, 'produksi.wjl');
             if ($request->produksi_wjl_operator) array_push($access, 'produksi.wjl.operator');
             if ($request->produksi_wjl_kepalaregu) array_push($access, 'produksi.wjl.kepalaregu');
             if ($request->produksi_wjl_rekap) array_push($access, 'produksi.wjl.rekap');
@@ -131,14 +132,21 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_extruder_beamatasmesin) array_push($access, 'produksi.extruder.beamatasmesin');
             if ($request->produksi_extruder_beambawahmesin) array_push($access, 'produksi.extruder.beambawahmesin');
             if ($request->produksi_extruder_stockbeaming) array_push($access, 'produksi.extruder.stockbeaming');
+            if ($request->produksi_laminating) array_push($access, 'produksi.laminating');
             if ($request->produksi_laminating_pengeringankain) array_push($access, 'produksi.laminating.pengeringankain');
             if ($request->produksi_laminating_rekap) array_push($access, 'produksi.laminating.rekap');
             if ($request->produksi_laminating_edit) array_push($access, 'produksi.laminating.edit');
+            if ($request->produksi_laminating_edit_kering) array_push($access, 'produksi.laminating.edit.kering');
+            if ($request->produksi_laminating_panen) array_push($access, 'produksi.laminating.panen');
+            if ($request->produksi_welding) array_push($access, 'produksi.welding');
+            if ($request->produksi_welding_edit) array_push($access, 'produksi.welding.edit');
+            if ($request->produksi_welding_panen) array_push($access, 'produksi.welding.panen');
             if (
                 $request->gudang_benang_cekstok ||
                 $request->gudang_benang_barangkeluar ||
                 $request->gudang_benang_barangmasuk ||
                 $request->gudang_benang_retur ||
+                $request->produksi_wjl ||
                 $request->produksi_wjl_operator ||
                 $request->produksi_wjl_kepalaregu ||
                 $request->produksi_wjl_rekap ||
@@ -154,9 +162,16 @@ class PeranpenggunaController extends Controller
                 $request->produksi_extruder_beamatasmesin ||
                 $request->produksi_extruder_beambawahmesin ||
                 $request->produksi_extruder_stockbeaming ||
+                $request->produksi_laminating ||
                 $request->produksi_laminating_pengeringankain ||
                 $request->produksi_laminating_rekap ||
-                $request->produksi_laminating_edit
+                $request->produksi_laminating_edit ||
+                $request->produksi_laminating_edit_kering ||
+                $request->produksi_laminating_pengeringankain ||
+                $request->produksi_laminating_panen ||
+                $request->produksi_welding ||
+                $request->produksi_welding_edit ||
+                $request->produksi_welding_panen
             ) {
                 array_push($access, 'produksi');
             }
@@ -167,6 +182,26 @@ class PeranpenggunaController extends Controller
                 $request->laporan_wjl_efisiensi
             ) {
                 array_push($access, 'laporan');
+            }
+            if ($request->material) array_push($access, 'material');
+            if ($request->mesin) array_push($access, 'mesin');
+            if ($request->lokasi) array_push($access, 'lokasi');
+            if (
+                $request->material ||
+                $request->mesin ||
+                $request->lokasi
+            ) {
+                array_push($access, 'masterdata');
+            }
+            if ($request->peranpengguna) array_push($access, 'peranpengguna');
+            if ($request->pengguna) array_push($access, 'pengguna');
+            if ($request->approval) array_push($access, 'approval');
+            if (
+                $request->peranpengguna ||
+                $request->pengguna ||
+                $request->approval
+            ) {
+                array_push($access, 'pengaturan');
             }
             $role->givePermissionTo($access);
             DB::commit();
@@ -270,6 +305,7 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_wjl_rekap) array_push($access, 'produksi.wjl.rekap');
             if ($request->produksi_wjl_edit) array_push($access, 'produksi.wjl.edit');
             if ($request->produksi_wjl_panen) array_push($access, 'produksi.wjl.panen');
+            if ($request->produksi_wjl) array_push($access, 'produksi.wjl');
             if ($request->produksi_extruder_kontroldenier) array_push($access, 'produksi.extruder.kontrol-denier');
             if ($request->produksi_extruder_kontrolbarmag) array_push($access, 'produksi.extruder.kontrol-barmag');
             if ($request->produksi_extruder_kontrolreifen) array_push($access, 'produksi.extruder.kontrol-reifen');
@@ -280,14 +316,21 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_extruder_beamatasmesin) array_push($access, 'produksi.extruder.beamatasmesin');
             if ($request->produksi_extruder_beambawahmesin) array_push($access, 'produksi.extruder.beambawahmesin');
             if ($request->produksi_extruder_stockbeaming) array_push($access, 'produksi.extruder.stockbeaming');
+            if ($request->produksi_laminating) array_push($access, 'produksi.laminating');
             if ($request->produksi_laminating_pengeringankain) array_push($access, 'produksi.laminating.pengeringankain');
             if ($request->produksi_laminating_rekap) array_push($access, 'produksi.laminating.rekap');
             if ($request->produksi_laminating_edit) array_push($access, 'produksi.laminating.edit');
+            if ($request->produksi_laminating_edit_kering) array_push($access, 'produksi.laminating.edit.kering');
+            if ($request->produksi_laminating_panen) array_push($access, 'produksi.laminating.panen');
+            if ($request->produksi_welding) array_push($access, 'produksi.welding');
+            if ($request->produksi_welding_edit) array_push($access, 'produksi.welding.edit');
+            if ($request->produksi_welding_panen) array_push($access, 'produksi.welding.panen');
             if (
                 $request->gudang_benang_cekstok ||
                 $request->gudang_benang_barangkeluar ||
                 $request->gudang_benang_barangmasuk ||
                 $request->gudang_benang_retur ||
+                $request->produksi_wjl ||
                 $request->produksi_wjl_operator ||
                 $request->produksi_wjl_kepalaregu ||
                 $request->produksi_wjl_rekap ||
@@ -303,9 +346,15 @@ class PeranpenggunaController extends Controller
                 $request->produksi_extruder_beamatasmesin ||
                 $request->produksi_extruder_beambawahmesin ||
                 $request->produksi_extruder_stockbeaming ||
+                $request->produksi_laminating ||
                 $request->produksi_laminating_pengeringankain ||
                 $request->produksi_laminating_rekap ||
-                $request->produksi_laminating_edit
+                $request->produksi_laminating_edit ||
+                $request->produksi_laminating_edit_kering ||
+                $request->produksi_laminating_panen ||
+                $request->produksi_welding ||
+                $request->produksi_welding_edit ||
+                $request->produksi_welding_panen
             ) {
                 array_push($access, 'produksi');
             }
@@ -316,6 +365,26 @@ class PeranpenggunaController extends Controller
                 $request->laporan_wjl_efisiensi
             ) {
                 array_push($access, 'laporan');
+            }
+            if ($request->material) array_push($access, 'material');
+            if ($request->mesin) array_push($access, 'mesin');
+            if ($request->lokasi) array_push($access, 'lokasi');
+            if (
+                $request->material ||
+                $request->mesin ||
+                $request->lokasi
+            ) {
+                array_push($access, 'masterdata');
+            }
+            if ($request->peranpengguna) array_push($access, 'peranpengguna');
+            if ($request->pengguna) array_push($access, 'pengguna');
+            if ($request->approval) array_push($access, 'approval');
+            if (
+                $request->peranpengguna ||
+                $request->pengguna ||
+                $request->approval
+            ) {
+                array_push($access, 'pengaturan');
             }
             $role->syncPermissions($access);
             DB::commit();
