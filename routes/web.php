@@ -40,6 +40,7 @@ use App\Http\Controllers\ProduksiwjlkepalareguController;
 use App\Http\Controllers\ProduksiwjloperatorController;
 use App\Http\Controllers\ProdweldingController;
 use App\Http\Controllers\ProdwjlController;
+use App\Http\Controllers\RekaplaporanweldingController;
 use App\Http\Controllers\RekappengeringankainController;
 use App\Http\Controllers\RekapproduksiwjlController;
 use App\Http\Controllers\ReturController;
@@ -634,5 +635,32 @@ Route::middleware(['auth'])->group(function () {
         Route::get('produksiwelding-laporan/{produksiwelding}/panen', [ProduksiweldingController::class, 'panen'])->name('produksiwelding.laporan.panen');
         Route::get('produksiwelding-laporan-get-prodwjl-by-id', [ProduksiweldingController::class, 'get_prodwjl_by_id'])->name('produksiwelding.laporan.get_prodwjl_by_id');
         Route::get('produksiwelding-laporan-get-prodlaminating-by-id', [ProduksiweldingController::class, 'get_prodlaminating_by_id'])->name('produksiwelding.laporan.get_prodlaminating_by_id');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.welding.rekap']], function () {
+        Route::get('produksiwelding-rekap', [RekaplaporanweldingController::class, 'index'])->name('produksiwelding.rekap.index');
+        Route::get('produksiwelding-get-rekap', [RekaplaporanweldingController::class, 'get_rekap'])->name('produksiwelding.rekap.get_rekap');
+        Route::post('produksiwelding-rekap', [RekaplaporanweldingController::class, 'store'])->name('produksiwelding.rekap.store');
+        Route::get('produksiwelding-rekap/create', [RekaplaporanweldingController::class, 'create'])->name('produksiwelding.rekap.create');
+        Route::get('produksiwelding-rekap/create-laporan', [RekaplaporanweldingController::class, 'create_laporan'])->name('produksiwelding.rekap.create_laporan');
+        Route::get('produksiwelding-rekap/{produksiwelding}', [RekaplaporanweldingController::class, 'show'])->name('produksiwelding.rekap.show');
+        Route::put('produksiwelding-rekap/{produksiwelding}', [RekaplaporanweldingController::class, 'update'])->name('produksiwelding.rekap.update');
+        Route::delete('produksiwelding-rekap/{produksiwelding}', [RekaplaporanweldingController::class, 'destroy'])->name('produksiwelding.rekap.destroy');
+
+        Route::group(['middleware' => ['role_or_permission:superadmin|produksi.wjl.edit']], function () {
+            Route::get('produksiwelding-rekap/{produksiwelding}/edit', [RekaplaporanweldingController::class, 'edit'])->name('produksiwelding.rekap.edit');
+        });
+
+        Route::group(['middleware' => ['role_or_permission:superadmin|produksi.wjl.konfirmasi']], function () {
+            Route::get('produksiwelding-rekap-konfirmasi', [RekaplaporanweldingController::class, 'konfirmasi'])->name('produksiwelding.rekap.konfirmasi');
+        });
+
+        Route::get('produksiwelding-rekap-cetak', [RekaplaporanweldingController::class, 'cetak'])->name('produksiwelding.rekap.cetak');
+        Route::get('produksiwelding-rekap-get-mesin', [RekaplaporanweldingController::class, 'get_mesin'])->name('produksiwelding.rekap.get_mesin');
+        Route::get('produksiwelding-rekap-get-detail', [RekaplaporanweldingController::class, 'get_detail'])->name('produksiwelding.rekap.get_detail');
+        Route::get('produksiwelding-rekap-cek-sebelumnya', [RekaplaporanweldingController::class, 'cek_sebelumnya'])->name('produksiwelding.rekap.cek_sebelumnya');
+        Route::get('produksiwelding-rekap-confirm/{produksiwelding}', [RekaplaporanweldingController::class, 'confirm'])->name('produksiwelding.rekap.confirm');
+
+        Route::get('produksiwelding-rekap-export', [RekaplaporanweldingController::class, 'export'])->name('produksiwelding.rekap.export');
     });
 });

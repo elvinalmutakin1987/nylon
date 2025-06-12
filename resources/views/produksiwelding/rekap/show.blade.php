@@ -1,0 +1,82 @@
+@php
+    use Illuminate\Support\Number;
+    use App\Models\Mesin;
+@endphp
+<center>
+    <p>Rekap Produksi Welding <br>
+        Tanggal : {{ \Carbon\Carbon::parse($tanggal_dari)->format('d/m/Y') }} -
+        {{ \Carbon\Carbon::parse($tanggal_sampai)->format('d/m/Y') }}
+    </p>
+</center>
+<div class="div" style="overflow-x: auto">
+    @php
+        $grandtotal = 0;
+    @endphp
+    @foreach ($produksiwelding_tanggal as $tanggal)
+        @php
+            $grandtotal_tanggal = 0;
+        @endphp
+        <br>
+        <p style="font-weight: bold; font-size: 20px">{{ $tanggal->tanggal }}
+        </p>
+        @foreach ($produksiwelding as $d)
+            @if ($d->tanggal == $tanggal->tanggal && $d->deleted_at == null)
+                <p>{{ $d->operator }}
+                </p>
+                <table id="table1" class="table table-sm projects table-bordered">
+                    <thead>
+                        <tr>
+                            @if (auth()->user()->can('produksi.welding.edit'))
+                                <th style="width: 80px" class="text-center">Aksi</th>
+                            @endif
+                            <th class="text-center">Tanggal</th>
+                            <th class="text-center">Ukuran</th>
+                            <th class="text-center">Jumlah</th>
+                            <th class="text-center">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            $grand_total = 0;
+                        @endphp
+                        @foreach ($d->produksiweldingdetail as $detail)
+                            <tr>
+                                @if (auth()->user()->can('produksi.welding.edit'))
+                                    <td class="align-top text-center">
+                                        <a class="btn btn-default btn-sm"
+                                            href="{{ route('produksiwelding.rekap.edit', $detail->slug) }}">
+                                            <i class="fas fa-pencil-alt"></i> Edit</a>
+                                    </td>
+                                @endif
+                                <td class="text-center">{{ $detail->produksiwelding->tanggal }}</td>
+                                <td class="text-center">
+                                    {{ Number::format((float) $detail->ukuran1) }} X
+                                    {{ Number::format((float) $detail->ukuran2) }}
+                                </td>
+                                <td class="text-center">{{ Number::format((float) $detail->jumlah) }}</td>
+                                <td class="text-center">{{ Number::format((float) $detail->total) }}</td>
+                            </tr>
+                            @php
+                                $grand_total += (float) $detail->total;
+                                $grandtotal_tanggal += (float) $detail->total;
+                                $grandtotal += (float) $detail->total;
+                            @endphp
+                        @endforeach
+                        <tr>
+                            <td class="text-right"
+                                colspan="{{ auth()->user()->can('produksi.welding.edit') ? '4' : '3' }}">Total</td>
+                            <td class="text-center">{{ Number::format((float) $grand_total) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            @endif
+        @endforeach
+        <p style="font-weight: bold; font-size: 25px">Total : {{ Number::format((float) $grandtotal_tanggal) }}
+        </p>
+
+        <hr>
+    @endforeach
+    <br>
+    <p style="font-weight: bold; font-size: 30px">Grant Total : {{ Number::format((float) $grandtotal) }}
+    </p>
+</div>
