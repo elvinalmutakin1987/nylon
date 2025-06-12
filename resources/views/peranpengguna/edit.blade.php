@@ -393,6 +393,33 @@
                                                             <br>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.welding.laporan"
+                                                                    name="produksi.welding.laporan"
+                                                                    {{ $role->hasPermissionTo('produksi.welding.laporan') ? 'checked' : '' }}>
+                                                                <label class="form-check-label"
+                                                                    for="produksi.welding.laporan">Laporan
+                                                                    Welding</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.welding.rekap"
+                                                                    name="produksi.welding.rekap"
+                                                                    {{ $role->hasPermissionTo('produksi.welding.rekap') ? 'checked' : '' }}>
+                                                                <label class="form-check-label"
+                                                                    for="produksi.welding.rekap">Rekap Welding</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.welding.laporan.edit"
+                                                                    name="produksi.welding.laporan.edit"
+                                                                    {{ $role->hasPermissionTo('produksi.welding.laporan.edit') ? 'checked' : '' }}>
+                                                                <label class="form-check-label"
+                                                                    for="produksi.welding.laporan.edit">Edit
+                                                                    Welding</label>
+                                                            </div>
+                                                            <br>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
                                                                     id="produksi.wjl" name="produksi.wjl"
                                                                     {{ $role->hasPermissionTo('produksi.wjl') ? 'checked' : '' }}>
                                                                 <label class="form-check-label"

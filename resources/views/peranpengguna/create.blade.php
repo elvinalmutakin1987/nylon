@@ -350,6 +350,30 @@
                                                             <br>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.welding.laporan"
+                                                                    name="produksi.welding.laporan">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.welding.laporan">Laporan
+                                                                    Welding</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.welding.rekap"
+                                                                    name="produksi.welding.rekap">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.welding.rekap">Rekap Welding</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="produksi.welding.laporan.edit"
+                                                                    name="produksi.welding.laporan.edit">
+                                                                <label class="form-check-label"
+                                                                    for="produksi.welding.laporan.edit">Edit
+                                                                    Welding</label>
+                                                            </div>
+                                                            <br>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
                                                                     id="produksi.wjl" name="produksi.wjl">
                                                                 <label class="form-check-label" for="produksi.wjl">
                                                                     Produksi

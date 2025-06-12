@@ -1,3 +1,6 @@
+@php
+    use Illuminate\Support\Number;
+@endphp
 @extends('partials.main')
 
 @section('content')
@@ -29,7 +32,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Application buttons -->
-                        <form action="{{ route('prodwelding.update', $prodwelding->slug) }}" enctype="multipart/form-data" method="POST">
+                        <form action="{{ route('prodwelding.update', $prodwelding->slug) }}" enctype="multipart/form-data"
+                            method="POST">
                             @csrf
                             @method('put')
                             <div class="card">

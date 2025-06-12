@@ -35,6 +35,7 @@ use App\Http\Controllers\PermintaanmaterialController;
 use App\Http\Controllers\ProdlaminatingController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProduksiController;
+use App\Http\Controllers\ProduksiweldingController;
 use App\Http\Controllers\ProduksiwjlkepalareguController;
 use App\Http\Controllers\ProduksiwjloperatorController;
 use App\Http\Controllers\ProdweldingController;
@@ -614,5 +615,24 @@ Route::middleware(['auth'])->group(function () {
         Route::get('prodwelding/{prodwelding}/panen', [ProdweldingController::class, 'panen'])->name('prodwelding.panen');
         Route::get('prodwelding-get-prodwjl-by-id', [ProdweldingController::class, 'get_prodwjl_by_id'])->name('prodwelding.get_prodwjl_by_id');
         Route::get('prodwelding-get-prodlaminating-by-id', [ProdweldingController::class, 'get_prodlaminating_by_id'])->name('prodwelding.get_prodlaminating_by_id');
+    });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.welding.laporan']], function () {
+        Route::get('produksiwelding-laporan', [ProduksiweldingController::class, 'index'])->name('produksiwelding.laporan.index');
+        Route::post('produksiwelding-laporan', [ProduksiweldingController::class, 'store'])->name('produksiwelding.laporan.store');
+        Route::get('produksiwelding-laporan/create', [ProduksiweldingController::class, 'create'])->name('produksiwelding.laporan.create');
+        Route::get('produksiwelding-laporan/{produksiwelding}', [ProduksiweldingController::class, 'show'])->name('produksiwelding.laporan.show');
+        Route::put('produksiwelding-laporan/{produksiwelding}', [ProduksiweldingController::class, 'update'])->name('produksiwelding.laporan.update');
+        Route::put('produksiwelding-laporan/{produksiwelding}/update', [ProduksiweldingController::class, 'update_panen'])->name('produksiwelding.laporan.update_panen');
+        Route::delete('produksiwelding-laporan/{produksiwelding}', [ProduksiweldingController::class, 'destroy'])->name('produksiwelding.laporan.destroy');
+        Route::get('produksiwelding-laporan/{produksiwelding}/edit', [ProduksiweldingController::class, 'edit'])->name('produksiwelding.laporan.edit');
+
+        Route::get('produksiwelding-laporan-get-mesin', [ProduksiweldingController::class, 'get_mesin'])->name('produksiwelding.laporan.get_mesin');
+        Route::get('produksiwelding-laporan-get-material', [ProduksiweldingController::class, 'get_material'])->name('produksiwelding.laporan.get_material');
+        Route::get('produksiwelding-laporan-get-prowjl', [ProduksiweldingController::class, 'get_prodwjl'])->name('produksiwelding.laporan.get_prodwjl');
+        Route::get('produksiwelding-laporan-get-prodlaminating', [ProduksiweldingController::class, 'get_prodlaminating'])->name('produksiwelding.laporan.get_prodlaminating');
+        Route::get('produksiwelding-laporan/{produksiwelding}/panen', [ProduksiweldingController::class, 'panen'])->name('produksiwelding.laporan.panen');
+        Route::get('produksiwelding-laporan-get-prodwjl-by-id', [ProduksiweldingController::class, 'get_prodwjl_by_id'])->name('produksiwelding.laporan.get_prodwjl_by_id');
+        Route::get('produksiwelding-laporan-get-prodlaminating-by-id', [ProduksiweldingController::class, 'get_prodlaminating_by_id'])->name('produksiwelding.laporan.get_prodlaminating_by_id');
     });
 });

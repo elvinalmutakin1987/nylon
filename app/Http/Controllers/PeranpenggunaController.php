@@ -141,6 +141,9 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_welding) array_push($access, 'produksi.welding');
             if ($request->produksi_welding_edit) array_push($access, 'produksi.welding.edit');
             if ($request->produksi_welding_panen) array_push($access, 'produksi.welding.panen');
+            if ($request->produksi_welding_laporan) array_push($access, 'produksi.welding.laporan');
+            if ($request->produksi_welding_laporan_edit) array_push($access, 'produksi.welding.laporan.edit');
+            if ($request->produksi_welding_rekap) array_push($access, 'produksi.welding.rekap');
             if (
                 $request->gudang_benang_cekstok ||
                 $request->gudang_benang_barangkeluar ||
@@ -171,7 +174,10 @@ class PeranpenggunaController extends Controller
                 $request->produksi_laminating_panen ||
                 $request->produksi_welding ||
                 $request->produksi_welding_edit ||
-                $request->produksi_welding_panen
+                $request->produksi_welding_panen ||
+                $request->produksi_welding_laporan ||
+                $request->produksi_welding_laporan_edit ||
+                $request->produksi_welding_rekap
             ) {
                 array_push($access, 'produksi');
             }
@@ -325,6 +331,9 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_welding) array_push($access, 'produksi.welding');
             if ($request->produksi_welding_edit) array_push($access, 'produksi.welding.edit');
             if ($request->produksi_welding_panen) array_push($access, 'produksi.welding.panen');
+            if ($request->produksi_welding_laporan) array_push($access, 'produksi.welding.laporan');
+            if ($request->produksi_welding_laporan_edit) array_push($access, 'produksi.welding.laporan.edit');
+            if ($request->produksi_welding_rekap) array_push($access, 'produksi.welding.rekap');
             if (
                 $request->gudang_benang_cekstok ||
                 $request->gudang_benang_barangkeluar ||
@@ -354,7 +363,10 @@ class PeranpenggunaController extends Controller
                 $request->produksi_laminating_panen ||
                 $request->produksi_welding ||
                 $request->produksi_welding_edit ||
-                $request->produksi_welding_panen
+                $request->produksi_welding_panen ||
+                $request->produksi_welding_laporan ||
+                $request->produksi_welding_laporan_edit ||
+                $request->produksi_welding_rekap
             ) {
                 array_push($access, 'produksi');
             }

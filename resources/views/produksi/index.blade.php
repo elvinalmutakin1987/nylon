@@ -82,6 +82,8 @@
                                                 </a>
                                             @endif
 
+                                            <br>
+
                                             @if (auth()->user()->can('produksi.extruder.checklistbeaming'))
                                                 <a class="btn btn-app"
                                                     href="{{ route('produksiextruder.checklistbeaming.index') }}">
@@ -140,6 +142,14 @@
                                                     <i class="fa fa-pencil"></i> Laporan Pengeringan Kain
                                                 </a>
                                             @endif
+
+                                            @if (auth()->user()->can('produksi.welding.laporan'))
+                                                <a class="btn btn-app" href="{{ route('produksiwelding.laporan.index') }}">
+                                                    <i class="fa fa-pencil"></i> Laporan Welding
+                                                </a>
+                                            @endif
+
+                                            <br>
 
                                             @if (auth()->user()->can('produksi.wjl.rekap'))
                                                 <a class="btn btn-app" href="{{ route('produksiwjl.rekap.index') }}">
