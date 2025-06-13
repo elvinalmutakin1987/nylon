@@ -17,19 +17,21 @@
             $grandtotal_tanggal = 0;
         @endphp
         <br>
-        <p style="font-weight: bold; font-size: 20px">{{ $tanggal->tanggal }}
+        <p style="font-weight: bold; font-size: 18px">{{ $tanggal->tanggal }}
         </p>
         @foreach ($produksiwelding as $d)
             @if ($d->tanggal == $tanggal->tanggal && $d->deleted_at == null)
                 <p>{{ $d->operator }}
                 </p>
+                @if (auth()->user()->can('produksi.welding.edit'))
+                    <a class="btn btn-default btn-sm mb-2" href="{{ route('produksiwelding.rekap.edit', $d->slug) }}">
+                        <i class="fas fa-pencil-alt"></i> Edit</a>
+                @endif
                 <table id="table1" class="table table-sm projects table-bordered">
                     <thead>
                         <tr>
-                            @if (auth()->user()->can('produksi.welding.edit'))
-                                <th style="width: 80px" class="text-center">Aksi</th>
-                            @endif
                             <th class="text-center">Tanggal</th>
+                            <th class="text-center">Jenis</th>
                             <th class="text-center">Ukuran</th>
                             <th class="text-center">Jumlah</th>
                             <th class="text-center">Total</th>
@@ -41,14 +43,8 @@
                         @endphp
                         @foreach ($d->produksiweldingdetail as $detail)
                             <tr>
-                                @if (auth()->user()->can('produksi.welding.edit'))
-                                    <td class="align-top text-center">
-                                        <a class="btn btn-default btn-sm"
-                                            href="{{ route('produksiwelding.rekap.edit', $detail->slug) }}">
-                                            <i class="fas fa-pencil-alt"></i> Edit</a>
-                                    </td>
-                                @endif
                                 <td class="text-center">{{ $detail->produksiwelding->tanggal }}</td>
+                                <td class="text-center">{{ $detail->jenis }}</td>
                                 <td class="text-center">
                                     {{ Number::format((float) $detail->ukuran1) }} X
                                     {{ Number::format((float) $detail->ukuran2) }}
@@ -63,20 +59,19 @@
                             @endphp
                         @endforeach
                         <tr>
-                            <td class="text-right"
-                                colspan="{{ auth()->user()->can('produksi.welding.edit') ? '4' : '3' }}">Total</td>
+                            <td class="text-right" colspan="4">Total</td>
                             <td class="text-center">{{ Number::format((float) $grand_total) }}</td>
                         </tr>
                     </tbody>
                 </table>
             @endif
         @endforeach
-        <p style="font-weight: bold; font-size: 25px">Total : {{ Number::format((float) $grandtotal_tanggal) }}
+        <p style="font-weight: bold; font-size: 20px">Total : {{ Number::format((float) $grandtotal_tanggal) }}
         </p>
 
         <hr>
     @endforeach
     <br>
-    <p style="font-weight: bold; font-size: 30px">Grant Total : {{ Number::format((float) $grandtotal) }}
+    <p style="font-weight: bold; font-size: 25px">Grant Total : {{ Number::format((float) $grandtotal) }}
     </p>
 </div>

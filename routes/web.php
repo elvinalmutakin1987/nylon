@@ -647,11 +647,11 @@ Route::middleware(['auth'])->group(function () {
         Route::put('produksiwelding-rekap/{produksiwelding}', [RekaplaporanweldingController::class, 'update'])->name('produksiwelding.rekap.update');
         Route::delete('produksiwelding-rekap/{produksiwelding}', [RekaplaporanweldingController::class, 'destroy'])->name('produksiwelding.rekap.destroy');
 
-        Route::group(['middleware' => ['role_or_permission:superadmin|produksi.wjl.edit']], function () {
+        Route::group(['middleware' => ['role_or_permission:superadmin|produksi.welding.edit']], function () {
             Route::get('produksiwelding-rekap/{produksiwelding}/edit', [RekaplaporanweldingController::class, 'edit'])->name('produksiwelding.rekap.edit');
         });
 
-        Route::group(['middleware' => ['role_or_permission:superadmin|produksi.wjl.konfirmasi']], function () {
+        Route::group(['middleware' => ['role_or_permission:superadmin|produksi.welding.konfirmasi']], function () {
             Route::get('produksiwelding-rekap-konfirmasi', [RekaplaporanweldingController::class, 'konfirmasi'])->name('produksiwelding.rekap.konfirmasi');
         });
 

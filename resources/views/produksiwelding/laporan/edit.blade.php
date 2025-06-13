@@ -329,25 +329,25 @@
                     <input type="text"
                         class="form-control @error('ukuran1') is-invalid @enderror"
                         id="ukuran1${row_id}" name="ukuran1[]"
-                        style="display: inline-block; width: 40%; vertical-align: middle;"
+                        style="display: inline-block; width: 40%; vertical-align: middle; text-align: center"
                         onkeyup="ubah_format('ukuran1${row_id}', this.value); hitung_total(${row_id});" value="${ukuran1}">
                     <span
                         style="display: inline-block; width: 10%; text-align: center;">X</span>
                     <input type="text"
                         class="form-control @error('ukuran2') is-invalid @enderror"
                         id="ukuran2${row_id}" name="ukuran2[]"
-                        style="display: inline-block; width: 40%; vertical-align: middle;"
+                        style="display: inline-block; width: 40%; vertical-align: middle; text-align: center"
                         onkeyup="ubah_format('ukuran2${row_id}', this.value); hitung_total(${row_id});" value="${ukuran2}">
                 </td>
                 <td style="vertical-align: top">
                     <input type="text"
                         class="form-control @error('jumlah') is-invalid @enderror"
-                        id="jumlah${row_id}" name="jumlah[]"
+                        id="jumlah${row_id}" name="jumlah[]" style="text-align: center"
                         onkeyup="ubah_format('jumlah${row_id}', this.value); hitung_total(${row_id});" value="${jumlah}">
                 </td>
                 <td style="vertical-align: top">
                     <input type="text"
-                        class="form-control @error('total') is-invalid @enderror"
+                        class="form-control @error('total') is-invalid @enderror"  style="text-align: center"
                         id="total${row_id}" name="total[]" readonly value="${total}">
                 </td>
                 <td style="vertical-align: top">

@@ -173,7 +173,7 @@
         </td>
     </tr>
     <tr>
-        <td>
+        <td class="font-10">
             @php
                 $grandtotal = 0;
             @endphp
@@ -182,10 +182,69 @@
                     $grandtotal_tanggal = 0;
                 @endphp
                 <br>
+                <br>
                 {{ $tanggal->tanggal }}
+                <br>
                 @foreach ($produksiwelding as $d)
+                    @if ($d->tanggal == $tanggal->tanggal && $d->deleted_at == null)
+                        {{ $d->operator }} <br>
+                        <table class="table-main font-10 garis-bawah">
+                            <thead>
+                                <tr>
+                                    <th class="garis">Tanggal</th>
+                                    <th class="garis">Jenis</th>
+                                    <th class="garis">Ukuran</th>
+                                    <th class="garis">Jumlah</th>
+                                    <th class="garis">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $grand_total = 0;
+                                @endphp
+                                @foreach ($d->produksiweldingdetail as $detail)
+                                    <tr>
+                                        <td class="v-align-top garis m-1 text-center">
+                                            {{ $detail->produksiwelding->tanggal }}</td>
+                                        <td class="v-align-top garis m-1 text-center">
+                                            {{ $detail->jenis }}</td>
+                                        <td class="v-align-top garis m-1 text-center">
+                                            {{ Number::format((float) $detail->ukuran1) }} X
+                                            {{ Number::format((float) $detail->ukuran2) }}
+                                        </td>
+                                        <td class="v-align-top garis m-1 text-center">
+                                            {{ Number::format((float) $detail->jumlah) }}
+                                        </td>
+                                        <td class="v-align-top garis m-1 text-center">
+                                            {{ Number::format((float) $detail->total) }}
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $grand_total += (float) $detail->total;
+                                        $grandtotal_tanggal += (float) $detail->total;
+                                        $grandtotal += (float) $detail->total;
+                                    @endphp
+                                @endforeach
+                                <tr>
+                                    <td class="v-align-top garis m-1 text-right" colspan="4">Total
+                                    </td>
+                                    <td class="v-align-top garis m-1 text-center">
+                                        {{ Number::format((float) $grand_total) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                    @endif
                 @endforeach
+                Total : {{ Number::format((float) $grandtotal_tanggal) }}
             @endforeach
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <br>
+            <p>Grant Total : {{ Number::format((float) $grandtotal) }}
+            </p>
         </td>
     </tr>
 </table>

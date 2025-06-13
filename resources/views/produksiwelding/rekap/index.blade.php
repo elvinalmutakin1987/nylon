@@ -33,9 +33,9 @@
                             <div class="card-body">
                                 <div class="row mb-4">
                                     <div class="col-md-12">
-                                        <button type="button" class="btn btn-default m-1" id="button-export"
+                                        {{-- <button type="button" class="btn btn-default m-1" id="button-export"
                                             onclick="export_()"><i class="fa fa-upload"></i>
-                                            Export</button>
+                                            Export</button> --}}
                                         <button type="button" class="btn btn-default m-1" id="button-export"
                                             onclick="cetak()"><i class="fa fa-print"></i> Cetak</button>
                                         <a type="button" class="btn btn-secondary m-1"

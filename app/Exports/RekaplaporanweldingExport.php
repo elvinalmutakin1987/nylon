@@ -19,10 +19,17 @@ class RekaplaporanweldingExport implements FromView
     {
         $produksiwelding = Produksiwelding::whereDate('tanggal', '>=', $this->tanggal_dari)
             ->whereDate('tanggal', '<=', $this->tanggal_sampai)
-            ->orderBy('tanggal', 'asc')
-            ->get();
+            ->orderBy('tanggal', 'asc')->get();
+        $produksiwelding_operator = Produksiwelding::select('operator')->whereDate('tanggal', '>=', $this->tanggal_dari)
+            ->whereDate('tanggal', '<=', $this->tanggal_sampai)
+            ->groupBy('operator')->get();
+        $produksiwelding_tanggal = Produksiwelding::select('tanggal')->whereDate('tanggal', '>=', $this->tanggal_dari)
+            ->whereDate('tanggal', '<=', $this->tanggal_sampai)
+            ->groupBy('tanggal')->get();
         return view('produksiwelding.rekap.export', [
-            'produksiwjl' => $produksiwjl,
+            'produksiwelding' => $produksiwelding,
+            'produksiwelding_operator' => $produksiwelding_operator,
+            'produksiwelding_tanggal' => $produksiwelding_tanggal,
             'tanggal_dari' => $this->tanggal_dari,
             'tanggal_sampai' => $this->tanggal_sampai,
         ]);
