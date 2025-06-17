@@ -63,6 +63,28 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
+                                                <label for="shift">Shift</label>
+                                                <select
+                                                    class="form-control select2 w-100 select-shift @error('shift') is-invalid @enderror"
+                                                    id="shift" name="shift">
+                                                    <option value="Pagi"
+                                                        {{ $produksiwelding->shift == 'Pagi' ? 'selected' : '' }}>Pagi
+                                                    </option>
+                                                    <option value="Sore"
+                                                        {{ $produksiwelding->shift == 'Sore' ? 'selected' : '' }}>Sore
+                                                    </option>
+                                                    <option value="Malam"
+                                                        {{ $produksiwelding->shift == 'Malam' ? 'selected' : '' }}>Malam
+                                                    </option>
+                                                </select>
+                                                @error('shift')
+                                                    <span id="shift-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
                                                 <label for="operator">Operator</label>
                                                 <input type="text"
                                                     class="form-control @error('operator') is-invalid @enderror"

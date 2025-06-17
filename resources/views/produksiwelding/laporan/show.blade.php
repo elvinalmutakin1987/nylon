@@ -43,6 +43,12 @@
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
+                                            <label for="operator">Shift</label>
+                                            <p>{{ $produksiwelding->shift }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
                                             <label for="operator">Operator</label>
                                             <p>{{ $produksiwelding->operator }}</p>
                                         </div>

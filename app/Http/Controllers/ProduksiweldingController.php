@@ -6,6 +6,7 @@ use App\Models\Foto;
 use App\Models\Mesin;
 use App\Models\Pengaturan;
 use App\Models\Produksiwelding;
+use App\Models\Produksiweldingdetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,14 @@ class ProduksiweldingController extends Controller
             $produksiwelding = Produksiwelding::query();
             return DataTables::of($produksiwelding)
                 ->addIndexColumn()
+                ->addColumn('total_produksi', function ($item) {
+                    $total_produksi = 0;
+                    $produksiweldingdetail = Produksiweldingdetail::where('produksiwelding_id', $item->id)->get();
+                    foreach ($produksiweldingdetail as $d) {
+                        $total_produksi += (float)$d->total;
+                    }
+                    return $total_produksi;
+                })
                 ->addColumn('action', function ($item) {
                     $button = '
                         <button type="button" class="btn btn-info" data-toggle="dropdown"><i
@@ -82,6 +91,7 @@ class ProduksiweldingController extends Controller
                 $produksiwelding->slug = Controller::gen_slug();
                 $produksiwelding->tanggal = Carbon::parse($request->tanggal)->format('Y-m-d');
                 $produksiwelding->operator = $request->operator;
+                $produksiwelding->shift = $request->shift;
                 $produksiwelding->created_by = Auth::user()->id;
             }
             $produksiwelding->updated_by = Auth::user()->id;
@@ -145,6 +155,7 @@ class ProduksiweldingController extends Controller
         try {
             $produksiwelding->tanggal = Carbon::parse($request->tanggal)->format('Y-m-d');
             $produksiwelding->operator = $request->operator;
+            $produksiwelding->shift = $request->shift;
             $produksiwelding->created_by = Auth::user()->id;
             $produksiwelding->save();
             if ($request->has('jenis')) {

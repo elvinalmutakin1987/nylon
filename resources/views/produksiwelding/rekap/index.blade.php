@@ -13,7 +13,7 @@
                             <li class="breadcrumb-item"><a href="{{ route('produksi.index') }}"
                                     class="text-dark">Produksi</a>
                             </li>
-                            <li class="breadcrumb-item" Active>Rekap Produksi Welding</li>
+                            <li class="breadcrumb-item" Active>Rekap Laporan Welding</li>
                         </ol>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                         <!-- Application buttons -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Rekap Produksi Welding</h3>
+                                <h3 class="card-title">Rekap Laporan Welding</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row mb-4">

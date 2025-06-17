@@ -149,7 +149,7 @@
                         Jl. Sukodono, Gedangan, Sidoarjo, Jawa Timur
                     </td>
                     <td class="w-30 float-right">
-                        <b class="underline">Laporan Produksi Welding </b>
+                        <b class="underline">Laporan Welding </b>
                     </td>
                 </tr>
                 <tr>
@@ -187,7 +187,8 @@
                 <br>
                 @foreach ($produksiwelding as $d)
                     @if ($d->tanggal == $tanggal->tanggal && $d->deleted_at == null)
-                        {{ $d->operator }} <br>
+                        {{ $d->operator }} :
+                        {{ $d->shift }} <br>
                         <table class="table-main font-10 garis-bawah">
                             <thead>
                                 <tr>

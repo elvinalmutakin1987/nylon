@@ -166,7 +166,7 @@
 
                                             @if (auth()->user()->can('produksi.welding.rekap'))
                                                 <a class="btn btn-app" href="{{ route('produksiwelding.rekap.index') }}">
-                                                    <i class="fa fa-file"></i> Rekap Produksi Welding
+                                                    <i class="fa fa-file"></i> Rekap Laporan Welding
                                                 </a>
                                             @endif
 

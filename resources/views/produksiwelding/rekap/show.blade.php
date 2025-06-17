@@ -21,7 +21,8 @@
         </p>
         @foreach ($produksiwelding as $d)
             @if ($d->tanggal == $tanggal->tanggal && $d->deleted_at == null)
-                <p>{{ $d->operator }}
+                <p>{{ $d->operator }} -
+                    {{ $d->shift }}
                 </p>
                 @if (auth()->user()->can('produksi.welding.edit'))
                     <a class="btn btn-default btn-sm mb-2" href="{{ route('produksiwelding.rekap.edit', $d->slug) }}">

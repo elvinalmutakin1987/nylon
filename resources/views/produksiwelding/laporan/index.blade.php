@@ -48,7 +48,9 @@
                                                 <tr>
                                                     <th></th>
                                                     <th>Tanggal</th>
+                                                    <th>Shift</th>
                                                     <th>Operator</th>
+                                                    <th>Total Produksi (80% of 2.700)</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -118,10 +120,33 @@
                         searchable: true,
                     },
                     {
+                        data: 'shift',
+                        name: 'shift',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
                         data: 'operator',
                         name: 'operator',
                         orderable: true,
                         searchable: true
+                    },
+                    {
+                        data: 'total_produksi',
+                        name: 'total_produksi',
+                        orderable: true,
+                        searchable: true,
+                        render: function(data, type, row) {
+                            if (data / 2700 * 100 >= 80) {
+                                return '<span class="badge bg-success" style="font-size: 13px">' +
+                                    numeral(data).format('0,0') +
+                                    '</span>';
+                            } else {
+                                return '<span class="badge bg-danger" style="font-size: 13px">' +
+                                    numeral(data).format('0,0') +
+                                    '</span>';
+                            }
+                        }
                     },
                     {
                         data: 'action',
