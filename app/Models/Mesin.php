@@ -76,4 +76,24 @@ class Mesin extends Model
     {
         return $this->hasMany(Prodlaminating::class);
     }
+
+    public function produksiwelding(): HasMany
+    {
+        return $this->hasMany(Produksiwelding::class);
+    }
+
+    public function produksitarik(): HasMany
+    {
+        return $this->hasMany(Produksitarik::class);
+    }
+
+    public function prodtarik(): HasMany
+    {
+        return $this->hasMany(Prodtarik::class);
+    }
+
+    public function prodtarikdetail(): HasMany
+    {
+        return $this->hasMany(Prodtarikdetail::class);
+    }
 }

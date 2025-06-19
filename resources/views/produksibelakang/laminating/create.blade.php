@@ -58,7 +58,7 @@
                                                 <label for="nomor_so">Nomor SO</label>
                                                 <input type="text"
                                                     class="form-control @error('nomor_so') is-invalid @enderror"
-                                                    id="nomor_so" name="nomor_so" readonly>
+                                                    id="nomor_so" name="nomor_so">
                                                 @error('nomor_so')
                                                     <span id="nomor_so-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
@@ -209,35 +209,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="material_id_panen">Material Panen</label>
-                                                <select
-                                                    class="form-control select2 w-100 select-material @error('material_id_panen') is-invalid @enderror"
-                                                    id="material_id_panen" name="material_id_panen[]">
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="jumlah_panen2">Meter</label>
-                                                <input type="text"
-                                                    class="form-control @error('jumlah_panen') is-invalid @enderror"
-                                                    id="jumlah_panen" name="jumlah_panen[]"
-                                                    onkeyup="ubah_format('jumlah_panen', this.value)">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="jumlah_panen2">KG</label>
-                                                <input type="text"
-                                                    class="form-control @error('jumlah_panen2') is-invalid @enderror"
-                                                    id="jumlah_panen2" name="jumlah_panen2[]"
-                                                    onkeyup="ubah_format('jumlah_panen2', this.value)">
-                                            </div>
-                                        </div>
-                                    </div> --}}
+
                                     <!-- /.card-body -->
 
                                 </div>

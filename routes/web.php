@@ -33,6 +33,7 @@ use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PeranpenggunaController;
 use App\Http\Controllers\PermintaanmaterialController;
 use App\Http\Controllers\ProdlaminatingController;
+use App\Http\Controllers\ProdtarikController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProduksiController;
 use App\Http\Controllers\ProduksiweldingController;
@@ -617,6 +618,28 @@ Route::middleware(['auth'])->group(function () {
         Route::get('prodwelding-get-prodwjl-by-id', [ProdweldingController::class, 'get_prodwjl_by_id'])->name('prodwelding.get_prodwjl_by_id');
         Route::get('prodwelding-get-prodlaminating-by-id', [ProdweldingController::class, 'get_prodlaminating_by_id'])->name('prodwelding.get_prodlaminating_by_id');
     });
+
+    Route::group(['middleware' => ['role_or_permission:superadmin|produksi.tarik']], function () {
+        Route::get('prodtarik', [ProdtarikController::class, 'index'])->name('prodtarik.index');
+        Route::post('prodtarik', [ProdtarikController::class, 'store'])->name('prodtarik.store');
+        Route::get('prodtarik/create', [ProdtarikController::class, 'create'])->name('prodtarik.create');
+        Route::get('prodtarik/{prodtarik}', [ProdtarikController::class, 'show'])->name('prodtarik.show');
+        Route::put('prodtarik/{prodtarik}', [ProdtarikController::class, 'update'])->name('prodtarik.update');
+        Route::put('prodtarik/{prodtarik}/update', [ProdtarikController::class, 'update_panen'])->name('prodtarik.update_panen');
+        Route::delete('prodtarik/{prodtarik}', [ProdtarikController::class, 'destroy'])->name('prodtarik.destroy');
+        Route::get('prodtarik/{prodtarik}/edit', [ProdtarikController::class, 'edit'])->name('prodtarik.edit');
+
+        Route::get('prodtarik-get-mesin', [ProdtarikController::class, 'get_mesin'])->name('prodtarik.get_mesin');
+        Route::get('prodtarik-get-material', [ProdtarikController::class, 'get_material'])->name('prodtarik.get_material');
+        Route::get('prodtarik-get-prowjl', [ProdtarikController::class, 'get_prodwjl'])->name('prodtarik.get_prodwjl');
+        Route::get('prodtarik-get-prodwelding', [ProdtarikController::class, 'get_prodwelding'])->name('prodtarik.get_prodwelding');
+        Route::get('prodtarik-get-prodlaminating', [ProdtarikController::class, 'get_prodlaminating'])->name('prodtarik.get_prodlaminating');
+        Route::get('prodtarik/{prodtarik}/panen', [ProdtarikController::class, 'panen'])->name('prodtarik.panen');
+        Route::get('prodtarik-get-prodwjl-by-id', [ProdtarikController::class, 'get_prodwjl_by_id'])->name('prodtarik.get_prodwjl_by_id');
+        Route::get('prodtarik-get-prodwelding-by-id', [ProdtarikController::class, 'get_prodwelding_by_id'])->name('prodtarik.get_prodwelding_by_id');
+        Route::get('prodtarik-get-prodlaminating-by-id', [ProdtarikController::class, 'get_prodlaminating_by_id'])->name('prodtarik.get_prodlaminating_by_id');
+    });
+
 
     Route::group(['middleware' => ['role_or_permission:superadmin|produksi.welding.laporan']], function () {
         Route::get('produksiwelding-laporan', [ProduksiweldingController::class, 'index'])->name('produksiwelding.laporan.index');

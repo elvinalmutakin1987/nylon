@@ -121,7 +121,13 @@
                         @if (auth()->user()->can('produksi.wjl.operator') ||
                                 auth()->user()->can('produksi.wjl.rekap') ||
                                 auth()->user()->can('produksi.laminating.pengeringankain') ||
-                                auth()->user()->can('produksi.laminating.rekap'))
+                                auth()->user()->can('produksi.laminating.rekap') ||
+                                auth()->user()->can('produksi.welding.laporan') ||
+                                auth()->user()->can('produksi.wjl.rekap') ||
+                                auth()->user()->can('produksi.wjl') ||
+                                auth()->user()->can('produksi.laminating') ||
+                                auth()->user()->can('produksi.welding') ||
+                                auth()->user()->can('produksi.tarik'))
                             <!-- Application buttons -->
                             <div class="card">
                                 <div class="card-header">
@@ -187,6 +193,12 @@
                                             @if (auth()->user()->can('produksi.welding'))
                                                 <a class="btn btn-app" href="{{ route('prodwelding.index') }}">
                                                     <i class="fa fa-asterisk"></i> Produksi Welding
+                                                </a>
+                                            @endif
+
+                                            @if (auth()->user()->can('produksi.tarik'))
+                                                <a class="btn btn-app" href="{{ route('prodtarik.index') }}">
+                                                    <i class="fa fa-asterisk"></i> Produksi Tarik
                                                 </a>
                                             @endif
                                         </div>

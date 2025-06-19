@@ -13,8 +13,8 @@
                             <li class="breadcrumb-item"><a href="{{ route('produksi.index') }}"
                                     class="text-dark">Produksi</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="{{ route('prodwjl.index') }}" class="text-dark">Produksi
-                                    WJL</a>
+                            <li class="breadcrumb-item"><a href="{{ route('prodtarik.index') }}" class="text-dark">Produksi
+                                    Tarik</a>
                             </li>
                             <li class="breadcrumb-item" Active>Tambah Data</li>
                         </ol>
@@ -28,53 +28,15 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Application buttons -->
-                        <form action="{{ route('prodwjl.store') }}" enctype="multipart/form-data" method="POST">
+                        <form action="{{ route('prodtarik.store') }}" enctype="multipart/form-data" method="POST">
                             @csrf
                             @method('post')
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Tambah Produksi WJL</h3>
+                                    <h3 class="card-title">Tambah Produksi Tarik</h3>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="nomor_so">Nomor SO</label>
-                                                <input type="text"
-                                                    class="form-control @error('nomor_so') is-invalid @enderror"
-                                                    id="nomor_so" name="nomor_so" value="{{ old('nomor_so') }}">
-                                                @error('nomor_so')
-                                                    <span id="nomor_so-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="nomor_roll">Nomor Roll</label>
-                                                <input type="text"
-                                                    class="form-control @error('nomor_roll') is-invalid @enderror"
-                                                    id="nomor_roll" name="nomor_roll" value="{{ old('nomor_roll') }}">
-                                                @error('nomor_roll')
-                                                    <span id="nomor_roll-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="mesin_id">Mesin</label>
-                                                <select
-                                                    class="form-control select2 w-100 select-mesin @error('mesin_id') is-invalid @enderror"
-                                                    id="mesin_id" name="mesin_id">
-                                                </select>
-                                                @error('mesin_id')
-                                                    <span id="mesin_id-error"
-                                                        class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
+
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
@@ -144,27 +106,57 @@
                                                 <table id="table1" class="table projects table-bordered table-sm">
                                                     <thead>
                                                         <tr>
-                                                            <th class="text-center" colspan="4">Build Of Material</th>
+                                                            <th class="text-center" colspan="7">Build Of Material</th>
                                                         </tr>
                                                         <tr>
                                                             <th class="text-center" rowspan="2"
-                                                                style="vertical-align: middle">
+                                                                style="vertical-align: middle" style="width: 15%">
+                                                                Produksi Welding
+                                                            </th>
+                                                            <th class="text-center" rowspan="2"
+                                                                style="vertical-align: middle" style="width: 15%">
+                                                                Nomor SO
+                                                            </th>
+                                                            <th class="text-center" rowspan="2"
+                                                                style="vertical-align: middle" style="width: 15%">
+                                                                Mesin
+                                                            </th>
+                                                            <th class="text-center" rowspan="2"
+                                                                style="vertical-align: middle" style="width: 15%">
                                                                 Material
                                                             </th>
-                                                            <th class="text-center" colspan="2">Satuan</th>
-                                                            <th class="text-center" rowspan="2" style="width: 50px">
+                                                            <th class="text-center" colspan="2" style="width: 20%">
+                                                                Satuan</th>
+                                                            <th class="text-center" rowspan="2">
                                                             </th>
                                                         </tr>
                                                         <tr>
-                                                            <th class="text-center" style="width: 200px">Meter</th>
-                                                            <th class="text-center" style="width: 200px">KG</th>
+                                                            <th class="text-center" style="width: 10%">Meter</th>
+                                                            <th class="text-center" style="width: 10%">KG</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
                                                             <td style="vertical-align: top">
                                                                 <select
-                                                                    class="form-control select2 w-100 select-material @error('mesin_id') is-invalid @enderror"
+                                                                    class="form-control select2 w-100 select-welding @error('prodwelding_id') is-invalid @enderror"
+                                                                    id="prodwelding_id1" name="prodwelding_id[]">
+                                                                </select>
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                <input type="text"
+                                                                    class="form-control @error('nomor_so') is-invalid @enderror"
+                                                                    id="nomor_so1" name="nomor_so[]">
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                <select
+                                                                    class="form-control select2 w-100 select-mesin @error('mesin_id') is-invalid @enderror"
+                                                                    id="mesin_id1" name="mesin_id[]">
+                                                                </select>
+                                                            </td>
+                                                            <td style="vertical-align: top">
+                                                                <select
+                                                                    class="form-control select2 w-100 select-material @error('material_id') is-invalid @enderror"
                                                                     id="material_id1" name="material_id[]">
                                                                 </select>
                                                             </td>
@@ -197,7 +189,7 @@
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <a type="button" class="btn btn-default" href="{{ route('prodwjl.index') }}"><i
+                                    <a type="button" class="btn btn-default" href="{{ route('prodtarik.index') }}"><i
                                             class="fa fa-reply"></i>
                                         Kembali</a>
                                     <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>
@@ -238,8 +230,26 @@
             $('.select-mesin').select2({
                 placeholder: "- Pilih Mesin -",
                 allowClear: true,
+                width: '100%',
                 ajax: {
-                    url: '{{ route('prodwjl.get_mesin') }}',
+                    url: '{{ route('prodtarik.get_mesin') }}',
+                    dataType: 'json',
+                    data: function(params) {
+                        return {
+                            term: params.term || '',
+                            page: params.page || 1,
+                        };
+                    },
+                    cache: true,
+                }
+            });
+
+            $('.select-welding').select2({
+                placeholder: "- Pilih Produksi Welding -",
+                allowClear: true,
+                width: '100%',
+                ajax: {
+                    url: '{{ route('prodtarik.get_prodwelding') }}',
                     dataType: 'json',
                     data: function(params) {
                         return {
@@ -254,13 +264,51 @@
             $('.select-material').select2({
                 placeholder: "- Pilih Material -",
                 allowClear: true,
+                width: '100%',
                 ajax: {
-                    url: '{{ route('prodwjl.get_material') }}',
+                    url: '{{ route('prodtarik.get_material') }}',
                     dataType: 'json',
                     data: function(params) {
                         return {
                             term: params.term || '',
                             page: params.page || 1,
+                        };
+                    },
+                    cache: true,
+                }
+            });
+
+            $('.select-prodwjl').select2({
+                placeholder: "- Pilih Produksi WJL -",
+                allowClear: true,
+                ajax: {
+                    url: '{{ route('prodtarik.get_prodwjl') }}',
+                    dataType: 'json',
+                    data: function(params) {
+                        return {
+                            term: params.term || '',
+                            page: params.page || 1,
+                        };
+                    },
+                    cache: true,
+                }
+            }).on('select2:select', function(e) {
+                var url = "{!! route('prodtarik.get_prodwjl_by_id', ['prodwjl_id' => '_prodwjl_id']) !!}"
+                url = url.replace('_prodwjl_id', this.value)
+                $.get(url, function(data) {});
+            });
+
+            $('.select-prodlaminating').select2({
+                placeholder: "- Pilih Produksi Laminating -",
+                allowClear: true,
+                ajax: {
+                    url: '{{ route('prodtarik.get_prodlaminating') }}',
+                    dataType: 'json',
+                    data: function(params) {
+                        return {
+                            term: params.term || '',
+                            page: params.page || 1,
+                            prodwjl_id: $('#prodwjl_id').val() || null,
                         };
                     },
                     cache: true,
@@ -273,13 +321,38 @@
             var row_id = Date.now().toString(36) + Math.random().toString(36).substr(2);
             var material_id = $("#material_id1 option:selected").val();
             var material = $("#material_id1 option:selected").text();
+            var mesin_id = $("#mesin_id1 option:selected").val();
+            var mesin = $("#mesin_id1 option:selected").text();
+            var prodwelding_id = $("#prodwelding_id1 option:selected").val();
+            var prodwelding = $("#prodwelding_id1 option:selected").text();
+            var nomor_so = $("#nomor_so1").val();
             var jumlah = $("#jumlah1").val();
             var jumlah2 = $("#jumlah21").val();
             $("#table1 > tbody > tr:last").before(`
             <tr>
                 <td style="vertical-align: top">
                     <select
-                        class="form-control select2 w-100 select-material @error('mesin_id') is-invalid @enderror"
+                        class="form-control select2 w-100 select-welding @error('prodwelding_id') is-invalid @enderror"
+                        id="prodwelding_id${row_id}" name="prodwelding_id[]">
+                        <option value="${prodwelding_id}">${prodwelding}</option>
+                    </select>
+                </td>
+                <td style="vertical-align: top">
+                    <input type="text"
+                        class="form-control @error('nomor_so') is-invalid @enderror"
+                        id="nomor_so${row_id}" name="nomor_so[]"
+                         value="${nomor_so}">
+                </td>
+                <td style="vertical-align: top">
+                    <select
+                        class="form-control select2 w-100 select-mesin @error('mesin_id') is-invalid @enderror"
+                        id="mesin_id${row_id}" name="mesin_id[]">
+                        <option value="${mesin_id}">${mesin}</option>
+                    </select>
+                </td>
+                <td style="vertical-align: top">
+                    <select
+                        class="form-control select2 w-100 select-material @error('material_id') is-invalid @enderror"
                         id="material_id${row_id}" name="material_id[]">
                         <option value="${material_id}">${material}</option>
                     </select>
@@ -306,6 +379,9 @@
             </tr>
         `);
             $("#material_id1").val(null).trigger('change');
+            $("#mesin_id1").val(null).trigger('change');
+            $("#prodwelding_id1").val(null).trigger('change');
+            $("#nomor_so1").val("");
             $("#jumlah1").val("");
             $("#jumlah21").val("");
 

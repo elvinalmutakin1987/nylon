@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Prodwelding extends Model
+class Produksitarik extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -22,14 +22,9 @@ class Prodwelding extends Model
 
     protected $fillable = [
         'mesin_id',
-        'prodlaminating_id',
         'slug',
-        'shift',
         'operator',
         'tanggal',
-        'nomor',
-        'nomor_roll',
-        'nomor_so',
         'status',
         'keterangan',
         'created_by',
@@ -41,37 +36,16 @@ class Prodwelding extends Model
         'updated_at',
         'deleted_at',
         'approved_at',
-        'confirmed_at',
-        'material_id',
-        'satuan',
-        'jumlah',
-        'satuan2',
-        'jumlah2'
+        'confirmed_at'
     ];
 
-
-    public function prodweldingdetail(): HasMany
+    public function produksitarikdetail(): HasMany
     {
-        return $this->hasMany(Prodweldingdetail::class);
+        return $this->hasMany(Produksitarikdetail::class);
     }
 
     public function mesin(): BelongsTo
     {
         return $this->belongsTo(Mesin::class)->withDefault(['slug' => null]);
-    }
-
-    public function material(): BelongsTo
-    {
-        return $this->belongsTo(Material::class)->withDefault(['slug' => null]);
-    }
-
-    public function prodlaminating(): BelongsTo
-    {
-        return $this->belongsTo(Prodlaminating::class)->withDefault(['slug' => null]);
-    }
-
-    public function prodtarikdetail(): HasMany
-    {
-        return $this->hasMany(Prodtarikdetail::class);
     }
 }

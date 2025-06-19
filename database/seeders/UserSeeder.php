@@ -115,6 +115,12 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'produksi.welding.laporan']);
         Permission::create(['name' => 'produksi.welding.laporan.edit']);
         Permission::create(['name' => 'produksi.welding.rekap']);
+        Permission::create(['name' => 'produksi.tarik']);
+        Permission::create(['name' => 'produksi.tarik.edit']);
+        Permission::create(['name' => 'produksi.tarik.panen']);
+        Permission::create(['name' => 'produksi.tarik.laporan']);
+        Permission::create(['name' => 'produksi.tarik.laporan.edit']);
+        Permission::create(['name' => 'produksi.tarik.rekap']);
         Permission::create(['name' => 'approval']);
         //===========================================
 

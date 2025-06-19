@@ -64,8 +64,7 @@
                                                 <label for="nomor_so">Nomor SO</label>
                                                 <input type="text"
                                                     class="form-control @error('nomor_so') is-invalid @enderror"
-                                                    id="nomor_so" name="nomor_so" readonly
-                                                    value="{{ $prodlaminating->nomor_so }}">
+                                                    id="nomor_so" name="nomor_so" value="{{ $prodlaminating->nomor_so }}">
                                                 @error('nomor_so')
                                                     <span id="nomor_so-error"
                                                         class="error invalid-feedback">{{ $message }}</span>
