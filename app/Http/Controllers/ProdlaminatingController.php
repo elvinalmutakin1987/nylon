@@ -175,7 +175,11 @@ class ProdlaminatingController extends Controller
             $prodlaminating->operator = $request->operator;
             $prodlaminating->tanggal = $request->tanggal;
             $prodlaminating->keterangan = $request->keterangan;
-            $prodlaminating->created_by = Auth::user()->id;
+            $prodlaminating->tanggal_panen  = $request->tanggal_panen;
+            $prodlaminating->jumlah = $request->jumlah_panen ? Controller::unformat_angka($request->jumlah_panen) : null;
+            $prodlaminating->jumlah2 = $request->jumlah_panen2 ? Controller::unformat_angka($request->jumlah_panen2) : null;
+            $prodlaminating->material_id = $request->material_id_panen;
+            $prodlaminating->updated_by = Auth::user()->id;
             $prodlaminating->save();
             if ($request->has('material_id')) {
                 foreach ($request->material_id as $key => $material_id) {

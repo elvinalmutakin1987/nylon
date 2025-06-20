@@ -310,7 +310,62 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="tanggal_panen">Tanggal Panen</label>
+                                                <div class="input-group date" id="div_tanggal_panen"
+                                                    data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input"
+                                                        data-target="#div_tanggal_panen" id="tanggal_panen"
+                                                        name="tanggal_panen"
+                                                        value="{{ old('tanggal_panen') ?? $prodwelding->tanggal_panen }}" />
+                                                    <div class="input-group-append" data-target="#div_tanggal_panen"
+                                                        data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @error('tanggal')
+                                                    <span id="nama-error"
+                                                        class="error invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="material_id_panen">Material Panen</label>
+                                                <select
+                                                    class="form-control select2 w-100 select-material @error('material_id_panen') is-invalid @enderror"
+                                                    id="material_id_panen" name="material_id_panen">
+                                                    <option value="{{ $prodwelding->material_id }}">
+                                                        {{ $prodwelding->material->nama }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="jumlah_panen">Meter</label>
+                                                <input type="text"
+                                                    class="form-control @error('jumlah_panen') is-invalid @enderror"
+                                                    id="jumlah_panen" name="jumlah_panen"
+                                                    onkeyup="ubah_format('jumlah_panen', this.value)"
+                                                    value="{{ Number::format((float) $prodwelding->jumlah) }}">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="jumlah_panen2">KG</label>
+                                                <input type="text"
+                                                    class="form-control @error('jumlah_panen2') is-invalid @enderror"
+                                                    id="jumlah_panen2" name="jumlah_panen2"
+                                                    onkeyup="ubah_format('jumlah_panen2', this.value)"
+                                                    value="{{ Number::format((float) $prodwelding->jumlah2) }}">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!-- /.card-body -->
 
                                 </div>

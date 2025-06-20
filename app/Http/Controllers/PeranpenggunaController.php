@@ -144,6 +144,12 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_welding_laporan) array_push($access, 'produksi.welding.laporan');
             if ($request->produksi_welding_laporan_edit) array_push($access, 'produksi.welding.laporan.edit');
             if ($request->produksi_welding_rekap) array_push($access, 'produksi.welding.rekap');
+            if ($request->produksi_tarik) array_push($access, 'produksi.tarik');
+            if ($request->produksi_tarik_edit) array_push($access, 'produksi.tarik.edit');
+            if ($request->produksi_tarik_panen) array_push($access, 'produksi.tarik.panen');
+            if ($request->produksi_tarik_laporan) array_push($access, 'produksi.tarik.laporan');
+            if ($request->produksi_tarik_laporan_edit) array_push($access, 'produksi.tarik.laporan.edit');
+            if ($request->produksi_tarik_rekap) array_push($access, 'produksi.tarik.rekap');
             if (
                 $request->gudang_benang_cekstok ||
                 $request->gudang_benang_barangkeluar ||
@@ -177,7 +183,13 @@ class PeranpenggunaController extends Controller
                 $request->produksi_welding_panen ||
                 $request->produksi_welding_laporan ||
                 $request->produksi_welding_laporan_edit ||
-                $request->produksi_welding_rekap
+                $request->produksi_welding_rekap ||
+                $request->produksi_tarik ||
+                $request->produksi_tarik_edit ||
+                $request->produksi_tarik_panen ||
+                $request->produksi_tarik_laporan ||
+                $request->produksi_tarik_laporan_edit ||
+                $request->produksi_tarik_rekap
             ) {
                 array_push($access, 'produksi');
             }
@@ -334,6 +346,12 @@ class PeranpenggunaController extends Controller
             if ($request->produksi_welding_laporan) array_push($access, 'produksi.welding.laporan');
             if ($request->produksi_welding_laporan_edit) array_push($access, 'produksi.welding.laporan.edit');
             if ($request->produksi_welding_rekap) array_push($access, 'produksi.welding.rekap');
+            if ($request->produksi_tarik) array_push($access, 'produksi.tarik');
+            if ($request->produksi_tarik_edit) array_push($access, 'produksi.tarik.edit');
+            if ($request->produksi_tarik_panen) array_push($access, 'produksi.tarik.panen');
+            if ($request->produksi_tarik_laporan) array_push($access, 'produksi.tarik.laporan');
+            if ($request->produksi_tarik_laporan_edit) array_push($access, 'produksi.tarik.laporan.edit');
+            if ($request->produksi_tarik_rekap) array_push($access, 'produksi.tarik.rekap');
             if (
                 $request->gudang_benang_cekstok ||
                 $request->gudang_benang_barangkeluar ||
@@ -366,7 +384,13 @@ class PeranpenggunaController extends Controller
                 $request->produksi_welding_panen ||
                 $request->produksi_welding_laporan ||
                 $request->produksi_welding_laporan_edit ||
-                $request->produksi_welding_rekap
+                $request->produksi_welding_rekap ||
+                $request->produksi_tarik ||
+                $request->produksi_tarik_edit ||
+                $request->produksi_tarik_panen ||
+                $request->produksi_tarik_laporan ||
+                $request->produksi_tarik_laporan_edit ||
+                $request->produksi_tarik_rekap
             ) {
                 array_push($access, 'produksi');
             }

@@ -58,4 +58,9 @@ class Prodtarik extends Model
     {
         return $this->belongsTo(Mesin::class)->withDefault(['slug' => null]);
     }
+
+    public function material(): BelongsTo
+    {
+        return $this->belongsTo(Material::class)->withDefault(['slug' => null]);
+    }
 }

@@ -113,11 +113,11 @@ class ProdtarikController extends Controller
                     $detail[] = [
                         'prodtarik_id' => $prodtarik->id,
                         'slug' => Controller::gen_slug(),
-                        'prodwelding_id' => $request->prodwelding_id && $request->prodwelding_id[$key] != 'undefined' ? $request->prowelding_id[$key] : null,
-                        'material_id' => $request->material_id && $request->material_id[$key] != 'undefined' ? $request->material_id[$key] : null,
-                        'mesin_id' => $request->mesin_id && $request->mesin_id[$key] != 'undefined' ? $request->mesin_id[$key] : null,
-                        'jumlah' => $request->jumlah[$key] ? Controller::unformat_angka($request->jumlah[$key]) : null,
-                        'jumlah2' => $request->jumlah2[$key] ? Controller::unformat_angka($request->jumlah2[$key]) : null,
+                        'prodwelding_id' => $request->prodwelding_id && $request->prowelding_id[$key] && $request->prodwelding_id[$key] != 'undefined' ? $request->prowelding_id[$key] : null,
+                        'material_id' => $request->material_id && $request->material_id[$key] && $request->material_id[$key] != 'undefined' ? $request->material_id[$key] : null,
+                        'mesin_id' => $request->mesin_id && $request->mesin_id[$key] && $request->mesin_id[$key] != 'undefined' ? $request->mesin_id[$key] : null,
+                        'jumlah' => $request->jumlah && $request->jumlah[$key] ? Controller::unformat_angka($request->jumlah[$key]) : null,
+                        'jumlah2' => $request->jumlah2 && $request->jumlah2[$key] ? Controller::unformat_angka($request->jumlah2[$key]) : null,
                     ];
                 }
                 $prodtarik->prodtarikdetail()->delete();
@@ -169,18 +169,22 @@ class ProdtarikController extends Controller
             $prodtarik->operator = $request->operator;
             $prodtarik->tanggal = $request->tanggal;
             $prodtarik->keterangan = $request->keterangan;
-            $prodtarik->created_by = Auth::user()->id;
+            $prodtarik->tanggal_panen  = $request->tanggal_panen;
+            $prodtarik->jumlah = $request->jumlah_panen ? Controller::unformat_angka($request->jumlah_panen) : null;
+            $prodtarik->jumlah2 = $request->jumlah_panen2 ? Controller::unformat_angka($request->jumlah_panen2) : null;
+            $prodtarik->material_id = $request->material_id_panen;
+            $prodtarik->updated_by = Auth::user()->id;
             $prodtarik->save();
             if ($request->has('material_id')) {
                 foreach ($request->material_id as $key => $material_id) {
                     $detail[] = [
                         'prodtarik_id' => $prodtarik->id,
                         'slug' => Controller::gen_slug(),
-                        'prodwelding_id' => $request->prodwelding_id && $request->prodwelding_id[$key] != 'undefined' ? $request->prowelding_id[$key] : null,
-                        'material_id' => $request->material_id && $request->material_id[$key] != 'undefined' ? $request->material_id[$key] : null,
-                        'mesin_id' => $request->mesin_id && $request->mesin_id[$key] != 'undefined' ? $request->mesin_id[$key] : null,
-                        'jumlah' => $request->jumlah[$key] ? Controller::unformat_angka($request->jumlah[$key]) : null,
-                        'jumlah2' => $request->jumlah2[$key] ? Controller::unformat_angka($request->jumlah2[$key]) : null,
+                        'prodwelding_id' => $request->prowelding_id && $request->prodwelding_id[$key] && $request->prodwelding_id[$key] != 'undefined' ? $request->prowelding_id[$key] : null,
+                        'material_id' => $request->material_id && $request->material_id[$key] && $request->material_id[$key] != 'undefined' ? $request->material_id[$key] : null,
+                        'mesin_id' => $request->mesin_id && $request->mesin_id[$key] && $request->mesin_id[$key] != 'undefined' ? $request->mesin_id[$key] : null,
+                        'jumlah' => $request->jumlah && $request->jumlah[$key] ? Controller::unformat_angka($request->jumlah[$key]) : null,
+                        'jumlah2' => $request->jumlah2 && $request->jumlah2[$key] ? Controller::unformat_angka($request->jumlah2[$key]) : null,
                     ];
                 }
                 $prodtarik->prodtarikdetail()->delete();
@@ -300,6 +304,40 @@ class ProdtarikController extends Controller
                 'mesin' => $mesin,
             ];
             return response()->json($data);
+        }
+    }
+
+    public function panen(Prodtarik $prodtarik)
+    {
+        if ($prodtarik->status != 'Draft') {
+            return redirect()->back()->with([
+                'status' => 'error',
+                'message' => 'Data sudah dipanen!'
+            ]);
+        }
+        return view('produksibelakang.tarik.panen', compact('prodtarik'));
+    }
+
+    public function update_panen(Request $request, Prodtarik $prodtarik)
+    {
+        DB::beginTransaction();
+        try {
+            $prodtarik->tanggal_panen  = $request->tanggal_panen;
+            $prodtarik->keterangan_panen = $request->keterangan_panen;
+            $prodtarik->status = 'Panen';
+            $prodtarik->jumlah = $request->jumlah_panen ? Controller::unformat_angka($request->jumlah_panen) : null;
+            $prodtarik->jumlah2 = $request->jumlah_panen2 ? Controller::unformat_angka($request->jumlah_panen2) : null;
+            $prodtarik->material_id = $request->material_id_panen;
+            $prodtarik->updated_by = Auth::user()->id;
+            $prodtarik->save();
+            DB::commit();
+            return redirect()->route('prodtarik.index')->with([
+                'status' => 'success',
+                'message' => 'Data telah disimpan!'
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return view('error', compact('th'));
         }
     }
 }
